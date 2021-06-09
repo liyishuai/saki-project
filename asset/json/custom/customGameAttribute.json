@@ -1270,7 +1270,7 @@
             },
             "listSelectSE": {
                 "varType": 1,
-                "value": "asset/audio/se/menu/Down.mp3,1,1",
+                "value": "asset/audio/se/menu/Get.mp3,1,1",
                 "copy": false,
                 "volume": "1",
                 "pitch": "1"

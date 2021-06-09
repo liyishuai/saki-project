@@ -3088,7 +3088,7 @@
                 },
                 "listSelectSE": {
                     "varType": 1,
-                    "value": "asset/audio/se/menu/Down.mp3,1,1",
+                    "value": "asset/audio/se/menu/Get.mp3,1,1",
                     "copy": false,
                     "volume": "1",
                     "pitch": "1"
@@ -5021,6 +5021,396 @@
             "index": 6
         },
         "id": 10
+    },
+    "asset/json/scene/tile/tile1.json": {
+        "url": "asset/image/tile/Surface_1.png",
+        "dataLayers": [
+            [
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ]
+            ],
+            [
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ]
+            ],
+            [
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ]
+            ]
+        ],
+        "width": 336,
+        "height": 96,
+        "id": 1,
+        "obstacleData": [
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ]
+        ],
+        "maskData": [
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ]
+        ]
     },
     "asset/json/custom/customMaterialList.json": {
         "list": [
@@ -9362,396 +9752,6 @@
             }
         }
     },
-    "asset/json/scene/tile/tile1.json": {
-        "url": "asset/image/tile/Surface_1.png",
-        "dataLayers": [
-            [
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ]
-            ],
-            [
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ]
-            ],
-            [
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ]
-            ]
-        ],
-        "width": 336,
-        "height": 96,
-        "id": 1,
-        "obstacleData": [
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                true,
-                false,
-                false,
-                false,
-                false,
-                false,
-                true,
-                false,
-                false,
-                false,
-                false,
-                true,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                true,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ]
-        ],
-        "maskData": [
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ]
-        ]
-    },
     "asset/json/scene/model/som1.json": {
         "preLayer": [
             {
@@ -10029,6 +10029,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -10076,6 +10077,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -10123,6 +10125,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -10170,6 +10173,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -10217,6 +10221,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -10270,7 +10275,17 @@
                         "51549968794_0.6786578552213784"
                     ]
                 ],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65700125139_0.9538990495078774"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -10333,7 +10348,17 @@
                         "51066802739_0.7329942440559905"
                     ]
                 ],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65700150684_0.4696839450220276"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -10356,7 +10381,17 @@
                         "50868454824_0.665920567123506"
                     ]
                 ],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65700159867_0.21073739786400858"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -10461,7 +10496,17 @@
                         "51066820506_0.3840760988644123"
                     ]
                 ],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65700155981_0.11582340585433548"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -10578,7 +10623,17 @@
                         "51066811899_0.42179486341227523"
                     ]
                 ],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65700153308_0.2645727171125223"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -18466,6 +18521,20 @@
         "id": 3003
     },
     "asset/json/server/ui/sui3003.json": {},
+    "asset/json/ui/data/ui3004.json": {
+        "root": {
+            "children": []
+        },
+        "id": 3004
+    },
+    "asset/json/server/ui/sui3004.json": {},
+    "asset/json/ui/data/ui3005.json": {
+        "root": {
+            "children": []
+        },
+        "id": 3005
+    },
+    "asset/json/server/ui/sui3005.json": {},
     "asset/json/custom/customCommandType.json": {
         "list": {
             "1": [
@@ -39325,20 +39394,6 @@
             }
         }
     },
-    "asset/json/ui/data/ui3004.json": {
-        "root": {
-            "children": []
-        },
-        "id": 3004
-    },
-    "asset/json/server/ui/sui3004.json": {},
-    "asset/json/ui/data/ui3005.json": {
-        "root": {
-            "children": []
-        },
-        "id": 3005
-    },
-    "asset/json/server/ui/sui3005.json": {},
     "asset/json/ui/data/ui15001.json": {
         "root": {
             "children": []
