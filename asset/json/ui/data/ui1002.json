@@ -1,0 +1,132 @@
+{
+    "root": {
+        "children": [
+            {
+                "id": "51047203995_0.9575899016102261",
+                "condition": [],
+                "type": "UIButton",
+                "name": "tsBtn",
+                "x": 12,
+                "y": 11,
+                "width": 28,
+                "height": 28,
+                "opacity": 1,
+                "rotation": 0,
+                "show": true,
+                "mouseEventEnabledData": true,
+                "materialData": [
+                    {
+                        "materials": []
+                    }
+                ],
+                "mouseEventEnabledInEditor": true,
+                "showOnEditor": true,
+                "hasCommand": [],
+                "isOpen": true,
+                "label": "",
+                "image1": "asset/image/picture/ui/menu/ts_NoPlay.png",
+                "grid9img1": "0,0,0,0,0",
+                "image2": "asset/image/picture/ui/menu/ts_Play.png",
+                "grid9img2": "0,0,0,0,0",
+                "image3": "asset/image/picture/ui/menu/ts_Play.png",
+                "grid9img3": "0,0,0,0,0",
+                "fontSize": 16,
+                "color": "#999999",
+                "bold": false,
+                "italic": false,
+                "align": 1,
+                "valign": 1,
+                "letterSpacing": 0,
+                "font": "思源黑体",
+                "textDx": 0,
+                "textDy": 0,
+                "textStroke": 0,
+                "textStrokeColor": "#000000"
+            },
+            {
+                "id": "51047230898_0.14104951387821751",
+                "condition": [],
+                "type": "UIString",
+                "name": "dialogName",
+                "x": 52,
+                "y": 4,
+                "width": 93,
+                "height": 46,
+                "opacity": 1,
+                "rotation": 0,
+                "show": true,
+                "mouseEventEnabledData": false,
+                "materialData": [
+                    {
+                        "materials": []
+                    }
+                ],
+                "mouseEventEnabledInEditor": true,
+                "showOnEditor": true,
+                "hasCommand": [],
+                "isOpen": true,
+                "text": "名字",
+                "fontSize": 18,
+                "color": "#3a87e7",
+                "bold": true,
+                "italic": false,
+                "align": 0,
+                "valign": 1,
+                "leading": 0,
+                "letterSpacing": 0,
+                "font": "思源黑体",
+                "wordWrap": true,
+                "overflow": 0,
+                "shadowEnabled": null,
+                "shadowColor": "#000000",
+                "shadowDx": 1,
+                "shadowDy": 1,
+                "stroke": 0,
+                "strokeColor": "#000000"
+            },
+            {
+                "id": "51047267614_0.9769246707144841",
+                "condition": [],
+                "type": "UIString",
+                "name": "dialogContent",
+                "x": 151,
+                "y": 20,
+                "width": 670,
+                "height": 69,
+                "opacity": 1,
+                "rotation": 0,
+                "show": true,
+                "mouseEventEnabledData": false,
+                "materialData": [
+                    {
+                        "materials": []
+                    }
+                ],
+                "mouseEventEnabledInEditor": true,
+                "showOnEditor": true,
+                "hasCommand": [],
+                "isOpen": true,
+                "text": "请将对话输入在此处。。。请将对话输入在此处。。。请将对话输入在此处。。。请将对话输入在此处。。。请将对话输入在此处。。。请将对话输入在此处。。。请将对话输入在此处。。。请将对话输入在此处。。。请将对话输入在此处。。。",
+                "fontSize": 16,
+                "color": "#898989",
+                "bold": false,
+                "italic": false,
+                "align": 0,
+                "valign": 0,
+                "leading": 0,
+                "letterSpacing": 0,
+                "font": "思源黑体",
+                "wordWrap": true,
+                "overflow": 0,
+                "shadowEnabled": null,
+                "shadowColor": "#000000",
+                "shadowDx": 1,
+                "shadowDy": 1,
+                "stroke": 0,
+                "strokeColor": "#000000"
+            }
+        ]
+    },
+    "id": 1002,
+    "instanceClassName": ""
+}

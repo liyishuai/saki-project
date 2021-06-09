@@ -1,0 +1,442 @@
+{
+    "list": [
+        null,
+        "场景",
+        "界面",
+        "模块",
+        "世界"
+    ],
+    "data": {
+        "1": {
+            "compAutoOrderLimitHeight": 0,
+            "id": 1,
+            "blockList": [
+                {
+                    "name": "场景",
+                    "blockAttrs": [
+                        {
+                            "attr": {
+                                "id": "57783148333_0.845491801295851",
+                                "varName": "type",
+                                "varType": 0,
+                                "compData": {
+                                    "compType": 2,
+                                    "compParam": {
+                                        "items": "名称",
+                                        "showIndex": false
+                                    }
+                                },
+                                "defaultValue": "",
+                                "hideMode": false,
+                                "useCommand": false,
+                                "onlyPointTo": false,
+                                "moduleID": 1,
+                                "dataStructureID": 1,
+                                "arrayMode": false,
+                                "arrayLength": 100,
+                                "arrayAllowDelete": false,
+                                "arrayAllowSwap": false,
+                                "arrayAllowUpdate": false,
+                                "accessMode": 1,
+                                "syncMode": 0,
+                                "attrTips": "",
+                                "alias": "属性",
+                                "onlyConfig": false,
+                                "preview": false,
+                                "autoTitleWidth": true,
+                                "titleWidth": 100,
+                                "eyeShow": true,
+                                "lockBlock": false
+                            },
+                            "attrConditions": [],
+                            "y": 23,
+                            "x": 13,
+                            "width": 200,
+                            "height": 32
+                        }
+                    ],
+                    "blockCondition": [],
+                    "blockHeight": 74,
+                    "autoOrder": true
+                }
+            ],
+            "isCustomPhraseDesc": true,
+            "name": "bbb",
+            "customPhraseDescTS": "// 根据属性名称值编写自定义短语描述，如：\"我的短语是\"+attrs.xxx\n// 使用下拉框组件的变量attrs.xxx有对应的attrs.xxxItems的属性以便获得标签名集合\n// 获取自定义模块的数据名称的函数：getModuleDataName(moduleID:number,dataID:number):string;\n// 获取各种列表内数据名称的函数：getTypeDataListName(typeID: number, dataID: number):string;\n// -- typeID ：0-全局变量 1-全局开关 2-全局字符串 3-玩家变量 4-玩家开关 5-玩家字符串\n//           ：6-场景列表 7-场景对象模型列表 8-图块列表 9-行走图列表 10-行走图动作列表 11-立绘列表 12-立绘表情列表\n//           ：13-公共事件 14-对话框列表 15-动画列表 16-动画信号列表 17-界面列表 18-数据结构列表 19-自定义模块列表\n//           ：20-自定义命令列表 21-自定义行为列表 22-自动元件列表 23-行走图部件列表 24-立绘部件列表 25-材质列表\n\"场景的\" + attrs.typeItems[attrs.type];",
+            "customPhraseDescJS": "\"场景的\" + attrs.typeItems[attrs.type];\n"
+        },
+        "2": {
+            "compAutoOrderLimitHeight": 0,
+            "id": 2,
+            "blockList": [
+                {
+                    "name": "界面组件属性",
+                    "blockAttrs": [
+                        {
+                            "attr": {
+                                "id": "57874463058_0.9413461571061179",
+                                "varName": "uiComp",
+                                "varType": 5,
+                                "compData": {
+                                    "compType": 46,
+                                    "compParam": {
+                                        "typeMode": 3
+                                    }
+                                },
+                                "defaultValue": "",
+                                "hideMode": false,
+                                "useCommand": false,
+                                "onlyPointTo": false,
+                                "moduleID": 1,
+                                "dataStructureID": 1,
+                                "arrayMode": false,
+                                "arrayLength": 100,
+                                "arrayAllowDelete": false,
+                                "arrayAllowSwap": false,
+                                "arrayAllowUpdate": false,
+                                "accessMode": 1,
+                                "syncMode": 0,
+                                "attrTips": "",
+                                "alias": "选择界面并指定属性",
+                                "onlyConfig": false,
+                                "preview": false,
+                                "autoTitleWidth": true,
+                                "titleWidth": 100,
+                                "eyeShow": true,
+                                "lockBlock": false
+                            },
+                            "attrConditions": [],
+                            "y": 16,
+                            "x": 10,
+                            "width": 600,
+                            "height": 32
+                        }
+                    ],
+                    "blockCondition": [],
+                    "blockHeight": 65,
+                    "autoOrder": true
+                }
+            ],
+            "isCustomPhraseDesc": true,
+            "customPhraseDescTS": "// 根据属性名称值编写自定义短语描述，如：\"我的短语是\"+attrs.xxx\n// 使用下拉框组件的变量attrs.xxx有对应的attrs.xxxItems的属性以便获得标签名集合\n// 获取自定义模块的数据名称的函数：getModuleDataName(moduleID:number,dataID:number):string;\n// 获取各种列表内数据名称的函数：getTypeDataListName(typeID: number, dataID: number):string;\n// -- typeID ：0-全局变量 1-全局开关 2-全局字符串 3-玩家变量 4-玩家开关 5-玩家字符串\n//           ：6-场景列表 7-场景对象模型列表 8-图块列表 9-行走图列表 10-行走图动作列表 11-立绘列表 12-立绘表情列表\n//           ：13-公共事件 14-对话框列表 15-动画列表 16-动画信号列表 17-界面列表 18-数据结构列表 19-自定义模块列表\n//           ：20-自定义命令列表 21-自定义行为列表 22-自动元件列表 23-行走图部件列表 24-立绘部件列表 25-材质列表\nvar str = \"\";\nif (attrs.uiComp.uiID) {\n    str += `${attrs.uiComp.uiID}-${getTypeDataListName(17, attrs.uiComp.uiID)}「${attrs.uiComp.compName}」的属性：${attrs.uiComp.varName}`;\n}\nstr;",
+            "customPhraseDescJS": "var str = \"\";\nif (attrs.uiComp.uiID) {\n    str += attrs.uiComp.uiID + \"-\" + getTypeDataListName(17, attrs.uiComp.uiID) + \"\\u300C\" + attrs.uiComp.compName + \"\\u300D\\u7684\\u5C5E\\u6027\\uFF1A\" + attrs.uiComp.varName;\n}\nstr;\n"
+        },
+        "3": {
+            "compAutoOrderLimitHeight": 0,
+            "id": 3,
+            "blockList": [
+                {
+                    "name": "模块",
+                    "blockAttrs": [
+                        {
+                            "attr": {
+                                "id": "57874675812_0.7101003105278643",
+                                "varName": "moduleID",
+                                "varType": 0,
+                                "compData": {
+                                    "compType": 45,
+                                    "compParam": {}
+                                },
+                                "defaultValue": "1",
+                                "hideMode": false,
+                                "useCommand": false,
+                                "onlyPointTo": false,
+                                "moduleID": 1,
+                                "dataStructureID": 1,
+                                "arrayMode": false,
+                                "arrayLength": 100,
+                                "arrayAllowDelete": false,
+                                "arrayAllowSwap": false,
+                                "arrayAllowUpdate": false,
+                                "accessMode": 1,
+                                "syncMode": 0,
+                                "attrTips": "",
+                                "alias": "模块编号",
+                                "onlyConfig": false,
+                                "preview": false,
+                                "autoTitleWidth": false,
+                                "titleWidth": 60,
+                                "eyeShow": true,
+                                "lockBlock": false
+                            },
+                            "attrConditions": [],
+                            "y": 10,
+                            "x": 15,
+                            "width": 225,
+                            "height": 32
+                        },
+                        {
+                            "attr": {
+                                "id": "57874757264_0.6974862057584863",
+                                "varName": "dataID",
+                                "varType": 0,
+                                "compData": {
+                                    "compType": 0,
+                                    "compParam": {}
+                                },
+                                "defaultValue": "",
+                                "hideMode": false,
+                                "useCommand": false,
+                                "onlyPointTo": false,
+                                "moduleID": 1,
+                                "dataStructureID": 1,
+                                "arrayMode": false,
+                                "arrayLength": 100,
+                                "arrayAllowDelete": false,
+                                "arrayAllowSwap": false,
+                                "arrayAllowUpdate": false,
+                                "accessMode": 1,
+                                "syncMode": 0,
+                                "attrTips": "",
+                                "alias": "数据编号",
+                                "onlyConfig": false,
+                                "preview": false,
+                                "autoTitleWidth": false,
+                                "titleWidth": 60,
+                                "eyeShow": true,
+                                "lockBlock": false
+                            },
+                            "attrConditions": [
+                                {
+                                    "attrID": "57874781881_0.6779085722812661",
+                                    "value": 0,
+                                    "isExpression": false,
+                                    "jsCode": null,
+                                    "tsCode": null,
+                                    "codeName": null
+                                }
+                            ],
+                            "y": 45,
+                            "x": 15,
+                            "width": 225,
+                            "height": 32
+                        },
+                        {
+                            "attr": {
+                                "id": "57874710597_0.3548170058971347",
+                                "varName": "dataVarID",
+                                "varType": 0,
+                                "compData": {
+                                    "compType": 6,
+                                    "compParam": {}
+                                },
+                                "defaultValue": "1",
+                                "hideMode": false,
+                                "useCommand": false,
+                                "onlyPointTo": false,
+                                "moduleID": 1,
+                                "dataStructureID": 1,
+                                "arrayMode": false,
+                                "arrayLength": 100,
+                                "arrayAllowDelete": false,
+                                "arrayAllowSwap": false,
+                                "arrayAllowUpdate": false,
+                                "accessMode": 1,
+                                "syncMode": 0,
+                                "attrTips": "",
+                                "alias": "数据编号",
+                                "onlyConfig": false,
+                                "preview": false,
+                                "autoTitleWidth": false,
+                                "titleWidth": 60,
+                                "eyeShow": true,
+                                "lockBlock": false
+                            },
+                            "attrConditions": [
+                                {
+                                    "attrID": "57874781881_0.6779085722812661",
+                                    "value": 1,
+                                    "isExpression": false,
+                                    "jsCode": null,
+                                    "tsCode": null,
+                                    "codeName": null
+                                }
+                            ],
+                            "y": 45,
+                            "x": 15,
+                            "width": 225,
+                            "height": 32
+                        },
+                        {
+                            "attr": {
+                                "id": "57874781881_0.6779085722812661",
+                                "varName": "useDataVar",
+                                "varType": 0,
+                                "compData": {
+                                    "compType": 2,
+                                    "compParam": {
+                                        "items": "常量,变量",
+                                        "showIndex": false
+                                    }
+                                },
+                                "defaultValue": "",
+                                "hideMode": false,
+                                "useCommand": false,
+                                "onlyPointTo": false,
+                                "moduleID": 1,
+                                "dataStructureID": 1,
+                                "arrayMode": false,
+                                "arrayLength": 100,
+                                "arrayAllowDelete": false,
+                                "arrayAllowSwap": false,
+                                "arrayAllowUpdate": false,
+                                "accessMode": 1,
+                                "syncMode": 0,
+                                "attrTips": "",
+                                "alias": "使用变量指定",
+                                "onlyConfig": false,
+                                "preview": false,
+                                "autoTitleWidth": false,
+                                "titleWidth": 0,
+                                "eyeShow": true,
+                                "lockBlock": false
+                            },
+                            "attrConditions": [],
+                            "y": 45,
+                            "x": 249,
+                            "width": 107,
+                            "height": 32
+                        },
+                        {
+                            "attr": {
+                                "id": "57874840206_0.9789134141155977",
+                                "varName": "attrName",
+                                "varType": 1,
+                                "compData": {
+                                    "compType": 9,
+                                    "compParam": {}
+                                },
+                                "defaultValue": "",
+                                "hideMode": false,
+                                "useCommand": false,
+                                "onlyPointTo": false,
+                                "moduleID": 1,
+                                "dataStructureID": 1,
+                                "arrayMode": false,
+                                "arrayLength": 100,
+                                "arrayAllowDelete": false,
+                                "arrayAllowSwap": false,
+                                "arrayAllowUpdate": false,
+                                "accessMode": 1,
+                                "syncMode": 0,
+                                "attrTips": "模块数据内的英文属性名称",
+                                "alias": "属性名",
+                                "onlyConfig": false,
+                                "preview": false,
+                                "autoTitleWidth": false,
+                                "titleWidth": 60,
+                                "eyeShow": true,
+                                "lockBlock": false
+                            },
+                            "attrConditions": [],
+                            "y": 80,
+                            "x": 15,
+                            "width": 225,
+                            "height": 32
+                        }
+                    ],
+                    "blockCondition": [],
+                    "blockHeight": 120,
+                    "autoOrder": true
+                }
+            ],
+            "isCustomPhraseDesc": true,
+            "customPhraseDescTS": "// 根据属性名称值编写自定义短语描述，如：\"我的短语是\"+attrs.xxx\n// 使用下拉框组件的变量attrs.xxx有对应的attrs.xxxItems的属性以便获得标签名集合\n// 获取自定义模块的数据名称的函数：getModuleDataName(moduleID:number,dataID:number):string;\n// 获取各种列表内数据名称的函数：getTypeDataListName(typeID: number, dataID: number):string;\n// -- typeID ：0-全局变量 1-全局开关 2-全局字符串 3-玩家变量 4-玩家开关 5-玩家字符串\n//           ：6-场景列表 7-场景对象模型列表 8-图块列表 9-行走图列表 10-行走图动作列表 11-立绘列表 12-立绘表情列表\n//           ：13-公共事件 14-对话框列表 15-动画列表 16-动画信号列表 17-界面列表 18-数据结构列表 19-自定义模块列表\n//           ：20-自定义命令列表 21-自定义行为列表 22-自动元件列表 23-行走图部件列表 24-立绘部件列表\nvar str = \"\";\nstr += `「${attrs.moduleID}-${getTypeDataListName(19, attrs.moduleID)}」`;\nstr += \"的数据「\";\nif (attrs.useDataVar) {\n    str += `[${attrs.dataVarID}-${getTypeDataListName(3, attrs.dataVarID)}]`;\n}\nelse {\n    str += `${attrs.dataID}`;\n}\nstr += \"」的属性「\"+attrs.attrName+\"」\";",
+            "customPhraseDescJS": "var str = \"\";\nstr += \"\\u300C\" + attrs.moduleID + \"-\" + getTypeDataListName(19, attrs.moduleID) + \"\\u300D\";\nstr += \"的数据「\";\nif (attrs.useDataVar) {\n    str += \"[\" + attrs.dataVarID + \"-\" + getTypeDataListName(3, attrs.dataVarID) + \"]\";\n}\nelse {\n    str += \"\" + attrs.dataID;\n}\nstr += \"」的属性「\" + attrs.attrName + \"」\";\n"
+        },
+        "4": {
+            "compAutoOrderLimitHeight": 0,
+            "id": 4,
+            "blockList": [
+                {
+                    "name": "世界",
+                    "blockAttrs": [
+                        {
+                            "attr": {
+                                "id": "57875162592_0.63662513466724",
+                                "varName": "type",
+                                "varType": 0,
+                                "compData": {
+                                    "compType": 2,
+                                    "compParam": {
+                                        "items": "自定义属性",
+                                        "showIndex": false
+                                    }
+                                },
+                                "defaultValue": "",
+                                "hideMode": false,
+                                "useCommand": false,
+                                "onlyPointTo": false,
+                                "moduleID": 1,
+                                "dataStructureID": 1,
+                                "arrayMode": false,
+                                "arrayLength": 100,
+                                "arrayAllowDelete": false,
+                                "arrayAllowSwap": false,
+                                "arrayAllowUpdate": false,
+                                "accessMode": 1,
+                                "syncMode": 0,
+                                "attrTips": "",
+                                "alias": "类别",
+                                "onlyConfig": false,
+                                "preview": false,
+                                "autoTitleWidth": false,
+                                "titleWidth": 60,
+                                "eyeShow": true,
+                                "lockBlock": false
+                            },
+                            "attrConditions": [],
+                            "y": 21,
+                            "x": 15,
+                            "width": 225,
+                            "height": 32
+                        },
+                        {
+                            "attr": {
+                                "id": "57875162592_0.12891718804864993",
+                                "varName": "customAttrName",
+                                "varType": 1,
+                                "compData": {
+                                    "compType": 9,
+                                    "compParam": {}
+                                },
+                                "defaultValue": "",
+                                "hideMode": false,
+                                "useCommand": false,
+                                "onlyPointTo": false,
+                                "moduleID": 1,
+                                "dataStructureID": 1,
+                                "arrayMode": false,
+                                "arrayLength": 100,
+                                "arrayAllowDelete": false,
+                                "arrayAllowSwap": false,
+                                "arrayAllowUpdate": false,
+                                "accessMode": 1,
+                                "syncMode": 0,
+                                "attrTips": "对应世界设定中的属性名称（英文属性名，如saveFileMax）",
+                                "alias": "属性名称",
+                                "onlyConfig": false,
+                                "preview": false,
+                                "autoTitleWidth": false,
+                                "titleWidth": 60,
+                                "eyeShow": true,
+                                "lockBlock": false
+                            },
+                            "attrConditions": [],
+                            "y": 63,
+                            "x": 15,
+                            "width": 225,
+                            "height": 32
+                        }
+                    ],
+                    "blockCondition": [],
+                    "blockHeight": 120,
+                    "autoOrder": true
+                }
+            ],
+            "isCustomPhraseDesc": true,
+            "customPhraseDescTS": "// 根据属性名称值编写自定义短语描述，如：\"我的短语是\"+attrs.xxx\n// 使用下拉框组件的变量attrs.xxx有对应的attrs.xxxItems的属性以便获得标签名集合\n// 获取自定义模块的数据名称的函数：getModuleDataName(moduleID:number,dataID:number):string;\n// 获取各种列表内数据名称的函数：getTypeDataListName(typeID: number, dataID: number):string;\n// -- typeID ：0-全局变量 1-全局开关 2-全局字符串 3-玩家变量 4-玩家开关 5-玩家字符串\n//           ：6-场景列表 7-场景对象模型列表 8-图块列表 9-行走图列表 10-行走图动作列表 11-立绘列表 12-立绘表情列表\n//           ：13-公共事件 14-对话框列表 15-动画列表 16-动画信号列表 17-界面列表 18-数据结构列表 19-自定义模块列表\n//           ：20-自定义命令列表 21-自定义行为列表 22-自动元件列表 23-行走图部件列表 24-立绘部件列表 25-材质列表\n\"世界的\" + attrs.customAttrName;",
+            "customPhraseDescJS": "\"世界的\" + attrs.customAttrName;\n"
+        }
+    }
+}

@@ -1,0 +1,111 @@
+{
+    "customSystemEnableds": {
+        "worldSetting": true,
+        "playerSetting": false,
+        "commonEventSetting": true,
+        "avatarSetting": false,
+        "animationSetting": true,
+        "dialogSetting": true,
+        "uiSetting": true,
+        "sceneObjectModelSetting": false,
+        "live2dSetting": true,
+        "tileSystem": false,
+        "sceneObjectSystem": false,
+        "standingSystem": true,
+        "mapGrid": false,
+        "dataGrid": false,
+        "scriptSystem": true,
+        "mainArea": 0,
+        "sceneState": {
+            "lastSceneMapID": 1,
+            "lastSceneElementIndex": 0,
+            "lastSceneElementSelectedIndex": 0,
+            "lastSceneElementBlockset": true
+        },
+        "viewState": {
+            "showGrid": false,
+            "alignGrid": false,
+            "dimLayer": 1,
+            "render": true,
+            "dataGridShow": [
+                false,
+                null,
+                null,
+                true
+            ],
+            "showObs": false,
+            "showMask": false
+        },
+        "elementShowGrid": true,
+        "systemCommands": {
+            "dialogMessage": true,
+            "dialogOption": true,
+            "dialogPlayerInput": true,
+            "variableSystem": true,
+            "process1": true,
+            "process2": true,
+            "process3": true,
+            "AdvancedDrama": true,
+            "audio": true
+        },
+        "runTestCompileMode": 1,
+        "restartServer": true,
+        "ediotrViewColor": {
+            "ui": [
+                "#4b4b4b",
+                "#000000"
+            ],
+            "dialog": [
+                "#848484",
+                "#404040"
+            ],
+            "animation": "#1a1a1a",
+            "avatar": "#1a1a1a",
+            "standAvatar": "#1a1a1a",
+            "custom": "#737373"
+        },
+        "presetColor": [
+            "#FF0000",
+            "#00FF00",
+            "#0000FF"
+        ],
+        "resourceunLimit": true,
+        "runtimeClassInfo": {
+            "soClientExtends": "ClientSceneObject",
+            "soServerExtends": "ServerSceneObject",
+            "sceneClientDefault": "ClientScene",
+            "sceneServerDefault": "ServerScene"
+        },
+        "avatarEditorConfig": {
+            "showLastFrame": false,
+            "showRefObj": false
+        },
+        "standAvatarEditorConfig": {
+            "showLastFrame": true
+        },
+        "uiListSwitch": false,
+        "CMD_PAGE_PREVIEW_MODE": [
+            {
+                "mode": 0
+            },
+            {
+                "mode": 2
+            },
+            {
+                "mode": 2
+            },
+            {
+                "mode": 2
+            },
+            {
+                "mode": 2
+            }
+        ],
+        "commandPagePreviewState": [
+            true,
+            true,
+            1,
+            true
+        ]
+    }
+}

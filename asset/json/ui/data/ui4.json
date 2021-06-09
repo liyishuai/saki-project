@@ -1,0 +1,185 @@
+{
+    "root": {
+        "children": [
+            {
+                "id": "51047054326_0.7644794441592311",
+                "condition": [],
+                "type": "UIBitmap",
+                "name": "界面背景",
+                "x": 0,
+                "y": 0,
+                "width": 1200,
+                "height": 720,
+                "opacity": 1,
+                "rotation": 0,
+                "show": true,
+                "mouseEventEnabledData": true,
+                "materialData": [
+                    {
+                        "materials": []
+                    }
+                ],
+                "mouseEventEnabledInEditor": true,
+                "showOnEditor": true,
+                "hasCommand": [],
+                "isOpen": true,
+                "image": "asset/image/picture/ui/menu/settingBg1.png",
+                "grid9": "0,0,0,0,0",
+                "flip": null,
+                "pivotType": 0
+            },
+            {
+                "id": "51691014956_0.8651375193973116",
+                "condition": [],
+                "type": "UIBitmap",
+                "name": "界面标志",
+                "x": 55,
+                "y": 50,
+                "width": 70,
+                "height": 236,
+                "opacity": 1,
+                "rotation": 0,
+                "show": true,
+                "mouseEventEnabledData": true,
+                "materialData": [
+                    {
+                        "materials": []
+                    }
+                ],
+                "mouseEventEnabledInEditor": true,
+                "showOnEditor": true,
+                "hasCommand": [],
+                "isOpen": true,
+                "image": "asset/image/picture/ui/menu/historyTitle.png",
+                "grid9": "0,0,0,0,0",
+                "flip": null,
+                "pivotType": 0
+            },
+            {
+                "id": "51047395648_0.23368339306909647",
+                "condition": [],
+                "type": "UIBitmap",
+                "name": "文本框背景",
+                "x": 171.5,
+                "y": 70,
+                "width": 857,
+                "height": 588,
+                "opacity": 1,
+                "rotation": 0,
+                "show": true,
+                "mouseEventEnabledData": true,
+                "materialData": [
+                    {
+                        "materials": []
+                    }
+                ],
+                "mouseEventEnabledInEditor": true,
+                "showOnEditor": true,
+                "hasCommand": [],
+                "isOpen": true,
+                "image": "asset/image/picture/control/uilistBg.png",
+                "grid9": "0,0,0,0,0",
+                "flip": null,
+                "pivotType": 0,
+                "children": [
+                    {
+                        "id": "51047332666_0.6891876111080384",
+                        "condition": [],
+                        "type": "UIList",
+                        "name": "dialogRecordList",
+                        "x": 13,
+                        "y": 12,
+                        "width": 830,
+                        "height": 551,
+                        "opacity": 1,
+                        "rotation": 0,
+                        "show": true,
+                        "mouseEventEnabledData": true,
+                        "materialData": [
+                            {
+                                "materials": []
+                            }
+                        ],
+                        "mouseEventEnabledInEditor": true,
+                        "showOnEditor": true,
+                        "hasCommand": [],
+                        "isOpen": true,
+                        "itemModelGUI": 1002,
+                        "previewSize": 8,
+                        "selectEnable": true,
+                        "repeatX": 1,
+                        "itemWidth": 200,
+                        "itemHeight": 72,
+                        "spaceX": 2,
+                        "spaceY": 10,
+                        "scrollShowType": 2,
+                        "hScrollBar": "asset/image/picture/control/hscroll_bar.png",
+                        "hScrollBg": "asset/image/picture/control/hscroll_bg.png",
+                        "vScrollBar": "asset/image/picture/control/vscroll_bar.png",
+                        "vScrollBg": "asset/image/picture/control/vscroll_bg.png",
+                        "scrollWidth": 6,
+                        "selectImageURL": "",
+                        "selectImageGrid9": "0,0,0,0,0",
+                        "selectedImageAlpha": 0.5,
+                        "selectedImageOnTop": false,
+                        "overImageURL": "",
+                        "overImageGrid9": "0,0,0,0,0",
+                        "overImageAlpha": 0.5,
+                        "overImageOnTop": false,
+                        "overSelectMode": false,
+                        "slowmotionType": 0
+                    }
+                ]
+            },
+            {
+                "id": "51000918058_0.3295618265795648",
+                "condition": [],
+                "type": "UIButton",
+                "name": "返回按钮",
+                "x": 1085,
+                "y": 680,
+                "width": 96,
+                "height": 26,
+                "opacity": 1,
+                "rotation": 0,
+                "show": true,
+                "mouseEventEnabledData": true,
+                "materialData": [
+                    {
+                        "materials": []
+                    }
+                ],
+                "mouseEventEnabledInEditor": true,
+                "showOnEditor": true,
+                "hasCommand": [
+                    true
+                ],
+                "isOpen": true,
+                "label": "关闭",
+                "image1": "asset/image/picture/control/btn_normal.png",
+                "grid9img1": "0,0,0,0,0",
+                "image2": "asset/image/picture/control/btn_over.png",
+                "grid9img2": "0,0,0,0,0",
+                "image3": "asset/image/picture/control/btn_click.png",
+                "grid9img3": "0,0,0,0,0",
+                "fontSize": 16,
+                "color": "#3a87e7",
+                "overColor": "#ff9962",
+                "clickColor": "#ff9962",
+                "bold": false,
+                "italic": false,
+                "align": 1,
+                "valign": 1,
+                "letterSpacing": 0,
+                "font": "思源黑体",
+                "textDx": -10,
+                "textDy": -4,
+                "textStroke": 0,
+                "textStrokeColor": "#000000"
+            }
+        ]
+    },
+    "instanceClassName": "GUI_DialogLog",
+    "id": 4,
+    "hasRootCommand": []
+}
