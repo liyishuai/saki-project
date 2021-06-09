@@ -88,7 +88,7 @@
                 "type": "UIList",
                 "name": "list",
                 "x": 194,
-                "y": 83,
+                "y": 81,
                 "width": 815,
                 "height": 543,
                 "opacity": 1,
@@ -150,6 +150,7 @@
                 "mouseEventEnabledInEditor": true,
                 "showOnEditor": true,
                 "hasCommand": [
+                    true,
                     true
                 ],
                 "isOpen": true,
@@ -166,6 +167,7 @@
                 "clickColor": "#ff9962",
                 "bold": false,
                 "italic": false,
+                "smooth": null,
                 "align": 1,
                 "valign": 1,
                 "letterSpacing": 0,

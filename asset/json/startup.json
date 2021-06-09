@@ -32,12 +32,6 @@
         "DEFAULT_FONT": "思源黑体",
         "gameSID": "0.03912418679636476-1599608422101"
     },
-    "asset/json/scene/tileList.json": {
-        "list": [
-            null,
-            ""
-        ]
-    },
     "asset/json/dialog/dialogList.json": {
         "list": [
             null,
@@ -50,6 +44,12 @@
             "大段文本",
             "大段文本:无框",
             "",
+            ""
+        ]
+    },
+    "asset/json/scene/tileList.json": {
+        "list": [
+            null,
             ""
         ]
     },
@@ -3113,396 +3113,6 @@
         "playerAttributeConfig": {
             "attrs": {}
         }
-    },
-    "asset/json/scene/tile/tile1.json": {
-        "url": "asset/image/tile/Surface_1.png",
-        "dataLayers": [
-            [
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ]
-            ],
-            [
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ]
-            ],
-            [
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ]
-            ]
-        ],
-        "width": 336,
-        "height": 96,
-        "id": 1,
-        "obstacleData": [
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                true,
-                false,
-                false,
-                false,
-                false,
-                false,
-                true,
-                false,
-                false,
-                false,
-                false,
-                true,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                true,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ]
-        ],
-        "maskData": [
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ]
-        ]
     },
     "asset/json/dialog/data/dialog1.json": {
         "initData": true,
@@ -9752,6 +9362,396 @@
         },
         "id": 10
     },
+    "asset/json/scene/tile/tile1.json": {
+        "url": "asset/image/tile/Surface_1.png",
+        "dataLayers": [
+            [
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ]
+            ],
+            [
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ]
+            ],
+            [
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ]
+            ]
+        ],
+        "width": 336,
+        "height": 96,
+        "id": 1,
+        "obstacleData": [
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ]
+        ],
+        "maskData": [
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ]
+        ]
+    },
     "asset/json/scene/model/som1.json": {
         "preLayer": [
             {
@@ -9970,9 +9970,9 @@
                     "condition": [],
                     "type": "UIString",
                     "name": "GameCreator标志",
-                    "x": 1061,
-                    "y": 651,
-                    "width": 124,
+                    "x": 1005,
+                    "y": 639,
+                    "width": 188,
                     "height": 15,
                     "opacity": 1,
                     "rotation": 0,
@@ -9987,7 +9987,7 @@
                     "showOnEditor": true,
                     "hasCommand": [],
                     "isOpen": true,
-                    "text": "GAMECREATOR",
+                    "text": "ICPC 亚洲第⑨训练委员会",
                     "fontSize": 16,
                     "color": "#ffffff",
                     "bold": false,
@@ -10838,7 +10838,7 @@
                     "type": "UIList",
                     "name": "list",
                     "x": 194,
-                    "y": 83,
+                    "y": 81,
                     "width": 815,
                     "height": 543,
                     "opacity": 1,
@@ -10900,6 +10900,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -10916,6 +10917,7 @@
                     "clickColor": "#ff9962",
                     "bold": false,
                     "italic": false,
+                    "smooth": null,
                     "align": 1,
                     "valign": 1,
                     "letterSpacing": 0,
@@ -10977,7 +10979,17 @@
                         "51075637739_0.9965988550662384"
                     ]
                 ],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65712112415_0.6475002693036631"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -13069,6 +13081,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -13184,7 +13197,17 @@
                         "51075708461_0.023936142849543707"
                     ]
                 ],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65712163276_0.9662971568911045"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -13370,7 +13393,7 @@
                     "type": "UIList",
                     "name": "list",
                     "x": 194,
-                    "y": 83,
+                    "y": 81,
                     "width": 815,
                     "height": 543,
                     "opacity": 1,
@@ -13432,6 +13455,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -13486,6 +13510,15 @@
             "commands": [
                 [],
                 [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
                 []
             ]
         },
@@ -13516,7 +13549,17 @@
                         "51075716756_0.565677019976432"
                     ]
                 ],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65712168353_0.37905142554446614"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -14132,6 +14175,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -14178,6 +14222,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -14250,6 +14295,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -14384,7 +14430,17 @@
                         "51075724905_0.6275462517144779"
                     ]
                 ],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65712175561_0.43497577433682766"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -14538,7 +14594,17 @@
                         }
                     ]
                 ],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65712305738_0.4518579015373958"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -14707,7 +14773,17 @@
                         }
                     ]
                 ],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65712308244_0.18585634191203648"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -15057,6 +15133,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -15158,7 +15235,17 @@
                         "51075733492_0.957022048049269"
                     ]
                 ],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65712391874_0.36403353158636476"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -15307,6 +15394,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -15391,7 +15479,17 @@
                         "51075740208_0.7337777554821396"
                     ]
                 ],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65712397665_0.07692820370970588"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -15555,6 +15653,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -15639,7 +15738,17 @@
                         "51075753897_0.6470380512079463"
                     ]
                 ],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65712383112_0.5853464371680597"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -15837,7 +15946,10 @@
                     ],
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
-                    "hasCommand": [],
+                    "hasCommand": [
+                        null,
+                        true
+                    ],
                     "isOpen": true,
                     "image": "asset/image/picture/ui/menu/settingBg1.png",
                     "grid9": "0,0,0,0,0",
@@ -15966,6 +16078,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -16020,6 +16133,15 @@
             "commands": [
                 [],
                 [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
                 []
             ]
         },
@@ -16050,7 +16172,17 @@
                         "51075758858_0.2801043712746176"
                     ]
                 ],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65712366232_0.363053303402574"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -16067,7 +16199,17 @@
             "condition": [],
             "commands": [
                 [],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65712292142_0.5799874435628425"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -16464,6 +16606,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -16510,6 +16653,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -16860,7 +17004,17 @@
                         }
                     ]
                 ],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65712224996_0.46367831367997003"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -16923,7 +17077,17 @@
                         "51003343565_0.8947161805475308"
                     ]
                 ],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65712227282_0.8567489207411023"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -17290,7 +17454,10 @@
         },
         "id": 1001,
         "instanceClassName": "",
-        "hasRootCommand": []
+        "hasRootCommand": [
+            null,
+            true
+        ]
     },
     "asset/json/server/ui/sui1001.json": {
         "42588584956_0.29244167155461853": {
@@ -17525,7 +17692,17 @@
         "root": {
             "commands": [
                 [],
-                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65712747561_0.9031596446236703"
+                        }
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -17729,12 +17906,42 @@
             ]
         },
         "id": 1003,
-        "instanceClassName": ""
+        "instanceClassName": "",
+        "hasRootCommand": [
+            null,
+            true
+        ]
     },
     "asset/json/server/ui/sui1003.json": {
         "51050742446_0.6127957094513128": {
             "condition": [],
             "commands": [
+                [],
+                [],
+                []
+            ]
+        },
+        "root": {
+            "commands": [
+                [],
+                [
+                    [
+                        67,
+                        "asset/audio/se/menu/Down.mp3",
+                        1,
+                        1,
+                        {
+                            "___cmdID": "65712753339_0.4059103477755033"
+                        }
+                    ]
+                ],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
                 [],
                 [],
                 []
@@ -18528,19 +18735,6 @@
         "id": 3004
     },
     "asset/json/server/ui/sui3004.json": {},
-    "asset/json/ui/data/ui3005.json": {
-        "root": {
-            "children": []
-        },
-        "id": 3005
-    },
-    "asset/json/server/ui/sui3005.json": {},
-    "asset/json/ui/data/ui15001.json": {
-        "root": {
-            "children": []
-        },
-        "id": 15001
-    },
     "asset/json/custom/customCommandType.json": {
         "list": {
             "1": [
@@ -39400,6 +39594,19 @@
             }
         }
     },
+    "asset/json/ui/data/ui3005.json": {
+        "root": {
+            "children": []
+        },
+        "id": 3005
+    },
+    "asset/json/server/ui/sui3005.json": {},
+    "asset/json/ui/data/ui15001.json": {
+        "root": {
+            "children": []
+        },
+        "id": 15001
+    },
     "asset/json/server/ui/sui15001.json": {},
     "asset/json/custom/customModule/customModuleDataList1.json": {
         "list": {
@@ -40323,385 +40530,6 @@
         ],
         "id": 15001
     },
-    "asset/json/server/command/data/ws15002.json": {
-        "allowClient": false,
-        "conditionSwitch": 1,
-        "updateMode": false,
-        "commands": [
-            [
-                0,
-                5,
-                0,
-                [
-                    0,
-                    1,
-                    1,
-                    0
-                ],
-                0,
-                0,
-                [
-                    0,
-                    1,
-                    1,
-                    0
-                ],
-                0,
-                [
-                    1,
-                    1,
-                    [
-                        0,
-                        0
-                    ]
-                ],
-                0,
-                0,
-                [
-                    1,
-                    1
-                ],
-                "",
-                "",
-                true,
-                null,
-                [
-                    5,
-                    {
-                        "sys": 3
-                    },
-                    [
-                        {
-                            "50994129090_0.9145624693624452": 3
-                        }
-                    ]
-                ],
-                null,
-                null,
-                null,
-                null,
-                0,
-                {
-                    "___cmdID": "51005171282_0.017168609828419834"
-                }
-            ],
-            [
-                13,
-                4,
-                15006,
-                0,
-                0,
-                1,
-                1,
-                1,
-                [
-                    0,
-                    100
-                ],
-                0,
-                -1,
-                [],
-                0,
-                0,
-                0,
-                {
-                    "___cmdID": "51005171282_0.6719961845493347"
-                }
-            ],
-            [
-                1,
-                {
-                    "___cmdID": "51005171282_0.08103992174797825"
-                }
-            ],
-            [
-                13,
-                4,
-                15006,
-                0,
-                0,
-                0,
-                1,
-                1,
-                [
-                    0,
-                    100
-                ],
-                0,
-                -1,
-                [],
-                0,
-                0,
-                0,
-                {
-                    "___cmdID": "51005171282_0.16184111435115"
-                }
-            ],
-            [
-                2,
-                {
-                    "___cmdID": "51005171282_0.12146776375809587"
-                }
-            ],
-            [
-                0,
-                1,
-                0,
-                [
-                    0,
-                    1,
-                    1,
-                    0
-                ],
-                0,
-                0,
-                [
-                    0,
-                    1,
-                    1,
-                    0
-                ],
-                0,
-                [
-                    15001,
-                    1,
-                    [
-                        0,
-                        0
-                    ]
-                ],
-                0,
-                0,
-                [
-                    1,
-                    1
-                ],
-                "",
-                "",
-                true,
-                null,
-                [
-                    5,
-                    {
-                        "sys": 3
-                    },
-                    [
-                        {
-                            "50994129090_0.9145624693624452": 3
-                        }
-                    ]
-                ],
-                null,
-                null,
-                null,
-                null,
-                0,
-                {
-                    "___cmdID": "51007928225_0.45366351374719516"
-                }
-            ],
-            [
-                13,
-                4,
-                15007,
-                0,
-                0,
-                1,
-                1,
-                1,
-                [
-                    0,
-                    100
-                ],
-                0,
-                -1,
-                [],
-                0,
-                0,
-                0,
-                {
-                    "___cmdID": "51007928225_0.3932216236698092"
-                }
-            ],
-            [
-                1,
-                {
-                    "___cmdID": "51007928225_0.4452827857242403"
-                }
-            ],
-            [
-                13,
-                4,
-                15007,
-                0,
-                0,
-                0,
-                1,
-                1,
-                [
-                    0,
-                    100
-                ],
-                0,
-                -1,
-                [],
-                0,
-                0,
-                0,
-                {
-                    "___cmdID": "51007928225_0.10758785577476271"
-                }
-            ],
-            [
-                2,
-                {
-                    "___cmdID": "51007928225_0.8413190224925946"
-                }
-            ]
-        ],
-        "id": 15002
-    },
-    "asset/json/server/command/data/ws15003.json": {
-        "allowClient": false,
-        "conditionSwitch": 1,
-        "updateMode": false,
-        "commands": [
-            [
-                0,
-                1,
-                0,
-                [
-                    0,
-                    1,
-                    1,
-                    0
-                ],
-                0,
-                0,
-                [
-                    0,
-                    1,
-                    1,
-                    0
-                ],
-                1,
-                [
-                    1,
-                    15007,
-                    [
-                        0,
-                        0
-                    ]
-                ],
-                0,
-                0,
-                [
-                    1,
-                    1
-                ],
-                "",
-                "",
-                false,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                0,
-                {
-                    "___cmdID": "51008444899_0.9074678961214635"
-                }
-            ],
-            [
-                0,
-                5,
-                0,
-                [
-                    0,
-                    1,
-                    1,
-                    0
-                ],
-                0,
-                0,
-                [
-                    0,
-                    1,
-                    1,
-                    0
-                ],
-                0,
-                [
-                    1,
-                    1,
-                    [
-                        0,
-                        0
-                    ]
-                ],
-                0,
-                0,
-                [
-                    1,
-                    1
-                ],
-                "",
-                "",
-                true,
-                null,
-                [
-                    5,
-                    {
-                        "sys": 4
-                    },
-                    [
-                        {
-                            "50994129090_0.9145624693624452": 4
-                        }
-                    ]
-                ],
-                null,
-                null,
-                null,
-                null,
-                0,
-                {
-                    "___cmdID": "51008444899_0.29854658827606295"
-                }
-            ],
-            [
-                1,
-                {
-                    "___cmdID": "51008444899_0.8130406282550149"
-                }
-            ],
-            [
-                14,
-                {
-                    "___cmdID": "51008444899_0.8132908223814681"
-                }
-            ],
-            [
-                2,
-                {
-                    "___cmdID": "51008444899_0.11826338054735075"
-                }
-            ],
-            [
-                2,
-                {
-                    "___cmdID": "51008444899_0.1575430336440733"
-                }
-            ],
-            [
-                20001,
-                null,
-                "51008504481_0.8533008166440663"
-            ]
-        ],
-        "id": 15003
-    },
     "asset/json/server/command/data/ws15004.json": {
         "allowClient": false,
         "conditionSwitch": 1,
@@ -41492,5 +41320,384 @@
             ]
         ],
         "id": 15004
+    },
+    "asset/json/server/command/data/ws15002.json": {
+        "allowClient": false,
+        "conditionSwitch": 1,
+        "updateMode": false,
+        "commands": [
+            [
+                0,
+                5,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                0,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                0,
+                [
+                    1,
+                    1,
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                0,
+                0,
+                [
+                    1,
+                    1
+                ],
+                "",
+                "",
+                true,
+                null,
+                [
+                    5,
+                    {
+                        "sys": 3
+                    },
+                    [
+                        {
+                            "50994129090_0.9145624693624452": 3
+                        }
+                    ]
+                ],
+                null,
+                null,
+                null,
+                null,
+                0,
+                {
+                    "___cmdID": "51005171282_0.017168609828419834"
+                }
+            ],
+            [
+                13,
+                4,
+                15006,
+                0,
+                0,
+                1,
+                1,
+                1,
+                [
+                    0,
+                    100
+                ],
+                0,
+                -1,
+                [],
+                0,
+                0,
+                0,
+                {
+                    "___cmdID": "51005171282_0.6719961845493347"
+                }
+            ],
+            [
+                1,
+                {
+                    "___cmdID": "51005171282_0.08103992174797825"
+                }
+            ],
+            [
+                13,
+                4,
+                15006,
+                0,
+                0,
+                0,
+                1,
+                1,
+                [
+                    0,
+                    100
+                ],
+                0,
+                -1,
+                [],
+                0,
+                0,
+                0,
+                {
+                    "___cmdID": "51005171282_0.16184111435115"
+                }
+            ],
+            [
+                2,
+                {
+                    "___cmdID": "51005171282_0.12146776375809587"
+                }
+            ],
+            [
+                0,
+                1,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                0,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                0,
+                [
+                    15001,
+                    1,
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                0,
+                0,
+                [
+                    1,
+                    1
+                ],
+                "",
+                "",
+                true,
+                null,
+                [
+                    5,
+                    {
+                        "sys": 3
+                    },
+                    [
+                        {
+                            "50994129090_0.9145624693624452": 3
+                        }
+                    ]
+                ],
+                null,
+                null,
+                null,
+                null,
+                0,
+                {
+                    "___cmdID": "51007928225_0.45366351374719516"
+                }
+            ],
+            [
+                13,
+                4,
+                15007,
+                0,
+                0,
+                1,
+                1,
+                1,
+                [
+                    0,
+                    100
+                ],
+                0,
+                -1,
+                [],
+                0,
+                0,
+                0,
+                {
+                    "___cmdID": "51007928225_0.3932216236698092"
+                }
+            ],
+            [
+                1,
+                {
+                    "___cmdID": "51007928225_0.4452827857242403"
+                }
+            ],
+            [
+                13,
+                4,
+                15007,
+                0,
+                0,
+                0,
+                1,
+                1,
+                [
+                    0,
+                    100
+                ],
+                0,
+                -1,
+                [],
+                0,
+                0,
+                0,
+                {
+                    "___cmdID": "51007928225_0.10758785577476271"
+                }
+            ],
+            [
+                2,
+                {
+                    "___cmdID": "51007928225_0.8413190224925946"
+                }
+            ]
+        ],
+        "id": 15002
+    },
+    "asset/json/server/command/data/ws15003.json": {
+        "allowClient": false,
+        "conditionSwitch": 1,
+        "updateMode": false,
+        "commands": [
+            [
+                0,
+                1,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                0,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                1,
+                [
+                    1,
+                    15007,
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                0,
+                0,
+                [
+                    1,
+                    1
+                ],
+                "",
+                "",
+                false,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+                {
+                    "___cmdID": "51008444899_0.9074678961214635"
+                }
+            ],
+            [
+                0,
+                5,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                0,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                0,
+                [
+                    1,
+                    1,
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                0,
+                0,
+                [
+                    1,
+                    1
+                ],
+                "",
+                "",
+                true,
+                null,
+                [
+                    5,
+                    {
+                        "sys": 4
+                    },
+                    [
+                        {
+                            "50994129090_0.9145624693624452": 4
+                        }
+                    ]
+                ],
+                null,
+                null,
+                null,
+                null,
+                0,
+                {
+                    "___cmdID": "51008444899_0.29854658827606295"
+                }
+            ],
+            [
+                1,
+                {
+                    "___cmdID": "51008444899_0.8130406282550149"
+                }
+            ],
+            [
+                14,
+                {
+                    "___cmdID": "51008444899_0.8132908223814681"
+                }
+            ],
+            [
+                2,
+                {
+                    "___cmdID": "51008444899_0.11826338054735075"
+                }
+            ],
+            [
+                2,
+                {
+                    "___cmdID": "51008444899_0.1575430336440733"
+                }
+            ],
+            [
+                20001,
+                null,
+                "51008504481_0.8533008166440663"
+            ]
+        ],
+        "id": 15003
     }
 }

@@ -21,7 +21,10 @@
                 ],
                 "mouseEventEnabledInEditor": true,
                 "showOnEditor": true,
-                "hasCommand": [],
+                "hasCommand": [
+                    null,
+                    true
+                ],
                 "isOpen": true,
                 "image": "asset/image/picture/ui/menu/settingBg1.png",
                 "grid9": "0,0,0,0,0",
@@ -150,6 +153,7 @@
                 "mouseEventEnabledInEditor": true,
                 "showOnEditor": true,
                 "hasCommand": [
+                    true,
                     true
                 ],
                 "isOpen": true,

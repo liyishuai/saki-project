@@ -85,7 +85,8 @@
                     "width": 28,
                     "height": 28,
                     "imageSource": 1,
-                    "signalId": 0
+                    "signalId": 0,
+                    "frameinterpolationEnabled": true
                 },
                 {
                     "index": 4,

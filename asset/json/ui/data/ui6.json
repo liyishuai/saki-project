@@ -550,6 +550,7 @@
                 "mouseEventEnabledInEditor": true,
                 "showOnEditor": true,
                 "hasCommand": [
+                    true,
                     true
                 ],
                 "isOpen": true,
@@ -596,6 +597,7 @@
                 "mouseEventEnabledInEditor": true,
                 "showOnEditor": true,
                 "hasCommand": [
+                    true,
                     true
                 ],
                 "isOpen": true,
@@ -668,6 +670,7 @@
                 "mouseEventEnabledInEditor": true,
                 "showOnEditor": true,
                 "hasCommand": [
+                    true,
                     true
                 ],
                 "isOpen": true,

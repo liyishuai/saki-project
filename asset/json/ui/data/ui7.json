@@ -114,6 +114,7 @@
                 "mouseEventEnabledInEditor": true,
                 "showOnEditor": true,
                 "hasCommand": [
+                    true,
                     true
                 ],
                 "isOpen": true,

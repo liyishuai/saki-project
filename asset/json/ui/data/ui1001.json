@@ -289,5 +289,8 @@
     },
     "id": 1001,
     "instanceClassName": "",
-    "hasRootCommand": []
+    "hasRootCommand": [
+        null,
+        true
+    ]
 }

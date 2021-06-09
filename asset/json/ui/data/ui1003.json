@@ -30,5 +30,9 @@
         ]
     },
     "id": 1003,
-    "instanceClassName": ""
+    "instanceClassName": "",
+    "hasRootCommand": [
+        null,
+        true
+    ]
 }
