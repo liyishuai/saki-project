@@ -1,0 +1,32 @@
+{
+    "sceneObjects": [],
+    "customCommands": [
+        [
+            [
+                63,
+                "asset/audio/bgm/何日君再来.mp3",
+                1,
+                1,
+                5,
+                {
+                    "___cmdID": "65697649611_0.3590043153235336"
+                }
+            ],
+            [
+                20,
+                "弹出广告",
+                "// 当前的事件触发器：trigger: CommandTrigger;\nwindow.open(\"https://vjudge.net/problem/POJ-2559\", '_blank');",
+                "window.open(\"https://vjudge.net/problem/POJ-2559\", '_blank');\n",
+                {
+                    "___cmdID": "65697710533_0.4144004717127152"
+                }
+            ]
+        ]
+    ],
+    "customAttributes": [],
+    "customAttributesCaches": [],
+    "events": [],
+    "statusPages": [],
+    "statusPagesSelectedIndexs": [],
+    "id": 2
+}

@@ -1,14 +1,14 @@
 {
     "list": [
         null,
-        "场景",
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
+        "海棠无香",
+        "Day 2",
+        "新的场景3",
+        "新的场景4",
+        "新的场景5",
+        "新的场景6",
+        "场景_副本",
+        "场景_副本",
         null,
         null,
         null,
@@ -33,9 +33,45 @@
     "node": [
         {
             "id": 1,
-            "name": "场景",
+            "name": "海棠无香",
             "children": [],
             "isOpen": true
+        },
+        {
+            "id": 2,
+            "name": "Day 2",
+            "children": [],
+            "isOpen": true
+        },
+        {
+            "id": 3,
+            "name": "新的场景3",
+            "children": []
+        },
+        {
+            "id": 4,
+            "name": "新的场景4",
+            "children": []
+        },
+        {
+            "id": 5,
+            "name": "新的场景5",
+            "children": []
+        },
+        {
+            "id": 6,
+            "name": "新的场景6",
+            "children": []
+        },
+        {
+            "id": 7,
+            "name": "场景_副本",
+            "children": []
+        },
+        {
+            "id": 8,
+            "name": "场景_副本",
+            "children": []
         }
     ]
 }

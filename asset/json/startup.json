@@ -2968,7 +2968,7 @@
                 },
                 "startupEvent": {
                     "varType": 1,
-                    "value": "进入标题界面\u000558075529419_0.08755600382380702\u0005[[10001,{\"42010122135_0.24848401267879283\":[{\"assetType\":5,\"asset0\":\"\",\"asset1\":\"\",\"asset2\":0,\"asset3\":0,\"asset4\":0,\"asset5\":1,\"asset6\":0,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]},{\"assetType\":5,\"asset0\":\"\",\"asset1\":\"\",\"asset2\":1,\"asset3\":1,\"asset4\":1,\"asset5\":2,\"asset6\":1,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]},{\"assetType\":5,\"asset0\":\"\",\"asset1\":\"\",\"asset2\":1,\"asset3\":1,\"asset4\":1,\"asset5\":6,\"asset6\":1,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]},{\"assetType\":5,\"asset0\":\"\",\"asset1\":\"\",\"asset2\":1,\"asset3\":1,\"asset4\":1,\"asset5\":11,\"asset6\":1,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]},{\"assetType\":5,\"asset0\":\"\",\"asset1\":\"\",\"asset2\":1,\"asset3\":1,\"asset4\":1,\"asset5\":2002,\"asset6\":1,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]},{\"assetType\":5,\"asset0\":\"\",\"asset1\":\"\",\"asset2\":1,\"asset3\":1,\"asset4\":1,\"asset5\":2003,\"asset6\":1,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]},{\"assetType\":5,\"asset0\":\"\",\"asset1\":\"\",\"asset2\":1,\"asset3\":1,\"asset4\":1,\"asset5\":2004,\"asset6\":1,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]},{\"assetType\":7,\"asset0\":\"\",\"asset1\":\"\",\"asset2\":1,\"asset3\":1,\"asset4\":1,\"asset5\":1,\"asset6\":1,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]},{\"assetType\":1,\"asset0\":\"\",\"asset1\":\"asset/audio/bgm/Title.mp3,1,1\",\"asset2\":1,\"asset3\":1,\"asset4\":1,\"asset5\":1,\"asset6\":1,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]}],\"42275874449_0.28161324216600425\":true,\"42275552693_0.09151993166059103\":\"loadingComp\",\"42275565858_0.9925963744814135\":\"value\",\"42275863488_0.8715139966044176\":2001},\"50820721089_0.0850562472097296\"],[40010,{\"49809728719_0.046619702255007\":0,\"24538808102_0.9970934946254328\":1,\"49612012650_0.7509974095572418\":1,\"24538808435_0.6230939565765392\":1,\"49518385245_0.9308839798952664\":1,\"50689082740_0.526404642451832\":false,\"49141521249_0.2965750598394892\":0,\"49519573910_0.08853124862540018\":1,\"49141521416_0.0884961804795068\":0,\"49519590084_0.3058131165318816\":1,\"49150249927_0.6881795527970145\":100,\"49519636189_0.2521948025226537\":1,\"49232462793_0.7622411974016037\":1,\"49520636693_0.8404154506260593\":1,\"49232464582_0.12430969584603324\":1,\"49520744730_0.6026838995761481\":1,\"49232999716_0.2133484967243402\":0,\"49520812848_0.5734967173507821\":1,\"49234813142_0.3142568229981375\":1,\"49520873912_0.5927053372462527\":1,\"49599648354_0.3738368266485066\":false,\"49518248081_0.4367396293869368\":false,\"49599660535_0.0823572381286597\":1,\"49518318443_0.5988810162565685\":false,\"49519399740_0.07229930251623617\":false,\"49519436070_0.9418611019894294\":false,\"49519475735_0.9428268094401824\":false,\"49519529748_0.519982170810438\":false,\"49520771123_0.27311479097864666\":false,\"49611947752_0.41521729946538755\":false},\"51060447155_0.8089298947674226\"],[63,\"asset/audio/bgm/Title.mp3\",1,1,1,{\"___cmdID\":\"50820721089_0.35182598985234237\"}],[18,\"//------------------------------------------------------------------------------------------------------\\n// 快捷键关闭界面\\n//------------------------------------------------------------------------------------------------------\",{\"___cmdID\":\"51093753473_0.5970414052925823\"}],[10003,{\"42612293498_0.480752728811654\":0,\"43114340537_0.8908961983320582\":0,\"50863734368_0.9019421681699644\":false,\"43114858493_0.09543223886965402\":27,\"43114858493_0.3171744305791697\":0,\"43114653398_0.8881147052471978\":[],\"43114873548_0.23450080376522942\":0,\"43116389200_0.5571849278665717\":false,\"43116402659_0.5042655137768752\":false,\"43116419156_0.632745028317159\":false,\"42612627174_0.578758902506004\":\"标题界面中关闭读档界面\\u000551093763942_0.07949724126570001\\u0005[[16,15004,false,{\\\"___cmdID\\\":\\\"51060659958_0.598755326011511\\\"}]]\",\"50863905972_0.3771312559501221\":1},\"51093753473_0.8344959153688676\"],[10004,{\"42616483455_0.4639772550758601\":0,\"42616489134_0.7730466615484748\":4,\"42616655343_0.8231014458198378\":\"标题界面中关闭读档界面\\u000551060685847_0.5687274154150752\\u0005[[16,15004,false,{\\\"___cmdID\\\":\\\"51060679909_0.9434309477771847\\\"}]]\",\"42875522865_0.10960228539938566\":false,\"50865172217_0.9666233269585383\":1},\"51093753473_0.009722471649976194\"]]",
+                    "value": "进入标题界面\u000565694873453_0.6245974028393722\u0005[[10001,{\"42010122135_0.24848401267879283\":[{\"assetType\":5,\"asset0\":\"\",\"asset1\":\"\",\"asset2\":0,\"asset3\":0,\"asset4\":0,\"asset5\":1,\"asset6\":0,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]},{\"assetType\":5,\"asset0\":\"\",\"asset1\":\"\",\"asset2\":1,\"asset3\":1,\"asset4\":1,\"asset5\":2,\"asset6\":1,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]},{\"assetType\":5,\"asset0\":\"\",\"asset1\":\"\",\"asset2\":1,\"asset3\":1,\"asset4\":1,\"asset5\":6,\"asset6\":1,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]},{\"assetType\":5,\"asset0\":\"\",\"asset1\":\"\",\"asset2\":1,\"asset3\":1,\"asset4\":1,\"asset5\":11,\"asset6\":1,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]},{\"assetType\":5,\"asset0\":\"\",\"asset1\":\"\",\"asset2\":1,\"asset3\":1,\"asset4\":1,\"asset5\":2002,\"asset6\":1,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]},{\"assetType\":5,\"asset0\":\"\",\"asset1\":\"\",\"asset2\":1,\"asset3\":1,\"asset4\":1,\"asset5\":2003,\"asset6\":1,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]},{\"assetType\":5,\"asset0\":\"\",\"asset1\":\"\",\"asset2\":1,\"asset3\":1,\"asset4\":1,\"asset5\":2004,\"asset6\":1,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]},{\"assetType\":7,\"asset0\":\"\",\"asset1\":\"\",\"asset2\":1,\"asset3\":1,\"asset4\":1,\"asset5\":1,\"asset6\":1,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]},{\"assetType\":1,\"asset0\":\"\",\"asset1\":\"asset/audio/bgm/Title.mp3,1,1\",\"asset2\":1,\"asset3\":1,\"asset4\":1,\"asset5\":1,\"asset6\":1,\"assetTypeItems\":[\"图片\",\"音频\",\"行走图\",\"立绘\",\"动画\",\"界面\",\"对话框样式\",\"预设字体\",\"CG图鉴\"]}],\"42275874449_0.28161324216600425\":true,\"42275552693_0.09151993166059103\":\"loadingComp\",\"42275565858_0.9925963744814135\":\"value\",\"42275863488_0.8715139966044176\":2001},\"50820721089_0.0850562472097296\"],[40010,{\"49809728719_0.046619702255007\":0,\"24538808102_0.9970934946254328\":1,\"49612012650_0.7509974095572418\":1,\"24538808435_0.6230939565765392\":1,\"49518385245_0.9308839798952664\":1,\"50689082740_0.526404642451832\":false,\"49141521249_0.2965750598394892\":0,\"49519573910_0.08853124862540018\":1,\"49141521416_0.0884961804795068\":0,\"49519590084_0.3058131165318816\":1,\"49150249927_0.6881795527970145\":100,\"49519636189_0.2521948025226537\":1,\"49232462793_0.7622411974016037\":1,\"49520636693_0.8404154506260593\":1,\"49232464582_0.12430969584603324\":1,\"49520744730_0.6026838995761481\":1,\"49232999716_0.2133484967243402\":0,\"49520812848_0.5734967173507821\":1,\"49234813142_0.3142568229981375\":1,\"49520873912_0.5927053372462527\":1,\"49599648354_0.3738368266485066\":false,\"49518248081_0.4367396293869368\":false,\"49599660535_0.0823572381286597\":1,\"49518318443_0.5988810162565685\":false,\"49519399740_0.07229930251623617\":false,\"49519436070_0.9418611019894294\":false,\"49519475735_0.9428268094401824\":false,\"49519529748_0.519982170810438\":false,\"49520771123_0.27311479097864666\":false,\"49611947752_0.41521729946538755\":false},\"51060447155_0.8089298947674226\"],[63,\"asset/audio/bgm/3(2).mp3\",1,1,0,{\"___cmdID\":\"50820721089_0.35182598985234237\"}],[18,\"//------------------------------------------------------------------------------------------------------\\n// 快捷键关闭界面\\n//------------------------------------------------------------------------------------------------------\",{\"___cmdID\":\"51093753473_0.5970414052925823\"}],[10003,{\"42612293498_0.480752728811654\":0,\"43114340537_0.8908961983320582\":0,\"50863734368_0.9019421681699644\":false,\"43114858493_0.09543223886965402\":27,\"43114858493_0.3171744305791697\":0,\"43114653398_0.8881147052471978\":[],\"43114873548_0.23450080376522942\":0,\"43116389200_0.5571849278665717\":false,\"43116402659_0.5042655137768752\":false,\"43116419156_0.632745028317159\":false,\"42612627174_0.578758902506004\":\"标题界面中关闭读档界面\\u000551093763942_0.07949724126570001\\u0005[[16,15004,false,{\\\"___cmdID\\\":\\\"51060659958_0.598755326011511\\\"}]]\",\"50863905972_0.3771312559501221\":1},\"51093753473_0.8344959153688676\"],[10004,{\"42616483455_0.4639772550758601\":0,\"42616489134_0.7730466615484748\":4,\"42616655343_0.8231014458198378\":\"标题界面中关闭读档界面\\u000551060685847_0.5687274154150752\\u0005[[16,15004,false,{\\\"___cmdID\\\":\\\"51060679909_0.9434309477771847\\\"}]]\",\"42875522865_0.10960228539938566\":false,\"50865172217_0.9666233269585383\":1},\"51093753473_0.009722471649976194\"]]",
                     "copy": false
                 },
                 "newGameStartEvent": {
@@ -4831,6 +4831,196 @@
             "index": 6
         },
         "id": 9
+    },
+    "asset/json/dialog/data/dialog10.json": {
+        "initData": false,
+        "previewMode": false,
+        "dialogBox": {
+            "x": 52,
+            "y": 439,
+            "width": 891,
+            "height": 259,
+            "alpha": 1,
+            "image": "asset/image/picture/control/dialogBg.png",
+            "flip": false,
+            "grid9": "0,0,0,0,0",
+            "showOnEditor": true,
+            "mouseEventEnabledInEditor": true,
+            "materialData": [
+                {
+                    "materials": []
+                }
+            ],
+            "index": 0
+        },
+        "headBox": {
+            "x": 60,
+            "y": 511,
+            "width": 150,
+            "height": 140,
+            "alpha": 1,
+            "locksize": true,
+            "adaptation": true,
+            "previewHeadImg": "editorAsset/img/ui_pic.png",
+            "flip": false,
+            "perviewMode": 0,
+            "previewStandAvatarID": 0,
+            "previewStandAvatarExp": 0,
+            "previewAnimationID": 0,
+            "previewUIID": 0,
+            "viewscaleX": 1,
+            "viewscaleY": 1,
+            "viewFps": 12,
+            "viewPlayOnce": false,
+            "showOnEditor": true,
+            "mouseEventEnabledInEditor": true,
+            "materialData": [
+                {
+                    "materials": []
+                }
+            ],
+            "index": 1
+        },
+        "optionBox": {
+            "x": 272,
+            "y": 191,
+            "width": 231,
+            "height": 111,
+            "alpha": 1,
+            "column": 4,
+            "columnSpaceing": 5,
+            "row": 1,
+            "rowSpaceing": 5,
+            "image1": "asset/image/picture/control/dialogNormal.png",
+            "grid9img1": "0,0,0,0,0",
+            "image2": "asset/image/picture/control/dialogOpOver.png",
+            "grid9img2": "0,0,0,0,0",
+            "image3": "asset/image/picture/control/dialogOpDown.png",
+            "grid9img3": "0,0,0,0,0",
+            "overSe": "",
+            "overVolume": 1,
+            "overPitch": 1,
+            "clickSe": "",
+            "clickVolume": 1,
+            "clikcPitch": 1,
+            "selectImageURL": "asset/image/picture/control/dialogSelect.png",
+            "grid9img4": "0,0,0,0,0",
+            "showOnEditor": true,
+            "mouseEventEnabledInEditor": true,
+            "materialData": [
+                {
+                    "materials": []
+                }
+            ],
+            "index": 2
+        },
+        "dialog": {
+            "x": 221,
+            "y": 512,
+            "width": 699,
+            "height": 134,
+            "alpha": 1,
+            "fontSize": 22,
+            "color": "#FFFFFF",
+            "bold": false,
+            "italic": false,
+            "align": 0,
+            "leading": 5,
+            "letterSpacing": 0,
+            "font": "宋体",
+            "shadowEnabled": false,
+            "shadowColor": "#000000",
+            "shadowDx": 1,
+            "shadowDy": 1,
+            "stroke": 0,
+            "strokeColor": "#000000",
+            "showOnEditor": true,
+            "mouseEventEnabledInEditor": true,
+            "wordWrap": false,
+            "materialData": [
+                {
+                    "materials": []
+                }
+            ],
+            "index": 3
+        },
+        "option": {
+            "x": 290,
+            "y": 226,
+            "width": 196,
+            "height": 40,
+            "alpha": 1,
+            "fontSize": 24,
+            "color": "#FFFFFF",
+            "bold": false,
+            "italic": false,
+            "align": 1,
+            "leading": 0,
+            "letterSpacing": 0,
+            "font": "宋体",
+            "valign": 1,
+            "shadowEnabled": false,
+            "shadowColor": "#000000",
+            "shadowDx": 1,
+            "shadowDy": 1,
+            "stroke": 0,
+            "strokeColor": "#000000",
+            "showOnEditor": true,
+            "mouseEventEnabledInEditor": true,
+            "materialData": [
+                {
+                    "materials": []
+                }
+            ],
+            "index": 4
+        },
+        "nameBox": {
+            "x": 121,
+            "y": 456,
+            "width": 123,
+            "height": 28,
+            "alpha": 1,
+            "fontSize": 24,
+            "color": "#FFFFFF",
+            "bold": false,
+            "italic": false,
+            "align": 1,
+            "leading": 0,
+            "letterSpacing": 0,
+            "font": "宋体",
+            "valign": 1,
+            "shadowEnabled": false,
+            "shadowColor": "#000000",
+            "shadowDx": 1,
+            "shadowDy": 1,
+            "stroke": 0,
+            "strokeColor": "#000000",
+            "showOnEditor": true,
+            "mouseEventEnabledInEditor": true,
+            "materialData": [
+                {
+                    "materials": []
+                }
+            ],
+            "index": 5
+        },
+        "skipBox": {
+            "x": 895,
+            "y": 608,
+            "width": 0,
+            "height": 0,
+            "alpha": 1,
+            "posIndex": 0,
+            "posX": 0,
+            "posY": 0,
+            "animationID": 0,
+            "scaleNumber": 1,
+            "playType": 2,
+            "showOnEditor": true,
+            "mouseEventEnabledInEditor": true,
+            "index": 6
+        },
+        "id": 10
     },
     "asset/json/custom/customMaterialList.json": {
         "list": [
@@ -9172,196 +9362,6 @@
             }
         }
     },
-    "asset/json/dialog/data/dialog10.json": {
-        "initData": false,
-        "previewMode": false,
-        "dialogBox": {
-            "x": 52,
-            "y": 439,
-            "width": 891,
-            "height": 259,
-            "alpha": 1,
-            "image": "asset/image/picture/control/dialogBg.png",
-            "flip": false,
-            "grid9": "0,0,0,0,0",
-            "showOnEditor": true,
-            "mouseEventEnabledInEditor": true,
-            "materialData": [
-                {
-                    "materials": []
-                }
-            ],
-            "index": 0
-        },
-        "headBox": {
-            "x": 60,
-            "y": 511,
-            "width": 150,
-            "height": 140,
-            "alpha": 1,
-            "locksize": true,
-            "adaptation": true,
-            "previewHeadImg": "editorAsset/img/ui_pic.png",
-            "flip": false,
-            "perviewMode": 0,
-            "previewStandAvatarID": 0,
-            "previewStandAvatarExp": 0,
-            "previewAnimationID": 0,
-            "previewUIID": 0,
-            "viewscaleX": 1,
-            "viewscaleY": 1,
-            "viewFps": 12,
-            "viewPlayOnce": false,
-            "showOnEditor": true,
-            "mouseEventEnabledInEditor": true,
-            "materialData": [
-                {
-                    "materials": []
-                }
-            ],
-            "index": 1
-        },
-        "optionBox": {
-            "x": 272,
-            "y": 191,
-            "width": 231,
-            "height": 111,
-            "alpha": 1,
-            "column": 4,
-            "columnSpaceing": 5,
-            "row": 1,
-            "rowSpaceing": 5,
-            "image1": "asset/image/picture/control/dialogNormal.png",
-            "grid9img1": "0,0,0,0,0",
-            "image2": "asset/image/picture/control/dialogOpOver.png",
-            "grid9img2": "0,0,0,0,0",
-            "image3": "asset/image/picture/control/dialogOpDown.png",
-            "grid9img3": "0,0,0,0,0",
-            "overSe": "",
-            "overVolume": 1,
-            "overPitch": 1,
-            "clickSe": "",
-            "clickVolume": 1,
-            "clikcPitch": 1,
-            "selectImageURL": "asset/image/picture/control/dialogSelect.png",
-            "grid9img4": "0,0,0,0,0",
-            "showOnEditor": true,
-            "mouseEventEnabledInEditor": true,
-            "materialData": [
-                {
-                    "materials": []
-                }
-            ],
-            "index": 2
-        },
-        "dialog": {
-            "x": 221,
-            "y": 512,
-            "width": 699,
-            "height": 134,
-            "alpha": 1,
-            "fontSize": 22,
-            "color": "#FFFFFF",
-            "bold": false,
-            "italic": false,
-            "align": 0,
-            "leading": 5,
-            "letterSpacing": 0,
-            "font": "宋体",
-            "shadowEnabled": false,
-            "shadowColor": "#000000",
-            "shadowDx": 1,
-            "shadowDy": 1,
-            "stroke": 0,
-            "strokeColor": "#000000",
-            "showOnEditor": true,
-            "mouseEventEnabledInEditor": true,
-            "wordWrap": false,
-            "materialData": [
-                {
-                    "materials": []
-                }
-            ],
-            "index": 3
-        },
-        "option": {
-            "x": 290,
-            "y": 226,
-            "width": 196,
-            "height": 40,
-            "alpha": 1,
-            "fontSize": 24,
-            "color": "#FFFFFF",
-            "bold": false,
-            "italic": false,
-            "align": 1,
-            "leading": 0,
-            "letterSpacing": 0,
-            "font": "宋体",
-            "valign": 1,
-            "shadowEnabled": false,
-            "shadowColor": "#000000",
-            "shadowDx": 1,
-            "shadowDy": 1,
-            "stroke": 0,
-            "strokeColor": "#000000",
-            "showOnEditor": true,
-            "mouseEventEnabledInEditor": true,
-            "materialData": [
-                {
-                    "materials": []
-                }
-            ],
-            "index": 4
-        },
-        "nameBox": {
-            "x": 121,
-            "y": 456,
-            "width": 123,
-            "height": 28,
-            "alpha": 1,
-            "fontSize": 24,
-            "color": "#FFFFFF",
-            "bold": false,
-            "italic": false,
-            "align": 1,
-            "leading": 0,
-            "letterSpacing": 0,
-            "font": "宋体",
-            "valign": 1,
-            "shadowEnabled": false,
-            "shadowColor": "#000000",
-            "shadowDx": 1,
-            "shadowDy": 1,
-            "stroke": 0,
-            "strokeColor": "#000000",
-            "showOnEditor": true,
-            "mouseEventEnabledInEditor": true,
-            "materialData": [
-                {
-                    "materials": []
-                }
-            ],
-            "index": 5
-        },
-        "skipBox": {
-            "x": 895,
-            "y": 608,
-            "width": 0,
-            "height": 0,
-            "alpha": 1,
-            "posIndex": 0,
-            "posX": 0,
-            "posY": 0,
-            "animationID": 0,
-            "scaleNumber": 1,
-            "playType": 2,
-            "showOnEditor": true,
-            "mouseEventEnabledInEditor": true,
-            "index": 6
-        },
-        "id": 10
-    },
     "asset/json/scene/tile/tile1.json": {
         "url": "asset/image/tile/Surface_1.png",
         "dataLayers": [
@@ -9809,7 +9809,7 @@
                     "showOnEditor": true,
                     "hasCommand": [],
                     "isOpen": true,
-                    "image": "asset/image/picture/titles/Title_1.png",
+                    "image": "asset/image/picture/titles/Title_1 - 副本.png",
                     "grid9": "3,3,3,3,0",
                     "flip": null,
                     "pivotType": 0
@@ -9927,12 +9927,12 @@
                     "condition": [],
                     "type": "UIString",
                     "name": "游戏标题",
-                    "x": 96,
-                    "y": 257,
-                    "width": 139,
+                    "x": 93,
+                    "y": 207,
+                    "width": 263,
                     "height": 31,
                     "opacity": 1,
-                    "rotation": 0,
+                    "rotation": 5,
                     "show": true,
                     "mouseEventEnabledData": false,
                     "materialData": [
@@ -9944,7 +9944,7 @@
                     "showOnEditor": true,
                     "hasCommand": [],
                     "isOpen": true,
-                    "text": "新的游戏",
+                    "text": "天才算竞少女  Kotori 篇",
                     "fontSize": 34,
                     "color": "#ffffff",
                     "bold": true,
@@ -10032,7 +10032,7 @@
                         true
                     ],
                     "isOpen": true,
-                    "label": "开始游戏",
+                    "label": "新的开始",
                     "image1": "asset/image/picture/ui/dialog/dialogNormal.png",
                     "grid9img1": "0,0,0,0,0",
                     "image2": "asset/image/picture/ui/dialog/dialogOpDown.png",
@@ -10079,7 +10079,7 @@
                         true
                     ],
                     "isOpen": true,
-                    "label": "读取存档",
+                    "label": "旧的回忆",
                     "image1": "asset/image/picture/ui/dialog/dialogNormal.png",
                     "grid9img1": "0,0,0,0,0",
                     "image2": "asset/image/picture/ui/dialog/dialogOpDown.png",
@@ -10126,7 +10126,7 @@
                         true
                     ],
                     "isOpen": true,
-                    "label": "退出游戏",
+                    "label": "AFK",
                     "image1": "asset/image/picture/ui/dialog/dialogNormal.png",
                     "grid9img1": "0,0,0,0,0",
                     "image2": "asset/image/picture/ui/dialog/dialogOpDown.png",
@@ -10220,7 +10220,7 @@
                         true
                     ],
                     "isOpen": true,
-                    "label": "图片鉴赏",
+                    "label": "特典收集",
                     "image1": "asset/image/picture/ui/dialog/dialogNormal.png",
                     "grid9img1": "0,0,0,0,0",
                     "image2": "asset/image/picture/ui/dialog/dialogOpDown.png",
@@ -18466,38 +18466,6 @@
         "id": 3003
     },
     "asset/json/server/ui/sui3003.json": {},
-    "asset/json/ui/data/ui3004.json": {
-        "root": {
-            "children": []
-        },
-        "id": 3004
-    },
-    "asset/json/server/ui/sui3004.json": {},
-    "asset/json/ui/data/ui3005.json": {
-        "root": {
-            "children": []
-        },
-        "id": 3005
-    },
-    "asset/json/server/ui/sui3005.json": {},
-    "asset/json/ui/data/ui15001.json": {
-        "root": {
-            "children": []
-        },
-        "id": 15001
-    },
-    "asset/json/server/ui/sui15001.json": {},
-    "asset/json/custom/customModule/customModuleDataList1.json": {
-        "list": {
-            "1": [
-                null,
-                "标题背景"
-            ]
-        },
-        "type": {
-            "1": "CG"
-        }
-    },
     "asset/json/custom/customCommandType.json": {
         "list": {
             "1": [
@@ -39357,6 +39325,38 @@
             }
         }
     },
+    "asset/json/ui/data/ui3004.json": {
+        "root": {
+            "children": []
+        },
+        "id": 3004
+    },
+    "asset/json/server/ui/sui3004.json": {},
+    "asset/json/ui/data/ui3005.json": {
+        "root": {
+            "children": []
+        },
+        "id": 3005
+    },
+    "asset/json/server/ui/sui3005.json": {},
+    "asset/json/ui/data/ui15001.json": {
+        "root": {
+            "children": []
+        },
+        "id": 15001
+    },
+    "asset/json/server/ui/sui15001.json": {},
+    "asset/json/custom/customModule/customModuleDataList1.json": {
+        "list": {
+            "1": [
+                null,
+                "标题背景"
+            ]
+        },
+        "type": {
+            "1": "CG"
+        }
+    },
     "asset/json/custom/customUIEventType.json": {
         "list": [
             null,
@@ -39476,6 +39476,13 @@
             "13": "",
             "16": "模板预设"
         }
+    },
+    "asset/json/server/command/data/ws1.json": {
+        "allowClient": false,
+        "conditionSwitch": 1,
+        "updateMode": false,
+        "commands": [],
+        "id": 1
     },
     "asset/json/server/command/data/ws15001.json": {
         "allowClient": false,
@@ -40260,13 +40267,6 @@
             ]
         ],
         "id": 15001
-    },
-    "asset/json/server/command/data/ws1.json": {
-        "allowClient": false,
-        "conditionSwitch": 1,
-        "updateMode": false,
-        "commands": [],
-        "id": 1
     },
     "asset/json/server/command/data/ws15002.json": {
         "allowClient": false,
