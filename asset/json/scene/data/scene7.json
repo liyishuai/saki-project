@@ -9,7 +9,7 @@
     "serverInstanceClassName": "ServerScene",
     "clientInstanceClassName": "ClientScene",
     "id": 7,
-    "name": "场景_副本",
+    "name": "原本的校验样例",
     "width": 1200,
     "height": 720,
     "LayerDatas": [
