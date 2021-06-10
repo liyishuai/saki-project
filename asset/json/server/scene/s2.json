@@ -3,13 +3,78 @@
     "customCommands": [
         [
             [
-                63,
-                "asset/audio/bgm/何日君再来.mp3",
+                11,
+                3,
+                2,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>今天由我来给大家介绍基础数据结构</span>",
+                null,
                 1,
-                1,
-                5,
+                0,
                 {
-                    "___cmdID": "65697649611_0.3590043153235336"
+                    "___cmdID": "65789005862_0.80161901630568"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>栈是算法竞赛中常用的一种线性数据结构。\n</span><span style='color:#FfFffF'>栈的修改是按照后进先出的原则进行的，\n</span><span style='color:#FfFffF'>因此栈通常被称为是后进先出（last in first out）表，\n</span><span style='color:#FfFffF'>简称 LIFO 表。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "65789007312_0.36639172666132525"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>我们可以方便的使用数组来模拟一个栈，代码如下：</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "65788938108_0.3129139906237761"
+                }
+            ],
+            [
+                11,
+                7,
+                2,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>int stk[N];\n</span><span style='color:#FfFffF'>// 这里使用 stk[0]( 即 *stk ) 代表栈中元素数量，同时也是栈顶下标\n</span><span style='color:#FfFffF'>// 压栈 ：\n</span><span style='color:#FfFffF'>stk[++*stk] = var1;\n</span><span style='color:#FfFffF'>// 取栈顶 ：\n</span><span style='color:#FfFffF'>int u = stk[*stk];\n</span><span style='color:#FfFffF'>// 弹栈 ：注意越界问题, *stk == 0 时不能继续弹出\n</span><span style='color:#FfFffF'>if (*stk) --*stk;\n</span><span style='color:#FfFffF'>// 清空栈\n</span><span style='color:#FfFffF'>*stk = 0;[p5][p15][p50]</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "65789039362_0.3979451500835436"
+                }
+            ],
+            [
+                11,
+                4,
+                null,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'></span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "65789613070_0.2756878698185832"
                 }
             ],
             [

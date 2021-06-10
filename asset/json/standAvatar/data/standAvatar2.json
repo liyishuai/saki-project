@@ -1,8 +1,11 @@
 {
     "picUrls": [
-        "editorAsset/img/empty.png"
+        "asset/image/picture/characters/c635752-d75956-p365119.png",
+        "asset/image/picture/characters/c635752-d75956-p424008.png",
+        "asset/image/picture/characters/c635752-d75956-p975456.png",
+        "asset/image/picture/characters/c635752-d75956-p831028.png"
     ],
-    "oriMode": 4,
+    "oriMode": 1,
     "autoFlip": true,
     "refObjs": {},
     "parts": [
@@ -15,7 +18,127 @@
     "actionListArr": [
         {
             "id": 1,
-            "frameImageInfo": []
+            "frameImageInfo": [
+                [
+                    {
+                        "picUrlIndex": 0,
+                        "rect": [
+                            0,
+                            0,
+                            400,
+                            400
+                        ],
+                        "x": -200,
+                        "y": -200,
+                        "width": 300,
+                        "height": 300,
+                        "rotation": 0,
+                        "alpha": 1,
+                        "hue": 0,
+                        "blur": 0,
+                        "tonal_r": 0,
+                        "tonal_g": 0,
+                        "tonal_b": 0,
+                        "tonal_gray": 0,
+                        "tonal_mr": 1,
+                        "tonal_mg": 1,
+                        "tonal_mb": 1
+                    }
+                ]
+            ]
+        },
+        {
+            "id": 2,
+            "frameImageInfo": [
+                [
+                    {
+                        "picUrlIndex": 1,
+                        "rect": [
+                            0,
+                            0,
+                            400,
+                            400
+                        ],
+                        "x": -200,
+                        "y": -200,
+                        "width": 300,
+                        "height": 300,
+                        "rotation": 0,
+                        "alpha": 1,
+                        "hue": 0,
+                        "blur": 0,
+                        "tonal_r": 0,
+                        "tonal_g": 0,
+                        "tonal_b": 0,
+                        "tonal_gray": 0,
+                        "tonal_mr": 1,
+                        "tonal_mg": 1,
+                        "tonal_mb": 1
+                    }
+                ]
+            ]
+        },
+        {
+            "id": 3,
+            "frameImageInfo": [
+                [
+                    {
+                        "picUrlIndex": 2,
+                        "rect": [
+                            0,
+                            0,
+                            400,
+                            400
+                        ],
+                        "x": -200,
+                        "y": -200,
+                        "width": 300,
+                        "height": 300,
+                        "rotation": 0,
+                        "alpha": 1,
+                        "hue": 0,
+                        "blur": 0,
+                        "tonal_r": 0,
+                        "tonal_g": 0,
+                        "tonal_b": 0,
+                        "tonal_gray": 0,
+                        "tonal_mr": 1,
+                        "tonal_mg": 1,
+                        "tonal_mb": 1
+                    }
+                ]
+            ]
+        },
+        {
+            "id": 6,
+            "frameImageInfo": [
+                [
+                    {
+                        "picUrlIndex": 3,
+                        "rect": [
+                            0,
+                            0,
+                            400,
+                            400
+                        ],
+                        "x": -200,
+                        "y": -200,
+                        "width": 300,
+                        "height": 300,
+                        "rotation": 0,
+                        "alpha": 1,
+                        "hue": 0,
+                        "blur": 0,
+                        "tonal_r": 0,
+                        "tonal_g": 0,
+                        "tonal_b": 0,
+                        "tonal_gray": 0,
+                        "tonal_mr": 1,
+                        "tonal_mg": 1,
+                        "tonal_mb": 1
+                    }
+                ]
+            ]
         }
     ],
     "id": 2
