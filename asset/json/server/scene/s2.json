@@ -91,7 +91,7 @@
                 "",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>在哈尔滨，夏日的白天总是来的格外的早</span>",
+                "<span style='color:#FfFffF'>哈尔滨夏日的清晨总是来的格外的早</span>",
                 null,
                 -1,
                 0,
@@ -642,7 +642,7 @@
             ],
             [
                 4,
-                "POJ 1213",
+                "POJ 3250",
                 0,
                 -1,
                 0,
@@ -662,8 +662,8 @@
             [
                 20,
                 "弹出广告",
-                "// 当前的事件触发器：trigger: CommandTrigger;\nwindow.open(\"https://vjudge.net/problem/POJ-1213\", '_blank');",
-                "window.open(\"https://vjudge.net/problem/POJ-1213\", '_blank');\n",
+                "// 当前的事件触发器：trigger: CommandTrigger;\nwindow.open(\"https://vjudge.net/problem/POJ-3250\", '_blank');",
+                "window.open(\"https://vjudge.net/problem/POJ-3250\", '_blank');\n",
                 {
                     "___cmdID": "65703966630_0.11223037122060031"
                 }
@@ -680,7 +680,7 @@
             ],
             [
                 4,
-                "POJ 1213(AC)",
+                "POJ 3250(AC)",
                 -1,
                 -1,
                 0,
