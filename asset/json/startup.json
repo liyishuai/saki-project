@@ -19,7 +19,7 @@
         "VIEW_USE_RESOLUTION": false,
         "DATA_GRIDS": [],
         "BORN": {
-            "sceneID": 1,
+            "sceneID": 2,
             "so": null,
             "customAttribute": null
         },
@@ -3048,7 +3048,7 @@
                 },
                 "bornScene": {
                     "varType": 0,
-                    "value": 1,
+                    "value": 2,
                     "copy": false
                 },
                 "dialogStart": {
@@ -3644,7 +3644,7 @@
             "index": 4
         },
         "nameBox": {
-            "x": 443,
+            "x": 300,
             "y": 541,
             "width": 140,
             "height": 30,
@@ -4274,10 +4274,10 @@
         "initData": true,
         "previewMode": false,
         "dialogBox": {
-            "x": 0,
-            "y": 70,
+            "x": 9,
+            "y": 320,
             "width": 1200,
-            "height": 651,
+            "height": 475,
             "alpha": 1,
             "image": "asset/image/picture/ui/dialog/dialogBg.png",
             "flip": false,
@@ -4353,8 +4353,8 @@
             "index": 2
         },
         "dialog": {
-            "x": 316,
-            "y": 173,
+            "x": 345,
+            "y": 390,
             "width": 720,
             "height": 475,
             "alpha": 1,
@@ -5426,38 +5426,6 @@
                 false
             ]
         ]
-    },
-    "asset/json/scene/model/som1.json": {
-        "preLayer": [
-            {
-                "varName": "avatar",
-                "type": 1,
-                "isPreView": true,
-                "inEditorShow": true,
-                "idList": [
-                    1,
-                    16
-                ]
-            }
-        ],
-        "varAttributes": [],
-        "serverInstanceClassName": "GameServerSceneObject_1",
-        "clientInstanceClassName": "ClientSceneObject",
-        "supportTriggerTypes": [
-            true,
-            true,
-            true,
-            true,
-            true,
-            true
-        ],
-        "supportStatusPage": true,
-        "id": 1,
-        "attribute": [],
-        "clientCode": "class ClientSceneObject_1 extends ClientSceneObject_Base1 {\n    constructor(soData: SceneObject, scene: ClientScene){\n        super(soData,scene);\n    }\n}",
-        "clientJsCode": "var __extends = (this && this.__extends) || function (d, b) {\n    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];\n    function __() { this.constructor = d; }\n    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\n};\nvar ClientSceneObject_1 = (function (_super) {\n    __extends(ClientSceneObject_1, _super);\n    function ClientSceneObject_1(soData, scene) {\n        _super.call(this, soData, scene);\n    }\n    return ClientSceneObject_1;\n}(ClientSceneObject_Base1));\n",
-        "commonCode": "",
-        "commonJsCode": ""
     },
     "asset/json/custom/customMaterialList.json": {
         "list": [
@@ -9798,6 +9766,38 @@
                 "shaderSize": false
             }
         }
+    },
+    "asset/json/scene/model/som1.json": {
+        "preLayer": [
+            {
+                "varName": "avatar",
+                "type": 1,
+                "isPreView": true,
+                "inEditorShow": true,
+                "idList": [
+                    1,
+                    16
+                ]
+            }
+        ],
+        "varAttributes": [],
+        "serverInstanceClassName": "GameServerSceneObject_1",
+        "clientInstanceClassName": "ClientSceneObject",
+        "supportTriggerTypes": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "supportStatusPage": true,
+        "id": 1,
+        "attribute": [],
+        "clientCode": "class ClientSceneObject_1 extends ClientSceneObject_Base1 {\n    constructor(soData: SceneObject, scene: ClientScene){\n        super(soData,scene);\n    }\n}",
+        "clientJsCode": "var __extends = (this && this.__extends) || function (d, b) {\n    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];\n    function __() { this.constructor = d; }\n    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\n};\nvar ClientSceneObject_1 = (function (_super) {\n    __extends(ClientSceneObject_1, _super);\n    function ClientSceneObject_1(soData, scene) {\n        _super.call(this, soData, scene);\n    }\n    return ClientSceneObject_1;\n}(ClientSceneObject_Base1));\n",
+        "commonCode": "",
+        "commonJsCode": ""
     },
     "asset/json/ui/data/ui1.json": {
         "root": {

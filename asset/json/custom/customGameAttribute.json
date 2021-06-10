@@ -1230,7 +1230,7 @@
             },
             "bornScene": {
                 "varType": 0,
-                "value": 1,
+                "value": 2,
                 "copy": false
             },
             "dialogStart": {
