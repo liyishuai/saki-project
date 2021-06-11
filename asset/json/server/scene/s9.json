@@ -39,44 +39,13 @@
                 "",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>咚咚咚咚！</span>",
+                "<span style='color:#FfFffF'>砰砰砰砰！！</span>",
                 null,
                 1,
                 0,
                 {
                     "___cmdID": "65870995800_0.6792853773589367"
                 }
-            ],
-            [
-                40014,
-                {
-                    "49825113823_0.7745949272019663": 0,
-                    "49897660694_0.39897478951731946": false,
-                    "49897660694_0.6399331644068169": 1,
-                    "49897660694_0.0946225960666689": 1,
-                    "49897706791_0.8101580703633997": false,
-                    "49897693777_0.31957312098050794": 1,
-                    "49897693777_0.39600212789547196": 1,
-                    "49904671869_0.1506235712026469": [
-                        {
-                            "materials": [
-                                {
-                                    "id": 10,
-                                    "mask": "asset/image/picture/background/h003c.png",
-                                    "useTrans": true,
-                                    "time": 0,
-                                    "trans": "{\"transType\":0,\"loopType\":2,\"timeType\":1,\"timeUnit\":1,\"totalTime\":120,\"tweenType\":4,\"tweenTypeName\":\"backInOut\",\"curveData\":[[0,0,0,99,1,1,1,3],[0,100,100]],\"refreshInterval\":16}",
-                                    "vagueness": 0.25,
-                                    "invertMask": 0,
-                                    "____timeInfo": {
-                                        "trans": 120
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "65871617098_0.0688247055397968"
             ],
             [
                 40001,
@@ -199,7 +168,7 @@
                 -3,
                 "<span style='color:#FfFffF'>爸爸... 晚上好...</span>",
                 null,
-                2,
+                18,
                 0,
                 {
                     "___cmdID": "65872281469_0.9131006469839866"
@@ -328,13 +297,13 @@
             [
                 11,
                 3,
-                null,
+                2,
                 "Kotori",
                 3,
                 -3,
                 "<span style='color:#FfFffF'>这次的数学试卷比较难...班里 90 分以上的也只有 20 多个...</span>",
                 null,
-                1,
+                15,
                 0,
                 {
                     "___cmdID": "65872865239_0.21474728989111336"
@@ -422,7 +391,7 @@
                 "",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>沉默了许久...\n</span><span style='color:#FfFffF'>他发话了</span>",
+                "<span style='color:#FfFffF'>沉默了许久... 他望着还在闪烁着 Turbo Pascall 特有的蓝底白字界面的 CRT 显示器 ...\n</span><span style='color:#FfFffF'>不安的预感环绕着我的全身。</span>",
                 null,
                 1,
                 0,
@@ -493,13 +462,13 @@
             [
                 11,
                 3,
-                null,
+                2,
                 "Kotori",
                 3,
                 -3,
                 "<span style='color:#FfFffF'>可是晚上我们要用机器写题目啊。。。\n</span><span style='color:#FfFffF'>没有了电脑我没有办法训练。。。</span>",
                 null,
-                1,
+                18,
                 0,
                 {
                     "___cmdID": "65873372277_0.44987740117886"
@@ -568,13 +537,13 @@
             [
                 11,
                 3,
-                null,
+                2,
                 "Kotori",
                 3,
                 -3,
                 "<span style='color:#FfFffF'>（痛。。。）</span>",
                 null,
-                1,
+                18,
                 0,
                 {
                     "___cmdID": "65873734266_0.07518694034557205"
@@ -692,7 +661,7 @@
                                     "vagueness": 0.25,
                                     "invertMask": 0,
                                     "____timeInfo": {
-                                        "trans": 46
+                                        "trans": 120
                                     }
                                 }
                             ]

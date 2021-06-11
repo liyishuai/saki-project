@@ -1,10 +1,16 @@
 {
     "picUrls": [
         "asset/image/picture/characters/c635752-d75956-p365119.png",
-        "asset/image/picture/characters/c635752-d75956-p424008.png",
-        "asset/image/picture/characters/c635752-d75956-p975456.png",
-        "asset/image/picture/characters/c635752-d75956-p831028.png",
-        "asset/image/picture/characters/kotori/短发/c635752-d75956-p507942.png"
+        "asset/image/picture/characters/kotori/短发/c635752-d75956-p507942.png",
+        "asset/image/picture/characters/kotori/短发/c635752-d75956-p143679 害怕.png",
+        "asset/image/picture/characters/kotori/短发/c635752-d75956-p598344.png",
+        "asset/image/picture/characters/kotori/短发/c635752-d75956-p466843.png",
+        "asset/image/picture/characters/kotori/长发/c635752-d75956-p153987.png",
+        "asset/image/picture/characters/kotori/长发/c635752-d75956-p969930.png",
+        "asset/image/picture/characters/kotori/短发/c635752-d75956-p424008.png",
+        "asset/image/picture/characters/kotori/长发/c635752-d75956-p100924.png",
+        "asset/image/picture/characters/kotori/长发/c635752-d75956-p61336.png",
+        "asset/image/picture/characters/kotori/短发/c635752-d75956-p603059 疑惑 帽子.png"
     ],
     "oriMode": 1,
     "autoFlip": true,
@@ -30,7 +36,7 @@
                             400
                         ],
                         "x": -200,
-                        "y": -200,
+                        "y": -199,
                         "width": 300,
                         "height": 300,
                         "rotation": 0,
@@ -53,7 +59,38 @@
             "frameImageInfo": [
                 [
                     {
-                        "picUrlIndex": 1,
+                        "picUrlIndex": 6,
+                        "rect": [
+                            0,
+                            0,
+                            400,
+                            400
+                        ],
+                        "x": -200,
+                        "y": -199,
+                        "width": 300,
+                        "height": 300,
+                        "rotation": 0,
+                        "alpha": 1,
+                        "hue": 0,
+                        "blur": 0,
+                        "tonal_r": 0,
+                        "tonal_g": 0,
+                        "tonal_b": 0,
+                        "tonal_gray": 0,
+                        "tonal_mr": 1,
+                        "tonal_mg": 1,
+                        "tonal_mb": 1
+                    }
+                ]
+            ]
+        },
+        {
+            "id": 3,
+            "frameImageInfo": [
+                [
+                    {
+                        "picUrlIndex": 5,
                         "rect": [
                             0,
                             0,
@@ -80,11 +117,11 @@
             ]
         },
         {
-            "id": 3,
+            "id": 4,
             "frameImageInfo": [
                 [
                     {
-                        "picUrlIndex": 2,
+                        "picUrlIndex": 8,
                         "rect": [
                             0,
                             0,
@@ -115,7 +152,7 @@
             "frameImageInfo": [
                 [
                     {
-                        "picUrlIndex": 4,
+                        "picUrlIndex": 1,
                         "rect": [
                             0,
                             0,
@@ -142,11 +179,197 @@
             ]
         },
         {
-            "id": 6,
+            "id": 7,
+            "frameImageInfo": [
+                [
+                    {
+                        "picUrlIndex": 2,
+                        "rect": [
+                            0,
+                            0,
+                            400,
+                            400
+                        ],
+                        "x": -200,
+                        "y": -200,
+                        "width": 300,
+                        "height": 300,
+                        "rotation": 0,
+                        "alpha": 1,
+                        "hue": 0,
+                        "blur": 0,
+                        "tonal_r": 0,
+                        "tonal_g": 0,
+                        "tonal_b": 0,
+                        "tonal_gray": 0,
+                        "tonal_mr": 1,
+                        "tonal_mg": 1,
+                        "tonal_mb": 1
+                    }
+                ]
+            ]
+        },
+        {
+            "id": 8,
+            "frameImageInfo": [
+                [
+                    {
+                        "picUrlIndex": 9,
+                        "rect": [
+                            0,
+                            0,
+                            400,
+                            400
+                        ],
+                        "x": -200,
+                        "y": -400,
+                        "width": 400,
+                        "height": 400,
+                        "rotation": 0,
+                        "alpha": 1,
+                        "hue": 0,
+                        "blur": 0,
+                        "tonal_r": 0,
+                        "tonal_g": 0,
+                        "tonal_b": 0,
+                        "tonal_gray": 0,
+                        "tonal_mr": 1,
+                        "tonal_mg": 1,
+                        "tonal_mb": 1
+                    }
+                ]
+            ]
+        },
+        {
+            "id": 14,
+            "frameImageInfo": [
+                [
+                    {
+                        "picUrlIndex": 4,
+                        "rect": [
+                            0,
+                            0,
+                            400,
+                            400
+                        ],
+                        "x": -200,
+                        "y": -200,
+                        "width": 400,
+                        "height": 400,
+                        "rotation": 0,
+                        "alpha": 1,
+                        "hue": 0,
+                        "blur": 0,
+                        "tonal_r": 0,
+                        "tonal_g": 0,
+                        "tonal_b": 0,
+                        "tonal_gray": 0,
+                        "tonal_mr": 1,
+                        "tonal_mg": 1,
+                        "tonal_mb": 1
+                    }
+                ]
+            ]
+        },
+        {
+            "id": 15,
             "frameImageInfo": [
                 [
                     {
                         "picUrlIndex": 3,
+                        "rect": [
+                            0,
+                            0,
+                            400,
+                            400
+                        ],
+                        "x": -200,
+                        "y": -200,
+                        "width": 300,
+                        "height": 300,
+                        "rotation": 0,
+                        "alpha": 1,
+                        "hue": 0,
+                        "blur": 0,
+                        "tonal_r": 0,
+                        "tonal_g": 0,
+                        "tonal_b": 0,
+                        "tonal_gray": 0,
+                        "tonal_mr": 1,
+                        "tonal_mg": 1,
+                        "tonal_mb": 1
+                    }
+                ]
+            ]
+        },
+        {
+            "id": 16,
+            "frameImageInfo": [
+                [
+                    {
+                        "picUrlIndex": 7,
+                        "rect": [
+                            0,
+                            0,
+                            400,
+                            400
+                        ],
+                        "x": -200,
+                        "y": -200,
+                        "width": 300,
+                        "height": 300,
+                        "rotation": 0,
+                        "alpha": 1,
+                        "hue": 0,
+                        "blur": 0,
+                        "tonal_r": 0,
+                        "tonal_g": 0,
+                        "tonal_b": 0,
+                        "tonal_gray": 0,
+                        "tonal_mr": 1,
+                        "tonal_mg": 1,
+                        "tonal_mb": 1
+                    }
+                ]
+            ]
+        },
+        {
+            "id": 17,
+            "frameImageInfo": [
+                [
+                    {
+                        "picUrlIndex": 10,
+                        "rect": [
+                            0,
+                            0,
+                            400,
+                            400
+                        ],
+                        "x": -200,
+                        "y": -200,
+                        "width": 300,
+                        "height": 300,
+                        "rotation": 0,
+                        "alpha": 1,
+                        "hue": 0,
+                        "blur": 0,
+                        "tonal_r": 0,
+                        "tonal_g": 0,
+                        "tonal_b": 0,
+                        "tonal_gray": 0,
+                        "tonal_mr": 1,
+                        "tonal_mg": 1,
+                        "tonal_mb": 1
+                    }
+                ]
+            ]
+        },
+        {
+            "id": 18,
+            "frameImageInfo": [
+                [
+                    {
+                        "picUrlIndex": 2,
                         "rect": [
                             0,
                             0,
