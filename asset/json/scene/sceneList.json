@@ -9,7 +9,7 @@
         "新的场景6",
         "原本的校验样例",
         "校验_纯文字",
-        null,
+        "回忆",
         null,
         null,
         null,
@@ -42,6 +42,11 @@
             "name": "Day 2",
             "children": [],
             "isOpen": true
+        },
+        {
+            "id": 9,
+            "name": "回忆",
+            "children": []
         },
         {
             "id": 3,
