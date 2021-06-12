@@ -64,7 +64,7 @@
                                     "vagueness": 0.25,
                                     "invertMask": 0,
                                     "____timeInfo": {
-                                        "trans": 76
+                                        "trans": 120
                                     }
                                 }
                             ]
@@ -177,7 +177,7 @@
                 "MoonMayCry",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>额，确实。目前的实验数据都没有证实和证伪 ...</span>",
+                "<span style='color:#FfFffF'>额，确实。目前的实验数据都没有能够证实或证伪 ...</span>",
                 null,
                 2,
                 0,
@@ -192,7 +192,7 @@
                 "Kotori",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>没有证伪... 也就是说还是有可能存在的吧？\n</span><span style='color:#FfFffF'>也许在月之暗面，也许在月面的岩层之下？\n</span><span style='color:#FfFffF'>生活着我们未曾发现过的耐氧细胞。</span>",
+                "<span style='color:#FfFffF'>没有证伪... 也就是说还是有可能存在的吧？\n</span><span style='color:#FfFffF'>也许在月之暗面，也许在月面的岩层之下？\n</span><span style='color:#FfFffF'>生活着我们未曾发现过的厌氧细胞。</span>",
                 null,
                 14,
                 0,
@@ -222,7 +222,7 @@
                 "Kotori",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>那你说，我们生活的宇宙中，\n</span><span style='color:#FfFffF'>会有其他的 ... 外星人会存在吗？</span>",
+                "<span style='color:#FfFffF'>那你说，我们生活的宇宙中，\n</span><span style='color:#FfFffF'>会有其他的 ... 宇宙人会存在吗？</span>",
                 null,
                 14,
                 0,
@@ -242,7 +242,82 @@
                 2,
                 0,
                 {
+                    "___cmdID": "65958021042_0.8162160921890751"
+                }
+            ],
+            [
+                11,
+                3,
+                4,
+                "MoonMayCry",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>目前...还没有观测到外星人存在的迹象...\n</span><span style='color:#FfFffF'>而且要构成生命存在所需要的基本条件，\n</span><span style='color:#FfFffF'>大气，温度，自转等等，\n</span><span style='color:#FfFffF'>本身就是一件极小概率的事件了。</span>",
+                null,
+                2,
+                0,
+                {
                     "___cmdID": "65932305706_0.5641340738871772"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>可是「地球」恰好就是一颗这样的行星啊，\n</span><span style='color:#FfFffF'>这样看的话宇宙存在像地球这样的星球，\n</span><span style='color:#FfFffF'>也会是很自然的事情吧。</span>",
+                null,
+                14,
+                0,
+                {
+                    "___cmdID": "65958108768_0.7904963643469631"
+                }
+            ],
+            [
+                11,
+                3,
+                4,
+                "MoonMayCry",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>你说的现象是「幸存者偏差」而已，\n</span><span style='color:#FfFffF'>只是因为你恰好生活在「地球」之上。。。</span>",
+                null,
+                2,
+                0,
+                {
+                    "___cmdID": "65958127103_0.17249748568496925"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>可是生命需要水，需要氧气，也只是基于\n</span><span style='color:#FfFffF'>人类目前的经验所做的假设而已。\n</span><span style='color:#FfFffF'>也许在遥远的外太空，\n</span><span style='color:#FfFffF'>居住着比我们还要聪明的，\n</span><span style='color:#FfFffF'>可以呼吸二氧化硫的非碳基生命呢。</span>",
+                null,
+                14,
+                0,
+                {
+                    "___cmdID": "65958154730_0.1700828171754889"
+                }
+            ],
+            [
+                11,
+                3,
+                4,
+                "MoonMayCry",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>呃...</span>",
+                null,
+                2,
+                0,
+                {
+                    "___cmdID": "65958189850_0.5487680192349493"
                 }
             ],
             [
@@ -252,7 +327,7 @@
                 "",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>被连珠炮似地提问，似乎是一时间想不到答案\n</span><span style='color:#FfFffF'>MoonMayCry抬起头，望向了远处的深空</span>",
+                "<span style='color:#FfFffF'>被连珠炮似地提问，似乎是一时间想不到如何回答\n</span><span style='color:#FfFffF'>MoonMayCry 抬起头，望向了远处的深空</span>",
                 null,
                 1,
                 0,
@@ -282,7 +357,7 @@
                 "MoonMayCry",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>我想应该存在吧，毕竟宇宙的尺度那么大。\n</span><span style='color:#FfFffF'>可观测的宇宙只占空间的很小一部分。\n</span><span style='color:#FfFffF'>无限小概率的事件在无限大的样本空间里也会成为必然事件。</span>",
+                "<span style='color:#FfFffF'>我想应该存在吧，毕竟宇宙的尺度那么大。\n</span><span style='color:#FfFffF'>可观测的宇宙只占空间的很小一部分。\n</span><span style='color:#FfFffF'>无限小的概率在无限大的样本空间里\n</span><span style='color:#FfFffF'>也会成为必然事件。</span>",
                 null,
                 2,
                 0,
@@ -327,17 +402,77 @@
                 "",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>...</span>",
+                "<span style='color:#FfFffF'>Kotori 伸出手，指向遥远的深空。</span>",
                 null,
                 1,
                 0,
                 {
-                    "___cmdID": "65932488946_0.39948069617691706"
+                    "___cmdID": "65958296334_0.6301076253998754"
                 }
             ],
             [
                 11,
+                3,
+                2,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>你看，在那颗星星的方向上，此时此刻\n</span><span style='color:#FfFffF'>是不是也会有另一个人，也在和我思考着相同的问题呢。</span>",
+                null,
+                14,
+                0,
+                {
+                    "___cmdID": "65958385006_0.5611147426017045"
+                }
+            ],
+            [
+                11,
+                3,
+                null,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>星光闪烁，仿佛在无言地回答</span>",
+                null,
                 1,
+                0,
+                {
+                    "___cmdID": "65958404233_0.6599355527926014"
+                }
+            ],
+            [
+                11,
+                3,
+                4,
+                "MoonMayCry",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>...</span>",
+                null,
+                2,
+                0,
+                {
+                    "___cmdID": "65958315404_0.15678061611006577"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>...</span>",
+                null,
+                14,
+                0,
+                {
+                    "___cmdID": "65958327881_0.7386082372007661"
+                }
+            ],
+            [
+                11,
+                3,
                 null,
                 "",
                 3,
@@ -348,21 +483,6 @@
                 0,
                 {
                     "___cmdID": "65932499094_0.5617994188785684"
-                }
-            ],
-            [
-                11,
-                3,
-                null,
-                "",
-                3,
-                -3,
-                "<span style='color:#FfFffF'>...</span>",
-                null,
-                1,
-                0,
-                {
-                    "___cmdID": "65932630945_0.6982091847566811"
                 }
             ],
             [
