@@ -252,7 +252,7 @@
                 "MoonMayCry",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>目前...还没有观测到外星人存在的迹象...\n</span><span style='color:#FfFffF'>而且要构成生命存在所需要的基本条件，\n</span><span style='color:#FfFffF'>大气，温度，自转等等，\n</span><span style='color:#FfFffF'>本身就是一件极小概率的事件了。</span>",
+                "<span style='color:#FfFffF'>目前...还没有观测到宇宙人存在的迹象...\n</span><span style='color:#FfFffF'>而且要构成生命存在所需要的基本条件，\n</span><span style='color:#FfFffF'>大气，温度，自转等等，\n</span><span style='color:#FfFffF'>每一件都是一件极小概率的事件。。。</span>",
                 null,
                 2,
                 0,
@@ -287,6 +287,21 @@
                 2,
                 0,
                 {
+                    "___cmdID": "65964070582_0.44795860805708076"
+                }
+            ],
+            [
+                11,
+                3,
+                4,
+                "MoonMayCry",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>如果地日距离缩小千分之一的话，\n</span><span style='color:#FfFffF'>地球上所有的生命就会因炎热而死；\n</span><span style='color:#FfFffF'>如果地日距离扩大千分之一的话，\n</span><span style='color:#FfFffF'>地球上所有的生命就会因寒冷而死。</span>",
+                null,
+                2,
+                0,
+                {
                     "___cmdID": "65958127103_0.17249748568496925"
                 }
             ],
@@ -297,7 +312,7 @@
                 "Kotori",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>可是生命需要水，需要氧气，也只是基于\n</span><span style='color:#FfFffF'>人类目前的经验所做的假设而已。\n</span><span style='color:#FfFffF'>也许在遥远的外太空，\n</span><span style='color:#FfFffF'>居住着比我们还要聪明的，\n</span><span style='color:#FfFffF'>可以呼吸二氧化硫的非碳基生命呢。</span>",
+                "<span style='color:#FfFffF'>可是生命需要水，需要氧气，也只是基于人类目前\n</span><span style='color:#FfFffF'>所观察到的结果所做的假设而已。也许 ...\n</span><span style='color:#FfFffF'>在遥远的外太空，居住着比我们还要聪明的，\n</span><span style='color:#FfFffF'>可以呼吸二氧化硫的非碳基生命呢。</span>",
                 null,
                 14,
                 0,
