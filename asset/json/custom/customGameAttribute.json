@@ -304,6 +304,43 @@
                         "x": 25,
                         "width": 350,
                         "height": 32
+                    },
+                    {
+                        "attr": {
+                            "id": "66039447544_0.7877697558468011",
+                            "varName": "AllProblems",
+                            "varType": 5,
+                            "compData": {
+                                "compType": 0,
+                                "compParam": {}
+                            },
+                            "defaultValue": "",
+                            "hideMode": false,
+                            "useCommand": false,
+                            "onlyPointTo": false,
+                            "moduleID": 1,
+                            "dataStructureID": 1,
+                            "arrayMode": false,
+                            "arrayLength": 100,
+                            "arrayAllowDelete": false,
+                            "arrayAllowSwap": false,
+                            "arrayAllowUpdate": false,
+                            "accessMode": 1,
+                            "syncMode": 0,
+                            "attrTips": "",
+                            "alias": "",
+                            "onlyConfig": false,
+                            "preview": false,
+                            "autoTitleWidth": true,
+                            "titleWidth": 100,
+                            "eyeShow": true,
+                            "lockBlock": false
+                        },
+                        "attrConditions": [],
+                        "y": 0,
+                        "x": 0,
+                        "width": 200,
+                        "height": 32
                     }
                 ],
                 "blockCondition": [],
@@ -1127,7 +1164,8 @@
                 "blockHeight": 75,
                 "autoOrder": true
             }
-        ]
+        ],
+        "compAutoOrderLimitHeight": 0
     },
     "playerAttributeSetting": {
         "blockList": [
@@ -1288,6 +1326,11 @@
             "对话相关事件处理": {
                 "varType": 1,
                 "value": "",
+                "copy": false
+            },
+            "AllProblems": {
+                "varType": 12,
+                "value": {},
                 "copy": false
             }
         }

@@ -3,15 +3,6 @@
     "customCommands": [
         [
             [
-                20,
-                "",
-                "// 当前的事件触发器：trigger: CommandTrigger;\ngenerateExam();  ",
-                "generateExam();\n",
-                {
-                    "___cmdID": "66022765422_0.6418072565282207"
-                }
-            ],
-            [
                 3,
                 0,
                 -1,

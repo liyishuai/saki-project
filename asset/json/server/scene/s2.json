@@ -655,25 +655,19 @@
                 }
             ],
             [
+                20,
+                "Generate exam for section2",
+                "// 当前的事件触发器：trigger: CommandTrigger;\ngenerateExam('section2', ['POJ-3250', 'POJ-2559']);",
+                "generateExam('section2', ['POJ-3250', 'POJ-2559']);\n",
+                {
+                    "___cmdID": "66040359583_0.12621599670455974"
+                }
+            ],
+            [
                 8,
                 "jump2",
                 {
                     "___cmdID": "65795952703_0.1772584910275503"
-                }
-            ],
-            [
-                11,
-                4,
-                null,
-                "",
-                3,
-                -3,
-                "<span style='color:#FfFffF'></span>",
-                null,
-                1,
-                0,
-                {
-                    "___cmdID": "65789613070_0.2756878698185832"
                 }
             ],
             [
@@ -690,56 +684,99 @@
                 "POJ 3250",
                 0,
                 -1,
-                0,
-                4001,
-                [
-                    {
-                        "type": 1,
-                        "varID": 2001,
-                        "compare": 0,
-                        "value": 0
-                    }
-                ],
+                1,
+                2001,
+                [],
                 {
                     "___cmdID": "65701056487_0.7281640090021608"
                 }
             ],
             [
-                20,
-                "弹出广告",
-                "// 当前的事件触发器：trigger: CommandTrigger;\nwindow.open(\"https://vjudge.net/problem/POJ-3250\", '_blank');",
-                "window.open(\"https://vjudge.net/problem/POJ-3250\", '_blank');\n",
-                {
-                    "___cmdID": "65703966630_0.11223037122060031"
-                }
-            ],
-            [
-                21,
-                false,
-                8,
-                25,
-                6,
-                {
-                    "___cmdID": "65703966630_0.2825140111318558"
-                }
-            ],
-            [
-                4,
-                "POJ 3250(AC)",
-                -1,
-                -1,
                 0,
-                4002,
+                0,
+                2,
                 [
-                    {
-                        "type": 1,
-                        "varID": 2001,
-                        "compare": 0,
-                        "value": 1
-                    }
+                    0,
+                    1,
+                    2001,
+                    0
+                ],
+                0,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                0,
+                [
+                    1,
+                    1,
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                0,
+                0,
+                [
+                    1,
+                    1
+                ],
+                "",
+                "",
+                true,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+                0,
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                [
+                    0,
+                    {},
+                    ""
                 ],
                 {
-                    "___cmdID": "65701056487_0.6926833898578824"
+                    "___cmdID": "66035492814_0.6582594324294873"
+                }
+            ],
+            [
+                20,
+                "弹出广告",
+                "// 当前的事件触发器：trigger: CommandTrigger;\nconst problemsMapName = WorldData.AllProblems.currentProblemsName;\nconst problemsMap = WorldData.AllProblems[problemsMapName];\n\nwindow.open(`https://vjudge.net/problem/${Object.keys(problemsMap)[0]}`, '_blank');",
+                "var problemsMapName = WorldData.AllProblems.currentProblemsName;\nvar problemsMap = WorldData.AllProblems[problemsMapName];\nwindow.open(\"https://vjudge.net/problem/\" + Object.keys(problemsMap)[0], '_blank');\n",
+                {
+                    "___cmdID": "66035492814_0.7778414653432739"
+                }
+            ],
+            [
+                16,
+                1,
+                false,
+                {
+                    "___cmdID": "66040531690_0.04651817631782085"
+                }
+            ],
+            [
+                9,
+                "jump2",
+                {
+                    "___cmdID": "66040672547_0.1640319541677262"
+                }
+            ],
+            [
+                1,
+                {
+                    "___cmdID": "66035492814_0.8604224109436507"
                 }
             ],
             [
@@ -754,17 +791,20 @@
                 1,
                 0,
                 {
-                    "___cmdID": "65704552132_0.3583399431785541"
+                    "___cmdID": "66035492814_0.6103018849794497"
                 }
             ],
             [
-                21,
-                false,
-                2,
-                13,
-                5,
+                9,
+                "jump2",
                 {
-                    "___cmdID": "65704552132_0.017198271094628126"
+                    "___cmdID": "66040548351_0.8073905656984284"
+                }
+            ],
+            [
+                2,
+                {
+                    "___cmdID": "66035492814_0.7960968163296427"
                 }
             ],
             [
@@ -772,56 +812,99 @@
                 "POJ 2559",
                 -1,
                 -1,
+                1,
+                2002,
+                [],
+                {
+                    "___cmdID": "65701056487_0.6926833898578824"
+                }
+            ],
+            [
                 0,
-                4003,
+                0,
+                2,
                 [
-                    {
-                        "type": 1,
-                        "varID": 2002,
-                        "compare": 0,
-                        "value": 0
-                    }
+                    0,
+                    1,
+                    2002,
+                    0
+                ],
+                0,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                0,
+                [
+                    1,
+                    1,
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                0,
+                0,
+                [
+                    1,
+                    1
+                ],
+                "",
+                "",
+                true,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+                0,
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                [
+                    0,
+                    {},
+                    ""
                 ],
                 {
-                    "___cmdID": "65701056487_0.39599244182783067"
+                    "___cmdID": "66035389345_0.45305564429690337"
                 }
             ],
             [
                 20,
                 "弹出广告",
-                "// 当前的事件触发器：trigger: CommandTrigger;\nwindow.open(\"https://vjudge.net/problem/POJ-2559\", '_blank');",
-                "window.open(\"https://vjudge.net/problem/POJ-2559\", '_blank');\n",
+                "// 当前的事件触发器：trigger: CommandTrigger;\nconst problemsMapName = WorldData.AllProblems.currentProblemsName;\nconst problemsMap = WorldData.AllProblems[problemsMapName];\n\nwindow.open(`https://vjudge.net/problem/${Object.keys(problemsMap)[1]}`, '_blank');",
+                "var problemsMapName = WorldData.AllProblems.currentProblemsName;\nvar problemsMap = WorldData.AllProblems[problemsMapName];\nwindow.open(\"https://vjudge.net/problem/\" + Object.keys(problemsMap)[1], '_blank');\n",
                 {
-                    "___cmdID": "65703961968_0.7652725623121597"
+                    "___cmdID": "66041249459_0.4171747154541914"
                 }
             ],
             [
-                21,
+                16,
+                1,
                 false,
-                8,
-                25,
-                6,
                 {
-                    "___cmdID": "65703961968_0.7520560378552625"
+                    "___cmdID": "66040557468_0.7759773141482194"
                 }
             ],
             [
-                4,
-                "POJ 2559 (AC)",
-                -1,
-                -1,
-                0,
-                0,
-                [
-                    {
-                        "type": 1,
-                        "varID": 2002,
-                        "compare": 0,
-                        "value": 1
-                    }
-                ],
+                9,
+                "jump2",
                 {
-                    "___cmdID": "65703925604_0.541907263494342"
+                    "___cmdID": "66040675654_0.05044485499968876"
+                }
+            ],
+            [
+                1,
+                {
+                    "___cmdID": "66035417334_0.8274994438408576"
                 }
             ],
             [
@@ -836,71 +919,32 @@
                 1,
                 0,
                 {
-                    "___cmdID": "65704516534_0.9141144782398396"
+                    "___cmdID": "66035444930_0.3842503458965234"
                 }
             ],
             [
-                21,
-                false,
+                9,
+                "jump2",
+                {
+                    "___cmdID": "66040553578_0.6299736626405503"
+                }
+            ],
+            [
                 2,
-                13,
-                5,
                 {
-                    "___cmdID": "65704543475_0.9654152313624222"
+                    "___cmdID": "66035403662_0.45080565694395225"
                 }
-            ],
-            [
-                4,
-                "放弃治疗",
-                -1,
-                -1,
-                0,
-                0,
-                [
-                    {
-                        "type": 1,
-                        "varID": 2006,
-                        "compare": 0,
-                        "value": 0
-                    }
-                ],
-                {
-                    "___cmdID": "65703925604_0.006104779588491427"
-                }
-            ],
-            [
-                50008,
-                null,
-                "65703989717_0.2232186409853687"
             ],
             [
                 4,
                 "打完收工",
                 -1,
                 -1,
-                0,
-                0,
-                [
-                    {
-                        "type": 1,
-                        "varID": 2006,
-                        "compare": 0,
-                        "value": 1
-                    }
-                ],
+                1,
+                2020,
+                [],
                 {
-                    "___cmdID": "65703925604_0.06342056100816706"
-                }
-            ],
-            [
-                50008,
-                null,
-                "65703990829_0.22718494720081184"
-            ],
-            [
-                10,
-                {
-                    "___cmdID": "65701056487_0.15026939526744276"
+                    "___cmdID": "65701056487_0.39599244182783067"
                 }
             ],
             [
@@ -908,7 +952,13 @@
                 {
                     "50715038747_0.21761311072349354": 10
                 },
-                "65962562698_0.7872178871194264"
+                "66039880348_0.42064586513241675"
+            ],
+            [
+                10,
+                {
+                    "___cmdID": "65701056487_0.15026939526744276"
+                }
             ]
         ]
     ],
