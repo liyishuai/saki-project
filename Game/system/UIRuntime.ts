@@ -301,23 +301,23 @@ class ListItem_13 extends UIListItemData {
 }
 
 /**
- * 14- [BASE]
+ * 14-题目选项框 [BASE]
  */
 class GUI_14 extends GUI_BASE {
-
+   列表:UIList; // Item=15
    constructor(){
       super(14);
    }
 }
 class ListItem_14 extends UIListItemData {
-
+   列表:UIListItemData[];
 }
 
 /**
- * 15- [BASE]
+ * 15-选项按钮 [BASE]
  */
 class GUI_15 extends GUI_BASE {
-
+   选项按钮:UIButton;
    constructor(){
       super(15);
    }
