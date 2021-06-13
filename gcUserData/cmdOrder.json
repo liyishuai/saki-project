@@ -341,7 +341,18 @@
         },
         {
             "typeName": "插件指令",
-            "commandList": []
+            "commandList": [
+                [
+                    160001,
+                    "手机端双指缩放",
+                    false
+                ],
+                [
+                    160002,
+                    "图像震动",
+                    false
+                ]
+            ]
         }
     ]
 }

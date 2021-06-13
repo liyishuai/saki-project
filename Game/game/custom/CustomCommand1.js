@@ -269,5 +269,9 @@ var CommandExecute;
         os.closeWindow();
     }
     CommandExecute.customCommand_4011 = customCommand_4011;
+    function getSolutionStatus(url) {
+        return 'Hello ' + url;
+    }
+    CommandExecute.getSolutionStatus = getSolutionStatus;
 })(CommandExecute || (CommandExecute = {}));
 //# sourceMappingURL=CustomCommand1.js.map

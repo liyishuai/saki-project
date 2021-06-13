@@ -1,1 +1,76 @@
-[]
+[
+    {
+        "allPlugUseData": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            [],
+            [],
+            [],
+            [],
+            [
+                15001
+            ],
+            [],
+            null,
+            null,
+            [],
+            [
+                {
+                    "filePath": "Game/GCplug/217/GC_ DoubleFingersScale.ts",
+                    "isServer": false
+                }
+            ],
+            null,
+            null,
+            [],
+            []
+        ],
+        "id": 217,
+        "name": "手机端双指缩放",
+        "lastUpdateTime": 1621311481,
+        "author": "JayLen"
+    },
+    {
+        "allPlugUseData": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            [],
+            [],
+            [],
+            [],
+            [
+                15002
+            ],
+            [],
+            null,
+            null,
+            [],
+            [
+                {
+                    "filePath": "Game/GCplug/145/ImageShake_kds1.ts",
+                    "isServer": false
+                }
+            ],
+            null,
+            null,
+            [],
+            []
+        ],
+        "id": 145,
+        "name": "图像震动指令",
+        "lastUpdateTime": 1613664672,
+        "author": "黑暗之神KDS"
+    }
+]
