@@ -9,7 +9,7 @@
     "serverInstanceClassName": "ServerScene",
     "clientInstanceClassName": "ClientScene",
     "id": 6,
-    "name": "网络流的疑问",
+    "name": "网络流篇-1",
     "width": 1200,
     "height": 720,
     "LayerDatas": [

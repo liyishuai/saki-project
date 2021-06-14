@@ -8,8 +8,8 @@
     "preLoadAssets": [],
     "serverInstanceClassName": "ServerScene",
     "clientInstanceClassName": "ClientScene",
-    "id": 2,
-    "name": "Day 1 数据结构-1",
+    "id": 8,
+    "name": "Day 3 状态空间搜索-1",
     "width": 1200,
     "height": 720,
     "LayerDatas": [

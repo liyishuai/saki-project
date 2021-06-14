@@ -2,19 +2,19 @@
     "list": [
         null,
         "海棠无香",
-        "Day 2",
+        "Day 1 数据结构-1",
         "新的场景3",
         "地外生命与宇宙人",
         "自由意志",
-        "网络流的疑问",
-        null,
-        null,
+        "网络流篇-1",
+        "Day 2 动态规划",
+        "Day 3 状态空间搜索-1",
         "冲突",
         "选剧本",
-        null,
-        null,
-        null,
-        null,
+        "Day 4 状态空间搜索-2",
+        "暑期集训篇",
+        "回忆碎片",
+        "Week1",
         null,
         null,
         null,
@@ -32,46 +32,88 @@
     ],
     "node": [
         {
-            "id": 1,
-            "name": "海棠无香",
-            "children": [],
-            "isOpen": true
-        },
-        {
-            "id": 2,
-            "name": "Day 2",
-            "children": [],
-            "isOpen": true
-        },
-        {
-            "id": 9,
-            "name": "冲突",
-            "children": []
-        },
-        {
             "id": 3,
             "name": "新的场景3",
-            "children": []
-        },
-        {
-            "id": 4,
-            "name": "地外生命与宇宙人",
-            "children": []
-        },
-        {
-            "id": 5,
-            "name": "自由意志",
-            "children": []
-        },
-        {
-            "id": 6,
-            "name": "网络流的疑问",
-            "children": []
+            "children": [
+                {
+                    "id": 1,
+                    "name": "海棠无香",
+                    "children": [],
+                    "isOpen": true
+                }
+            ],
+            "isOpen": true
         },
         {
             "id": 10,
             "name": "选剧本",
-            "children": []
+            "children": [
+                {
+                    "id": 12,
+                    "name": "暑期集训篇",
+                    "children": [
+                        {
+                            "id": 14,
+                            "name": "Week1",
+                            "children": [
+                                {
+                                    "id": 2,
+                                    "name": "Day 1 数据结构-1",
+                                    "children": [],
+                                    "isOpen": true
+                                },
+                                {
+                                    "id": 7,
+                                    "name": "Day 2 动态规划",
+                                    "children": [],
+                                    "isOpen": true
+                                },
+                                {
+                                    "id": 8,
+                                    "name": "Day 3 状态空间搜索-1",
+                                    "children": [],
+                                    "isOpen": true
+                                },
+                                {
+                                    "id": 11,
+                                    "name": "Day 4 状态空间搜索-2",
+                                    "children": []
+                                }
+                            ],
+                            "isOpen": true
+                        }
+                    ],
+                    "isOpen": true
+                },
+                {
+                    "id": 13,
+                    "name": "回忆碎片",
+                    "children": [
+                        {
+                            "id": 4,
+                            "name": "地外生命与宇宙人",
+                            "children": []
+                        },
+                        {
+                            "id": 5,
+                            "name": "自由意志",
+                            "children": []
+                        },
+                        {
+                            "id": 9,
+                            "name": "冲突",
+                            "children": []
+                        },
+                        {
+                            "id": 6,
+                            "name": "网络流篇-1",
+                            "children": []
+                        }
+                    ],
+                    "isOpen": true
+                }
+            ],
+            "isOpen": true
         }
     ]
 }
