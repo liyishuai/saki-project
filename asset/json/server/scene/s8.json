@@ -248,7 +248,7 @@
                 "sevenzero",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>其他情况，我们需要扩展当前的状态，寻找当前排列的第 k 个元素。\n</span><span style='color:#FfFffF'>为了保证字典序，我们总是从最小的元素开始枚举，\n</span><span style='color:#FfFffF'>如果当前元素未被使用，就标记使用，递归到下一层。\n</span><span style='color:#FfFffF'>记得递归回来时要将这个标记删除。</span>",
+                "<span style='color:#FfFffF'>k < n 时，我们需要扩展当前的状态，寻找当前排列的第 k 个元素。\n</span><span style='color:#FfFffF'>为了保证字典序，我们总是从最小的元素开始枚举，\n</span><span style='color:#FfFffF'>如果当前元素未被使用，就标记使用，递归到下一层。\n</span><span style='color:#FfFffF'>记得递归回来时要将这个标记删除。</span>",
                 null,
                 1,
                 0,
