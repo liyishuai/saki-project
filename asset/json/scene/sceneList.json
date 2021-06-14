@@ -15,9 +15,9 @@
         "暑期集训篇",
         "回忆碎片",
         "Week1",
-        null,
-        null,
-        null,
+        "Day 5 数据结构-2",
+        "Day 6 多校-1",
+        "Day 7 休息日",
         null,
         null,
         null,
@@ -77,6 +77,24 @@
                                 {
                                     "id": 11,
                                     "name": "Day 4 状态空间搜索-2",
+                                    "children": [],
+                                    "isOpen": true
+                                },
+                                {
+                                    "id": 15,
+                                    "name": "Day 5 数据结构-2",
+                                    "children": [],
+                                    "isOpen": true
+                                },
+                                {
+                                    "id": 16,
+                                    "name": "Day 6 多校-1",
+                                    "children": [],
+                                    "isOpen": true
+                                },
+                                {
+                                    "id": 17,
+                                    "name": "Day 7 休息日",
                                     "children": []
                                 }
                             ],
