@@ -27,7 +27,7 @@
         "Day 6 比賽",
         "Day 7 休息日",
         "开学篇",
-        null,
+        "Day 0",
         null
     ],
     "node": [
@@ -52,6 +52,11 @@
                     "id": 12,
                     "name": "暑期集训篇",
                     "children": [
+                        {
+                            "id": 27,
+                            "name": "Day 0",
+                            "children": []
+                        },
                         {
                             "id": 14,
                             "name": "Week1",
