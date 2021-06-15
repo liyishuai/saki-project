@@ -18,15 +18,15 @@
         "Day 5 数据结构-2",
         "Day 6 多校-1",
         "Day 7 休息日",
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
+        "Week2",
+        "Day 1 图论-1",
+        "Day 2 图论-2",
+        "Day 3 数论-1",
+        "Day 4 字符串-1",
+        "Day 5 计算几何-1",
+        "Day 6 比賽",
+        "Day 7 休息日",
+        "开学篇",
         null,
         null
     ],
@@ -99,9 +99,56 @@
                                 }
                             ],
                             "isOpen": true
+                        },
+                        {
+                            "id": 18,
+                            "name": "Week2",
+                            "children": [
+                                {
+                                    "id": 19,
+                                    "name": "Day 1 图论-1",
+                                    "children": []
+                                },
+                                {
+                                    "id": 20,
+                                    "name": "Day 2 图论-2",
+                                    "children": []
+                                },
+                                {
+                                    "id": 21,
+                                    "name": "Day 3 数论-1",
+                                    "children": []
+                                },
+                                {
+                                    "id": 22,
+                                    "name": "Day 4 字符串-1",
+                                    "children": []
+                                },
+                                {
+                                    "id": 23,
+                                    "name": "Day 5 计算几何-1",
+                                    "children": []
+                                },
+                                {
+                                    "id": 24,
+                                    "name": "Day 6 比賽",
+                                    "children": []
+                                },
+                                {
+                                    "id": 25,
+                                    "name": "Day 7 休息日",
+                                    "children": []
+                                }
+                            ],
+                            "isOpen": true
                         }
                     ],
                     "isOpen": true
+                },
+                {
+                    "id": 26,
+                    "name": "开学篇",
+                    "children": []
                 },
                 {
                     "id": 13,
