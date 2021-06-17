@@ -2,9 +2,9 @@
     "initData": true,
     "previewMode": false,
     "dialogBox": {
-        "x": 155,
-        "y": 550,
-        "width": 891,
+        "x": 1,
+        "y": 552,
+        "width": 1200,
         "height": 170,
         "alpha": 1,
         "image": "asset/image/picture/ui/dialog/dialogBg.png",
