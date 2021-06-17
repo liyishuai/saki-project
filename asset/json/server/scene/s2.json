@@ -56,32 +56,17 @@
             ],
             [
                 11,
-                3,
-                2,
+                9,
+                null,
                 "",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>啊切，好冷... 刚才是什么。。。奇怪的梦？ </span>",
+                "<span style='color:#FfFffF'>Day-1</span>",
                 null,
                 1,
                 0,
                 {
-                    "___cmdID": "65794021294_0.365823597185005"
-                }
-            ],
-            [
-                11,
-                3,
-                2,
-                "",
-                3,
-                -3,
-                "<span style='color:#FfFffF'>这里是 </span><span style='color:#ffffff'>Kotori</span><span style='color:#FfFffF'>，准大一新生，OI 败犬。\n</span><span style='color:#FfFffF'>这是我来到 HIT 参加 ACM 算法集训的第一天。</span>",
-                null,
-                1,
-                0,
-                {
-                    "___cmdID": "65862123190_0.3046661480584205"
+                    "___cmdID": "66372549728_0.689499108236906"
                 }
             ],
             [
@@ -91,12 +76,12 @@
                 "Kotori",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>虽然说是 OI 败犬没错，但是硬要说起来我多少也是一名竞赛保送生，\n</span><span style='color:#FfFffF'>比其他人有了更多的自己的时间，比如，\n</span><span style='color:#FfFffF'>从 Pascal 换成 CPP 语言什么的。</span>",
+                "<span style='color:#FfFffF'>啊切，好冷... </span>",
                 null,
                 1,
                 0,
                 {
-                    "___cmdID": "65862181786_0.2652434923981475"
+                    "___cmdID": "65794021294_0.365823597185005"
                 }
             ],
             [
@@ -136,42 +121,12 @@
                 "Kotori",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>啊，要到 8:00 了。。。</span>",
+                "<span style='color:#FfFffF'>（开始了！）</span>",
                 null,
                 1,
                 0,
                 {
                     "___cmdID": "65794299371_0.6348901539022163"
-                }
-            ],
-            [
-                11,
-                7,
-                0,
-                "",
-                3,
-                -3,
-                "<span style='color:#FfFffF'>HIT 的暑期算法竞赛集训，一般从每年七月的下旬开始。\n</span><span style='color:#FfFffF'>由高年级的学长负责讲课，低年级和刚刚从高中升上来的新生则参加选拔。\n</span><span style='color:#FfFffF'>今年的课表是：</span>",
-                null,
-                -1,
-                0,
-                {
-                    "___cmdID": "65794348480_0.14926518802241917"
-                }
-            ],
-            [
-                11,
-                7,
-                0,
-                "",
-                3,
-                -3,
-                "<span style='color:#FfFffF'>Day 1 - 数据结构\n</span><span style='color:#FfFffF'>Day 2 - 动态规划\n</span><span style='color:#FfFffF'>Day 3 - 状态空间搜索\n</span><span style='color:#FfFffF'>Day 4 - 图论\n</span><span style='color:#FfFffF'>Day 5 - 数论\n</span><span style='color:#FfFffF'>Day 6 - 字符串\n</span><span style='color:#FfFffF'>Day 7 - 计算几何\n</span><span style='color:#FfFffF'>每天的上午负责讲课，下午做题，晚上则讲解题目，\n</span><span style='color:#FfFffF'>再最后的几日还会有区域赛队伍的选拔。</span>",
-                null,
-                -1,
-                0,
-                {
-                    "___cmdID": "65862781925_0.32512223675524243"
                 }
             ],
             [
@@ -196,7 +151,7 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>集训的课表大家都拿到了，那么现在就让我们开始第一天的内容。\n</span><span style='color:#FfFffF'>我们每天上午 8：00 开始讲课，迟到早退的同学会被扣分哦！</span>",
+                "<span style='color:#FfFffF'>集训的课表大家都拿到了，我们每天上午 8：00 准时开始讲课，\n</span><span style='color:#FfFffF'>迟到早退的同学会被扣分哦！\n</span><span style='color:#FfFffF'>那么现在就让我们开始第一天的内容。</span>",
                 null,
                 1,
                 0,
