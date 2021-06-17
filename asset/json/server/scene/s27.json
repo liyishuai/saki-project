@@ -3,6 +3,21 @@
     "customCommands": [
         [
             [
+                11,
+                9,
+                null,
+                "",
+                0,
+                -3,
+                "<span style='color:#FfFffF'>暑期集训篇 Week-1 Day-0[p5]</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66372858402_0.6245290539595538"
+                }
+            ],
+            [
                 65,
                 "asset/audio/bgs/龙出现.ogg",
                 0.81,

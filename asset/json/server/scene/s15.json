@@ -1,12 +1,28 @@
 {
     "sceneObjects": [],
     "customCommands": [
-        []
+        [
+            [
+                11,
+                9,
+                null,
+                "",
+                0,
+                -3,
+                "<span style='color:#FfFffF'>暑期集训篇 Week-1 Day-5[p5]</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66372920292_0.1914018012096219"
+                }
+            ]
+        ]
     ],
     "customAttributes": [],
     "customAttributesCaches": [],
     "events": [],
     "statusPages": [],
     "statusPagesSelectedIndexs": [],
-    "id": 11
+    "id": 15
 }

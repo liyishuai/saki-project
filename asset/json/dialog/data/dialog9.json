@@ -99,7 +99,7 @@
         "width": 699,
         "height": 134,
         "alpha": 1,
-        "fontSize": 70,
+        "fontSize": 55,
         "color": "#FFFFFF",
         "bold": true,
         "italic": false,
@@ -134,7 +134,7 @@
                     },
                     {
                         "id": 3,
-                        "strength": 1.35,
+                        "strength": 0.6,
                         "____timeInfo": {}
                     }
                 ]

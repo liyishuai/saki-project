@@ -56,6 +56,21 @@
             ],
             [
                 11,
+                9,
+                null,
+                "",
+                0,
+                -3,
+                "<span style='color:#FfFffF'>暑期集训篇 Week-1 Day-7[p5]</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66372941493_0.1768075401858853"
+                }
+            ],
+            [
+                11,
                 3,
                 6,
                 "SevenZero",
@@ -307,5 +322,5 @@
     "events": [],
     "statusPages": [],
     "statusPagesSelectedIndexs": [],
-    "id": 11
+    "id": 17
 }
