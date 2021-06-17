@@ -506,6 +506,186 @@
                 {
                     "___cmdID": "66243547121_0.32558822456337544"
                 }
+            ],
+            [
+                11,
+                3,
+                2,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>あの，すみません...\n</span><span style='color:#FfFffF'>请问 Larry 学长在这里吗...</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66344111603_0.2598137282333537"
+                }
+            ],
+            [
+                11,
+                1,
+                null,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>...</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66344128003_0.7901558892978764"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>あの，すみません...</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66344111434_0.5520352654517584"
+                }
+            ],
+            [
+                11,
+                1,
+                null,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>不知是我的声音太小，还是大家都在专注着写题的缘故。\n</span><span style='color:#FfFffF'>似乎并没有人发现机房里多了一个人。\n</span><span style='color:#FfFffF'>我一动不动的呆在原地。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66344164934_0.22029448257428474"
+                }
+            ],
+            [
+                11,
+                1,
+                null,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>zuozaijifang最后排的学长似乎发现了我的存在。\n</span><span style='color:#FfFffF'>朝我走来。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66344136800_0.8420105635211472"
+                }
+            ],
+            [
+                11,
+                3,
+                3,
+                "OnePlus",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>你好，我是 OnePlus，\n</span><span style='color:#FfFffF'>你是 Kotori 学长吗？</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66344281217_0.9578875331006909"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>そ、そうです。\n</span><span style='color:#FfFffF'>请问 Larry 学长 ...</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66344312786_0.16182629525865733"
+                }
+            ],
+            [
+                11,
+                1,
+                null,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>眼前的人似乎并不是 Larry？此前在网上人肉过照片。\n</span><span style='color:#FfFffF'>虽然我明明是新手，也被称为学长，\n</span><span style='color:#FfFffF'>看来这是集训队的标准称谓。\n</span><span style='color:#FfFffF'>我很快就领会到了这一点。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66344299523_0.749461843511241"
+                }
+            ],
+            [
+                11,
+                3,
+                3,
+                "OnePlus",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>Larry 学长已经毕业，昨天傍晚已经离开哈尔滨了，\n</span><span style='color:#FfFffF'>临走之后他特地和我们嘱咐，今天机房会来一位小美女。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66344412548_0.19315130291081206"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>不知是我的声音太小，还是大家都在专注着写题的缘故。\n</span><span style='color:#FfFffF'>似乎并没有人发现机房里多了一个人。\n</span><span style='color:#FfFffF'>我一动不动的呆在原地。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66344111293_0.31691795592940863"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>あの，すみません...\n</span><span style='color:#FfFffF'>请问 Larry 学长在这里吗...</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66344111124_0.4789089733479013"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>あの，すみません...\n</span><span style='color:#FfFffF'>请问 Larry 学长在这里吗...</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66344066213_0.15972903207413447"
+                }
             ]
         ]
     ],
