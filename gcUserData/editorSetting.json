@@ -17,7 +17,7 @@
         "scriptSystem": true,
         "mainArea": 0,
         "sceneState": {
-            "lastSceneMapID": 28,
+            "lastSceneMapID": 16,
             "lastSceneElementIndex": 0,
             "lastSceneElementSelectedIndex": 0,
             "lastSceneElementBlockset": true
@@ -52,7 +52,7 @@
         "restartServer": true,
         "ediotrViewColor": {
             "ui": [
-                "#4b4b4b",
+                "#1d1d1d",
                 "#000000"
             ],
             "dialog": [

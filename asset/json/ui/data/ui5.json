@@ -25,6 +25,7 @@
                 "isOpen": true,
                 "image": "asset/image/picture/ui/menu/bgi.png",
                 "grid9": "3,3,3,3,0",
+                "flip": null,
                 "pivotType": 0
             },
             {
@@ -34,8 +35,8 @@
                 "name": "界面标志",
                 "x": 0,
                 "y": 10,
-                "width": 500,
-                "height": 140,
+                "width": 425,
+                "height": 119,
                 "opacity": 1,
                 "rotation": 0,
                 "show": true,
@@ -78,6 +79,7 @@
                 "isOpen": true,
                 "image": "asset/image/picture/ui/menu/paper.png",
                 "grid9": "15,15,15,15,0",
+                "flip": null,
                 "pivotType": 0
             },
             {
@@ -148,6 +150,7 @@
                 "mouseEventEnabledInEditor": true,
                 "showOnEditor": true,
                 "hasCommand": [
+                    true,
                     true
                 ],
                 "isOpen": true,
@@ -164,6 +167,7 @@
                 "clickColor": "#ff9962",
                 "bold": false,
                 "italic": false,
+                "smooth": null,
                 "align": 1,
                 "valign": 1,
                 "letterSpacing": 0,
@@ -197,6 +201,7 @@
                 "isOpen": true,
                 "image": "asset/image/picture/ui/menu/SAVE.png",
                 "grid9": "0,0,0,0,0",
+                "flip": null,
                 "pivotType": 0
             }
         ]

@@ -40,6 +40,7 @@ class GUI_2 extends GUI_BASE {
    界面背景框:UIBitmap;
    list:UIList; // Item=1001
    关闭读取存档界面按钮:UIButton;
+   图片:UIBitmap;
    constructor(){
       super(2);
    }
@@ -49,7 +50,7 @@ class ListItem_2 extends UIListItemData {
    界面标志:string;
    界面背景框:string;
    list:UIListItemData[];
-
+   图片:string;
 }
 
 /**
@@ -83,6 +84,7 @@ class GUI_4 extends GUI_BASE {
    文本框背景:UIBitmap;
    dialogRecordList:UIList; // Item=1002
    返回按钮:UIButton;
+   图片:UIBitmap;
    constructor(){
       super(4);
    }
@@ -92,7 +94,7 @@ class ListItem_4 extends UIListItemData {
    界面标志:string;
    文本框背景:string;
    dialogRecordList:UIListItemData[];
-
+   图片:string;
 }
 
 /**
@@ -104,6 +106,7 @@ class GUI_5 extends GUI_BASE {
    界面背景框:UIBitmap;
    list:UIList; // Item=1001
    关闭存入存档界面按钮:UIButton;
+   图片:UIBitmap;
    constructor(){
       super(5);
    }
@@ -113,7 +116,7 @@ class ListItem_5 extends UIListItemData {
    界面标志:string;
    界面背景框:string;
    list:UIListItemData[];
-
+   图片:string;
 }
 
 /**
@@ -123,7 +126,6 @@ class GUI_6 extends GUI_BASE {
    界面背景:UIBitmap;
    界面中层背景:UIBitmap;
    界面标志:UIBitmap;
-   分割线:UIBitmap;
    背景音乐音量滑块背景:UIBitmap;
    背景音乐音量文本:UIString;
    环境音效音量滑块背景:UIBitmap;
@@ -141,6 +143,7 @@ class GUI_6 extends GUI_BASE {
    全屏文本:UIString;
    快进已读勾选框:UISwitch;
    快进已读文本:UIString;
+   图片:UIBitmap;
    constructor(){
       super(6);
    }
@@ -149,7 +152,6 @@ class ListItem_6 extends UIListItemData {
    界面背景:string;
    界面中层背景:string;
    界面标志:string;
-   分割线:string;
    背景音乐音量滑块背景:string;
    背景音乐音量文本:string;
    环境音效音量滑块背景:string;
@@ -166,6 +168,7 @@ class ListItem_6 extends UIListItemData {
    全屏文本:string;
    快进已读勾选框:number;
    快进已读文本:string;
+   图片:string;
 }
 
 /**
@@ -337,7 +340,6 @@ class GUI_1001 extends GUI_BASE {
    no:UIString;
    delBtn:UIButton;
    gameTimeStr:UIString;
-   分割线:UIBitmap;
    constructor(){
       super(1001);
    }
@@ -349,7 +351,6 @@ class ListItem_1001 extends UIListItemData {
    dateStr:string;
    no:string;
    gameTimeStr:string;
-   分割线:string;
 }
 
 /**
