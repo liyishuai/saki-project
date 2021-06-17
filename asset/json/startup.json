@@ -3240,9 +3240,9 @@
             "index": 2
         },
         "dialog": {
-            "x": 278,
-            "y": 577,
-            "width": 720,
+            "x": 118,
+            "y": 578,
+            "width": 946,
             "height": 101,
             "alpha": 1,
             "fontSize": 24,
@@ -5484,6 +5484,38 @@
                 false
             ]
         ]
+    },
+    "asset/json/scene/model/som1.json": {
+        "preLayer": [
+            {
+                "varName": "avatar",
+                "type": 1,
+                "isPreView": true,
+                "inEditorShow": true,
+                "idList": [
+                    1,
+                    16
+                ]
+            }
+        ],
+        "varAttributes": [],
+        "serverInstanceClassName": "GameServerSceneObject_1",
+        "clientInstanceClassName": "ClientSceneObject",
+        "supportTriggerTypes": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "supportStatusPage": true,
+        "id": 1,
+        "attribute": [],
+        "clientCode": "class ClientSceneObject_1 extends ClientSceneObject_Base1 {\n    constructor(soData: SceneObject, scene: ClientScene){\n        super(soData,scene);\n    }\n}",
+        "clientJsCode": "var __extends = (this && this.__extends) || function (d, b) {\n    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];\n    function __() { this.constructor = d; }\n    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\n};\nvar ClientSceneObject_1 = (function (_super) {\n    __extends(ClientSceneObject_1, _super);\n    function ClientSceneObject_1(soData, scene) {\n        _super.call(this, soData, scene);\n    }\n    return ClientSceneObject_1;\n}(ClientSceneObject_Base1));\n",
+        "commonCode": "",
+        "commonJsCode": ""
     },
     "asset/json/custom/customMaterialList.json": {
         "list": [
@@ -9824,38 +9856,6 @@
                 "shaderSize": false
             }
         }
-    },
-    "asset/json/scene/model/som1.json": {
-        "preLayer": [
-            {
-                "varName": "avatar",
-                "type": 1,
-                "isPreView": true,
-                "inEditorShow": true,
-                "idList": [
-                    1,
-                    16
-                ]
-            }
-        ],
-        "varAttributes": [],
-        "serverInstanceClassName": "GameServerSceneObject_1",
-        "clientInstanceClassName": "ClientSceneObject",
-        "supportTriggerTypes": [
-            true,
-            true,
-            true,
-            true,
-            true,
-            true
-        ],
-        "supportStatusPage": true,
-        "id": 1,
-        "attribute": [],
-        "clientCode": "class ClientSceneObject_1 extends ClientSceneObject_Base1 {\n    constructor(soData: SceneObject, scene: ClientScene){\n        super(soData,scene);\n    }\n}",
-        "clientJsCode": "var __extends = (this && this.__extends) || function (d, b) {\n    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];\n    function __() { this.constructor = d; }\n    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\n};\nvar ClientSceneObject_1 = (function (_super) {\n    __extends(ClientSceneObject_1, _super);\n    function ClientSceneObject_1(soData, scene) {\n        _super.call(this, soData, scene);\n    }\n    return ClientSceneObject_1;\n}(ClientSceneObject_Base1));\n",
-        "commonCode": "",
-        "commonJsCode": ""
     },
     "asset/json/ui/data/ui1.json": {
         "root": {
@@ -19074,6 +19074,20 @@
             }
         },
         "id": 1
+    },
+    "asset/json/custom/customSceneEventType.json": {
+        "list": [
+            null,
+            "进入场景"
+        ],
+        "data": [
+            null,
+            {
+                "id": 1,
+                "tips": "触发事件示例-进入场景时触发的事件\n进入场景时会预加载事件中的资源",
+                "multiline": false
+            }
+        ]
     },
     "asset/json/custom/customCommandType.json": {
         "list": {
@@ -40451,20 +40465,6 @@
                 "customPhraseDescJS": "var str = \"\";\nstr += \"「\" + attrs.typeItems[attrs.type] + \"」\";\nif (attrs.type == 0) {\n    var passageStr = attrs.passageIDUseVar ? \"@\" + attrs.passageIDVar + \"-\" + getTypeDataListName(3, attrs.passageIDVar) : attrs.passageID;\n    str += \"\\u7F16\\u53F7\\u3010\" + passageStr + \"\\u3011\";\n}\nstr += attrs.shakeTimeTypeItems[attrs.shakeTimeType];\nif (attrs.shakeTimeType == 0) {\n    str += \":\" + attrs.duringFrame + \"帧\";\n}\nif (attrs.shakeTimeType != 2) {\n    str += \" \\u9707\\u52A8\\u5F3A\\u5EA6\\uFF08\" + attrs.dx + \",\" + attrs.dy + \"\\uFF09\";\n}\nstr;\n"
             }
         }
-    },
-    "asset/json/custom/customSceneEventType.json": {
-        "list": [
-            null,
-            "进入场景"
-        ],
-        "data": [
-            null,
-            {
-                "id": 1,
-                "tips": "触发事件示例-进入场景时触发的事件\n进入场景时会预加载事件中的资源",
-                "multiline": false
-            }
-        ]
     },
     "asset/json/server/command/worldCommand.json": {
         "list": {

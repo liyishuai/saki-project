@@ -115,7 +115,7 @@
                 "",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>或许是经过长途旅行不可避免所产生的疲惫，\n</span><span style='color:#FfFffF'>又或许是第一次来到一座遥远而陌生的城市所产生的不安，\n</span><span style='color:#FfFffF'>少女勉强从盛夏的阳光中睁开朦胧的双眼，\n</span><span style='color:#FfFffF'>脑海中似有似无的呼喊声也终于开始消退。</span>",
+                "<span style='color:#FfFffF'>或许是经过长途旅行不可避免所产生的疲惫，又或许是第一次来到一座遥远而陌生的城市所产生的不安，少女勉强从盛夏的阳光中睁开朦胧的双眼，脑海中似有似无的呼喊声也终于开始消退。</span>",
                 null,
                 1,
                 0,
@@ -177,8 +177,8 @@
             ],
             [
                 11,
-                3,
-                0,
+                1,
+                null,
                 "",
                 3,
                 -3,
@@ -192,8 +192,8 @@
             ],
             [
                 11,
-                3,
-                0,
+                1,
+                null,
                 "",
                 3,
                 -3,
@@ -207,12 +207,12 @@
             ],
             [
                 11,
-                3,
-                0,
+                1,
+                null,
                 "",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>虽然 OI 起步较晚，也不像数学、物理等科⽬⼀样属于⾼考考察的范围。\n</span><span style='color:#FfFffF'>OI 依然以其独特的魅力，跻身五大学科竞赛之列。\n</span><span style='color:#FfFffF'></span>",
+                "<span style='color:#FfFffF'>虽然 OI 起步较晚，也不像数学、物理等科⽬⼀样属于⾼考考察的范围。\n</span><span style='color:#FfFffF'>OI 依然以其独特的魅力，跻身五大学科竞赛之列。</span>",
                 null,
                 -1,
                 0,
@@ -222,8 +222,8 @@
             ],
             [
                 11,
-                3,
-                0,
+                1,
+                null,
                 "",
                 3,
                 -3,
@@ -237,8 +237,8 @@
             ],
             [
                 11,
-                3,
-                0,
+                1,
+                null,
                 "",
                 3,
                 -3,
@@ -267,7 +267,7 @@
             ],
             [
                 11,
-                3,
+                1,
                 null,
                 "",
                 3,
@@ -328,7 +328,7 @@
             ],
             [
                 11,
-                3,
+                1,
                 null,
                 "",
                 3,
@@ -343,7 +343,7 @@
             ],
             [
                 11,
-                3,
+                1,
                 null,
                 "",
                 3,
@@ -358,7 +358,7 @@
             ],
             [
                 11,
-                3,
+                1,
                 null,
                 "",
                 3,
@@ -373,7 +373,7 @@
             ],
             [
                 11,
-                3,
+                1,
                 null,
                 "",
                 3,
@@ -388,7 +388,7 @@
             ],
             [
                 11,
-                3,
+                1,
                 null,
                 "",
                 3,
@@ -403,7 +403,7 @@
             ],
             [
                 11,
-                3,
+                1,
                 null,
                 "",
                 3,
@@ -418,7 +418,7 @@
             ],
             [
                 11,
-                3,
+                1,
                 null,
                 "",
                 3,
@@ -433,7 +433,7 @@
             ],
             [
                 11,
-                3,
+                1,
                 null,
                 "",
                 3,
@@ -494,7 +494,7 @@
             ],
             [
                 11,
-                3,
+                1,
                 null,
                 "",
                 3,
@@ -514,7 +514,7 @@
                 "",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>あの，すみません...\n</span><span style='color:#FfFffF'>请问 Larry 学长在这里吗...</span>",
+                "<span style='color:#FfFffF'>「あの，すみません...\n</span><span style='color:#FfFffF'>请问 Larry 学长在这里吗...」</span>",
                 null,
                 1,
                 0,
@@ -544,7 +544,7 @@
                 "",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>あの，すみません...</span>",
+                "<span style='color:#FfFffF'>「あの，すみません...」</span>",
                 null,
                 1,
                 0,
@@ -604,7 +604,7 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>你好，我是 OnePlus，\n</span><span style='color:#FfFffF'>你是 Kotori 学长吗？</span>",
+                "<span style='color:#FfFffF'>「你好，我是 OnePlus，\n</span><span style='color:#FfFffF'>你是 Kotori 学长吗？」</span>",
                 null,
                 1,
                 0,
@@ -619,7 +619,7 @@
                 "",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>そ、そうです。\n</span><span style='color:#FfFffF'>请问 Larry 学长 ...</span>",
+                "<span style='color:#FfFffF'>「そ、そうです。\n</span><span style='color:#FfFffF'>请问 Larry 学长 ...」</span>",
                 null,
                 1,
                 0,
@@ -649,7 +649,7 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>Larry 学长已经毕业，昨天傍晚已经离开哈尔滨了，\n</span><span style='color:#FfFffF'>临走之后他特地和我们嘱咐，今天机房会来一位小美女。</span>",
+                "<span style='color:#FfFffF'>「Larry 学长已经毕业，昨天傍晚已经离开哈尔滨了，\n</span><span style='color:#FfFffF'>临走之后他特地和我们嘱咐，今天机房会来一位小美女。」</span>",
                 null,
                 1,
                 0,
@@ -694,7 +694,7 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>这是 Larry 学长的饭卡和宿舍的钥匙。\n</span><span style='color:#FfFffF'>你是第一次来 HIT 吧，我带你认识一下宿舍吧。</span>",
+                "<span style='color:#FfFffF'>「这是 Larry 学长的饭卡和宿舍的钥匙。\n</span><span style='color:#FfFffF'>你是第一次来 HIT 吧，我带你认识一下宿舍吧。」</span>",
                 null,
                 1,
                 0,
@@ -753,12 +753,42 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>这里就是研究生宿舍了，\n</span><span style='color:#FfFffF'>在正式开学之前，准新生会先安排在这里。</span>",
+                "<span style='color:#FfFffF'>「这里就是研究生宿舍了，\n</span><span style='color:#FfFffF'>在正式开学之前，准新生会先安排在这里。」</span>",
                 null,
                 1,
                 0,
                 {
                     "___cmdID": "66345929464_0.0017476145994081982"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>「谢谢学长...」</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66347435247_0.9886087220036204"
+                }
+            ],
+            [
+                11,
+                3,
+                3,
+                "OnePlus",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>「有什么问题想要问我吗？」</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66347366630_0.27651766697287594"
                 }
             ],
             [
@@ -805,12 +835,42 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>关于集训的课表和讲师之前已经发在论坛和群里了。</span>",
+                "<span style='color:#FfFffF'>「关于集训的课表和讲师之前已经发在论坛和群里了。」</span>",
                 null,
                 1,
                 0,
                 {
-                    "___cmdID": "66346051138_0.6585012934200416"
+                    "___cmdID": "66347542304_0.8536838847090709"
+                }
+            ],
+            [
+                11,
+                7,
+                3,
+                "OnePlus",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>Week1\n</span><span style='color:#FfFffF'>月曜日 Day 1 数据结构-1\n</span><span style='color:#FfFffF'>火曜日 Day 2 动态规划-1\n</span><span style='color:#FfFffF'>水曜日 Day 3 状态空间搜索-1\n</span><span style='color:#FfFffF'>木曜日 Day 4 状态空间搜索-1\n</span><span style='color:#FfFffF'>金曜日 Day 5 数据结构-2\n</span><span style='color:#FfFffF'>土曜日 Day 6 比賽\n</span><span style='color:#FfFffF'>日曜日 Day 7 自由活動</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66347587357_0.9415714735356131"
+                }
+            ],
+            [
+                11,
+                7,
+                3,
+                "OnePlus",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>Week2\n</span><span style='color:#FfFffF'>月曜日 Day 1 图论-1\n</span><span style='color:#FfFffF'>火曜日 Day 2 图论-2\n</span><span style='color:#FfFffF'>水曜日 Day 3 数论-1\n</span><span style='color:#FfFffF'>木曜日 Day 4 字符串-1\n</span><span style='color:#FfFffF'>金曜日 Day 5 计算几何-1\n</span><span style='color:#FfFffF'>土曜日 Day 6 比賽\n</span><span style='color:#FfFffF'>日曜日 Day 7 自由活動</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66347542155_0.4240889475795011"
                 }
             ],
             [
@@ -839,7 +899,7 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>刚才我们路过的两栋楼就是食堂所在的地方。\n</span><span style='color:#FfFffF'>以及对面的这栋黑色屋檐的建筑，我们一般叫做「黑店」，\n</span><span style='color:#FfFffF'>虽然叫「黑店」，但是价格也并不黑，里面也有很多餐厅。\n</span><span style='color:#FfFffF'>当然校园周围也有很多可以吃饭的地方。</span>",
+                "<span style='color:#FfFffF'>「刚才我们路过的两栋楼就是食堂所在的地方。\n</span><span style='color:#FfFffF'>以及对面的这栋黑色屋檐的建筑，我们一般叫做「黑店」，\n</span><span style='color:#FfFffF'>虽然叫「黑店」，但是价格也并不黑，里面也有很多餐厅。\n</span><span style='color:#FfFffF'>当然校园周围也有很多可以吃饭的地方。」</span>",
                 null,
                 1,
                 0,
@@ -873,7 +933,7 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>似乎还有一名选手，是会明天才过来。</span>",
+                "<span style='color:#FfFffF'>「似乎还有一名选手，是会明天才过来。」</span>",
                 null,
                 1,
                 0,
@@ -907,7 +967,7 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>Larry 学长今年已经毕业了，\n</span><span style='color:#FfFffF'>似乎去了哪家公司搬砖。</span>",
+                "<span style='color:#FfFffF'>「Larry 学长今年已经毕业了，\n</span><span style='color:#FfFffF'>似乎去了哪家公司搬砖。」</span>",
                 null,
                 1,
                 0,
@@ -941,7 +1001,7 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>第一周和第二周的周六分辨会有两场考试，\n</span><span style='color:#FfFffF'>集训队会根据考试的结果选拔今年区域赛的选手。</span>",
+                "<span style='color:#FfFffF'>「第一周和第二周的周六分辨会有两场考试，\n</span><span style='color:#FfFffF'>集训队会根据考试的结果选拔今年区域赛的选手。」</span>",
                 null,
                 1,
                 0,
@@ -958,7 +1018,7 @@
             ],
             [
                 4,
-                "结束询问",
+                "谢谢 ...",
                 -1,
                 -1,
                 0,
@@ -981,7 +1041,7 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>今天时间也不早了，你先早点回宿舍休息吧。\n</span><span style='color:#FfFffF'>记得明天早上 8:00 来机房参加集训。</span>",
+                "<span style='color:#FfFffF'>「今天时间也不早了，你先早点回宿舍休息吧。\n</span><span style='color:#FfFffF'>记得明天早上 8:00 来机房参加集训。」</span>",
                 null,
                 1,
                 0,
@@ -996,7 +1056,7 @@
                 "",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>学长。。学长去哪里呢。</span>",
+                "<span style='color:#FfFffF'>「学长。。学长去哪里呢。」</span>",
                 null,
                 1,
                 0,
@@ -1011,7 +1071,7 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>我继续回机房参加训练了，\n</span><span style='color:#FfFffF'>毕竟对我们大三的选手来说每天的训练时间都很宝贵。</span>",
+                "<span style='color:#FfFffF'>「我继续回机房参加训练了，\n</span><span style='color:#FfFffF'>毕竟对我们大三的选手来说每天的训练时间都很宝贵。」</span>",
                 null,
                 1,
                 0,
@@ -1041,7 +1101,7 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>啊，对了，这是我的联络方式。\n</span><span style='color:#FfFffF'>在宿舍遇到问题的话，可以来找我们。</span>",
+                "<span style='color:#FfFffF'>「啊，对了，这是我的联络方式。\n</span><span style='color:#FfFffF'>在宿舍遇到问题的话，可以来找我们。」</span>",
                 null,
                 1,
                 0,
@@ -1056,7 +1116,7 @@
                 "",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>谢.. 谢谢。</span>",
+                "<span style='color:#FfFffF'>「谢.. 谢谢。」</span>",
                 null,
                 1,
                 0,
@@ -1080,11 +1140,20 @@
                 }
             ],
             [
+                40008,
+                {
+                    "49807345511_0.462284017239353": false,
+                    "49807339080_0.9818794648978915": 1,
+                    "49807339080_0.7327578678428031": 1
+                },
+                "66349027264_0.9863145584900332"
+            ],
+            [
                 40001,
                 {
                     "24538808102_0.9970934946254328": 1,
                     "49612012650_0.7509974095572418": 1,
-                    "24538808435_0.6230939565765392": "asset/image/picture/background/school/bg_017.png",
+                    "24538808435_0.6230939565765392": "asset/image/picture/background/school/h012a.png",
                     "49518385245_0.9308839798952664": 1,
                     "49141521249_0.2965750598394892": 1,
                     "49519573910_0.08853124862540018": 1,
@@ -1092,9 +1161,9 @@
                     "49519590084_0.3058131165318816": 1,
                     "49150249927_0.6881795527970145": 100,
                     "49519636189_0.2521948025226537": 1,
-                    "49232462793_0.7622411974016037": 1200,
+                    "49232462793_0.7622411974016037": 1197,
                     "49520636693_0.8404154506260593": 1,
-                    "49232464582_0.12430969584603324": 900,
+                    "49232464582_0.12430969584603324": 897,
                     "49520744730_0.6026838995761481": 1,
                     "49232999716_0.2133484967243402": 0,
                     "49520812848_0.5734967173507821": 1,
@@ -1115,13 +1184,6 @@
                     "49611947752_0.41521729946538755": false
                 },
                 "66346253972_0.5659703779079441"
-            ],
-            [
-                18,
-                "TODO: 这里同样缺一张宿舍的图片……记得替换素材w\n",
-                {
-                    "___cmdID": "66346264977_0.7135513264160858"
-                }
             ],
             [
                 11,
@@ -1166,6 +1228,52 @@
                 0,
                 {
                     "___cmdID": "66346322158_0.07041732929419608"
+                }
+            ],
+            [
+                40014,
+                {
+                    "49825113823_0.7745949272019663": 1,
+                    "49897660694_0.39897478951731946": false,
+                    "49897660694_0.6399331644068169": 1,
+                    "49897660694_0.0946225960666689": 1,
+                    "49897706791_0.8101580703633997": false,
+                    "49897693777_0.31957312098050794": 1,
+                    "49897693777_0.39600212789547196": 1,
+                    "49904671869_0.1506235712026469": [
+                        {
+                            "materials": [
+                                {
+                                    "id": 10,
+                                    "mask": "",
+                                    "useTrans": true,
+                                    "time": 0,
+                                    "trans": "{\"transType\":0,\"loopType\":0,\"timeType\":1,\"timeUnit\":1,\"totalTime\":120,\"tweenType\":0,\"tweenTypeName\":\"linearNone\",\"curveData\":[[0,0,0,99,1,1,1,3],[0,100,100]],\"refreshInterval\":16}",
+                                    "vagueness": 0.25,
+                                    "invertMask": 0,
+                                    "____timeInfo": {
+                                        "trans": 120
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "66348856146_0.04462057027361421"
+            ],
+            [
+                11,
+                1,
+                null,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>...</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66347328914_0.5551088533198161"
                 }
             ],
             [
