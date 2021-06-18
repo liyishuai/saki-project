@@ -47,6 +47,12 @@
             ""
         ]
     },
+    "asset/json/scene/tileList.json": {
+        "list": [
+            null,
+            ""
+        ]
+    },
     "asset/json/scene/autoTileList.json": {
         "list": [
             null,
@@ -60,12 +66,6 @@
                 "id": 1
             }
         }
-    },
-    "asset/json/scene/tileList.json": {
-        "list": [
-            null,
-            ""
-        ]
     },
     "asset/json/custom/dataStructure.json": {
         "list": {
@@ -13488,6 +13488,7 @@
                     "isOpen": true,
                     "image": "asset/image/picture/ui/menu/bgi.png",
                     "grid9": "3,3,3,3,0",
+                    "flip": null,
                     "pivotType": 0
                 },
                 {
@@ -13497,8 +13498,8 @@
                     "name": "界面标志",
                     "x": 0,
                     "y": 10,
-                    "width": 500,
-                    "height": 140,
+                    "width": 425,
+                    "height": 119,
                     "opacity": 1,
                     "rotation": 0,
                     "show": true,
@@ -13541,6 +13542,7 @@
                     "isOpen": true,
                     "image": "asset/image/picture/ui/menu/paper.png",
                     "grid9": "15,15,15,15,0",
+                    "flip": null,
                     "pivotType": 0
                 },
                 {
@@ -13611,6 +13613,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -13627,6 +13630,7 @@
                     "clickColor": "#ff9962",
                     "bold": false,
                     "italic": false,
+                    "smooth": null,
                     "align": 1,
                     "valign": 1,
                     "letterSpacing": 0,
@@ -13660,6 +13664,7 @@
                     "isOpen": true,
                     "image": "asset/image/picture/ui/menu/SAVE.png",
                     "grid9": "0,0,0,0,0",
+                    "flip": null,
                     "pivotType": 0
                 }
             ]
@@ -13802,6 +13807,10 @@
                 [],
                 []
             ]
+        },
+        "66386921317_0.9348148879739111": {
+            "condition": [],
+            "commands": []
         }
     },
     "asset/json/ui/data/ui6.json": {
@@ -13920,8 +13929,8 @@
                     "condition": [],
                     "type": "UIString",
                     "name": "背景音乐音量文本",
-                    "x": 136,
-                    "y": 207,
+                    "x": 141,
+                    "y": 208,
                     "width": 130,
                     "height": 30,
                     "opacity": 1,
@@ -13990,8 +13999,8 @@
                     "condition": [],
                     "type": "UIString",
                     "name": "环境音效音量文本",
-                    "x": 128,
-                    "y": 281,
+                    "x": 136,
+                    "y": 299,
                     "width": 130,
                     "height": 30,
                     "opacity": 1,
@@ -14060,8 +14069,8 @@
                     "condition": [],
                     "type": "UIString",
                     "name": "音效音量文本",
-                    "x": 125,
-                    "y": 364,
+                    "x": 138,
+                    "y": 387,
                     "width": 130,
                     "height": 30,
                     "opacity": 1,
@@ -14130,8 +14139,8 @@
                     "condition": [],
                     "type": "UIString",
                     "name": "语音音量文本",
-                    "x": 124,
-                    "y": 464,
+                    "x": 138,
+                    "y": 456,
                     "width": 130,
                     "height": 30,
                     "opacity": 1,
@@ -14341,6 +14350,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -14388,6 +14398,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -14404,8 +14415,8 @@
                     "condition": [],
                     "type": "UIString",
                     "name": "全屏文本",
-                    "x": 126,
-                    "y": 542,
+                    "x": 140,
+                    "y": 544,
                     "width": 130,
                     "height": 30,
                     "opacity": 1,
@@ -14463,6 +14474,7 @@
                     "mouseEventEnabledInEditor": true,
                     "showOnEditor": true,
                     "hasCommand": [
+                        true,
                         true
                     ],
                     "isOpen": true,
@@ -14479,8 +14491,8 @@
                     "condition": [],
                     "type": "UIString",
                     "name": "快进已读文本",
-                    "x": 119,
-                    "y": 586,
+                    "x": 141,
+                    "y": 581,
                     "width": 165,
                     "height": 38,
                     "opacity": 1,
@@ -15027,23 +15039,6 @@
                 []
             ]
         },
-        "51692866320_0.317917878523599": {
-            "condition": [],
-            "commands": [
-                [],
-                [],
-                [],
-                [],
-                [],
-                [],
-                [],
-                [],
-                [],
-                [],
-                [],
-                []
-            ]
-        },
         "51692936312_0.9068853706220226": {
             "condition": [],
             "commands": [
@@ -15212,6 +15207,10 @@
                 [],
                 []
             ]
+        },
+        "66386848652_0.23439235444851825": {
+            "condition": [],
+            "commands": []
         }
     },
     "asset/json/ui/data/ui7.json": {
@@ -19102,6 +19101,76 @@
         "type": {
             "1": "CG"
         }
+    },
+    "asset/json/custom/customUIEventType.json": {
+        "list": [
+            null,
+            "点击事件",
+            "鼠标悬停",
+            "鼠标离开",
+            "显示时",
+            "消失时",
+            "左键按下",
+            "左键弹起",
+            "左键双击",
+            "鼠标移动",
+            "右键按下",
+            "右键弹起",
+            "右键点击"
+        ],
+        "data": [
+            null,
+            {
+                "id": 1,
+                "tips": "鼠标左键点击该组件时触发的事件\n触发者：玩家的对象  执行者：当前的对象",
+                "multiline": false
+            },
+            {
+                "id": 2,
+                "tips": "鼠标悬停在该组件上时触发的事件\n触发者：玩家的对象  执行者：当前的对象",
+                "multiline": false
+            },
+            {
+                "id": 3,
+                "tips": "鼠标从该组件中离开时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
+            },
+            {
+                "id": 4,
+                "tips": "该组件显示时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
+            },
+            {
+                "id": 5,
+                "tips": "该组件从显示状态消失时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
+            },
+            {
+                "id": 6,
+                "tips": "鼠标左键按下该组件时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
+            },
+            {
+                "id": 7,
+                "tips": "鼠标左键弹起该组件时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
+            },
+            {
+                "id": 8,
+                "tips": "鼠标左键双击该组件触发的事件\n触发者：玩家的对象  执行者：当前的对象"
+            },
+            {
+                "id": 9,
+                "tips": "鼠标在该组件上移动时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
+            },
+            {
+                "id": 10,
+                "tips": "鼠标右键按下该组件时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
+            },
+            {
+                "id": 11,
+                "tips": "鼠标右键弹起该组件时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
+            },
+            {
+                "id": 12,
+                "tips": "鼠标右键点击该组件时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
+            }
+        ]
     },
     "asset/json/custom/customCommandType.json": {
         "list": {
@@ -40479,76 +40548,6 @@
                 "customPhraseDescJS": "var str = \"\";\nstr += \"「\" + attrs.typeItems[attrs.type] + \"」\";\nif (attrs.type == 0) {\n    var passageStr = attrs.passageIDUseVar ? \"@\" + attrs.passageIDVar + \"-\" + getTypeDataListName(3, attrs.passageIDVar) : attrs.passageID;\n    str += \"\\u7F16\\u53F7\\u3010\" + passageStr + \"\\u3011\";\n}\nstr += attrs.shakeTimeTypeItems[attrs.shakeTimeType];\nif (attrs.shakeTimeType == 0) {\n    str += \":\" + attrs.duringFrame + \"帧\";\n}\nif (attrs.shakeTimeType != 2) {\n    str += \" \\u9707\\u52A8\\u5F3A\\u5EA6\\uFF08\" + attrs.dx + \",\" + attrs.dy + \"\\uFF09\";\n}\nstr;\n"
             }
         }
-    },
-    "asset/json/custom/customUIEventType.json": {
-        "list": [
-            null,
-            "点击事件",
-            "鼠标悬停",
-            "鼠标离开",
-            "显示时",
-            "消失时",
-            "左键按下",
-            "左键弹起",
-            "左键双击",
-            "鼠标移动",
-            "右键按下",
-            "右键弹起",
-            "右键点击"
-        ],
-        "data": [
-            null,
-            {
-                "id": 1,
-                "tips": "鼠标左键点击该组件时触发的事件\n触发者：玩家的对象  执行者：当前的对象",
-                "multiline": false
-            },
-            {
-                "id": 2,
-                "tips": "鼠标悬停在该组件上时触发的事件\n触发者：玩家的对象  执行者：当前的对象",
-                "multiline": false
-            },
-            {
-                "id": 3,
-                "tips": "鼠标从该组件中离开时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
-            },
-            {
-                "id": 4,
-                "tips": "该组件显示时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
-            },
-            {
-                "id": 5,
-                "tips": "该组件从显示状态消失时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
-            },
-            {
-                "id": 6,
-                "tips": "鼠标左键按下该组件时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
-            },
-            {
-                "id": 7,
-                "tips": "鼠标左键弹起该组件时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
-            },
-            {
-                "id": 8,
-                "tips": "鼠标左键双击该组件触发的事件\n触发者：玩家的对象  执行者：当前的对象"
-            },
-            {
-                "id": 9,
-                "tips": "鼠标在该组件上移动时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
-            },
-            {
-                "id": 10,
-                "tips": "鼠标右键按下该组件时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
-            },
-            {
-                "id": 11,
-                "tips": "鼠标右键弹起该组件时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
-            },
-            {
-                "id": 12,
-                "tips": "鼠标右键点击该组件时触发的事件\n触发者：玩家的对象  执行者：当前的对象"
-            }
-        ]
     },
     "asset/json/custom/customModule/1/cm1.json": {
         "attrs": {
