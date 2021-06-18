@@ -123,7 +123,7 @@
                 "母上",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>生日快乐，宝贝！又长大一岁了呢。\n</span><span style='color:#FfFffF'>对着蛋糕许个愿望吧！</span>",
+                "<span style='color:#FfFffF'>生日快乐，宝贝！又长大一岁了呢。</span>",
                 null,
                 1,
                 0,
@@ -153,7 +153,7 @@
                 "",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>6 岁生日那一天 ...</span>",
+                "<span style='color:#FfFffF'>6 岁生日的那天 ...</span>",
                 null,
                 1,
                 0,
@@ -164,16 +164,238 @@
             [
                 11,
                 3,
-                7,
-                "Kotori",
+                null,
+                "母上",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>（嗯 ... Kotori 想要成为 ... </span><span style='color:#ffa000'>大数学家</span><span style='color:#FfFffF'>！）</span>",
+                "<span style='color:#FfFffF'>对着蛋糕许个愿望吧！</span>",
                 null,
                 1,
                 0,
                 {
-                    "___cmdID": "66377404206_0.19894137811251555"
+                    "___cmdID": "66491151113_0.2862147980931249"
+                }
+            ],
+            [
+                11,
+                3,
+                7,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>（唔嗯 ... Kotori 许个什么愿望好呢？）</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66491214625_0.6911277003478846"
+                }
+            ],
+            [
+                11,
+                1,
+                null,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>这样思索着，脑海中飞快的闪现出未来的无限多种可能 ...\n</span><span style='color:#FfFffF'>每一种未来似乎都在一瞬间进行了一遍演绎 ...</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66491302066_0.40447813730845494"
+                }
+            ],
+            [
+                11,
+                1,
+                null,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>但是果然 Kotori 还是最想成为 ...</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66491225921_0.3187396146630139"
+                }
+            ],
+            [
+                3,
+                0,
+                -1,
+                -1,
+                {
+                    "___cmdID": "66491333295_0.9409168613955203"
+                }
+            ],
+            [
+                4,
+                "大数学家",
+                -1,
+                -1,
+                0,
+                0,
+                [],
+                {
+                    "___cmdID": "66491446005_0.14537477858129222"
+                }
+            ],
+            [
+                11,
+                3,
+                7,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>（嗯 ... Kotori 想要成为 ... 像欧拉那样的 </span><span style='color:#ffa000'>大数学家</span><span style='color:#FfFffF'>！）</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66491453844_0.8550874150308541"
+                }
+            ],
+            [
+                4,
+                "大理论计算机科学家",
+                -1,
+                -1,
+                0,
+                0,
+                [],
+                {
+                    "___cmdID": "66491446005_0.24359409451824043"
+                }
+            ],
+            [
+                11,
+                3,
+                7,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>（嗯 ... Kotori 想要成为 ... 像图灵那样的 </span><span style='color:#ffa000'>大理论计算机科学家</span><span style='color:#FfFffF'>！）</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66491456211_0.6563289615448764"
+                }
+            ],
+            [
+                4,
+                "大工程师",
+                -1,
+                -1,
+                0,
+                0,
+                [],
+                {
+                    "___cmdID": "66491446005_0.11228613898008222"
+                }
+            ],
+            [
+                11,
+                3,
+                7,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>（嗯 ... Kotori 想要成为 ... 像特斯拉那样的 </span><span style='color:#ffa000'>大工程师</span><span style='color:#FfFffF'>！）</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66491478378_0.0009070859331099523"
+                }
+            ],
+            [
+                4,
+                "大作家",
+                -1,
+                -1,
+                0,
+                0,
+                [],
+                {
+                    "___cmdID": "66491446005_0.4857326480958879"
+                }
+            ],
+            [
+                11,
+                3,
+                7,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>（嗯 ... Kotori 想要成为 ... 像曹雪芹那样的 </span><span style='color:#ffa000'>大作家</span><span style='color:#FfFffF'>！）</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66491533342_0.45275917398862764"
+                }
+            ],
+            [
+                4,
+                "大艺术家",
+                -1,
+                -1,
+                0,
+                0,
+                [],
+                {
+                    "___cmdID": "66491446005_0.0302330689065895"
+                }
+            ],
+            [
+                11,
+                3,
+                7,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>（嗯 ... Kotori 想要成为 ... 像莫扎特那样的 </span><span style='color:#ffa000'>大艺术家</span><span style='color:#FfFffF'>！）</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66491540730_0.08364465980658142"
+                }
+            ],
+            [
+                4,
+                "大福利姬",
+                -1,
+                -1,
+                0,
+                0,
+                [],
+                {
+                    "___cmdID": "66491446005_0.7380382550306694"
+                }
+            ],
+            [
+                11,
+                3,
+                7,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>（嗯 ... Kotori 想要成为 ... 像三上悠亚那样的 </span><span style='color:#ffa000'>大福利姬</span><span style='color:#FfFffF'>！）</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66491579563_0.12324548836483928"
+                }
+            ],
+            [
+                10,
+                {
+                    "___cmdID": "66491446005_0.13214027855755028"
                 }
             ],
             [

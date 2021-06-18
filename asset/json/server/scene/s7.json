@@ -85,7 +85,7 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>动态规划嘛，我一向主张多多练习，\n</span><span style='color:#FfFffF'>讲义发下去大家自己看吧。</span>",
+                "<span style='color:#FfFffF'>今天来介绍动态规划的部分，\n</span><span style='color:#FfFffF'>关于理论部分，比如重叠子问题，最优子结构以及无后效性，\n</span><span style='color:#FfFffF'>这里就不再赘述了，大家可以自己去看教材或讲义。</span>",
                 null,
                 1,
                 0,
@@ -96,16 +96,16 @@
             [
                 11,
                 3,
-                2,
-                "",
+                3,
+                "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>什么嘛，结果还是要自学啊。。。</span>",
+                "<span style='color:#FfFffF'>关于动态规划的动机，其一是重叠子问题，其二是多阶段决策。\n</span><span style='color:#FfFffF'>而具体做起来主要考察的就是，设计状态，寻找 </span><span style='color:#ff0000'>状态转移方程</span><span style='color:#FfFffF'>，\n</span><span style='color:#FfFffF'>以及最后的优化时间复杂度。</span>",
                 null,
-                5,
+                1,
                 0,
                 {
-                    "___cmdID": "65795895324_0.845271135660772"
+                    "___cmdID": "66498948751_0.5748613126574258"
                 }
             ],
             [
@@ -115,7 +115,208 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>这里还是讲解一下最简单的 ...\n</span><span style='color:#FfFffF'>最长递增子序列（Longest Increasing Subsequence）问题。</span>",
+                "<span style='color:#FfFffF'>我们先来看一道最简单的模型。\n</span><span style='color:#FfFffF'>最大连续子序列和问题 ...</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66498642057_0.2718352897491516"
+                }
+            ],
+            [
+                11,
+                3,
+                3,
+                "OnePlus",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>给定 n 个整数的序列 a，连续子序列是所有连续子序列中元素和最大的一个，\n</span><span style='color:#FfFffF'>例如给定序列 -2, 11, -4, 13, -5, -2，\n</span><span style='color:#FfFffF'>其最大连续子序列为 11, -4, 13，最大和为 20。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66498642057_0.9907093414628496"
+                }
+            ],
+            [
+                20,
+                "Generate exam2",
+                "// 当前的事件触发器：trigger: CommandTrigger;\ngenerateExam('exam2', ['POJ-1141',]);",
+                "generateExam('exam2', ['POJ-1141',]);\n",
+                {
+                    "___cmdID": "66498642057_0.09237936667058544"
+                }
+            ],
+            [
+                8,
+                "exam2",
+                {
+                    "___cmdID": "66498642057_0.6428079533644986"
+                }
+            ],
+            [
+                3,
+                0,
+                0,
+                -1,
+                {
+                    "___cmdID": "66498642057_0.970695450696698"
+                }
+            ],
+            [
+                4,
+                "POJ 3250",
+                0,
+                -1,
+                1,
+                2001,
+                [],
+                {
+                    "___cmdID": "66498642057_0.6732148325985519"
+                }
+            ],
+            [
+                0,
+                0,
+                2,
+                [
+                    0,
+                    1,
+                    2001,
+                    0
+                ],
+                0,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                0,
+                [
+                    1,
+                    1,
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                0,
+                0,
+                [
+                    1,
+                    1
+                ],
+                "",
+                "",
+                true,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+                0,
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                {
+                    "___cmdID": "66498642057_0.7955268720442725"
+                }
+            ],
+            [
+                20,
+                "弹出广告",
+                "// 当前的事件触发器：trigger: CommandTrigger;\nconst problemsMapName = WorldData.AllProblems.currentProblemsName;\nconst problemsMap = WorldData.AllProblems[problemsMapName];\n\nwindow.open(`https://vjudge.net/problem/${Object.keys(problemsMap)[0]}`, '_blank');",
+                "var problemsMapName = WorldData.AllProblems.currentProblemsName;\nvar problemsMap = WorldData.AllProblems[problemsMapName];\nwindow.open(\"https://vjudge.net/problem/\" + Object.keys(problemsMap)[0], '_blank');\n",
+                {
+                    "___cmdID": "66498642057_0.20081544595749934"
+                }
+            ],
+            [
+                16,
+                1,
+                false,
+                {
+                    "___cmdID": "66498642057_0.9279339377732616"
+                }
+            ],
+            [
+                9,
+                "exam2",
+                {
+                    "___cmdID": "66498642057_0.8146979288016107"
+                }
+            ],
+            [
+                1,
+                {
+                    "___cmdID": "66498642057_0.1907916805392278"
+                }
+            ],
+            [
+                11,
+                1,
+                null,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>你已经完成这个题目了哦！去试试其他的题目吧。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66498642057_0.43918804925357713"
+                }
+            ],
+            [
+                9,
+                "exam2",
+                {
+                    "___cmdID": "66498642057_0.86951694420707"
+                }
+            ],
+            [
+                2,
+                {
+                    "___cmdID": "66498642057_0.8002515319626029"
+                }
+            ],
+            [
+                4,
+                "打完收工",
+                -1,
+                -1,
+                1,
+                2020,
+                [],
+                {
+                    "___cmdID": "66498642057_0.8479326609335125"
+                }
+            ],
+            [
+                10,
+                {
+                    "___cmdID": "66498642057_0.448764346201179"
+                }
+            ],
+            [
+                11,
+                3,
+                3,
+                "OnePlus",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>我们再来看一道经典的问题 ...\n</span><span style='color:#FfFffF'>最长递增子序列（Longest Increasing Subsequence）问题。</span>",
                 null,
                 1,
                 0,
@@ -130,7 +331,7 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>求一个序列的最长递增子序列，注意子序列和子串的不同，前者不要求位置连续。\n</span><span style='color:#FfFffF'>例如：4 2 3 1 5 的最长递增子序列为 2 3 5，长度为 3 。</span>",
+                "<span style='color:#FfFffF'>求一个序列的最长递增子序列，\n</span><span style='color:#FfFffF'>这里还是注意子序列和子串的不同，\n</span><span style='color:#FfFffF'>前者不要求位置连续。\n</span><span style='color:#FfFffF'>例如：4 2 3 1 5 的最长递增子序列为 2 3 5，长度为 3 。</span>",
                 null,
                 1,
                 0,
@@ -298,6 +499,21 @@
             [
                 11,
                 3,
+                2,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>（小睡一会儿的话，应该，没关系的吧。。）</span>",
+                null,
+                5,
+                0,
+                {
+                    "___cmdID": "66490390514_0.17678560291599066"
+                }
+            ],
+            [
+                11,
+                3,
                 0,
                 "",
                 3,
@@ -308,6 +524,36 @@
                 0,
                 {
                     "___cmdID": "66160199160_0.07978142670424715"
+                }
+            ],
+            [
+                11,
+                3,
+                3,
+                "OnePlus",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>下面我们来做一些习题。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66490353910_0.525551047805658"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>（啊。。。怎么又直接到习题阶段了。。。）</span>",
+                null,
+                5,
+                0,
+                {
+                    "___cmdID": "66490365154_0.2984998742181568"
                 }
             ],
             [
@@ -418,13 +664,6 @@
                 }
             ],
             [
-                8,
-                "jump1",
-                {
-                    "___cmdID": "66481791493_0.23780765184230823"
-                }
-            ],
-            [
                 11,
                 3,
                 3,
@@ -437,6 +676,13 @@
                 0,
                 {
                     "___cmdID": "66481676735_0.3846479816339139"
+                }
+            ],
+            [
+                8,
+                "jump1",
+                {
+                    "___cmdID": "66490350485_0.07615497973525764"
                 }
             ],
             [
@@ -626,183 +872,12 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>再看一题？</span>",
+                "<span style='color:#FfFffF'>下面我们再来看一道经典的例题 ...\n</span><span style='color:#FfFffF'>石子归并 ...</span>",
                 null,
                 1,
                 0,
                 {
-                    "___cmdID": "66157167153_0.8886209150337672"
-                }
-            ],
-            [
-                20,
-                "Generate exam2",
-                "// 当前的事件触发器：trigger: CommandTrigger;\ngenerateExam('exam2', ['POJ-1141',]);",
-                "generateExam('exam2', ['POJ-1141',]);\n",
-                {
-                    "___cmdID": "66481415523_0.9162769040452963"
-                }
-            ],
-            [
-                8,
-                "exam2",
-                {
-                    "___cmdID": "65795952703_0.1772584910275503"
-                }
-            ],
-            [
-                3,
-                0,
-                0,
-                -1,
-                {
-                    "___cmdID": "65700935699_0.1992017069362002"
-                }
-            ],
-            [
-                4,
-                "POJ 3250",
-                0,
-                -1,
-                1,
-                2001,
-                [],
-                {
-                    "___cmdID": "65701056487_0.7281640090021608"
-                }
-            ],
-            [
-                0,
-                0,
-                2,
-                [
-                    0,
-                    1,
-                    2001,
-                    0
-                ],
-                0,
-                0,
-                [
-                    0,
-                    1,
-                    1,
-                    0
-                ],
-                0,
-                [
-                    1,
-                    1,
-                    [
-                        0,
-                        0
-                    ]
-                ],
-                0,
-                0,
-                [
-                    1,
-                    1
-                ],
-                "",
-                "",
-                true,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                0,
-                0,
-                [
-                    0,
-                    {},
-                    ""
-                ],
-                [
-                    0,
-                    {},
-                    ""
-                ],
-                {
-                    "___cmdID": "66035492814_0.6582594324294873"
-                }
-            ],
-            [
-                20,
-                "弹出广告",
-                "// 当前的事件触发器：trigger: CommandTrigger;\nconst problemsMapName = WorldData.AllProblems.currentProblemsName;\nconst problemsMap = WorldData.AllProblems[problemsMapName];\n\nwindow.open(`https://vjudge.net/problem/${Object.keys(problemsMap)[0]}`, '_blank');",
-                "var problemsMapName = WorldData.AllProblems.currentProblemsName;\nvar problemsMap = WorldData.AllProblems[problemsMapName];\nwindow.open(\"https://vjudge.net/problem/\" + Object.keys(problemsMap)[0], '_blank');\n",
-                {
-                    "___cmdID": "66035492814_0.7778414653432739"
-                }
-            ],
-            [
-                16,
-                1,
-                false,
-                {
-                    "___cmdID": "66040531690_0.04651817631782085"
-                }
-            ],
-            [
-                9,
-                "exam2",
-                {
-                    "___cmdID": "66040672547_0.1640319541677262"
-                }
-            ],
-            [
-                1,
-                {
-                    "___cmdID": "66035492814_0.8604224109436507"
-                }
-            ],
-            [
-                11,
-                1,
-                null,
-                "",
-                3,
-                -3,
-                "<span style='color:#FfFffF'>你已经完成这个题目了哦！去试试其他的题目吧。</span>",
-                null,
-                1,
-                0,
-                {
-                    "___cmdID": "66035492814_0.6103018849794497"
-                }
-            ],
-            [
-                9,
-                "exam2",
-                {
-                    "___cmdID": "66040548351_0.8073905656984284"
-                }
-            ],
-            [
-                2,
-                {
-                    "___cmdID": "66035492814_0.7960968163296427"
-                }
-            ],
-            [
-                4,
-                "打完收工",
-                -1,
-                -1,
-                1,
-                2020,
-                [],
-                {
-                    "___cmdID": "65701056487_0.6926833898578824"
-                }
-            ],
-            [
-                10,
-                {
-                    "___cmdID": "65701056487_0.15026939526744276"
+                    "___cmdID": "66498274965_0.5444980148694263"
                 }
             ],
             [
@@ -812,12 +887,12 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>再看一题？</span>",
+                "<span style='color:#FfFffF'>有一个石子归并的游戏。最开始的时候，有 n 堆石子排成一列，\n</span><span style='color:#FfFffF'>目标是要将所有的石子合并成一堆，合并规则如下：\n</span><span style='color:#FfFffF'>每一次可以合并 </span><span style='color:#ff0000'>相邻 </span><span style='color:#FfFffF'>位置的两堆石子\n</span><span style='color:#FfFffF'>每次合并的代价为所合并的两堆石子的重量之和\n</span><span style='color:#FfFffF'>求出最小的合并代价。</span>",
                 null,
                 1,
                 0,
                 {
-                    "___cmdID": "66480978821_0.42769216499918983"
+                    "___cmdID": "66498274964_0.18809669706913068"
                 }
             ],
             [
@@ -1176,6 +1251,37 @@
                 {
                     "___cmdID": "66481546881_0.4887863710995981"
                 }
+            ],
+            [
+                11,
+                3,
+                3,
+                "OnePlus",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>今天的课程到这里就结束了。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66499246852_0.13650043837290537"
+                }
+            ],
+            [
+                40008,
+                {
+                    "49807345511_0.462284017239353": false,
+                    "49807339080_0.9818794648978915": 1,
+                    "49807339080_0.7327578678428031": 1
+                },
+                "66484001215_0.8248037184806993"
+            ],
+            [
+                40017,
+                {
+                    "50715038747_0.21761311072349354": 10
+                },
+                "66484001215_0.06432222574525404"
             ]
         ]
     ],
