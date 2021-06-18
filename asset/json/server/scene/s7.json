@@ -312,7 +312,7 @@
             ],
             [
                 9,
-                "exam1",
+                "jump1",
                 {
                     "___cmdID": "66160116062_0.07771908924177096"
                 }
@@ -418,19 +418,10 @@
                 }
             ],
             [
-                20,
-                "Generate exam1",
-                "// 当前的事件触发器：trigger: CommandTrigger;\ngenerateExam('exam1', ['POJ-2533',]);",
-                "generateExam('exam1', ['POJ-2533',]);\n",
-                {
-                    "___cmdID": "66157102429_0.0596150037176566"
-                }
-            ],
-            [
                 8,
-                "exam1",
+                "jump1",
                 {
-                    "___cmdID": "66157102429_0.06455075991710535"
+                    "___cmdID": "66481791493_0.23780765184230823"
                 }
             ],
             [
@@ -445,7 +436,23 @@
                 1,
                 0,
                 {
-                    "___cmdID": "66160244589_0.38169829329871185"
+                    "___cmdID": "66481676735_0.3846479816339139"
+                }
+            ],
+            [
+                20,
+                "Generate exam1",
+                "// 当前的事件触发器：trigger: CommandTrigger;\ngenerateExam('exam1', ['POJ-2533',]);",
+                "generateExam('exam1', ['POJ-2533',]);\n",
+                {
+                    "___cmdID": "66157102429_0.0596150037176566"
+                }
+            ],
+            [
+                8,
+                "exam1",
+                {
+                    "___cmdID": "66157102429_0.06455075991710535"
                 }
             ],
             [
@@ -629,11 +636,11 @@
             ],
             [
                 20,
-                "Generate exam for section2",
-                "// 当前的事件触发器：trigger: CommandTrigger;\ngenerateExam('section1', ['POJ-1141',]);",
-                "generateExam('section1', ['POJ-1141',]);\n",
+                "Generate exam2",
+                "// 当前的事件触发器：trigger: CommandTrigger;\ngenerateExam('exam2', ['POJ-1141',]);",
+                "generateExam('exam2', ['POJ-1141',]);\n",
                 {
-                    "___cmdID": "66040359583_0.12621599670455974"
+                    "___cmdID": "66481415523_0.9162769040452963"
                 }
             ],
             [
@@ -796,6 +803,378 @@
                 10,
                 {
                     "___cmdID": "65701056487_0.15026939526744276"
+                }
+            ],
+            [
+                11,
+                3,
+                3,
+                "OnePlus",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>再看一题？</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66480978821_0.42769216499918983"
+                }
+            ],
+            [
+                20,
+                "Generate exam3",
+                "// 当前的事件触发器：trigger: CommandTrigger;\ngenerateExam('exam3', ['51Nod-1021',]);",
+                "generateExam('exam3', ['51Nod-1021',]);\n",
+                {
+                    "___cmdID": "66481461061_0.2655159273412995"
+                }
+            ],
+            [
+                8,
+                "exam3",
+                {
+                    "___cmdID": "66480978821_0.1916369245813685"
+                }
+            ],
+            [
+                3,
+                0,
+                0,
+                -1,
+                {
+                    "___cmdID": "66481144610_0.5893587540496095"
+                }
+            ],
+            [
+                4,
+                "POJ 3250",
+                0,
+                -1,
+                1,
+                2001,
+                [],
+                {
+                    "___cmdID": "66481144610_0.3557716279170766"
+                }
+            ],
+            [
+                0,
+                0,
+                2,
+                [
+                    0,
+                    1,
+                    2001,
+                    0
+                ],
+                0,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                0,
+                [
+                    1,
+                    1,
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                0,
+                0,
+                [
+                    1,
+                    1
+                ],
+                "",
+                "",
+                true,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+                0,
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                {
+                    "___cmdID": "66481144610_0.26103860637271703"
+                }
+            ],
+            [
+                20,
+                "弹出广告",
+                "// 当前的事件触发器：trigger: CommandTrigger;\nconst problemsMapName = WorldData.AllProblems.currentProblemsName;\nconst problemsMap = WorldData.AllProblems[problemsMapName];\n\nwindow.open(`https://vjudge.net/problem/${Object.keys(problemsMap)[0]}`, '_blank');",
+                "var problemsMapName = WorldData.AllProblems.currentProblemsName;\nvar problemsMap = WorldData.AllProblems[problemsMapName];\nwindow.open(\"https://vjudge.net/problem/\" + Object.keys(problemsMap)[0], '_blank');\n",
+                {
+                    "___cmdID": "66481144610_0.6274268022298959"
+                }
+            ],
+            [
+                16,
+                1,
+                false,
+                {
+                    "___cmdID": "66481144610_0.4097078249813344"
+                }
+            ],
+            [
+                9,
+                "exam3",
+                {
+                    "___cmdID": "66481144610_0.7125084179827572"
+                }
+            ],
+            [
+                1,
+                {
+                    "___cmdID": "66481144610_0.5317166633638919"
+                }
+            ],
+            [
+                11,
+                1,
+                null,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>你已经完成这个题目了哦！去试试其他的题目吧。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66481144610_0.9329603210778781"
+                }
+            ],
+            [
+                9,
+                "exam3",
+                {
+                    "___cmdID": "66481144610_0.7547848102480532"
+                }
+            ],
+            [
+                2,
+                {
+                    "___cmdID": "66481144610_0.274670386811839"
+                }
+            ],
+            [
+                4,
+                "打完收工",
+                -1,
+                -1,
+                1,
+                2020,
+                [],
+                {
+                    "___cmdID": "66481144610_0.3854595474222613"
+                }
+            ],
+            [
+                10,
+                {
+                    "___cmdID": "66481144610_0.6166309577957927"
+                }
+            ],
+            [
+                11,
+                3,
+                3,
+                "OnePlus",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>再看一题？</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66481770364_0.20304029316349315"
+                }
+            ],
+            [
+                20,
+                "Generate exam4",
+                "// 当前的事件触发器：trigger: CommandTrigger;\ngenerateExam('exam4', ['HDU-1231',]);",
+                "generateExam('exam4', ['HDU-1231',]);\n",
+                {
+                    "___cmdID": "66481518330_0.6435462905874971"
+                }
+            ],
+            [
+                8,
+                "exam4",
+                {
+                    "___cmdID": "66481566967_0.2527274664854673"
+                }
+            ],
+            [
+                3,
+                0,
+                0,
+                -1,
+                {
+                    "___cmdID": "66481546881_0.7216035305261821"
+                }
+            ],
+            [
+                4,
+                "POJ 3250",
+                0,
+                -1,
+                1,
+                2001,
+                [],
+                {
+                    "___cmdID": "66481546881_0.3730433799578181"
+                }
+            ],
+            [
+                0,
+                0,
+                2,
+                [
+                    0,
+                    1,
+                    2001,
+                    0
+                ],
+                0,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                0,
+                [
+                    1,
+                    1,
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                0,
+                0,
+                [
+                    1,
+                    1
+                ],
+                "",
+                "",
+                true,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+                0,
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                {
+                    "___cmdID": "66481546881_0.7573304426432426"
+                }
+            ],
+            [
+                20,
+                "弹出广告",
+                "// 当前的事件触发器：trigger: CommandTrigger;\nconst problemsMapName = WorldData.AllProblems.currentProblemsName;\nconst problemsMap = WorldData.AllProblems[problemsMapName];\n\nwindow.open(`https://vjudge.net/problem/${Object.keys(problemsMap)[0]}`, '_blank');",
+                "var problemsMapName = WorldData.AllProblems.currentProblemsName;\nvar problemsMap = WorldData.AllProblems[problemsMapName];\nwindow.open(\"https://vjudge.net/problem/\" + Object.keys(problemsMap)[0], '_blank');\n",
+                {
+                    "___cmdID": "66481546881_0.19109965241375826"
+                }
+            ],
+            [
+                16,
+                1,
+                false,
+                {
+                    "___cmdID": "66481546881_0.7685320779466491"
+                }
+            ],
+            [
+                9,
+                "exam4",
+                {
+                    "___cmdID": "66481546881_0.9019630608755942"
+                }
+            ],
+            [
+                1,
+                {
+                    "___cmdID": "66481546881_0.45317604661413124"
+                }
+            ],
+            [
+                11,
+                1,
+                null,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>你已经完成所有题目了哦！</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66481546881_0.1198875171178777"
+                }
+            ],
+            [
+                9,
+                "exam4",
+                {
+                    "___cmdID": "66481546881_0.3729162018134944"
+                }
+            ],
+            [
+                2,
+                {
+                    "___cmdID": "66481546881_0.13811528269734108"
+                }
+            ],
+            [
+                4,
+                "打完收工",
+                -1,
+                -1,
+                1,
+                2020,
+                [],
+                {
+                    "___cmdID": "66481546881_0.661549604912951"
+                }
+            ],
+            [
+                10,
+                {
+                    "___cmdID": "66481546881_0.4887863710995981"
                 }
             ]
         ]
