@@ -75,7 +75,7 @@
                 "",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>（我气喘吁吁的追上正在收拾书包准备离开教室的 xiaodai）</span>",
+                "<span style='color:#FfFffF'>我气喘吁吁的追上正在收拾书包的 xiaodai 学长 ...</span>",
                 null,
                 1,
                 0,
@@ -105,7 +105,7 @@
                 "xiaodai",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>唉？为什么突然要学这个。。。</span>",
+                "<span style='color:#FfFffF'>唉？为什么这么突然。。。</span>",
                 null,
                 1,
                 0,
@@ -120,7 +120,7 @@
                 "Kotori",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>因为我听说，一切算法皆网络流！\n</span><span style='color:#FfFffF'>我也想理解其中的奥妙！</span>",
+                "<span style='color:#FfFffF'>因为我听他们群里面说，一切算法皆网络流！\n</span><span style='color:#FfFffF'>我也想理解其中的秘辛！</span>",
                 null,
                 1,
                 0,
@@ -300,7 +300,7 @@
                 "xiaodai",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>证明的过程主要就是说明当不存在增广路时，\n</span><span style='color:#FfFffF'>可以找到某个割，使得容量等于当前的流。\n</span><span style='color:#FfFffF'>又因为流量总是小于等于割的容量，\n</span><span style='color:#FfFffF'>所以此时的流一定最大流。</span>",
+                "<span style='color:#FfFffF'>证明的过程主要就是说明当不存在增广路时，\n</span><span style='color:#FfFffF'>可以构造性的找到某个割，使得该割容量等于当前流。\n</span><span style='color:#FfFffF'>又因为流量总是小于等于割的容量，\n</span><span style='color:#FfFffF'>所以此时的流一定最大流，找到的割集既最小割。</span>",
                 null,
                 1,
                 0,
@@ -380,47 +380,694 @@
                 1,
                 0,
                 {
+                    "___cmdID": "66060919324_0.14648343394510133"
+                }
+            ],
+            [
+                11,
+                3,
+                5,
+                "xiaodai",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>Andrew Stankevich Contest #4, Unique Attack ...\n</span><span style='color:#FfFffF'>给定一个流网络，判断其最小割是否唯一 ...</span>",
+                null,
+                1,
+                0,
+                {
                     "___cmdID": "66005654712_0.26446183961726977"
+                }
+            ],
+            [
+                20,
+                "Generate exam for section1",
+                "// 当前的事件触发器：trigger: CommandTrigger;\ngenerateExam('section1', ['ZOJ-2587']);",
+                "generateExam('section1', ['ZOJ-2587']);\n",
+                {
+                    "___cmdID": "66057653408_0.6601263724504289"
+                }
+            ],
+            [
+                8,
+                "jump2",
+                {
+                    "___cmdID": "66057653408_0.4673149775293375"
                 }
             ],
             [
                 3,
                 0,
-                -1,
+                0,
                 -1,
                 {
-                    "___cmdID": "66005676961_0.7595518023961678"
+                    "___cmdID": "66057653408_0.504591858025383"
                 }
             ],
             [
                 4,
-                "选项内容-1",
-                -1,
-                -1,
+                "POJ 3250",
                 0,
-                0,
+                -1,
+                1,
+                2001,
                 [],
                 {
-                    "___cmdID": "66005679681_0.6916346222393708"
+                    "___cmdID": "66057653408_0.8680499129356511"
+                }
+            ],
+            [
+                0,
+                0,
+                2,
+                [
+                    0,
+                    1,
+                    2001,
+                    0
+                ],
+                0,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                0,
+                [
+                    1,
+                    1,
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                0,
+                0,
+                [
+                    1,
+                    1
+                ],
+                "",
+                "",
+                true,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+                0,
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                {
+                    "___cmdID": "66057653408_0.07449415022896"
+                }
+            ],
+            [
+                20,
+                "弹出广告",
+                "// 当前的事件触发器：trigger: CommandTrigger;\nconst problemsMapName = WorldData.AllProblems.currentProblemsName;\nconst problemsMap = WorldData.AllProblems[problemsMapName];\n\nwindow.open(`https://vjudge.net/problem/${Object.keys(problemsMap)[0]}`, '_blank');",
+                "var problemsMapName = WorldData.AllProblems.currentProblemsName;\nvar problemsMap = WorldData.AllProblems[problemsMapName];\nwindow.open(\"https://vjudge.net/problem/\" + Object.keys(problemsMap)[0], '_blank');\n",
+                {
+                    "___cmdID": "66057653408_0.7364430372422837"
+                }
+            ],
+            [
+                16,
+                1,
+                false,
+                {
+                    "___cmdID": "66057653408_0.5894867676646951"
+                }
+            ],
+            [
+                9,
+                "jump2",
+                {
+                    "___cmdID": "66057653408_0.8682623509171712"
+                }
+            ],
+            [
+                1,
+                {
+                    "___cmdID": "66057653408_0.1364002411786993"
+                }
+            ],
+            [
+                11,
+                1,
+                null,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>你已经完成这个题目了哦！去试试其他的题目吧。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66057653408_0.4859882068596031"
+                }
+            ],
+            [
+                9,
+                "jump2",
+                {
+                    "___cmdID": "66057653408_0.47267418219560264"
+                }
+            ],
+            [
+                2,
+                {
+                    "___cmdID": "66057653408_0.5398406030975651"
                 }
             ],
             [
                 4,
-                "选项内容-2",
+                "打完收工",
                 -1,
                 -1,
-                0,
-                0,
+                1,
+                2020,
                 [],
                 {
-                    "___cmdID": "66005679681_0.9260637512658096"
+                    "___cmdID": "66057653408_0.617844656402474"
+                }
+            ],
+            [
+                0,
+                0,
+                2,
+                [
+                    0,
+                    1,
+                    2001,
+                    0
+                ],
+                0,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                0,
+                [
+                    1,
+                    1,
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                0,
+                0,
+                [
+                    1,
+                    1
+                ],
+                "",
+                "",
+                true,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+                0,
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                {
+                    "___cmdID": "66060244988_0.7861018205444597"
+                }
+            ],
+            [
+                11,
+                3,
+                5,
+                "xiaodai",
+                3,
+                -3,
+                "<span style='color:#FfFffF'> 不给力啊，Kotori 老师 ...</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66060244988_0.6870867134312175"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>呜 ...</span>",
+                null,
+                15,
+                0,
+                {
+                    "___cmdID": "66061190795_0.5013606047683499"
+                }
+            ],
+            [
+                11,
+                3,
+                5,
+                "xiaodai",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>最大流最小割定理的证明里，已经包含了最小割的构造方法。\n</span><span style='color:#FfFffF'>方法是从 S 出发，沿残量网络 dfs() 染色即可。\n</span><span style='color:#FfFffF'>要判断最小割是否唯一，可以从 S 和 T 分别染色，\n</span><span style='color:#FfFffF'>看是否可以覆盖所有结点。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66061310068_0.7746044017294567"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>我再学习一下 ...</span>",
+                null,
+                15,
+                0,
+                {
+                    "___cmdID": "66061549523_0.6075880960977247"
+                }
+            ],
+            [
+                11,
+                3,
+                5,
+                "xiaodai",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>今天就先到这里，先去吃饭吧 ...</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66061579494_0.735603163642788"
+                }
+            ],
+            [
+                1,
+                {
+                    "___cmdID": "66060244988_0.3889345016334309"
+                }
+            ],
+            [
+                11,
+                3,
+                5,
+                "xiaodai",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>不愧是 Kotori 老师 。。。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66060244988_0.8347094962397377"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>那必须的 ... 这种题目根本塞牙缝都不够 ...</span>",
+                null,
+                2,
+                0,
+                {
+                    "___cmdID": "66061647433_0.3830168002453542"
+                }
+            ],
+            [
+                11,
+                3,
+                5,
+                "xiaodai",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>看来你已经熟练掌握最小割的构造方法，\n</span><span style='color:#FfFffF'>不妨我们再看一个例题 ...</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66061597097_0.6487446477609502"
+                }
+            ],
+            [
+                20,
+                "Generate exam for section2",
+                "// 当前的事件触发器：trigger: CommandTrigger;\ngenerateExam('section2', ['POJ-3469']);",
+                "generateExam('section2', ['POJ-3469']);\n",
+                {
+                    "___cmdID": "66061740237_0.7576627227815469"
+                }
+            ],
+            [
+                3,
+                0,
+                0,
+                -1,
+                {
+                    "___cmdID": "66061709389_0.4316013498798217"
+                }
+            ],
+            [
+                4,
+                "POJ 3250",
+                0,
+                -1,
+                1,
+                2001,
+                [],
+                {
+                    "___cmdID": "66061709389_0.19988931305110724"
+                }
+            ],
+            [
+                0,
+                0,
+                2,
+                [
+                    0,
+                    1,
+                    2001,
+                    0
+                ],
+                0,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                0,
+                [
+                    1,
+                    1,
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                0,
+                0,
+                [
+                    1,
+                    1
+                ],
+                "",
+                "",
+                true,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+                0,
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                {
+                    "___cmdID": "66061709389_0.8281972350574818"
+                }
+            ],
+            [
+                20,
+                "弹出广告",
+                "// 当前的事件触发器：trigger: CommandTrigger;\nconst problemsMapName = WorldData.AllProblems.currentProblemsName;\nconst problemsMap = WorldData.AllProblems[problemsMapName];\n\nwindow.open(`https://vjudge.net/problem/${Object.keys(problemsMap)[0]}`, '_blank');",
+                "var problemsMapName = WorldData.AllProblems.currentProblemsName;\nvar problemsMap = WorldData.AllProblems[problemsMapName];\nwindow.open(\"https://vjudge.net/problem/\" + Object.keys(problemsMap)[0], '_blank');\n",
+                {
+                    "___cmdID": "66061709389_0.9375109240037278"
+                }
+            ],
+            [
+                16,
+                1,
+                false,
+                {
+                    "___cmdID": "66061709389_0.8422669396659186"
+                }
+            ],
+            [
+                9,
+                "jump2",
+                {
+                    "___cmdID": "66061709389_0.5175914717718162"
+                }
+            ],
+            [
+                1,
+                {
+                    "___cmdID": "66061709389_0.8886667018713592"
+                }
+            ],
+            [
+                11,
+                1,
+                null,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>你已经完成这个题目了哦！去试试其他的题目吧。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66061709389_0.33843244176429743"
+                }
+            ],
+            [
+                9,
+                "jump2",
+                {
+                    "___cmdID": "66061709389_0.18393540212581727"
+                }
+            ],
+            [
+                2,
+                {
+                    "___cmdID": "66061709389_0.43386827808085715"
+                }
+            ],
+            [
+                4,
+                "打完收工",
+                -1,
+                -1,
+                1,
+                2020,
+                [],
+                {
+                    "___cmdID": "66061709389_0.7358022547897158"
+                }
+            ],
+            [
+                0,
+                0,
+                2,
+                [
+                    0,
+                    1,
+                    2001,
+                    0
+                ],
+                0,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                0,
+                [
+                    1,
+                    1,
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                0,
+                0,
+                [
+                    1,
+                    1
+                ],
+                "",
+                "",
+                true,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+                0,
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                {
+                    "___cmdID": "66061831195_0.050260574415868176"
+                }
+            ],
+            [
+                11,
+                3,
+                5,
+                "xiaodai",
+                3,
+                -3,
+                "<span style='color:#FfFffF'> 不给力啊，Kotori 老师 ...</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66061831195_0.6706864706684399"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>呜 ...</span>",
+                null,
+                15,
+                0,
+                {
+                    "___cmdID": "66061831195_0.9018194996487154"
+                }
+            ],
+            [
+                1,
+                {
+                    "___cmdID": "66061831195_0.1078686296026139"
+                }
+            ],
+            [
+                11,
+                3,
+                5,
+                "xiaodai",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>不愧是 Kotori 老师 。。。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66061831195_0.08449594638859659"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>那必须的 ... 这种题目根本塞牙缝都不够 ...</span>",
+                null,
+                2,
+                0,
+                {
+                    "___cmdID": "66061831195_0.6563828105301297"
+                }
+            ],
+            [
+                2,
+                {
+                    "___cmdID": "66061831195_0.16128445708020478"
                 }
             ],
             [
                 10,
                 {
-                    "___cmdID": "66005679681_0.8973715101958004"
+                    "___cmdID": "66061709389_0.09535846433048545"
                 }
+            ],
+            [
+                2,
+                {
+                    "___cmdID": "66060244988_0.641969153512763"
+                }
+            ],
+            [
+                10,
+                {
+                    "___cmdID": "66057653408_0.26174666026032"
+                }
+            ],
+            [
+                40008,
+                {
+                    "49807345511_0.462284017239353": false,
+                    "49807339080_0.9818794648978915": 1,
+                    "49807339080_0.7327578678428031": 1
+                },
+                "66057763454_0.5836616735505453"
+            ],
+            [
+                40017,
+                {
+                    "50715038747_0.21761311072349354": 10
+                },
+                "66058850630_0.6880979522627939"
             ]
         ]
     ],
