@@ -23,22 +23,14 @@ function solutionRequest() {
     var solutionId = Game.player.variable.getString(1);
     var problemsMapName = WorldData.AllProblems.currentProblemsName;
     var problemsMap = WorldData.AllProblems[problemsMapName];
-    ur.send("https://vjudge.net/solution/data/" + solutionId);
+    ur.send("https://vjudge.net/solution/data/" + solutionId, null, 'get', 'json');
     ur.on(EventObject.COMPLETE, this, function (content) {
-        var data;
-        try {
-            data = JSON.parse(content);
-        }
-        catch (e) {
-            Game.player.variable.setVariable(1, 2);
-            return;
-        }
-        Game.player.variable.setString(6, data.author);
-        Game.player.variable.setString(7, data.memory);
-        Game.player.variable.setString(8, data.language);
-        Game.player.variable.setString(9, data.status);
-        var problem = [data.oj, data.probNum].join('-');
-        if (data.statusCanonical === 'AC' && Object.keys(problemsMap).indexOf(problem) !== -1) {
+        Game.player.variable.setString(6, content.author);
+        Game.player.variable.setString(7, content.memory);
+        Game.player.variable.setString(8, content.language);
+        Game.player.variable.setString(9, content.status);
+        var problem = [content.oj, content.probNum].join('-');
+        if (content.statusCanonical === 'AC' && Object.keys(problemsMap).indexOf(problem) !== -1) {
             problemsMap[problem] = 1;
         }
         updateSolutionVariables(problemsMap);

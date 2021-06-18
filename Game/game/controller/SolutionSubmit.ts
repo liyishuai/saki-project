@@ -46,27 +46,17 @@ function solutionRequest() {
     const problemsMap = WorldData.AllProblems[problemsMapName];
 
     // vjudge API
-    ur.send(`https://vjudge.net/solution/data/${solutionId}`);
+    ur.send(`https://vjudge.net/solution/data/${solutionId}`, null, 'get', 'json');
 
-    ur.on(EventObject.COMPLETE, this, (content: string) => {
-        let data;
+    ur.on(EventObject.COMPLETE, this, (content) => {
+        Game.player.variable.setString(6, content.author);
+        Game.player.variable.setString(7, content.memory);
+        Game.player.variable.setString(8, content.language);
+        Game.player.variable.setString(9, content.status);
 
-        try {
-            data = JSON.parse(content);
-        } catch(e) {
-            // request is error flag
-            Game.player.variable.setVariable(1, 2);
-            return;
-        }
+        const problem = [content.oj, content.probNum].join('-');
 
-        Game.player.variable.setString(6, data.author);
-        Game.player.variable.setString(7, data.memory);
-        Game.player.variable.setString(8, data.language);
-        Game.player.variable.setString(9, data.status);
-
-        const problem = [data.oj, data.probNum].join('-');
-
-        if (data.statusCanonical === 'AC' && Object.keys(problemsMap).indexOf(problem) !== -1) {
+        if (content.statusCanonical === 'AC' && Object.keys(problemsMap).indexOf(problem) !== -1) {
             problemsMap[problem] = 1;
         }
 
