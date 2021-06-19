@@ -130,7 +130,7 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>给定 n 个整数的序列 a，连续子序列是所有连续子序列中元素和最大的一个，\n</span><span style='color:#FfFffF'>例如给定序列 -2, 11, -4, 13, -5, -2，\n</span><span style='color:#FfFffF'>其最大连续子序列为 11, -4, 13，最大和为 20。</span>",
+                "<span style='color:#FfFffF'>最大连续子序列和问题，有时也被称作最大子段和问题，\n</span><span style='color:#FfFffF'>给定 n 个整数的序列 a，求所有连续子序列中，和最大的一个，\n</span><span style='color:#FfFffF'>例如给定序列 -2, 11, -4, 13, -5, -2，\n</span><span style='color:#FfFffF'>其最大连续子序列为 11, -4, 13，和为 11-4+13 = 20。</span>",
                 null,
                 1,
                 0,
@@ -1279,7 +1279,7 @@
             [
                 40017,
                 {
-                    "50715038747_0.21761311072349354": 10
+                    "50715038747_0.21761311072349354": 8
                 },
                 "66484001215_0.06432222574525404"
             ]

@@ -144,6 +144,7 @@ class GUI_6 extends GUI_BASE {
    快进已读勾选框:UISwitch;
    快进已读文本:UIString;
    图片:UIBitmap;
+
    constructor(){
       super(6);
    }
@@ -169,6 +170,7 @@ class ListItem_6 extends UIListItemData {
    快进已读勾选框:number;
    快进已读文本:string;
    图片:string;
+
 }
 
 /**
@@ -252,6 +254,7 @@ class GUI_11 extends GUI_BASE {
    界面标志:UIBitmap;
    cgList:UIList; // Item=1003
    关闭CG鉴赏界面按钮:UIButton;
+   图片:UIBitmap;
    constructor(){
       super(11);
    }
@@ -261,7 +264,7 @@ class ListItem_11 extends UIListItemData {
    鉴赏框背景:string;
    界面标志:string;
    cgList:UIListItemData[];
-
+   图片:string;
 }
 
 /**
@@ -340,6 +343,7 @@ class GUI_1001 extends GUI_BASE {
    no:UIString;
    delBtn:UIButton;
    gameTimeStr:UIString;
+   图片:UIBitmap;
    constructor(){
       super(1001);
    }
@@ -351,6 +355,7 @@ class ListItem_1001 extends UIListItemData {
    dateStr:string;
    no:string;
    gameTimeStr:string;
+   图片:string;
 }
 
 /**
