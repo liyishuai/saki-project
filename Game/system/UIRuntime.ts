@@ -144,7 +144,11 @@ class GUI_6 extends GUI_BASE {
    快进已读勾选框:UISwitch;
    快进已读文本:UIString;
    图片:UIBitmap;
-
+   分割线1:UIBitmap;
+   分割线2:UIBitmap;
+   分割线3:UIBitmap;
+   分割线4:UIBitmap;
+   分割线5:UIBitmap;
    constructor(){
       super(6);
    }
@@ -170,7 +174,11 @@ class ListItem_6 extends UIListItemData {
    快进已读勾选框:number;
    快进已读文本:string;
    图片:string;
-
+   分割线1:string;
+   分割线2:string;
+   分割线3:string;
+   分割线4:string;
+   分割线5:string;
 }
 
 /**

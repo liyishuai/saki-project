@@ -33,7 +33,7 @@
                 "condition": [],
                 "type": "UIBitmap",
                 "name": "screenshotImg",
-                "x": 580,
+                "x": 610,
                 "y": 15,
                 "width": 216,
                 "height": 130,
@@ -103,7 +103,7 @@
                 "condition": [],
                 "type": "UIString",
                 "name": "dateStr",
-                "x": 350,
+                "x": 400,
                 "y": 70,
                 "width": 217,
                 "height": 22,
@@ -189,8 +189,8 @@
                 "condition": [],
                 "type": "UIButton",
                 "name": "delBtn",
-                "x": 809,
-                "y": 63,
+                "x": 828,
+                "y": 60,
                 "width": 46,
                 "height": 36,
                 "opacity": 1,
@@ -236,7 +236,7 @@
                 "condition": [],
                 "type": "UIString",
                 "name": "gameTimeStr",
-                "x": 221,
+                "x": 250,
                 "y": 70,
                 "width": 157,
                 "height": 17,
@@ -298,11 +298,15 @@
                 "isOpen": true,
                 "image": "asset/image/picture/ui/menu/new/icon.png",
                 "grid9": "0,0,0,0,0",
+                "flip": null,
                 "pivotType": 0
             }
         ]
     },
     "id": 1001,
     "instanceClassName": "",
-    "hasRootCommand": []
+    "hasRootCommand": [
+        null,
+        true
+    ]
 }
