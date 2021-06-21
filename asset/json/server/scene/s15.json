@@ -70,6 +70,21 @@
                 "OnePlus",
                 3,
                 -3,
+                "<span style='color:#FfFffF'>同学们我又回来了 ...</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66739387251_0.3678263634097507"
+                }
+            ],
+            [
+                11,
+                3,
+                3,
+                "OnePlus",
+                3,
+                -3,
                 "<span style='color:#FfFffF'>今天是数据结构的第二讲，我们来介绍一下线段树，\n</span><span style='color:#FfFffF'>线段树是用来维护区间信息的数据结构。</span>",
                 null,
                 1,
@@ -85,7 +100,7 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>还记得 Day 2 介绍的最大子段和问题吗？\n</span><span style='color:#FfFffF'>我们来看那个题目的一道推广，SPOJ GSS1。</span>",
+                "<span style='color:#FfFffF'>还记得 Day 2 介绍的最大子段和问题吗？\n</span><span style='color:#FfFffF'>我们来看那个题目的区间询问版本 —— SPOJ GSS1。</span>",
                 null,
                 1,
                 0,
@@ -115,7 +130,22 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>这类涉及区间修改，区间询问的问题，通常可以用线段树方便的解决，\n</span><span style='color:#FfFffF'>线段树将每个长度不为 1 的区间划分成左右两个区间递归求解，\n</span><span style='color:#FfFffF'>把整个线段划分为一个树形结构，通过合并左右两区间信息来求得该区间的信息。\n</span><span style='color:#FfFffF'>这种数据结构可以方便的进行大部分的区间操作。通常情况下，\n</span><span style='color:#FfFffF'>线段树对于单点修改，区间修改，区间查询等操作的时间复杂度都是 O(logn) 。</span>",
+                "<span style='color:#FfFffF'>这类涉及区间修改，区间询问的问题，通常可以用线段树方便的解决，</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66739362974_0.5291102374864487"
+                }
+            ],
+            [
+                11,
+                3,
+                3,
+                "OnePlus",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>线段树将每个长度不为 1 的区间划分成左右两个区间递归求解，\n</span><span style='color:#FfFffF'>把整个线段划分为一个树形结构，通过合并左右两区间信息来求得该区间的信息。\n</span><span style='color:#FfFffF'>这种数据结构可以方便的进行大部分的区间操作。通常情况下，\n</span><span style='color:#FfFffF'>线段树对于单点修改，区间修改，区间查询等操作的时间复杂度都是 O(logn) 。</span>",
                 null,
                 1,
                 0,

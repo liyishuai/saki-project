@@ -3,21 +3,6 @@
     "customCommands": [
         [
             [
-                11,
-                3,
-                0,
-                "",
-                3,
-                -3,
-                "<span style='color:#FfFffF'>..ZzZzzz..</span>",
-                null,
-                -1,
-                0,
-                {
-                    "___cmdID": "66138161630_0.22391218995399975"
-                }
-            ],
-            [
                 40001,
                 {
                     "24538808102_0.9970934946254328": 1,
@@ -52,7 +37,7 @@
                     "49520771123_0.27311479097864666": false,
                     "49611947752_0.41521729946538755": false
                 },
-                "66138161630_0.38367838300958823"
+                "66739901632_0.4362400585637054"
             ],
             [
                 67,
@@ -60,7 +45,7 @@
                 1,
                 1,
                 {
-                    "___cmdID": "66375369332_0.4822138068946864"
+                    "___cmdID": "66739901632_0.1323066715724448"
                 }
             ],
             [
@@ -75,253 +60,7 @@
                 1,
                 0,
                 {
-                    "___cmdID": "66372933762_0.3934714869809668"
-                }
-            ],
-            [
-                11,
-                3,
-                6,
-                "SevenZero",
-                3,
-                -3,
-                "<span style='color:#FfFffF'>今天和大家讲解状态空间搜索，\n</span><span style='color:#FfFffF'>也就是暴搜。</span>",
-                null,
-                1,
-                0,
-                {
-                    "___cmdID": "66138161630_0.8043401711951197"
-                }
-            ],
-            [
-                11,
-                3,
-                6,
-                "sevenzero",
-                3,
-                -3,
-                "<span style='color:#FfFffF'>暴搜是 ACM 里最基本的解题方法，\n</span><span style='color:#FfFffF'>在人工智能和图论里也经常出线，\n</span><span style='color:#FfFffF'>当你在赛场上实在没有事情可干时，\n</span><span style='color:#FfFffF'>记得你还可以暴搜找找规律。</span>",
-                null,
-                1,
-                0,
-                {
-                    "___cmdID": "66138161630_0.13396258347829004"
-                }
-            ],
-            [
-                11,
-                3,
-                6,
-                "sevenzero",
-                3,
-                -3,
-                "<span style='color:#FfFffF'>根据搜索顺序的不同主要可以分为\n</span><span style='color:#FfFffF'>深度优先搜索（DFS）和广度优先搜索（BFS）两种。</span>",
-                null,
-                1,
-                0,
-                {
-                    "___cmdID": "66138161630_0.5417494918287933"
-                }
-            ],
-            [
-                11,
-                3,
-                6,
-                "sevenzero",
-                3,
-                -3,
-                "<span style='color:#FfFffF'>前者使用栈保存当前访问的状态，\n</span><span style='color:#FfFffF'>后者使用队列。</span>",
-                null,
-                1,
-                0,
-                {
-                    "___cmdID": "66138285579_0.6286407482950578"
-                }
-            ],
-            [
-                11,
-                3,
-                6,
-                "sevenzero",
-                3,
-                -3,
-                "<span style='color:#FfFffF'>我们先来介绍深度优先搜索。</span>",
-                null,
-                1,
-                0,
-                {
-                    "___cmdID": "66138161630_0.19356913630637074"
-                }
-            ],
-            [
-                20,
-                "Generate exam1",
-                "// 当前的事件触发器：trigger: CommandTrigger;\ngenerateExam('exam1', ['UVALive-2026',]);",
-                "generateExam('exam1', ['UVALive-2026',]);\n",
-                {
-                    "___cmdID": "66138161630_0.6415759592379697"
-                }
-            ],
-            [
-                8,
-                "exam1",
-                {
-                    "___cmdID": "66138161630_0.0597236201644622"
-                }
-            ],
-            [
-                3,
-                0,
-                0,
-                -1,
-                {
-                    "___cmdID": "66138161630_0.5707669781624338"
-                }
-            ],
-            [
-                4,
-                "POJ 3250",
-                0,
-                -1,
-                1,
-                2001,
-                [],
-                {
-                    "___cmdID": "66138161630_0.5816057706591768"
-                }
-            ],
-            [
-                0,
-                0,
-                2,
-                [
-                    0,
-                    1,
-                    2001,
-                    0
-                ],
-                0,
-                0,
-                [
-                    0,
-                    1,
-                    1,
-                    0
-                ],
-                0,
-                [
-                    1,
-                    1,
-                    [
-                        0,
-                        0
-                    ]
-                ],
-                0,
-                0,
-                [
-                    1,
-                    1
-                ],
-                "",
-                "",
-                true,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                0,
-                0,
-                [
-                    0,
-                    {},
-                    ""
-                ],
-                [
-                    0,
-                    {},
-                    ""
-                ],
-                {
-                    "___cmdID": "66138161630_0.4632216151286175"
-                }
-            ],
-            [
-                20,
-                "弹出广告",
-                "// 当前的事件触发器：trigger: CommandTrigger;\nconst problemsMapName = WorldData.AllProblems.currentProblemsName;\nconst problemsMap = WorldData.AllProblems[problemsMapName];\n\nwindow.open(`https://vjudge.net/problem/${Object.keys(problemsMap)[0]}`, '_blank');",
-                "var problemsMapName = WorldData.AllProblems.currentProblemsName;\nvar problemsMap = WorldData.AllProblems[problemsMapName];\nwindow.open(\"https://vjudge.net/problem/\" + Object.keys(problemsMap)[0], '_blank');\n",
-                {
-                    "___cmdID": "66138161630_0.18901435573613434"
-                }
-            ],
-            [
-                16,
-                1,
-                false,
-                {
-                    "___cmdID": "66138161630_0.8011091358090545"
-                }
-            ],
-            [
-                9,
-                "exam1",
-                {
-                    "___cmdID": "66138161630_0.669316095453119"
-                }
-            ],
-            [
-                1,
-                {
-                    "___cmdID": "66138161630_0.9029048729528308"
-                }
-            ],
-            [
-                11,
-                1,
-                null,
-                "",
-                3,
-                -3,
-                "<span style='color:#FfFffF'>你已经完成这个题目了哦！去试试其他的题目吧。</span>",
-                null,
-                1,
-                0,
-                {
-                    "___cmdID": "66138161630_0.08656078063220751"
-                }
-            ],
-            [
-                9,
-                "exam1",
-                {
-                    "___cmdID": "66138161630_0.981719476732452"
-                }
-            ],
-            [
-                2,
-                {
-                    "___cmdID": "66138161630_0.5998251074909333"
-                }
-            ],
-            [
-                4,
-                "打完收工",
-                -1,
-                -1,
-                1,
-                2020,
-                [],
-                {
-                    "___cmdID": "66138161630_0.7262423586439708"
-                }
-            ],
-            [
-                10,
-                {
-                    "___cmdID": "66138161630_0.568757117645392"
+                    "___cmdID": "66739901632_0.5866367085451631"
                 }
             ]
         ]

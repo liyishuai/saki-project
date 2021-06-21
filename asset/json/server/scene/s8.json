@@ -487,7 +487,7 @@
                 1,
                 0,
                 {
-                    "___cmdID": "66156150410_0.19626516985758946"
+                    "___cmdID": "66742201965_0.9894554898236432"
                 }
             ],
             [
@@ -497,7 +497,22 @@
                 "sevenzero",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>讲完了 dfs()，下面再来看 bfs()。</span>",
+                "<span style='color:#FfFffF'>和 dfs()，在 bfs() 中我们按照距离初始结点的距离，\n</span><span style='color:#FfFffF'>从近到远进行搜索，因此在一些需要求最短距离的题目中会比 dfs() 更加直接。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66156150410_0.19626516985758946"
+                }
+            ],
+            [
+                11,
+                7,
+                6,
+                "sevenzero",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>首先我们来看一看例题，魔板。\n</span><span style='color:#FfFffF'>我们有一张拥有8个格子的魔板，初始排列为：\n</span><span style='color:#FfFffF'>1 2 3 4\n</span><span style='color:#FfFffF'>8 7 6 5\n</span><span style='color:#FfFffF'>我们可以对魔板进行三种操作。\n</span><span style='color:#FfFffF'>A：交换上下两行\n</span><span style='color:#FfFffF'>B：将最右一列插入左侧\n</span><span style='color:#FfFffF'>C：魔板中间四个格子顺时针旋转。\n</span><span style='color:#FfFffF'>给出一个状态排列，求转换至基础状态所需的最少操作数和操作。</span>",
                 null,
                 1,
                 0,
@@ -512,12 +527,243 @@
                 "sevenzero",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>讲完了 dfs()，下面再来看 bfs()。</span>",
+                "<span style='color:#FfFffF'>对于这道题，我们可以使用bfs()来求解。\n</span><span style='color:#FfFffF'>首先，我们将</span>",
                 null,
                 1,
                 0,
                 {
                     "___cmdID": "66156150092_0.9236235949472698"
+                }
+            ],
+            [
+                11,
+                3,
+                6,
+                "sevenzero",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>讲完了 dfs()，下面再来看 bfs()。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66742342876_0.7319644172068964"
+                }
+            ],
+            [
+                11,
+                3,
+                6,
+                "sevenzero",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>讲完了 dfs()，下面再来看 bfs()。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66742342732_0.831891320203908"
+                }
+            ],
+            [
+                11,
+                3,
+                6,
+                "sevenzero",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>讲完了 dfs()，下面再来看 bfs()。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66742342560_0.6653667206951626"
+                }
+            ],
+            [
+                11,
+                3,
+                6,
+                "sevenzero",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>讲完了 dfs()，下面再来看 bfs()。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66742341177_0.6368862748391979"
+                }
+            ],
+            [
+                20,
+                "Generate exam2",
+                "// 当前的事件触发器：trigger: CommandTrigger;\ngenerateExam('exam2', ['LibreOJ-10027',]);",
+                "generateExam('exam2', ['LibreOJ-10027',]);\n",
+                {
+                    "___cmdID": "66742349682_0.10168098617542176"
+                }
+            ],
+            [
+                8,
+                "exam2",
+                {
+                    "___cmdID": "66742349682_0.863471739408376"
+                }
+            ],
+            [
+                3,
+                0,
+                0,
+                -1,
+                {
+                    "___cmdID": "66742349682_0.15655608118440067"
+                }
+            ],
+            [
+                4,
+                "POJ 3250",
+                0,
+                -1,
+                1,
+                2001,
+                [],
+                {
+                    "___cmdID": "66742349682_0.023374501205875253"
+                }
+            ],
+            [
+                0,
+                0,
+                2,
+                [
+                    0,
+                    1,
+                    2001,
+                    0
+                ],
+                0,
+                0,
+                [
+                    0,
+                    1,
+                    1,
+                    0
+                ],
+                0,
+                [
+                    1,
+                    1,
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                0,
+                0,
+                [
+                    1,
+                    1
+                ],
+                "",
+                "",
+                true,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+                0,
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                [
+                    0,
+                    {},
+                    ""
+                ],
+                {
+                    "___cmdID": "66742349682_0.7098568379053884"
+                }
+            ],
+            [
+                20,
+                "弹出广告",
+                "// 当前的事件触发器：trigger: CommandTrigger;\nconst problemsMapName = WorldData.AllProblems.currentProblemsName;\nconst problemsMap = WorldData.AllProblems[problemsMapName];\n\nwindow.open(`https://vjudge.net/problem/${Object.keys(problemsMap)[0]}`, '_blank');",
+                "var problemsMapName = WorldData.AllProblems.currentProblemsName;\nvar problemsMap = WorldData.AllProblems[problemsMapName];\nwindow.open(\"https://vjudge.net/problem/\" + Object.keys(problemsMap)[0], '_blank');\n",
+                {
+                    "___cmdID": "66742349682_0.2162491284342618"
+                }
+            ],
+            [
+                16,
+                1,
+                false,
+                {
+                    "___cmdID": "66742349682_0.23912915723105455"
+                }
+            ],
+            [
+                9,
+                "exam2",
+                {
+                    "___cmdID": "66742349682_0.13036293842751645"
+                }
+            ],
+            [
+                1,
+                {
+                    "___cmdID": "66742349682_0.8691626634469565"
+                }
+            ],
+            [
+                11,
+                1,
+                null,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>你已经完成这个题目了哦！去试试其他的题目吧。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66742349682_0.41129027055060496"
+                }
+            ],
+            [
+                9,
+                "exam2",
+                {
+                    "___cmdID": "66742349682_0.41014809193174195"
+                }
+            ],
+            [
+                2,
+                {
+                    "___cmdID": "66742349682_0.8560140205701467"
+                }
+            ],
+            [
+                4,
+                "打完收工",
+                -1,
+                -1,
+                1,
+                2020,
+                [],
+                {
+                    "___cmdID": "66742349682_0.13846186905905022"
+                }
+            ],
+            [
+                10,
+                {
+                    "___cmdID": "66742349682_0.9685668032429093"
                 }
             ],
             [
