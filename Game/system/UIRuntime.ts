@@ -65,6 +65,8 @@ class GUI_3 extends GUI_BASE {
    设置界面按钮:UIButton;
    返回标题界面按钮:UIButton;
    提示文本:UIString;
+   手机按钮:UIButton;
+   脑图按钮:UIButton;
    constructor(){
       super(3);
    }
@@ -73,6 +75,7 @@ class ListItem_3 extends UIListItemData {
    自动播放按钮:number;
    快进按钮:number;
    提示文本:string;
+
 }
 
 /**

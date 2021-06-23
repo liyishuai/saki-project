@@ -47,6 +47,26 @@
             ""
         ]
     },
+    "asset/json/scene/tileList.json": {
+        "list": [
+            null,
+            ""
+        ]
+    },
+    "asset/json/scene/autoTileList.json": {
+        "list": [
+            null,
+            ""
+        ],
+        "data": {
+            "1": {
+                "url": "",
+                "dataLayers": [],
+                "GCATMode": 0,
+                "id": 1
+            }
+        }
+    },
     "asset/json/custom/dataStructure.json": {
         "list": {
             "1": [
@@ -659,26 +679,6 @@
                         "hideBlockTitle": false
                     }
                 ]
-            }
-        }
-    },
-    "asset/json/scene/tileList.json": {
-        "list": [
-            null,
-            ""
-        ]
-    },
-    "asset/json/scene/autoTileList.json": {
-        "list": [
-            null,
-            ""
-        ],
-        "data": {
-            "1": {
-                "url": "",
-                "dataLayers": [],
-                "GCATMode": 0,
-                "id": 1
             }
         }
     },
@@ -4935,196 +4935,6 @@
             "index": 6
         },
         "id": 9
-    },
-    "asset/json/dialog/data/dialog10.json": {
-        "initData": false,
-        "previewMode": false,
-        "dialogBox": {
-            "x": 52,
-            "y": 439,
-            "width": 891,
-            "height": 259,
-            "alpha": 1,
-            "image": "asset/image/picture/control/dialogBg.png",
-            "flip": false,
-            "grid9": "0,0,0,0,0",
-            "showOnEditor": true,
-            "mouseEventEnabledInEditor": true,
-            "materialData": [
-                {
-                    "materials": []
-                }
-            ],
-            "index": 0
-        },
-        "headBox": {
-            "x": 60,
-            "y": 511,
-            "width": 150,
-            "height": 140,
-            "alpha": 1,
-            "locksize": true,
-            "adaptation": true,
-            "previewHeadImg": "editorAsset/img/ui_pic.png",
-            "flip": false,
-            "perviewMode": 0,
-            "previewStandAvatarID": 0,
-            "previewStandAvatarExp": 0,
-            "previewAnimationID": 0,
-            "previewUIID": 0,
-            "viewscaleX": 1,
-            "viewscaleY": 1,
-            "viewFps": 12,
-            "viewPlayOnce": false,
-            "showOnEditor": true,
-            "mouseEventEnabledInEditor": true,
-            "materialData": [
-                {
-                    "materials": []
-                }
-            ],
-            "index": 1
-        },
-        "optionBox": {
-            "x": 272,
-            "y": 191,
-            "width": 231,
-            "height": 111,
-            "alpha": 1,
-            "column": 4,
-            "columnSpaceing": 5,
-            "row": 1,
-            "rowSpaceing": 5,
-            "image1": "asset/image/picture/control/dialogNormal.png",
-            "grid9img1": "0,0,0,0,0",
-            "image2": "asset/image/picture/control/dialogOpOver.png",
-            "grid9img2": "0,0,0,0,0",
-            "image3": "asset/image/picture/control/dialogOpDown.png",
-            "grid9img3": "0,0,0,0,0",
-            "overSe": "",
-            "overVolume": 1,
-            "overPitch": 1,
-            "clickSe": "",
-            "clickVolume": 1,
-            "clikcPitch": 1,
-            "selectImageURL": "asset/image/picture/control/dialogSelect.png",
-            "grid9img4": "0,0,0,0,0",
-            "showOnEditor": true,
-            "mouseEventEnabledInEditor": true,
-            "materialData": [
-                {
-                    "materials": []
-                }
-            ],
-            "index": 2
-        },
-        "dialog": {
-            "x": 221,
-            "y": 512,
-            "width": 699,
-            "height": 134,
-            "alpha": 1,
-            "fontSize": 22,
-            "color": "#FFFFFF",
-            "bold": false,
-            "italic": false,
-            "align": 0,
-            "leading": 5,
-            "letterSpacing": 0,
-            "font": "宋体",
-            "shadowEnabled": false,
-            "shadowColor": "#000000",
-            "shadowDx": 1,
-            "shadowDy": 1,
-            "stroke": 0,
-            "strokeColor": "#000000",
-            "showOnEditor": true,
-            "mouseEventEnabledInEditor": true,
-            "wordWrap": false,
-            "materialData": [
-                {
-                    "materials": []
-                }
-            ],
-            "index": 3
-        },
-        "option": {
-            "x": 290,
-            "y": 226,
-            "width": 196,
-            "height": 40,
-            "alpha": 1,
-            "fontSize": 24,
-            "color": "#FFFFFF",
-            "bold": false,
-            "italic": false,
-            "align": 1,
-            "leading": 0,
-            "letterSpacing": 0,
-            "font": "宋体",
-            "valign": 1,
-            "shadowEnabled": false,
-            "shadowColor": "#000000",
-            "shadowDx": 1,
-            "shadowDy": 1,
-            "stroke": 0,
-            "strokeColor": "#000000",
-            "showOnEditor": true,
-            "mouseEventEnabledInEditor": true,
-            "materialData": [
-                {
-                    "materials": []
-                }
-            ],
-            "index": 4
-        },
-        "nameBox": {
-            "x": 121,
-            "y": 456,
-            "width": 123,
-            "height": 28,
-            "alpha": 1,
-            "fontSize": 24,
-            "color": "#FFFFFF",
-            "bold": false,
-            "italic": false,
-            "align": 1,
-            "leading": 0,
-            "letterSpacing": 0,
-            "font": "宋体",
-            "valign": 1,
-            "shadowEnabled": false,
-            "shadowColor": "#000000",
-            "shadowDx": 1,
-            "shadowDy": 1,
-            "stroke": 0,
-            "strokeColor": "#000000",
-            "showOnEditor": true,
-            "mouseEventEnabledInEditor": true,
-            "materialData": [
-                {
-                    "materials": []
-                }
-            ],
-            "index": 5
-        },
-        "skipBox": {
-            "x": 895,
-            "y": 608,
-            "width": 0,
-            "height": 0,
-            "alpha": 1,
-            "posIndex": 0,
-            "posX": 0,
-            "posY": 0,
-            "animationID": 0,
-            "scaleNumber": 1,
-            "playType": 2,
-            "showOnEditor": true,
-            "mouseEventEnabledInEditor": true,
-            "index": 6
-        },
-        "id": 10
     },
     "asset/json/custom/customMaterialList.json": {
         "list": [
@@ -9466,6 +9276,196 @@
             }
         }
     },
+    "asset/json/dialog/data/dialog10.json": {
+        "initData": false,
+        "previewMode": false,
+        "dialogBox": {
+            "x": 52,
+            "y": 439,
+            "width": 891,
+            "height": 259,
+            "alpha": 1,
+            "image": "asset/image/picture/control/dialogBg.png",
+            "flip": false,
+            "grid9": "0,0,0,0,0",
+            "showOnEditor": true,
+            "mouseEventEnabledInEditor": true,
+            "materialData": [
+                {
+                    "materials": []
+                }
+            ],
+            "index": 0
+        },
+        "headBox": {
+            "x": 60,
+            "y": 511,
+            "width": 150,
+            "height": 140,
+            "alpha": 1,
+            "locksize": true,
+            "adaptation": true,
+            "previewHeadImg": "editorAsset/img/ui_pic.png",
+            "flip": false,
+            "perviewMode": 0,
+            "previewStandAvatarID": 0,
+            "previewStandAvatarExp": 0,
+            "previewAnimationID": 0,
+            "previewUIID": 0,
+            "viewscaleX": 1,
+            "viewscaleY": 1,
+            "viewFps": 12,
+            "viewPlayOnce": false,
+            "showOnEditor": true,
+            "mouseEventEnabledInEditor": true,
+            "materialData": [
+                {
+                    "materials": []
+                }
+            ],
+            "index": 1
+        },
+        "optionBox": {
+            "x": 272,
+            "y": 191,
+            "width": 231,
+            "height": 111,
+            "alpha": 1,
+            "column": 4,
+            "columnSpaceing": 5,
+            "row": 1,
+            "rowSpaceing": 5,
+            "image1": "asset/image/picture/control/dialogNormal.png",
+            "grid9img1": "0,0,0,0,0",
+            "image2": "asset/image/picture/control/dialogOpOver.png",
+            "grid9img2": "0,0,0,0,0",
+            "image3": "asset/image/picture/control/dialogOpDown.png",
+            "grid9img3": "0,0,0,0,0",
+            "overSe": "",
+            "overVolume": 1,
+            "overPitch": 1,
+            "clickSe": "",
+            "clickVolume": 1,
+            "clikcPitch": 1,
+            "selectImageURL": "asset/image/picture/control/dialogSelect.png",
+            "grid9img4": "0,0,0,0,0",
+            "showOnEditor": true,
+            "mouseEventEnabledInEditor": true,
+            "materialData": [
+                {
+                    "materials": []
+                }
+            ],
+            "index": 2
+        },
+        "dialog": {
+            "x": 221,
+            "y": 512,
+            "width": 699,
+            "height": 134,
+            "alpha": 1,
+            "fontSize": 22,
+            "color": "#FFFFFF",
+            "bold": false,
+            "italic": false,
+            "align": 0,
+            "leading": 5,
+            "letterSpacing": 0,
+            "font": "宋体",
+            "shadowEnabled": false,
+            "shadowColor": "#000000",
+            "shadowDx": 1,
+            "shadowDy": 1,
+            "stroke": 0,
+            "strokeColor": "#000000",
+            "showOnEditor": true,
+            "mouseEventEnabledInEditor": true,
+            "wordWrap": false,
+            "materialData": [
+                {
+                    "materials": []
+                }
+            ],
+            "index": 3
+        },
+        "option": {
+            "x": 290,
+            "y": 226,
+            "width": 196,
+            "height": 40,
+            "alpha": 1,
+            "fontSize": 24,
+            "color": "#FFFFFF",
+            "bold": false,
+            "italic": false,
+            "align": 1,
+            "leading": 0,
+            "letterSpacing": 0,
+            "font": "宋体",
+            "valign": 1,
+            "shadowEnabled": false,
+            "shadowColor": "#000000",
+            "shadowDx": 1,
+            "shadowDy": 1,
+            "stroke": 0,
+            "strokeColor": "#000000",
+            "showOnEditor": true,
+            "mouseEventEnabledInEditor": true,
+            "materialData": [
+                {
+                    "materials": []
+                }
+            ],
+            "index": 4
+        },
+        "nameBox": {
+            "x": 121,
+            "y": 456,
+            "width": 123,
+            "height": 28,
+            "alpha": 1,
+            "fontSize": 24,
+            "color": "#FFFFFF",
+            "bold": false,
+            "italic": false,
+            "align": 1,
+            "leading": 0,
+            "letterSpacing": 0,
+            "font": "宋体",
+            "valign": 1,
+            "shadowEnabled": false,
+            "shadowColor": "#000000",
+            "shadowDx": 1,
+            "shadowDy": 1,
+            "stroke": 0,
+            "strokeColor": "#000000",
+            "showOnEditor": true,
+            "mouseEventEnabledInEditor": true,
+            "materialData": [
+                {
+                    "materials": []
+                }
+            ],
+            "index": 5
+        },
+        "skipBox": {
+            "x": 895,
+            "y": 608,
+            "width": 0,
+            "height": 0,
+            "alpha": 1,
+            "posIndex": 0,
+            "posX": 0,
+            "posY": 0,
+            "animationID": 0,
+            "scaleNumber": 1,
+            "playType": 2,
+            "showOnEditor": true,
+            "mouseEventEnabledInEditor": true,
+            "index": 6
+        },
+        "id": 10
+    },
     "asset/json/scene/tile/tile1.json": {
         "url": "asset/image/tile/Surface_1.png",
         "dataLayers": [
@@ -11576,6 +11576,103 @@
                     "stroke": 0,
                     "strokeColor": "#000000",
                     "onChangeFragEvent": null
+                },
+                {
+                    "id": "66908864374_0.627149418949069",
+                    "condition": [],
+                    "type": "UIButton",
+                    "name": "手机按钮",
+                    "x": 935,
+                    "y": 669,
+                    "width": 32,
+                    "height": 32,
+                    "opacity": 1,
+                    "rotation": 0,
+                    "show": true,
+                    "mouseEventEnabledData": true,
+                    "materialData": [
+                        {
+                            "materials": []
+                        }
+                    ],
+                    "mouseEventEnabledInEditor": true,
+                    "showOnEditor": true,
+                    "hasCommand": [
+                        null,
+                        true,
+                        true
+                    ],
+                    "isOpen": true,
+                    "label": "",
+                    "image1": "asset/image/picture/ui/dialog/Phone.jpg",
+                    "grid9img1": "0,0,0,0,0",
+                    "image2": "asset/image/picture/ui/dialog/Phone.jpg",
+                    "grid9img2": "0,0,0,0,0",
+                    "image3": "asset/image/picture/ui/dialog/Phone.jpg",
+                    "grid9img3": "0,0,0,0,0",
+                    "fontSize": 16,
+                    "color": "#999999",
+                    "overColor": "#999999",
+                    "clickColor": "#999999",
+                    "bold": false,
+                    "italic": false,
+                    "smooth": null,
+                    "align": 1,
+                    "valign": 1,
+                    "letterSpacing": 0,
+                    "font": "思源黑体",
+                    "textDx": 0,
+                    "textDy": 0,
+                    "textStroke": 0,
+                    "textStrokeColor": "#000000"
+                },
+                {
+                    "id": "66909539673_0.549048059395076",
+                    "condition": [],
+                    "type": "UIButton",
+                    "name": "脑图按钮",
+                    "x": 910,
+                    "y": 677,
+                    "width": 22,
+                    "height": 22,
+                    "opacity": 1,
+                    "rotation": 0,
+                    "show": true,
+                    "mouseEventEnabledData": true,
+                    "materialData": [
+                        {
+                            "materials": []
+                        }
+                    ],
+                    "mouseEventEnabledInEditor": true,
+                    "showOnEditor": true,
+                    "hasCommand": [
+                        null,
+                        true,
+                        true
+                    ],
+                    "isOpen": true,
+                    "label": "",
+                    "image1": "asset/image/picture/ui/dialog/Light.jpg",
+                    "grid9img1": "0,0,0,0,0",
+                    "image2": "asset/image/picture/ui/dialog/Light.jpg",
+                    "grid9img2": "0,0,0,0,0",
+                    "image3": "asset/image/picture/ui/dialog/Light.jpg",
+                    "grid9img3": "0,0,0,0,0",
+                    "fontSize": 16,
+                    "color": "#999999",
+                    "overColor": "#999999",
+                    "clickColor": "#999999",
+                    "bold": false,
+                    "italic": false,
+                    "align": 1,
+                    "valign": 1,
+                    "letterSpacing": 0,
+                    "font": "思源黑体",
+                    "textDx": 0,
+                    "textDy": 0,
+                    "textStroke": 0,
+                    "textStrokeColor": "#000000"
                 }
             ]
         },
@@ -13063,6 +13160,164 @@
                 [],
                 [],
                 [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                []
+            ]
+        },
+        "66908864374_0.627149418949069": {
+            "condition": [],
+            "commands": [
+                [],
+                [
+                    [
+                        40013,
+                        {
+                            "49888868392_0.20897767076252083": [
+                                10000001,
+                                [
+                                    30,
+                                    "{\"transType\":0,\"loopType\":0,\"timeType\":0,\"timeUnit\":1,\"totalTime\":2,\"tweenType\":0,\"tweenTypeName\":\"linearNone\",\"curveData\":[[0,0,0,99,1,1,1,3],[0,100,100]],\"refreshInterval\":16}",
+                                    {
+                                        "uiID": 3,
+                                        "atts": {
+                                            "51002554449_0.9381395484044113": [
+                                                0,
+                                                {
+                                                    "text": "手机"
+                                                },
+                                                {
+                                                    "text": {}
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    0,
+                                    1,
+                                    0
+                                ]
+                            ]
+                        },
+                        "66909864710_0.298643909104938"
+                    ]
+                ],
+                [
+                    [
+                        40013,
+                        {
+                            "49888868392_0.20897767076252083": [
+                                10000001,
+                                [
+                                    30,
+                                    "{\"transType\":0,\"loopType\":0,\"timeType\":0,\"timeUnit\":1,\"totalTime\":2,\"tweenType\":0,\"tweenTypeName\":\"linearNone\",\"curveData\":[[0,0,0,99,1,1,1,3],[0,100,100]],\"refreshInterval\":16}",
+                                    {
+                                        "uiID": 3,
+                                        "atts": {
+                                            "51002554449_0.9381395484044113": [
+                                                0,
+                                                {
+                                                    "text": ""
+                                                },
+                                                {
+                                                    "text": {}
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    0,
+                                    1,
+                                    0
+                                ]
+                            ]
+                        },
+                        "66909973025_0.16963288520830777"
+                    ]
+                ],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                []
+            ]
+        },
+        "66909539673_0.549048059395076": {
+            "condition": [],
+            "commands": [
+                [],
+                [
+                    [
+                        40013,
+                        {
+                            "49888868392_0.20897767076252083": [
+                                10000001,
+                                [
+                                    30,
+                                    "{\"transType\":0,\"loopType\":0,\"timeType\":0,\"timeUnit\":1,\"totalTime\":2,\"tweenType\":0,\"tweenTypeName\":\"linearNone\",\"curveData\":[[0,0,0,99,1,1,1,3],[0,100,100]],\"refreshInterval\":16}",
+                                    {
+                                        "uiID": 3,
+                                        "atts": {
+                                            "51002554449_0.9381395484044113": [
+                                                0,
+                                                {
+                                                    "text": "脑图"
+                                                },
+                                                {
+                                                    "text": {}
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    0,
+                                    1,
+                                    0
+                                ]
+                            ]
+                        },
+                        "66909939058_0.4537680096665373"
+                    ]
+                ],
+                [
+                    [
+                        40013,
+                        {
+                            "49888868392_0.20897767076252083": [
+                                10000001,
+                                [
+                                    30,
+                                    "{\"transType\":0,\"loopType\":0,\"timeType\":0,\"timeUnit\":1,\"totalTime\":2,\"tweenType\":0,\"tweenTypeName\":\"linearNone\",\"curveData\":[[0,0,0,99,1,1,1,3],[0,100,100]],\"refreshInterval\":16}",
+                                    {
+                                        "uiID": 3,
+                                        "atts": {
+                                            "51002554449_0.9381395484044113": [
+                                                0,
+                                                {
+                                                    "text": ""
+                                                },
+                                                {
+                                                    "text": {}
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    0,
+                                    1,
+                                    0
+                                ]
+                            ]
+                        },
+                        "66909983609_0.31152570345502295"
+                    ]
+                ],
                 [],
                 [],
                 [],
@@ -19758,6 +20013,13 @@
         "id": 3002
     },
     "asset/json/server/ui/sui3002.json": {},
+    "asset/json/ui/data/ui3003.json": {
+        "root": {
+            "children": []
+        },
+        "id": 3003
+    },
+    "asset/json/server/ui/sui3003.json": {},
     "asset/json/custom/customCommandType.json": {
         "list": {
             "1": [
@@ -41135,13 +41397,6 @@
             }
         }
     },
-    "asset/json/ui/data/ui3003.json": {
-        "root": {
-            "children": []
-        },
-        "id": 3003
-    },
-    "asset/json/server/ui/sui3003.json": {},
     "asset/json/ui/data/ui3004.json": {
         "root": {
             "children": []
