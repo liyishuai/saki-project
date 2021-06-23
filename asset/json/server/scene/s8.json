@@ -81,6 +81,36 @@
             [
                 11,
                 3,
+                3,
+                "OnePlus",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>同学们，从今天开始我们开始新的主题，\n</span><span style='color:#FfFffF'>后续两天的课程将由 Sevenzero 学长负责。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66901225170_0.9414911184389974"
+                }
+            ],
+            [
+                11,
+                3,
+                6,
+                "sevenzero",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>大家好。。。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66901261729_0.2807065481880553"
+                }
+            ],
+            [
+                11,
+                3,
                 6,
                 "sevenzero",
                 3,
