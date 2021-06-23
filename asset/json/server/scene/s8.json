@@ -85,7 +85,7 @@
                 "OnePlus",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>同学们，从今天开始我们开始新的主题，\n</span><span style='color:#FfFffF'>后续两天的课程将由 Sevenzero 学长负责。</span>",
+                "<span style='color:#FfFffF'>从今天开始我们将开始新的主题，\n</span><span style='color:#FfFffF'>后续两天的课程将由 Sevenzero 学长负责。</span>",
                 null,
                 1,
                 0,
@@ -106,6 +106,141 @@
                 0,
                 {
                     "___cmdID": "66901261729_0.2807065481880553"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>哇呜...</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66901921914_0.5976251033118252"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>（这个就是 HIT 现役最强的选手吗？）</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66901886032_0.0020146891301942027"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>（不知道和 Sevenkplus 相比谁更厉害。）</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66901945582_0.8359746212663177"
+                }
+            ],
+            [
+                11,
+                3,
+                2,
+                "Kotori",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>（不管怎么说，先加入《个别名单记录》，\n</span><span style='color:#FfFffF'>如果想进入 WorldFinal 就必须先打败她才行！）</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66901975919_0.8363228468812538"
+                }
+            ],
+            [
+                11,
+                1,
+                null,
+                "",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>不知为何，Kotori 的心中燃起了斗志。</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66901987981_0.27575748496389907"
+                }
+            ],
+            [
+                11,
+                3,
+                6,
+                "sevenzero",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>（搜索吗，真是无聊的问题。）</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66902008142_0.5324258164130273"
+                }
+            ],
+            [
+                11,
+                3,
+                6,
+                "sevenzero",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>（姑且用来打发打发时间吧。）</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66902019968_0.1651143223606104"
+                }
+            ],
+            [
+                11,
+                3,
+                6,
+                "sevenzero",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>（不知道这个学期会不会有厉害的新人加入。如果没有就太无聊了。。。）</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66902035102_0.674801032730278"
+                }
+            ],
+            [
+                11,
+                3,
+                6,
+                "sevenzero",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>嗯啊。（清嗓子）</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66902063099_0.8512537894177115"
                 }
             ],
             [
@@ -532,32 +667,47 @@
                 1,
                 0,
                 {
+                    "___cmdID": "66901520374_0.6141063674482894"
+                }
+            ],
+            [
+                11,
+                3,
+                6,
+                "sevenzero",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>首先我们来看一看例题，魔板。\n</span><span style='color:#FfFffF'>我们有一张拥有 8 个格子的魔板，初始状态为：\n</span><span style='color:#FfFffF'>1 2 3 4\n</span><span style='color:#FfFffF'>8 7 6 5</span>",
+                null,
+                1,
+                0,
+                {
+                    "___cmdID": "66901520057_0.2468006613989766"
+                }
+            ],
+            [
+                11,
+                3,
+                6,
+                "sevenzero",
+                3,
+                -3,
+                "<span style='color:#FfFffF'>我们可以对魔板进行三种操作。\n</span><span style='color:#FfFffF'>A：交换上下两行\n</span><span style='color:#FfFffF'>B：将最右一列插入左侧\n</span><span style='color:#FfFffF'>C：魔板中间四个格子顺时针旋转。\n</span><span style='color:#FfFffF'>给出一个状态排列，求转换至初始状态所需的最少操作。</span>",
+                null,
+                1,
+                0,
+                {
                     "___cmdID": "66156150410_0.19626516985758946"
                 }
             ],
             [
                 11,
-                7,
-                6,
-                "sevenzero",
-                3,
-                -3,
-                "<span style='color:#FfFffF'>首先我们来看一看例题，魔板。\n</span><span style='color:#FfFffF'>我们有一张拥有8个格子的魔板，初始排列为：\n</span><span style='color:#FfFffF'>1 2 3 4\n</span><span style='color:#FfFffF'>8 7 6 5\n</span><span style='color:#FfFffF'>我们可以对魔板进行三种操作。\n</span><span style='color:#FfFffF'>A：交换上下两行\n</span><span style='color:#FfFffF'>B：将最右一列插入左侧\n</span><span style='color:#FfFffF'>C：魔板中间四个格子顺时针旋转。\n</span><span style='color:#FfFffF'>给出一个状态排列，求转换至基础状态所需的最少操作数和操作。</span>",
-                null,
-                1,
-                0,
-                {
-                    "___cmdID": "66156150267_0.6249579627531514"
-                }
-            ],
-            [
-                11,
                 3,
                 6,
                 "sevenzero",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>对于这道题，我们可以使用bfs()来求解。\n</span><span style='color:#FfFffF'>首先，我们将</span>",
+                "<span style='color:#FfFffF'>对于这道题，我们可以使用bfs()来求解。\n</span><span style='color:#FfFffF'>首先，我们先构建这道题所需的答案，\n</span><span style='color:#FfFffF'>设Ai为排列，Si为从给出的起点排列到排列Ai所需的步骤。\n</span><span style='color:#FfFffF'>我们可以轻松地用字符串和map来构建答案，\n</span><span style='color:#FfFffF'>我们将排列和步骤都存储为字符串，并存入map中。</span>",
                 null,
                 1,
                 0,
@@ -567,12 +717,12 @@
             ],
             [
                 11,
-                3,
+                7,
                 6,
                 "sevenzero",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>讲完了 dfs()，下面再来看 bfs()。</span>",
+                "<span style='color:#FfFffF'>接下来构建bfs部分，将每个排序看成节点，每个操作看成连接节点的边。\n</span><span style='color:#FfFffF'>然后再使用队列储存需要处理的节点，弹出处理完毕的节点。\n</span><span style='color:#FfFffF'>可以很容易地构建出\n</span><span style='color:#FfFffF'>“从一个起点排序开始，进行循环处理，\n</span><span style='color:#FfFffF'>每次处理一种针对该排列的操作，然后将操作后得出的排序存入队列，\n</span><span style='color:#FfFffF'>再将对应的状态步骤，也就是我们需要的答案存入map中。\n</span><span style='color:#FfFffF'>一个排序的处理结束后，将其弹出队列，然后再处理被存入队列的下一个排序。\n</span><span style='color:#FfFffF'>当处理至我们的目标排序时，结束处理并输出存在map中的答案。”\n</span><span style='color:#FfFffF'>这样的操作。\n</span><span style='color:#FfFffF'>就是这样，简单易懂。\n</span><span style='color:#FfFffF'>剩下的就是把代码写出来了。</span>",
                 null,
                 1,
                 0,
@@ -587,37 +737,7 @@
                 "sevenzero",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>讲完了 dfs()，下面再来看 bfs()。</span>",
-                null,
-                1,
-                0,
-                {
-                    "___cmdID": "66742342732_0.831891320203908"
-                }
-            ],
-            [
-                11,
-                3,
-                6,
-                "sevenzero",
-                3,
-                -3,
-                "<span style='color:#FfFffF'>讲完了 dfs()，下面再来看 bfs()。</span>",
-                null,
-                1,
-                0,
-                {
-                    "___cmdID": "66742342560_0.6653667206951626"
-                }
-            ],
-            [
-                11,
-                3,
-                6,
-                "sevenzero",
-                3,
-                -3,
-                "<span style='color:#FfFffF'>讲完了 dfs()，下面再来看 bfs()。</span>",
+                "<span style='color:#FfFffF'>好了，来自己做做？</span>",
                 null,
                 1,
                 0,
@@ -803,7 +923,7 @@
                 "sevenzero",
                 3,
                 -3,
-                "<span style='color:#FfFffF'>讲完了 dfs()，下面再来看 bfs()。</span>",
+                "<span style='color:#FfFffF'>这道题是很简单的bfs的模板题，除此之外还有很多变形的题目，\n</span><span style='color:#FfFffF'>也有许多基于bfs的变形算法来处理这些复杂问题。\n</span><span style='color:#FfFffF'>可不要做会了一道题就觉得自己学懂了哦。</span>",
                 null,
                 1,
                 0,
