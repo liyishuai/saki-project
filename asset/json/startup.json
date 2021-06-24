@@ -20020,6 +20020,13 @@
         "id": 3003
     },
     "asset/json/server/ui/sui3003.json": {},
+    "asset/json/ui/data/ui3004.json": {
+        "root": {
+            "children": []
+        },
+        "id": 3004
+    },
+    "asset/json/server/ui/sui3004.json": {},
     "asset/json/custom/customCommandType.json": {
         "list": {
             "1": [
@@ -41397,13 +41404,6 @@
             }
         }
     },
-    "asset/json/ui/data/ui3004.json": {
-        "root": {
-            "children": []
-        },
-        "id": 3004
-    },
-    "asset/json/server/ui/sui3004.json": {},
     "asset/json/ui/data/ui3005.json": {
         "root": {
             "children": []
@@ -41964,6 +41964,13 @@
         ],
         "id": 1
     },
+    "asset/json/server/command/data/ws5.json": {
+        "allowClient": false,
+        "conditionSwitch": 1,
+        "updateMode": false,
+        "commands": [],
+        "id": 5
+    },
     "asset/json/server/command/data/ws2.json": {
         "allowClient": false,
         "conditionSwitch": 1,
@@ -42281,13 +42288,6 @@
         "updateMode": false,
         "commands": [],
         "id": 4
-    },
-    "asset/json/server/command/data/ws5.json": {
-        "allowClient": false,
-        "conditionSwitch": 1,
-        "updateMode": false,
-        "commands": [],
-        "id": 5
     },
     "asset/json/server/command/data/ws15001.json": {
         "allowClient": false,
