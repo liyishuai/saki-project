@@ -344,6 +344,336 @@ class ListItem_15 extends UIListItemData {
 }
 
 /**
+ * 16-手机界面 [BASE]
+ */
+class GUI_16 extends GUI_BASE {
+   按钮:UIButton;
+   图片:UIBitmap;
+
+   constructor(){
+      super(16);
+   }
+}
+class ListItem_16 extends UIListItemData {
+   图片:string;
+
+}
+
+/**
+ * 17- [BASE]
+ */
+class GUI_17 extends GUI_BASE {
+
+   constructor(){
+      super(17);
+   }
+}
+class ListItem_17 extends UIListItemData {
+
+}
+
+/**
+ * 18- [BASE]
+ */
+class GUI_18 extends GUI_BASE {
+
+   constructor(){
+      super(18);
+   }
+}
+class ListItem_18 extends UIListItemData {
+
+}
+
+/**
+ * 19---手机界面 [BASE]
+ */
+class GUI_19 extends GUI_BASE {
+
+   constructor(){
+      super(19);
+   }
+}
+class ListItem_19 extends UIListItemData {
+
+}
+
+/**
+ * 20-QQ [BASE]
+ */
+class GUI_20 extends GUI_BASE {
+   按钮:UIButton;
+   图片:UIBitmap;
+   constructor(){
+      super(20);
+   }
+}
+class ListItem_20 extends UIListItemData {
+   图片:string;
+}
+
+/**
+ * 21-Gmail [BASE]
+ */
+class GUI_21 extends GUI_BASE {
+   按钮:UIButton;
+   图片:UIBitmap;
+   constructor(){
+      super(21);
+   }
+}
+class ListItem_21 extends UIListItemData {
+   图片:string;
+}
+
+/**
+ * 22- [BASE]
+ */
+class GUI_22 extends GUI_BASE {
+
+   constructor(){
+      super(22);
+   }
+}
+class ListItem_22 extends UIListItemData {
+
+}
+
+/**
+ * 23- [BASE]
+ */
+class GUI_23 extends GUI_BASE {
+
+   constructor(){
+      super(23);
+   }
+}
+class ListItem_23 extends UIListItemData {
+
+}
+
+/**
+ * 24- [BASE]
+ */
+class GUI_24 extends GUI_BASE {
+
+   constructor(){
+      super(24);
+   }
+}
+class ListItem_24 extends UIListItemData {
+
+}
+
+/**
+ * 25- [BASE]
+ */
+class GUI_25 extends GUI_BASE {
+
+   constructor(){
+      super(25);
+   }
+}
+class ListItem_25 extends UIListItemData {
+
+}
+
+/**
+ * 26- [BASE]
+ */
+class GUI_26 extends GUI_BASE {
+
+   constructor(){
+      super(26);
+   }
+}
+class ListItem_26 extends UIListItemData {
+
+}
+
+/**
+ * 27- [BASE]
+ */
+class GUI_27 extends GUI_BASE {
+
+   constructor(){
+      super(27);
+   }
+}
+class ListItem_27 extends UIListItemData {
+
+}
+
+/**
+ * 28- [BASE]
+ */
+class GUI_28 extends GUI_BASE {
+
+   constructor(){
+      super(28);
+   }
+}
+class ListItem_28 extends UIListItemData {
+
+}
+
+/**
+ * 29- [BASE]
+ */
+class GUI_29 extends GUI_BASE {
+
+   constructor(){
+      super(29);
+   }
+}
+class ListItem_29 extends UIListItemData {
+
+}
+
+/**
+ * 30- [BASE]
+ */
+class GUI_30 extends GUI_BASE {
+
+   constructor(){
+      super(30);
+   }
+}
+class ListItem_30 extends UIListItemData {
+
+}
+
+/**
+ * 31- [BASE]
+ */
+class GUI_31 extends GUI_BASE {
+
+   constructor(){
+      super(31);
+   }
+}
+class ListItem_31 extends UIListItemData {
+
+}
+
+/**
+ * 32- [BASE]
+ */
+class GUI_32 extends GUI_BASE {
+
+   constructor(){
+      super(32);
+   }
+}
+class ListItem_32 extends UIListItemData {
+
+}
+
+/**
+ * 33- [BASE]
+ */
+class GUI_33 extends GUI_BASE {
+
+   constructor(){
+      super(33);
+   }
+}
+class ListItem_33 extends UIListItemData {
+
+}
+
+/**
+ * 34- [BASE]
+ */
+class GUI_34 extends GUI_BASE {
+
+   constructor(){
+      super(34);
+   }
+}
+class ListItem_34 extends UIListItemData {
+
+}
+
+/**
+ * 35- [BASE]
+ */
+class GUI_35 extends GUI_BASE {
+
+   constructor(){
+      super(35);
+   }
+}
+class ListItem_35 extends UIListItemData {
+
+}
+
+/**
+ * 36- [BASE]
+ */
+class GUI_36 extends GUI_BASE {
+
+   constructor(){
+      super(36);
+   }
+}
+class ListItem_36 extends UIListItemData {
+
+}
+
+/**
+ * 37- [BASE]
+ */
+class GUI_37 extends GUI_BASE {
+
+   constructor(){
+      super(37);
+   }
+}
+class ListItem_37 extends UIListItemData {
+
+}
+
+/**
+ * 38- [BASE]
+ */
+class GUI_38 extends GUI_BASE {
+
+   constructor(){
+      super(38);
+   }
+}
+class ListItem_38 extends UIListItemData {
+
+}
+
+/**
+ * 39- [BASE]
+ */
+class GUI_39 extends GUI_BASE {
+
+   constructor(){
+      super(39);
+   }
+}
+class ListItem_39 extends UIListItemData {
+
+}
+
+/**
+ * 40- [BASE]
+ */
+class GUI_40 extends GUI_BASE {
+
+   constructor(){
+      super(40);
+   }
+}
+class ListItem_40 extends UIListItemData {
+
+}
+
+/**
  * 1001-档案Item [BASE]
  */
 class GUI_1001 extends GUI_BASE {

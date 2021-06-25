@@ -134,7 +134,7 @@
                 "condition": [],
                 "type": "UIButton",
                 "name": "关闭读取存档界面按钮",
-                "x": 1025,
+                "x": 1024,
                 "y": 30,
                 "width": 104,
                 "height": 40,
