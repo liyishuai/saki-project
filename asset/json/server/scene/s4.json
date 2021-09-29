@@ -64,7 +64,7 @@
                                     "vagueness": 0.25,
                                     "invertMask": 0,
                                     "____timeInfo": {
-                                        "trans": 120
+                                        "trans": 37
                                     }
                                 }
                             ]
@@ -149,7 +149,7 @@
                 -3,
                 "<span style='color:#FfFffF'>嗯哼...\n</span><span style='color:#FfFffF'>根据目前的观测结果...太阳系的其他行星里都没有类地生命的存在呢。</span>",
                 null,
-                2,
+                1,
                 0,
                 {
                     "___cmdID": "65932137348_0.7730272725147271"

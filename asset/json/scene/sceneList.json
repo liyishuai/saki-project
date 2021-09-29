@@ -30,7 +30,8 @@
         "Day 0",
         "生日礼物",
         "冲突 - 褪色奖状",
-        "对话测试场景"
+        "对话测试场景",
+        "生成函数"
     ],
     "node": [
         {
@@ -105,7 +106,7 @@
                                     "children": []
                                 }
                             ],
-                            "isOpen": true
+                            "isOpen": false
                         },
                         {
                             "id": 18,
@@ -147,7 +148,7 @@
                                     "children": []
                                 }
                             ],
-                            "isOpen": true
+                            "isOpen": false
                         }
                     ],
                     "isOpen": true
@@ -189,6 +190,11 @@
                         {
                             "id": 29,
                             "name": "冲突 - 褪色奖状",
+                            "children": []
+                        },
+                        {
+                            "id": 31,
+                            "name": "生成函数",
                             "children": []
                         }
                     ],
