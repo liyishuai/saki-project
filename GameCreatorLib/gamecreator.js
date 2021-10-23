@@ -1,8 +1,3 @@
-//@cannot search
-//------------------------------------------------------------------------------------------------------
-// Game Creator Runtime By 黑暗之神KDS
-// 请勿修改该JS文件，引擎会根据版本自动替换该文件
-//------------------------------------------------------------------------------------------------------
 var AsynTask = (function () {
     function AsynTask(onFin) {
         this._asynCount = 0;
@@ -17690,10 +17685,10 @@ if (typeof define === 'function' && define.amd) {
             BlendMode.targetFns = [BlendMode.BlendNormalTarget, BlendMode.BlendAddTarget, BlendMode.BlendMultiplyTarget, BlendMode.BlendScreenTarget, BlendMode.BlendOverlayTarget, BlendMode.BlendLightTarget, BlendMode.BlendMask, BlendMode.BlendDestinationOut];
         };
         BlendMode.BlendNormal = function (gl) {
-            gl.blendFuncSeparate(0x0302, 0x0303, 0x0302, 0x0303);
+            gl.blendFunc(/*laya.webgl.WebGLContext.ONE*/1,/*laya.webgl.WebGLContext.ONE_MINUS_SRC_ALPHA*/0x0303);
         };
         BlendMode.BlendAdd = function (gl) {
-            gl.blendFunc(0x0302, 0x0304);
+            gl.blendFunc(/*laya.webgl.WebGLContext.ONE*/1,/*laya.webgl.WebGLContext.DST_ALPHA*/0x0304);
         };
         BlendMode.BlendMultiply = function (gl) {
             gl.blendFunc(0x0306, 0x0303);
@@ -18193,8 +18188,8 @@ if (typeof define === 'function' && define.amd) {
             Shader.addInclude("parts/ColorAdd_ps_logic.glsl", "gl_FragColor = vec4(colorAdd.rgb,colorAdd.a*gl_FragColor.a);\ngl_FragColor.xyz *= colorAdd.a;");
             var vs, ps;
             vs = "attribute vec4 position;\nattribute vec2 texcoord;\nuniform vec2 size;\n\n#ifdef WORLDMAT\nuniform mat4 mmat;\n#endif\nvarying vec2 v_texcoord;\nvoid main() {\n  #ifdef WORLDMAT\n  vec4 pos=mmat*position;\n  gl_Position =vec4((pos.x/size.x-0.5)*2.0,(0.5-pos.y/size.y)*2.0,pos.z,1.0);\n  #else\n  gl_Position =vec4((position.x/size.x-0.5)*2.0,(0.5-position.y/size.y)*2.0,position.z,1.0);\n  #endif\n  \n  v_texcoord = texcoord;\n}";
-            ps = "precision mediump float;\n//precision highp float;\nvarying vec2 v_texcoord;\nuniform sampler2D texture;\nuniform float alpha;\n#include?BLUR_FILTER  \"parts/BlurFilter_ps_uniform.glsl\";\n#include?COLOR_FILTER \"parts/ColorFilter_ps_uniform.glsl\";\n#include?GLOW_FILTER \"parts/GlowFilter_ps_uniform.glsl\";\n#include?COLOR_ADD \"parts/ColorAdd_ps_uniform.glsl\";\n\nvoid main() {\n   vec4 color= texture2D(texture, v_texcoord);\nif(color.a<1.0)color.rgb*=1.0/color.a;\n   color.a*=alpha;\n   \n   gl_FragColor=color;\n   #include?COLOR_ADD \"parts/ColorAdd_ps_logic.glsl\";   \n   #include?BLUR_FILTER  \"parts/BlurFilter_ps_logic.glsl\";\n   #include?COLOR_FILTER \"parts/ColorFilter_ps_logic.glsl\";\n   #include?GLOW_FILTER \"parts/GlowFilter_ps_logic.glsl\";\n}";
-            Shader.preCompile2D(0, 0x01, vs, ps, null);
+            ps = "precision mediump float;\n//precision highp float;\nvarying vec2 v_texcoord;\nuniform sampler2D texture;\nuniform float alpha;\n#include?BLUR_FILTER  \"parts/BlurFilter_ps_uniform.glsl\";\n#include?COLOR_FILTER \"parts/ColorFilter_ps_uniform.glsl\";\n#include?GLOW_FILTER \"parts/GlowFilter_ps_uniform.glsl\";\n#include?COLOR_ADD \"parts/ColorAdd_ps_uniform.glsl\";\n\nvoid main() {\n   vec4 color= texture2D(texture, v_texcoord);\n   color.a*=alpha;\n   color.rgb*=alpha;\n   gl_FragColor=color;\n   #include?COLOR_ADD \"parts/ColorAdd_ps_logic.glsl\";   \n   #include?BLUR_FILTER  \"parts/BlurFilter_ps_logic.glsl\";\n   #include?COLOR_FILTER \"parts/ColorFilter_ps_logic.glsl\";\n   #include?GLOW_FILTER \"parts/GlowFilter_ps_logic.glsl\";\n}";
+            Shader.preCompile2D(0,/*laya.webgl.shader.d2.ShaderDefines2D.TEXTURE2D*/0x01, vs, ps, null);
             vs = "attribute vec4 position;\nuniform vec2 size;\nuniform mat4 mmat;\nvoid main() {\n  vec4 pos=mmat*position;\n  gl_Position =vec4((pos.x/size.x-0.5)*2.0,(0.5-pos.y/size.y)*2.0,pos.z,1.0);\n}";
             ps = "precision mediump float;\nuniform vec4 color;\nuniform float alpha;\n#include?COLOR_FILTER \"parts/ColorFilter_ps_uniform.glsl\";\nvoid main() {\n	vec4 a = vec4(color.r, color.g, color.b, color.a);\n	a.w = alpha;\n	a.xyz *= alpha;\n	gl_FragColor = a;\n	#include?COLOR_FILTER \"parts/ColorFilter_ps_logic.glsl\";\n}";
             Shader.preCompile2D(0, 0x02, vs, ps, null);
@@ -43828,7 +43823,7 @@ var TreeRender = (function (_super) {
         if (e.ctrlKey || e.shiftKey) {
             return;
         }
-        if (this.data.numChildren == 0)
+        if (!this.data || this.data.numChildren == 0)
             return;
         var isOpen = !this.data.isOpen;
         if (!isOpen) {
@@ -44412,16 +44407,16 @@ Shader2D.initMaterial = function () {
     }
     var vs, ps;
     vs = "\n\tattribute vec4 position;\n\tattribute vec2 texcoord;\n\tuniform vec2 size;\n\t#ifdef WORLDMAT\n\t uniform mat4 mmat;\n\t#endif\n\tvarying vec2 v_texcoord;\n\tvoid main() {\n\t\t  vec2 sizex = size;\n\t\t  #ifdef WORLDMAT\n\t\t   vec4 pos=mmat*position;\n\t\t   gl_Position =vec4((pos.x/sizex.x-0.5)*2.0,(0.5-pos.y/sizex.y)*2.0,pos.z,1.0);\n\t\t  #else\n\t\t   gl_Position =vec4((position.x/sizex.x-0.5)*2.0,(0.5-position.y/sizex.y)*2.0,position.z,1.0);\n\t\t  #endif\n\t\t v_texcoord = texcoord;\n\t}";
-    ps = "\n\t" + (Config.EDIT_MODE ? "#define IN_GC_EDITOR" : "") + "\n\tprecision mediump float;\n\t//precision highp float;\n\tvarying vec2 v_texcoord;\n\tuniform sampler2D texture;\n\tuniform float alpha;\n\tuniform vec2 renderTargetSize;\n\tuniform float u_yFilp;\n\n\tvec2 getDrawUV(vec2 texcoord,vec4 p){\n\t\tvec2 drawUV = texcoord;\n\t\tdrawUV.x = fract(drawUV.x);\n\t\tif(u_yFilp==1.0){\n\t\t\tdrawUV.y = fract(drawUV.y);\n\t\t}\n\t\telse{\n\t\t\tdrawUV.y = fract(drawUV.y)*-1.0+1.0;\n\t\t}\n    \t\n\n    \tdrawUV.x *= p.x;\n    \tdrawUV.y *= p.y;\n\n    \tdrawUV.x += p.z;\n    \tdrawUV.y += p.w;\n\n\t\treturn drawUV;\n\t}\n\tvec4 getTextureColor(vec2 texcoord) {\n\t\t vec4 color= texture2D(texture, fract(texcoord));\n\t\t return color;\n\t}\n\n\tvec2 getInRangeTextureCoord(vec2 texcoord){\n\t\treturn fract(texcoord);\n\t}\n\t\n\t#include?KDS  \"parts/KDS_ps_uniform.glsl\";\n\t#include?BLUR_FILTER  \"parts/BlurFilter_ps_uniform.glsl\";\n\t#include?COLOR_FILTER \"parts/ColorFilter_ps_uniform.glsl\";\n\t#include?GLOW_FILTER \"parts/GlowFilter_ps_uniform.glsl\";\n\t#include?COLOR_ADD \"parts/ColorAdd_ps_uniform.glsl\";\n\tvoid main() {\n\t\t   vec4 color= getTextureColor(v_texcoord);\n\t\t   if(color.a<1.0){\n\t\t\t   if(color.a==0.0){\n\t\t\t\t   color.rgb *= 0.0;\n\t\t\t   }\n\t\t\t   else{\n\t\t\t\t   color.rgb*=1.0/color.a;\n\t\t\t   }\n\t\t   }\n\t\t   color.a*=alpha;\n\t\t   gl_FragColor=color;\n\t\t//    gl_FragColor.w = 1.0;\n\t\t   #include?KDS  \"parts/KDS_ps_logic.glsl\";\n\t\t   #include?COLOR_ADD \"parts/ColorAdd_ps_logic.glsl\"; \n\t\t   #include?BLUR_FILTER  \"parts/BlurFilter_ps_logic.glsl\";\n\t\t   #include?COLOR_FILTER \"parts/ColorFilter_ps_logic.glsl\";\n\t\t   #include?GLOW_FILTER \"parts/GlowFilter_ps_logic.glsl\";\n\n\t\t//    gl_FragColor.g = 1.0;\n\n\t}";
+    ps = "\n\t" + (Config.EDIT_MODE ? "#define IN_GC_EDITOR" : "") + "\n\tprecision mediump float;\n\t//precision highp float;\n\tvarying vec2 v_texcoord;\n\tuniform sampler2D texture;\n\tuniform float alpha;\n\tuniform vec2 renderTargetSize;\n\tuniform float u_yFilp;\n\n\tvec2 getDrawUV(vec2 texcoord,vec4 p){\n\t\tvec2 drawUV = texcoord;\n\t\tdrawUV.x = fract(drawUV.x);\n\t\tif(u_yFilp==1.0){\n\t\t\tdrawUV.y = fract(drawUV.y);\n\t\t}\n\t\telse{\n\t\t\tdrawUV.y = fract(drawUV.y)*-1.0+1.0;\n\t\t}\n    \t\n\n    \tdrawUV.x *= p.x;\n    \tdrawUV.y *= p.y;\n\n    \tdrawUV.x += p.z;\n    \tdrawUV.y += p.w;\n\n\t\treturn drawUV;\n\t}\n\tvec4 getTextureColor(vec2 texcoord) {\n\t\t vec4 color= texture2D(texture, fract(texcoord));\n\t\t return color;\n\t}\n\n\tvec2 getInRangeTextureCoord(vec2 texcoord){\n\t\treturn fract(texcoord);\n\t}\n\t\n\t#include?KDS  \"parts/KDS_ps_uniform.glsl\";\n\t#include?BLUR_FILTER  \"parts/BlurFilter_ps_uniform.glsl\";\n\t#include?COLOR_FILTER \"parts/ColorFilter_ps_uniform.glsl\";\n\t#include?GLOW_FILTER \"parts/GlowFilter_ps_uniform.glsl\";\n\t#include?COLOR_ADD \"parts/ColorAdd_ps_uniform.glsl\";\n\tvoid main() {\n\n\t\tvec4 color= getTextureColor(v_texcoord);\n\t\tcolor.a*=alpha;\n\t\tcolor.rgb*=alpha;\n\t\tgl_FragColor=color;\n\n\t\t   #include?KDS  \"parts/KDS_ps_logic.glsl\";\n\t\t   #include?COLOR_ADD \"parts/ColorAdd_ps_logic.glsl\"; \n\t\t   #include?BLUR_FILTER  \"parts/BlurFilter_ps_logic.glsl\";\n\t\t   #include?COLOR_FILTER \"parts/ColorFilter_ps_logic.glsl\";\n\t\t   #include?GLOW_FILTER \"parts/GlowFilter_ps_logic.glsl\";\n\n\t\t//    gl_FragColor.g = 1.0;\n\n\t}";
     Shader.preCompile2D(0, 0x01, vs, ps, null);
     vs = "\n\tattribute vec4 position;\n\tattribute vec2 texcoord;\n\tuniform vec2 size;\n\t#ifdef WORLDMAT\n\tuniform mat4 mmat;\n\t#endif\n\tvarying vec2 v_texcoord;\n\tvoid main() {\n\t\t  #ifdef WORLDMAT\n\t\t    vec4 pos=mmat*position;\n\t\t\tgl_Position =vec4((pos.x/size.x-0.5)*2.0,(0.5-pos.y/size.y)*2.0,pos.z,1.0);\n\t\t  #else\n\t\t\tgl_Position =vec4((position.x/size.x-0.5)*2.0,(0.5-position.y/size.y)*2.0,position.z,1.0);\n\t\t  #endif\n\t\t  v_texcoord = texcoord;\n\t}";
-    ps = "\n\t" + (Config.EDIT_MODE ? "#define IN_GC_EDITOR" : "") + "\n\t#ifdef FSHIGHPRECISION\n\tprecision highp float;\n\t#else\n\tprecision mediump float;\n\t#endif\n\t//precision highp float;\n\tvarying vec2 v_texcoord;\n\tuniform sampler2D texture;\n\tuniform float alpha;\n\tuniform vec4 u_TexRange;\n\tuniform vec2 u_offset;\n\tuniform vec2 renderTargetSize;\n\n\tvec2 getDrawUV(vec2 texcoord,vec4 p){\n\t\tvec2 drawUV = texcoord;\n\t\tdrawUV.x = fract(drawUV.x);\n\t\tdrawUV.y = fract(drawUV.y); // *-1.0+1.0\n\n    \tdrawUV.x *= p.x;\n    \tdrawUV.y *= p.y;\n\n    \tdrawUV.x += p.z;\n    \tdrawUV.y += p.w;\n\n\t\treturn drawUV;\n\t}\n\t\n\tvec4 getTextureColor(vec2 texcoord) {\n\t\t vec2 newTexCoord;\n\t\t newTexCoord.x = mod(u_offset.x + texcoord.x,u_TexRange.y) + u_TexRange.x;\n\t\t newTexCoord.y = mod(u_offset.y + texcoord.y,u_TexRange.w) + u_TexRange.z;\n\t\t vec4 color = texture2D(texture, newTexCoord);\n\t\t return color;\n\t}\n\n\tvec2 getInRangeTextureCoord(vec2 texcoord){\n\t\tvec2 newTexCoord;\n\t\tnewTexCoord.x = fract(mod(u_offset.x + texcoord.x,u_TexRange.y) + u_TexRange.x);\n\t\tnewTexCoord.y = fract(mod(u_offset.y + texcoord.y,u_TexRange.w) + u_TexRange.z);\n\t\treturn newTexCoord;\n\t}\n\n\t#include?KDS  \"parts/KDS_ps_uniform.glsl\";\n\t#include?BLUR_FILTER  \"parts/BlurFilter_ps_uniform.glsl\";\n\t#include?COLOR_FILTER \"parts/ColorFilter_ps_uniform.glsl\";\n\t#include?GLOW_FILTER \"parts/GlowFilter_ps_uniform.glsl\";\n\t#include?COLOR_ADD \"parts/ColorAdd_ps_uniform.glsl\";\n\tvoid main() {\n\t\t vec4 color = getTextureColor(v_texcoord);\n\t\t if(color.a<1.0){\n\t\t\t   if(color.a==0.0){\n\t\t\t\t   color.rgb *= 0.0;\n\t\t\t   }\n\t\t\t   else{\n\t\t\t\t   color.rgb*=1.0/color.a;\n\t\t\t   }\n\t\t }\n\t\t color.a*=alpha;\n\t\t gl_FragColor=color;\n\t\t #include?KDS  \"parts/KDS_ps_logic.glsl\";\n\t\t #include?COLOR_ADD \"parts/ColorAdd_ps_logic.glsl\";   \n\t\t #include?BLUR_FILTER  \"parts/BlurFilter_ps_logic.glsl\";\n\t\t #include?COLOR_FILTER \"parts/ColorFilter_ps_logic.glsl\";\n\t\t #include?GLOW_FILTER \"parts/GlowFilter_ps_logic.glsl\";\n\t}";
+    ps = "\n\t" + (Config.EDIT_MODE ? "#define IN_GC_EDITOR" : "") + "\n\t#ifdef FSHIGHPRECISION\n\tprecision highp float;\n\t#else\n\tprecision mediump float;\n\t#endif\n\t//precision highp float;\n\tvarying vec2 v_texcoord;\n\tuniform sampler2D texture;\n\tuniform float alpha;\n\tuniform vec4 u_TexRange;\n\tuniform vec2 u_offset;\n\tuniform vec2 renderTargetSize;\n\n\tvec2 getDrawUV(vec2 texcoord,vec4 p){\n\t\tvec2 drawUV = texcoord;\n\t\tdrawUV.x = fract(drawUV.x);\n\t\tdrawUV.y = fract(drawUV.y); // *-1.0+1.0\n\n    \tdrawUV.x *= p.x;\n    \tdrawUV.y *= p.y;\n\n    \tdrawUV.x += p.z;\n    \tdrawUV.y += p.w;\n\n\t\treturn drawUV;\n\t}\n\t\n\tvec4 getTextureColor(vec2 texcoord) {\n\t\t vec2 newTexCoord;\n\t\t newTexCoord.x = mod(u_offset.x + texcoord.x,u_TexRange.y) + u_TexRange.x;\n\t\t newTexCoord.y = mod(u_offset.y + texcoord.y,u_TexRange.w) + u_TexRange.z;\n\t\t vec4 color = texture2D(texture, newTexCoord);\n\t\t return color;\n\t}\n\n\tvec2 getInRangeTextureCoord(vec2 texcoord){\n\t\tvec2 newTexCoord;\n\t\tnewTexCoord.x = fract(mod(u_offset.x + texcoord.x,u_TexRange.y) + u_TexRange.x);\n\t\tnewTexCoord.y = fract(mod(u_offset.y + texcoord.y,u_TexRange.w) + u_TexRange.z);\n\t\treturn newTexCoord;\n\t}\n\n\t#include?KDS  \"parts/KDS_ps_uniform.glsl\";\n\t#include?BLUR_FILTER  \"parts/BlurFilter_ps_uniform.glsl\";\n\t#include?COLOR_FILTER \"parts/ColorFilter_ps_uniform.glsl\";\n\t#include?GLOW_FILTER \"parts/GlowFilter_ps_uniform.glsl\";\n\t#include?COLOR_ADD \"parts/ColorAdd_ps_uniform.glsl\";\n\tvoid main() {\n\t\tvec4 color= getTextureColor(v_texcoord);\n\t\tcolor.a*=alpha;\n\t\tcolor.rgb*=alpha;\n\t\tgl_FragColor=color;\n\t\t #include?KDS  \"parts/KDS_ps_logic.glsl\";\n\t\t #include?COLOR_ADD \"parts/ColorAdd_ps_logic.glsl\";   \n\t\t #include?BLUR_FILTER  \"parts/BlurFilter_ps_logic.glsl\";\n\t\t #include?COLOR_FILTER \"parts/ColorFilter_ps_logic.glsl\";\n\t\t #include?GLOW_FILTER \"parts/GlowFilter_ps_logic.glsl\";\n\t}";
     Shader.preCompile2D(0, 0x100, vs, ps, null);
     ShaderDefines2D.reg("KDS", GameSpriteMaterialPass.shaderType);
 };
 Shader2D.__init__ = function () {
     Shader.addInclude("parts/ColorFilter_ps_uniform.glsl", "uniform vec4 colorAlpha;\nuniform mat4 colorMat;");
-    Shader.addInclude("parts/ColorFilter_ps_logic.glsl", "mat4 alphaMat =colorMat;\n\tfloat lastDr = alphaMat[0][3];\n\tfloat lastDg = alphaMat[1][3];\n\tfloat lastDb = alphaMat[2][3];\n\talphaMat[0][3] =0.0;\n\talphaMat[1][3] =0.0;\n\talphaMat[2][3] =0.0;\n\tgl_FragColor = gl_FragColor * alphaMat;\n\tgl_FragColor.r += lastDr*(lastDr<0.0?gl_FragColor.r:1.0);\n\tgl_FragColor.g += lastDg*(lastDr<0.0?gl_FragColor.g:1.0);\n\tgl_FragColor.b += lastDb*(lastDr<0.0?gl_FragColor.b:1.0);\n\t");
+    Shader.addInclude("parts/ColorFilter_ps_logic.glsl", "mat4 alphaMat =colorMat;\n\nalphaMat[0][3] *= gl_FragColor.a;\nalphaMat[1][3] *= gl_FragColor.a;\nalphaMat[2][3] *= gl_FragColor.a;\n\ngl_FragColor = gl_FragColor * alphaMat;\ngl_FragColor += colorAlpha*gl_FragColor.a;\n");
     Shader.addInclude("parts/GlowFilter_ps_uniform.glsl", "\n\tuniform vec4 u_color;\n\tuniform float u_strength;\n\tuniform float u_blurX;\n\tuniform float u_blurY;\n\tuniform float u_offsetX;\n\tuniform float u_offsetY;\n\tuniform float u_textW;\n\tuniform float u_textH;");
     Shader.addInclude("parts/GlowFilter_ps_logic.glsl", "\n\tconst float c_IterationTime = 10.0;\n\tfloat floatIterationTotalTime = c_IterationTime * c_IterationTime;\n\tvec4 vec4Color = vec4(0.0,0.0,0.0,0.0);\n\tvec2 vec2FilterDir = vec2(-(u_offsetX)/u_textW,-(u_offsetY)/u_textH);\n\tvec2 vec2FilterOff = vec2(u_blurX/u_textW/c_IterationTime * 2.0,u_blurY/u_textH/c_IterationTime * 2.0);\n\tfloat maxNum = u_blurX * u_blurY;\n\tvec2 vec2Off = vec2(0.0,0.0);\n\tfloat floatOff = c_IterationTime/2.0;\n\tfor(float i = 0.0;i<=c_IterationTime; ++i){\n\t\t\tfor(float j = 0.0;j<=c_IterationTime; ++j){\n\t\t\t\tvec2Off = vec2(vec2FilterOff.x * (i - floatOff),vec2FilterOff.y * (j - floatOff));\n\t\t\t\tvec4Color += texture2D(texture, v_texcoord + vec2FilterDir + vec2Off)/floatIterationTotalTime;\n\t\t\t}\n\t}\n\tgl_FragColor = vec4(u_color.rgb,vec4Color.a * u_strength);\n\tgl_FragColor.rgb *= gl_FragColor.a;");
     Shader.addInclude("parts/BlurFilter_ps_logic.glsl", "gl_FragColor =   blur();\ngl_FragColor.w*=alpha;");
@@ -49156,11 +49151,13 @@ var FileUtils = (function () {
             taskF.apply(this);
         }
     };
-    FileUtils.deleteFile = function (localURL, onFin) {
+    FileUtils.deleteFile = function (localURL, onFin, isFullPath) {
         var _this = this;
+        if (onFin === void 0) { onFin = null; }
+        if (isFullPath === void 0) { isFullPath = false; }
         new SyncTask(FileUtils.TASK_MODIFY_FILE, function () {
             var onDeleteFileFin = Callback.New(function (success, localURL) {
-                onFin.runWith([success, localURL]);
+                onFin && onFin.runWith([success, localURL]);
                 SyncTask.taskOver(FileUtils.TASK_MODIFY_FILE);
             }, _this);
             if (!Config.EDIT_MODE && (os.platform != 2)) {
@@ -49178,7 +49175,7 @@ var FileUtils = (function () {
             var fs;
             if (typeof gcTop.require && (fs = gcTop.require("fs"))) {
                 var head = (typeof gcTop.mainDomain_LGNative != "undefined") ? gcTop.mainDomain_LGNative.WORK_PATH + "/" : "";
-                var fullURL = head + localURL;
+                var fullURL = isFullPath ? localURL : (head + localURL);
                 if (!fs.existsSync(fullURL)) {
                     onDeleteFileFin && onDeleteFileFin.delayRun(0, null, [false, localURL]);
                     return;
@@ -50506,6 +50503,7 @@ var Config = (function () {
     Config.JSON_PATH = "asset/json";
     Config.JSON_CONFIG = Config.JSON_PATH + "/config.json";
     Config.SCENE_BY_DRAWLINES_MAX = 500;
+    Config.ENGINE_MERGE_STARTUP_FILE = true;
     Config.DATA_GRIDS = [];
     Config.FONTS = [];
     Config.startupPreloadFonts = true;
@@ -51109,6 +51107,9 @@ var CustomCompositeSetting = (function (_super) {
     CustomCompositeSetting.getAllAttributes = function (data, dsAttrMode, varInBlockMapping) {
         if (dsAttrMode === void 0) { dsAttrMode = true; }
         if (varInBlockMapping === void 0) { varInBlockMapping = null; }
+        if (data == null) {
+            return [];
+        }
         var len = data.blockList.length;
         var arr = [];
         for (var i = 0; i < len; i++) {
@@ -55305,10 +55306,14 @@ var GameSprite = (function (_super) {
         if (!ani)
             return;
         this._animationTargetEffect.push(ani);
+        if (this.isDisposed)
+            return;
         this.refreshAnimationTargetEffect();
     };
     GameSprite.prototype.removeAnimationTargetEffect = function (ani) {
         ArrayUtils.remove(this._animationTargetEffect, ani);
+        if (this.isDisposed)
+            return;
         this.refreshAnimationTargetEffect();
     };
     GameSprite.prototype.refreshAnimationTargetEffect = function () {
@@ -55413,9 +55418,9 @@ var GameSprite = (function (_super) {
         var gt0 = 0 - (0 - 0.6094) * gray / 100;
         var bt0 = 0 - (0 - 0.0820) * gray / 100;
         this._tonalFilter = new ColorFilter([
-            rt1 * mr, gt0, bt0, r / 255, 0,
-            rt0, gt1 * mg, bt0, g / 255, 0,
-            rt0, gt0, bt1 * mb, b / 255, 0,
+            rt1 * mr, gt0, bt0, 0, r / 255,
+            rt0, gt1 * mg, bt0, 0, g / 255,
+            rt0, gt0, bt1 * mb, 0, b / 255,
             0, 0, 0, 1, 0
         ]);
         this.refreshFilters();
@@ -57060,7 +57065,7 @@ var ClientMain = (function () {
                 return;
             if (gcTop == window && (os.platform == 2))
                 return;
-            if (!Config.USE_FN || (e.keyCode != Keyboard.F11 && e.keyCode != Keyboard.F5)) {
+            if (!Config.USE_FN || (e.keyCode != Keyboard.F11 && e.keyCode != Keyboard.F5 && e.keyCode != Keyboard.F12)) {
                 e.stopPropagation();
                 window.event.returnValue = false;
             }
@@ -57081,6 +57086,7 @@ var ClientMain = (function () {
         GameCommand.init();
         Game.init();
         GameUI.init();
+        new SyncTask(this.initTask, this.loadStartupJson, [], this);
         new SyncTask(this.initTask, this.installDataConfig, [Config.JSON_CONFIG, Config], this);
         new SyncTask(this.initTask, this.loadFontFile, [], this);
         new SyncTask(this.initTask, this.initConfig, [], this);
@@ -57111,6 +57117,30 @@ var ClientMain = (function () {
         stage.on(EventObject.MOUSE_DOWN, this, function () {
             window.focus();
         });
+    };
+    ClientMain.prototype.loadStartupJson = function () {
+        var _this = this;
+        if (!Config.RELEASE_GAME) {
+            SyncTask.taskOver(this.initTask);
+            return;
+        }
+        var oldLoadJson1 = FileUtils.loadJsonFile;
+        FileUtils.loadJsonFile("asset/json/startup.json", Callback.New(function (startupJsons) {
+            if (!startupJsons) {
+                alert("找不到合并版的Json!");
+                return;
+            }
+            FileUtils.loadJsonFile = function (localURL, onFin, onErrorTips) {
+                if (onErrorTips === void 0) { onErrorTips = true; }
+                var bigJsonCacheObj = startupJsons[localURL];
+                if (bigJsonCacheObj) {
+                    onFin.delayRun(0, null, [bigJsonCacheObj]);
+                    return;
+                }
+                oldLoadJson1.apply(FileUtils, [localURL, onFin, onErrorTips]);
+            };
+            SyncTask.taskOver(_this.initTask);
+        }, this));
     };
     ClientMain.prototype.installDataConfig = function (url, configObj) {
         FileUtils.loadJsonFile(url, new Callback(function (cfgJson) {
@@ -59250,7 +59280,7 @@ var AnimationTargetLayer = (function (_super) {
         if (!this.animation)
             return;
         var target = this.animation.target;
-        if (!target)
+        if (!target || target.isDisposed)
             return;
         if (target instanceof GameSprite) {
             target.refreshAnimationTargetEffect();
@@ -63274,8 +63304,8 @@ var UIComponent;
             var _this = this;
             if (this.isDisposed)
                 return;
+            this.graphics.clear();
             if (!Config.EDIT_MODE) {
-                this.graphics.clear();
                 var varID = this.getVarID();
                 if (varID) {
                     var switchBool = Game.player.variable.getSwitch(varID);
@@ -63304,18 +63334,21 @@ var UIComponent;
                 }
             }
             else {
-                if (this._previewselected) {
-                    var url = this.image2;
-                    var gridText = this._grid9img2;
-                    if (url) {
-                        this._image.skin = url;
-                        this._image.width = this.width;
-                        this._image.height = this.height;
-                        this._image.sizeGrid = gridText;
-                    }
-                    return;
+                var url = this._previewselected ? this.image2 : this.image1;
+                var gridText = this._previewselected ? this._grid9img2 : this._grid9img1;
+                if (url) {
+                    AssetManager.loadImage(url, Callback.New(function (url, tex) {
+                        if (_this.isDisposed)
+                            return;
+                        var thisUrl = _this._previewselected ? _this.image2 : _this.image1;
+                        if (thisUrl != url)
+                            return;
+                        _this._image.skin = url;
+                        _this._image.width = _this.width;
+                        _this._image.height = _this.height;
+                        _this._image.sizeGrid = gridText;
+                    }, this, [url]), true, false);
                 }
-                _super.prototype.refresh.call(this);
             }
         };
         UISwitch.prototype.dispose = function () {
@@ -64729,6 +64762,7 @@ var Avatar = (function (_super) {
         set: function (v) {
             if (this.fixedOrientation)
                 return;
+            this.userChangeOrientation = true;
             for (var i in this.avatarList) {
                 if (this.avatarList[i] == this)
                     continue;
@@ -65098,7 +65132,7 @@ var Avatar = (function (_super) {
             this._bodyGraphicsFlip = (this.oriMode % 2 == 1) && (this.ori == 3 || this.ori == 6 || this.ori == 9) && this.autoFlip;
             if (this._bodyGraphicsFlip) {
                 this._bodyGraphics.scaleX = -1;
-                this._bodyGraphics.x = -frame.x * 2;
+                this._bodyGraphics.x = frame.width > 0 ? -frame.x * 2 : frame.x * 2;
             }
             else {
                 this._bodyGraphics.scaleX = 1;
@@ -68489,10 +68523,8 @@ var UIComponent;
             }
             this.addChildAt(this._avatar, 0);
             this.avatar.on(Avatar.RENDER, this, this.refreshSize);
-            this.avatar.on(EventObject.LOADED, this, function () {
+            this.avatar.once(EventObject.LOADED, this, function () {
                 _this._oriMode = _this.avatar.oriMode;
-                _this.orientationIndex = _this._orientationIndex;
-                _this.refreshSize();
             });
         };
         Object.defineProperty(UIAvatar.prototype, "syncLoadedEventWhenAssetExist", {
@@ -68584,6 +68616,16 @@ var UIComponent;
                 return this._orientationIndex;
             },
             set: function (v) {
+                var _this = this;
+                if (this.avatar.isLoading) {
+                    this.avatar.once(EventObject.LOADED, this, function () {
+                        if (_this.isDisposed || _this.avatar.isDisposed || _this.avatar.userChangeOrientation)
+                            return;
+                        _this.orientationIndex = v;
+                        _this.refreshSize();
+                    });
+                    return;
+                }
                 v = Math.floor(v);
                 this._orientationIndex = v;
                 var orientation = GameUtils.getFlipOriByIndex(v, this._oriMode);
@@ -68600,6 +68642,7 @@ var UIComponent;
             },
             set: function (v) {
                 v = Math.floor(v);
+                this._orientationIndex = GameUtils.getIndexByFlipOri(v, this._oriMode);
                 this.avatar.orientation = v;
                 this.refreshSize();
             },
@@ -68699,6 +68742,10 @@ var UIComponent;
                     if (_this.avatar)
                         _this.hitArea = _this.avatar.getBounds();
                 }, this);
+            }
+            else {
+                if (this.avatar)
+                    this.hitArea = this.avatar.getBounds();
             }
         };
         UIAvatar.prototype.on = function (type, caller, listener, args) {

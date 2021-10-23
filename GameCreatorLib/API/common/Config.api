@@ -30,6 +30,12 @@ class Config {
         return null;
     }
     /**
+     * 游戏发布后的版本，用于区分是否正式版游戏
+     */
+    static get RELEASE_GAME(): boolean {
+        return null;
+    }
+    /**
      * 创建工程时的GC版本号
      */
     static get CREATED_GC_VERSION(): number {

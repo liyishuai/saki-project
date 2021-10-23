@@ -7,10 +7,10 @@
         "animationSetting": true,
         "dialogSetting": true,
         "uiSetting": true,
-        "sceneObjectModelSetting": false,
         "live2dSetting": true,
         "tileSystem": false,
         "sceneObjectSystem": false,
+        "fastEditEditor": false,
         "standingSystem": true,
         "mapGrid": false,
         "dataGrid": false,
@@ -46,7 +46,14 @@
             "process2": true,
             "process3": true,
             "AdvancedDrama": true,
-            "audio": true
+            "audio": true,
+            "sceneTo": true,
+            "sceneShake": true,
+            "sceneTonal": true,
+            "sceneCamera": true,
+            "sceneFog": true,
+            "sceneObjectBehavior": true,
+            "sceneObjectWaitBehavior": true
         },
         "runTestCompileMode": 1,
         "restartServer": true,
@@ -69,7 +76,7 @@
             "#00FF00",
             "#0000FF"
         ],
-        "resourceunLimit": true,
+        "isWhowQRCode": true,
         "runtimeClassInfo": {
             "soClientExtends": "ClientSceneObject",
             "soServerExtends": "ServerSceneObject",
@@ -106,6 +113,8 @@
             true,
             1,
             true
-        ]
+        ],
+        "sceneObjectModelSetting": false,
+        "resourceunLimit": true
     }
 }
