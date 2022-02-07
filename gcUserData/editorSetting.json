@@ -76,6 +76,7 @@
             "#00FF00",
             "#0000FF"
         ],
+        "resourceunLimit": true,
         "isWhowQRCode": true,
         "runtimeClassInfo": {
             "soClientExtends": "ClientSceneObject",
@@ -114,7 +115,7 @@
             1,
             true
         ],
-        "sceneObjectModelSetting": false,
-        "resourceunLimit": true
+        "applyModuleToAllScene": false,
+        "sceneObjectModelSetting": false
     }
 }

@@ -853,9 +853,13 @@ var ObjectUtils = (function () {
             return false;
         var aLen = 0, bLen = 0;
         for (var i in a) {
+            if (i == "constructor")
+                continue;
             aLen++;
         }
         for (var i in b) {
+            if (i == "constructor")
+                continue;
             bLen++;
         }
         if (bLen != aLen)
@@ -2475,9 +2479,9 @@ var Laya = window.Laya = (function (window, document) {
                 this._vectorgraphArray.push(tId);
             }
             ;
-            // var offset = lineWidth % 2 === 0 ? 0 : 0.5;
-            // var arr = [fromX + offset, fromY + offset, toX + offset, toY + offset, lineColor, lineWidth, tId];
-            var arr = [fromX, fromY, toX, toY, lineColor, lineWidth, tId];
+            var offset = lineWidth % 2 === 0 ? 0 : 0.5;
+            var arr = [fromX + offset, fromY + offset, toX + offset, toY + offset, lineColor, lineWidth, tId];
+            // var arr = [fromX, fromY, toX, toY, lineColor, lineWidth, tId];
             this._saveToCmd(Render._context._drawLine, arr);
         };
         __proto.drawLines = function (x, y, points, lineColor, lineWidth) {
@@ -14553,7 +14557,7 @@ var Laya = window.Laya = (function (window, document) {
             }
             charsWidth = this._charSize.width + letterSpacingW;
             maybeIndex = Math.floor((wordWrapWidth - this._charSize.width) / charsWidth);
-            (maybeIndex == 0) && (maybeIndex = 1);
+            (maybeIndex <= 0 || maybeIndex == Infinity) && (maybeIndex = 1);
             charsWidth = this.getTextWidth(line.substring(0, maybeIndex));
             wordWidth = charsWidth;
             var ___letterSpacing = this.letterSpacing * (this.stroke ? 2 : 1);
@@ -16136,8 +16140,8 @@ var Laya = window.Laya = (function (window, document) {
         __proto._syncInputTransform = function () {
             var inputElement = this.nativeInput;
             var transform = Utils.getTransformRelativeToWindow(this, this.padding[3], this.padding[0]);
-            var inputWid = this._width - this.padding[1] - this.padding[3] - 15;
-            var inputHei = this._height - this.padding[0] - this.padding[2];
+            var inputWid = (this.stroke > 0 ? this._width * 2 : this._width) - this.padding[1] - this.padding[3] - 15;
+            var inputHei = (this.stroke > 0 ? this._height * 2 : this._height) - this.padding[0] - this.padding[2];
             if (Render.isConchApp) {
                 inputElement.setScale(transform.scaleX, transform.scaleY);
                 inputElement.setSize(inputWid, inputHei);
@@ -24653,7 +24657,7 @@ if (typeof define === 'function' && define.amd) {
             WebGLContext.bindTexture(gl, 0x0DE1, glTex);
             gl.pixelStorei(0x9240, this.flipY ? 1 : 0);
             this.premulAlpha && gl.pixelStorei(0x9241, true);
-            if (this._imgData.videoWidth || this._imgData.videoHeight) {
+            if (this._imgData.width || this._imgData.height || this._imgData.videoWidth || this._imgData.videoHeight) {
                 gl.texImage2D(0x0DE1, 0, 0x1908, 0x1908, 0x1401, this._imgData);
             } else {
                 if (!window['defaultImageData']) {
@@ -24680,7 +24684,7 @@ if (typeof define === 'function' && define.amd) {
             var preTexture = WebGLContext.curBindTexValue;
             WebGLContext.bindTexture(gl, 0x0DE1, this._source);
             this.premulAlpha && gl.pixelStorei(0x9241, true);
-            if (this._imgData.videoWidth || this._imgData.videoHeight) {
+            if (this._imgData.width || this._imgData.height || this._imgData.videoWidth || this._imgData.videoHeight) {
                 gl.texImage2D(0x0DE1, 0, 0x1908, 0x1908, 0x1401, this._imgData);
             } else {
                 if (!window['defaultImageData']) {
@@ -44780,7 +44784,7 @@ var CommandExecute;
                 socIndex = triggerPlayer.variable.getVariable(index);
             }
             cmd.callExecuteFunction(trigger.id, trigger.triggerPlayer, [cmd.params[0], cmd.params[1], name, cmd.params[3],
-                socIndex, content, cmd.params[6], cmd.params[7], cmd.id]);
+                socIndex, content, cmd.params[6], cmd.params[7], cmd.params[9], cmd.id]);
         }
     }
     CommandExecute.command_11 = command_11;
@@ -45241,14 +45245,14 @@ var CommandExecute;
                 var condition = conditionList[i];
                 var bool = true;
                 if (condition.type == 0) {
-                    bool = triggerPlayer.variable.getSwitch(condition.varID) == 1;
+                    bool = triggerPlayer.variable.getSwitch(condition.varID) == condition.value;
                 }
                 else if (condition.type == 4) {
                     if (Config.SINGLE_PLAYER_CORE) {
-                        bool = ClientWorld.getWorldSwitch(condition.varID) == 1;
+                        bool = ClientWorld.getWorldSwitch(condition.varID) == condition.value;
                     }
                     else {
-                        bool = ServerWorld.getWorldSwitch(condition.varID) == 1;
+                        bool = ServerWorld.getWorldSwitch(condition.varID) == condition.value;
                     }
                 }
                 else {
@@ -45763,6 +45767,7 @@ var SceneObject = (function () {
         this.shadowHeight = 15;
         this.shadowAlpha = 0.5;
         this.displayList = {};
+        this.moduleDisplayList = [];
         this.layerLevel = 1;
         this.autoPlayEnable = true;
         this.scale = 1;
@@ -45786,12 +45791,82 @@ var SceneObject = (function () {
         if (recordModelData)
             so.modelData = modelData;
         if (modelData) {
-            var attrSettings = modelData.varAttributes;
+            if (Config.useNewSceneObjectModel) {
+                var fixModelData = Common.sceneObjectModelList.data[0];
+            }
+            else {
+                fixModelData = modelData;
+            }
+            var attrSettings = fixModelData.varAttributes;
             if (!presetCustomAttrs) {
-                presetCustomAttrs = CustomAttributeSetting.formatCustomData(null, modelData.varAttributes);
+                presetCustomAttrs = CustomAttributeSetting.formatCustomData(null, fixModelData.varAttributes);
             }
             CustomAttributeSetting.installAttributeFromEditorSet(so, presetCustomAttrs, attrSettings, false, false, GameData.CUSTOM_ATTR_SCENE_OBJECT_DATA);
         }
+    };
+    SceneObject.installModuleAttributesBeforeConstructor = function (soe, moduleID, moduleName, moduleData, presetData, soModule) {
+        soModule.id = moduleID;
+        soModule.name = moduleName;
+        soModule.so = soe;
+        if (Config.EDIT_MODE) {
+            soModule.owner = soe;
+            soModule.soModule = soModule;
+        }
+        var attrSettings = moduleData.varAttributes;
+        var editorSetAttrs = {};
+        CustomAttributeSetting.formatCustomData(editorSetAttrs, attrSettings);
+        CustomAttributeSetting.installAttributeFromEditorSet(soModule, editorSetAttrs, attrSettings, false, false, GameData.CUSTOM_ATTR_SCENE_OBJECT_MODULE_DATA);
+        for (var i = 0; i < moduleData.preLayer.length; i++) {
+            var p = moduleData.preLayer[i];
+            if (p["__dragPresetID"]) {
+                soModule[p.varName] = p["__dragPresetID"];
+                delete p["__dragPresetID"];
+            }
+            else {
+                soModule[p.varName] = p.id;
+            }
+        }
+        if (presetData)
+            ObjectUtils.clone(presetData, soModule);
+    };
+    SceneObject.createModule = function (moduleID, soe, presetData) {
+        if (presetData === void 0) { presetData = null; }
+        var moduleData = Common.sceneObjectModuleList.data[moduleID];
+        if (moduleData) {
+            var moduleName = GameListData.getName(Common.sceneObjectModuleList, moduleID);
+            var installCB = Callback.New(this.installModuleAttributesBeforeConstructor, this, [soe, moduleID, moduleName, moduleData, presetData]);
+            var soModule;
+            if (Config.EDIT_MODE && !Config.BEHAVIOR_EDIT_MODE) {
+                soModule = SceneObject.editorSceneObjectModule(installCB, moduleID);
+            }
+            else {
+                var cls;
+                if (Config.IS_SERVER) {
+                    if (moduleData.serverInstanceClassName) {
+                        cls = globalThis[moduleData.serverInstanceClassName];
+                    }
+                }
+                else {
+                    if (moduleData.clientInstanceClassName) {
+                        cls = globalThis[moduleData.clientInstanceClassName];
+                    }
+                }
+                if (!cls)
+                    cls = SceneObjectModule.moduleClassArr[moduleID];
+                if (cls) {
+                    soModule = new cls(installCB);
+                }
+                else {
+                    soModule = new SceneObjectModule(installCB);
+                }
+            }
+            if (soModule) {
+                return soModule;
+            }
+        }
+    };
+    SceneObject.editorSceneObjectModule = function (installCB, moduleID) {
+        return null;
     };
     SceneObject.__gcClone = function (so) {
         var soData = new SceneObject();
@@ -45816,7 +45891,7 @@ var SceneObject = (function () {
         }
         return arr;
     };
-    SceneObject.compoundAttributes = ["displayList", "hasCommand", "materialData"];
+    SceneObject.compoundAttributes = ["displayList", "hasCommand", "materialData", "moduleIDs", "moduleDisplayList"];
     SceneObject.statusCommonAttributes = {
         x: true,
         y: true,
@@ -45839,6 +45914,7 @@ var SceneObjectEntity = (function (_super) {
         if (persetData === void 0) { persetData = null; }
         _super.call(this);
         this.inScene = false;
+        this._modules = [];
         this.customCommandPagesCache = [];
         this.hasCommandCache = [];
         if (persetData) {
@@ -45851,7 +45927,7 @@ var SceneObjectEntity = (function (_super) {
             }
             this.index = persetData.soIndex;
             this.installSwitchs(persetData.soSwitchs, false);
-            this.installStatusPageData(persetData.sceneObjectData, persetData.fromSceneObjectindex, persetData.soData, persetData.customAttr, persetData.eventData, persetData.recordData);
+            this.installStatusPageData(persetData.sceneObjectData, persetData.fromSceneObjectindex, persetData.soData, persetData.customAttr, persetData.eventData, persetData.recordData, persetData.moduleCustomAttrs);
             this.____afterInstallAttributeInit();
         }
     }
@@ -45865,8 +45941,9 @@ var SceneObjectEntity = (function (_super) {
     };
     SceneObjectEntity.prototype.____afterInstallAttributeInit = function () {
     };
-    SceneObjectEntity.prototype.installStatusPageData = function (sceneObjectData, fromSceneObjectindex, soData, customAttr, eventData, recordData) {
+    SceneObjectEntity.prototype.installStatusPageData = function (sceneObjectData, fromSceneObjectindex, soData, customAttr, eventData, recordData, moduleCustomAttrs) {
         if (recordData === void 0) { recordData = null; }
+        if (moduleCustomAttrs === void 0) { moduleCustomAttrs = null; }
         this.sceneObjectData = sceneObjectData;
         this.fromSceneObjectindex = fromSceneObjectindex;
         var statusPages = sceneObjectData.statusPages[fromSceneObjectindex];
@@ -45874,11 +45951,14 @@ var SceneObjectEntity = (function (_super) {
             statusPages = sceneObjectData.statusPages[fromSceneObjectindex] = [];
         this.statusPages = statusPages.concat();
         var customAttributesCache = sceneObjectData.customAttributesCaches[fromSceneObjectindex];
+        var modulesCustomAttributesCaches = sceneObjectData.modulesCustomAttributesCaches[fromSceneObjectindex];
         this.statusPages.unshift({
             so: soData,
             customAttribute: customAttr,
             event: eventData,
-            customAttributesCache: customAttributesCache
+            customAttributesCache: customAttributesCache,
+            modulesCustomAttribute: moduleCustomAttrs,
+            modulesCustomAttributesCaches: modulesCustomAttributesCaches
         });
         var st = this.refreshDisappearStatus("rd", recordData);
         if (!st.changeStatusPage) {
@@ -45902,6 +45982,49 @@ var SceneObjectEntity = (function (_super) {
             stp.customAttributesCache = customAttributesCache;
         }
         return customAttributesCache;
+    };
+    SceneObjectEntity.prototype.getModuleCustomAttributeCache = function (stpIndex, moduleIndex) {
+        var stp = this.statusPages[stpIndex];
+        var moduleCacheArr = stp.modulesCustomAttributesCaches;
+        var stpSceneObjectData;
+        if (stpIndex == 0) {
+            if (!moduleCacheArr)
+                moduleCacheArr = stp.modulesCustomAttributesCaches = this.sceneObjectData.modulesCustomAttributesCaches[this.fromSceneObjectindex] = [];
+        }
+        else {
+            if (!moduleCacheArr)
+                moduleCacheArr = stp.modulesCustomAttributesCaches = this.sceneObjectData.statusPages[this.fromSceneObjectindex][stpIndex - 1].modulesCustomAttributesCaches = [];
+        }
+        var moduleCache = moduleCacheArr[moduleIndex];
+        if (!moduleCache) {
+            var moduleID = stp.so.moduleIDs[moduleIndex];
+            var moduleData = Common.sceneObjectModuleList.data[moduleID];
+            if (!moduleData)
+                return null;
+            var virtualModule = {};
+            if (stpIndex == 0) {
+                moduleCache = this.sceneObjectData.modulesCustomAttributesCaches[this.fromSceneObjectindex][moduleIndex] = virtualModule;
+            }
+            else {
+                moduleCache = this.sceneObjectData.statusPages[this.fromSceneObjectindex][stpIndex - 1].modulesCustomAttributesCaches[moduleIndex] = virtualModule;
+            }
+            CustomAttributeSetting.installAttributeFromEditorSet(virtualModule, stp.modulesCustomAttribute[moduleIndex], moduleData.varAttributes, false, false, GameData.CUSTOM_ATTR_SCENE_OBJECT_MODULE_DATA);
+            moduleCacheArr[moduleIndex] = moduleCache;
+            for (var i = 0; i < moduleData.preLayer.length; i++) {
+                var p = moduleData.preLayer[i];
+                var displayInfos = stp.so.moduleDisplayList[moduleIndex];
+                if (displayInfos) {
+                    var displayInfo = displayInfos[p.varName];
+                    if (displayInfo != null) {
+                        moduleCache[p.varName] = displayInfo.id;
+                    }
+                    else {
+                        moduleCache[p.varName] = 0;
+                    }
+                }
+            }
+        }
+        return moduleCache;
     };
     SceneObjectEntity.prototype.getSwitchs = function (index) {
         return this.switchs[index];
@@ -45990,6 +46113,282 @@ var SceneObjectEntity = (function (_super) {
         }
         return trigger;
     };
+    SceneObjectEntity.getModulesSaveData = function (soc) {
+        var soModuleArr = [];
+        for (var i = 0; i < soc._modules.length; i++) {
+            var soModule = soc._modules[i];
+            var soModuleData;
+            if (Config.IS_SERVER) {
+                soModuleData = ObjectUtils.depthClone(soModule);
+            }
+            else {
+                soModuleData = {};
+                var moduleData = Game.data.sceneObjectModuleList.data[soModule.id];
+                for (var s = 0; s < moduleData.varAttributes.length; s++) {
+                    var attrSetting = moduleData.varAttributes[s];
+                    soModuleData[attrSetting.varName] = soModule[attrSetting.varName];
+                }
+                for (var s = 0; s < moduleData.preLayer.length; s++) {
+                    var preLayer = moduleData.preLayer[s];
+                    if (preLayer.type == 2 || preLayer.type == 4) {
+                        soModuleData[preLayer.varName] = preLayer.id;
+                    }
+                    else if (preLayer.type == 3) {
+                        var uiRoot = soModule[preLayer.varName];
+                        soModuleData[preLayer.varName] = uiRoot ? uiRoot.guiID : 0;
+                    }
+                    else if (preLayer.type == 5) {
+                        var ani = soModule[preLayer.varName];
+                        soModuleData[preLayer.varName] = ani ? ani.id : 0;
+                    }
+                }
+                soModuleData = ObjectUtils.depthClone(soModuleData);
+            }
+            soModuleArr.push(soModuleData);
+        }
+        return soModuleArr;
+    };
+    SceneObjectEntity.prototype.installModulesByTypeValue = function (moduleIDs, moduleDisplayList, modulesCustomAttribute, presetDatas) {
+        if (presetDatas === void 0) { presetDatas = null; }
+        this.removeAllModules();
+        this.moduleIDs = [];
+        this.moduleDisplayList = [];
+        for (var i = 0; i < moduleIDs.length; i++) {
+            var moduleID = moduleIDs[i];
+            var soModulePresetData = {};
+            var moduleData = Game.data.sceneObjectModuleList.data[moduleID];
+            if (moduleData) {
+                CustomAttributeSetting.installAttributeFromEditorSet(soModulePresetData, modulesCustomAttribute[i], moduleData.varAttributes, false, false, GameData.CUSTOM_ATTR_SCENE_OBJECT_MODULE_DATA);
+                for (var s = 0; s < moduleData.preLayer.length; s++) {
+                    var p = moduleData.preLayer[s];
+                    var displayInfos = moduleDisplayList[i];
+                    if (displayInfos) {
+                        var displayInfo = displayInfos[p.varName];
+                        if (displayInfo != null) {
+                            soModulePresetData[p.varName] = displayInfo.id;
+                        }
+                        else {
+                            soModulePresetData[p.varName] = 0;
+                        }
+                    }
+                }
+                if (presetDatas) {
+                    var presetData = presetDatas[i];
+                    if (presetData) {
+                        ObjectUtils.clone(presetData, soModulePresetData);
+                    }
+                }
+                var soModule = SceneObject.createModule(moduleID, this, soModulePresetData);
+                if (soModule)
+                    this.addModule(soModule);
+            }
+        }
+    };
+    SceneObjectEntity.prototype.addModule = function (soModule, sendEvent) {
+        if (sendEvent === void 0) { sendEvent = true; }
+        if (ArrayUtils.matchAttributes(this._modules, { id: soModule.id }, true).length == 1)
+            return false;
+        var moduleData = Common.sceneObjectModuleList.data[soModule.id];
+        if (moduleData) {
+            this._modules.push(soModule);
+            this.moduleIDs.push(soModule.id);
+            var moduleIndex = this._modules.length - 1;
+            var moduleDisplayInfo = {};
+            this.moduleDisplayList.push(moduleDisplayInfo);
+            for (var i = 0; i < moduleData.preLayer.length; i++) {
+                var p = moduleData.preLayer[i];
+                var id;
+                var attributeValue = soModule[p.varName];
+                if (attributeValue) {
+                    id = typeof attributeValue == "number" ? attributeValue : attributeValue.id;
+                }
+                else {
+                    id = p.id;
+                }
+                moduleDisplayInfo[p.varName] = { type: p.type, id: id };
+            }
+            soModule.so = this;
+            if (sendEvent)
+                EventUtils.happen(SceneObjectEntity, SceneObjectEntity.EVENT_ON_ADD_MODULE, [this, soModule]);
+            return true;
+        }
+        return false;
+    };
+    SceneObjectEntity.prototype.addModuleAt = function (soModule, index, sendEvent) {
+        if (sendEvent === void 0) { sendEvent = true; }
+        if (index < 0 || index > this._modules.length)
+            return false;
+        if (ArrayUtils.matchAttributes(this._modules, { id: soModule.id }, true).length == 1)
+            return false;
+        var bool = this.addModule(soModule, false);
+        if (bool) {
+            var fromIndex = this._modules.length - 1;
+            bool = this.setModuleIndexByIndex(fromIndex, index);
+            if (sendEvent)
+                EventUtils.happen(SceneObjectEntity, SceneObjectEntity.EVENT_ON_ADD_MODULE, [this, soModule]);
+            return bool;
+        }
+        return false;
+    };
+    SceneObjectEntity.prototype.addModuleByID = function (moduleID, sendEvent) {
+        if (sendEvent === void 0) { sendEvent = true; }
+        if (ArrayUtils.matchAttributes(this._modules, { id: moduleID }, true).length == 1)
+            return null;
+        var soModule = SceneObject.createModule(moduleID, this);
+        if (!soModule)
+            return null;
+        var bool = this.addModule(soModule, sendEvent);
+        if (bool)
+            return soModule;
+    };
+    SceneObjectEntity.prototype.addModuleByIDAt = function (moduleID, index, sendEvent) {
+        if (sendEvent === void 0) { sendEvent = true; }
+        var soModule = this.addModuleByID(moduleID, sendEvent);
+        if (soModule) {
+            var fromIndex = this._modules.length - 1;
+            var bool = this.setModuleIndexByIndex(fromIndex, index);
+            if (bool)
+                return soModule;
+        }
+        return null;
+    };
+    SceneObjectEntity.prototype.removeAllModules = function (isDispose, sendEvent) {
+        if (isDispose === void 0) { isDispose = true; }
+        if (sendEvent === void 0) { sendEvent = true; }
+        if (this._modules) {
+            var removeModuleArr = this._modules.concat();
+        }
+        if (this.moduleDisplayList)
+            this.moduleDisplayList.length = 0;
+        this._modules.length = 0;
+        if (this.moduleIDs)
+            this.moduleIDs.length = 0;
+        if (removeModuleArr) {
+            for (var i = 0; i < removeModuleArr.length; i++) {
+                var soModule = removeModuleArr[i];
+                soModule.onRemoved();
+                if (sendEvent) {
+                    EventUtils.happen(SceneObjectEntity, SceneObjectEntity.EVENT_ON_REMOVE_MODULE, [this, soModule]);
+                }
+                if (isDispose) {
+                    soModule.dispose && soModule.dispose();
+                }
+            }
+        }
+    };
+    SceneObjectEntity.prototype.removeModuleByID = function (moduleID, isDispose, sendEvent) {
+        if (isDispose === void 0) { isDispose = true; }
+        if (sendEvent === void 0) { sendEvent = true; }
+        var index = ArrayUtils.matchAttributes(this._modules, { id: moduleID }, true, "==", true)[0];
+        if (index != null) {
+            this.moduleDisplayList.splice(index, 1);
+            this.moduleIDs.splice(index, 1);
+            var soModule = this._modules.splice(index, 1)[0];
+            if (soModule) {
+                soModule.onRemoved();
+                if (sendEvent) {
+                    EventUtils.happen(SceneObjectEntity, SceneObjectEntity.EVENT_ON_REMOVE_MODULE, [this, soModule]);
+                }
+                if (isDispose) {
+                    soModule.dispose && soModule.dispose();
+                }
+            }
+            return soModule;
+        }
+        return null;
+    };
+    SceneObjectEntity.prototype.removeModule = function (soModule, isDispose, sendEvent) {
+        if (isDispose === void 0) { isDispose = true; }
+        if (sendEvent === void 0) { sendEvent = true; }
+        var index = this._modules.indexOf(soModule);
+        if (index != -1) {
+            this.moduleDisplayList.splice(index, 1);
+            this.moduleIDs.splice(index, 1);
+            this._modules.splice(index, 1);
+            soModule.onRemoved();
+            if (sendEvent) {
+                EventUtils.happen(SceneObjectEntity, SceneObjectEntity.EVENT_ON_REMOVE_MODULE, [this, soModule]);
+            }
+            if (isDispose) {
+                soModule.dispose && soModule.dispose();
+            }
+            return true;
+        }
+        return false;
+    };
+    SceneObjectEntity.prototype.removeModuleAt = function (index, isDispose, sendEvent) {
+        if (isDispose === void 0) { isDispose = true; }
+        if (sendEvent === void 0) { sendEvent = true; }
+        if (index < 0 || index >= this._modules.length)
+            return false;
+        if (index != null) {
+            var soModule = this._modules[index];
+            this.moduleDisplayList.splice(index, 1);
+            this.moduleIDs.splice(index, 1);
+            this._modules.splice(index, 1);
+            soModule.onRemoved();
+            if (sendEvent) {
+                EventUtils.happen(SceneObjectEntity, SceneObjectEntity.EVENT_ON_REMOVE_MODULE, [this, soModule]);
+            }
+            if (isDispose) {
+                soModule.dispose && soModule.dispose();
+            }
+            return true;
+        }
+        return false;
+    };
+    SceneObjectEntity.prototype.setModuleIndex = function (soModule, toIndex) {
+        var index = this._modules.indexOf(soModule);
+        if (index != -1)
+            return this.setModuleIndexByIndex(index, toIndex);
+        return false;
+    };
+    SceneObjectEntity.prototype.setModuleIndexByID = function (moduleID, toIndex) {
+        var index = ArrayUtils.matchAttributes(this._modules, { id: moduleID }, true, "==", true)[0];
+        if (index != null)
+            return this.setModuleIndexByIndex(index, toIndex);
+        return false;
+    };
+    SceneObjectEntity.prototype.setModuleIndexByIndex = function (fromIndex, toIndex) {
+        if (fromIndex < 0 || fromIndex >= this._modules.length)
+            return false;
+        if (toIndex < 0 || toIndex >= this._modules.length)
+            return false;
+        var fromObj = this._modules.splice(fromIndex, 1)[0];
+        this._modules.splice(toIndex, 0, fromObj);
+        fromObj = this.moduleIDs.splice(fromIndex, 1)[0];
+        this.moduleIDs.splice(toIndex, 0, fromObj);
+        fromObj = this.moduleDisplayList.splice(fromIndex, 1)[0];
+        this.moduleDisplayList.splice(toIndex, 0, fromObj);
+        return true;
+    };
+    SceneObjectEntity.prototype.getModule = function (moduleID) {
+        return ArrayUtils.matchAttributes(this._modules, { id: moduleID }, true)[0];
+    };
+    SceneObjectEntity.prototype.getModuleByName = function (moduleName) {
+        return ArrayUtils.matchAttributes(this._modules, { name: moduleName }, true)[0];
+    };
+    SceneObjectEntity.prototype.getModuleAt = function (index) {
+        if (index >= 0 && index < this._modules.length) {
+            return this._modules[index];
+        }
+    };
+    SceneObjectEntity.prototype.getModuleIndex = function (soModule) {
+        return this._modules.indexOf(soModule);
+    };
+    SceneObjectEntity.prototype.getModuleIndexByID = function (moduleID) {
+        var index = ArrayUtils.matchAttributes(this._modules, { id: moduleID }, true, "==", true)[0];
+        if (index == null)
+            return -1;
+        return index;
+    };
+    Object.defineProperty(SceneObjectEntity.prototype, "moduleLength", {
+        get: function () {
+            return this._modules.length;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(SceneObjectEntity.prototype, "world", {
         get: function () {
             return Config.IS_SERVER ? ServerWorld : ClientWorld;
@@ -46132,21 +46531,79 @@ var SceneObjectEntity = (function (_super) {
                             this[attrName] = ObjectUtils.depthClone(recordData[attrName]);
                         }
                         SceneObject.installCustomData(this, stp.customAttribute);
-                        CustomAttributeSetting.installAttributeFromRecordData(this, recordData, modelData.varAttributes, null, 3);
+                        var fixModelData;
+                        if (Config.useNewSceneObjectModel) {
+                            fixModelData = Common.sceneObjectModelList.data[0];
+                        }
+                        else {
+                            fixModelData = modelData;
+                        }
+                        CustomAttributeSetting.installAttributeFromRecordData(this, recordData, fixModelData.varAttributes, null, 3);
+                        var recoveryModulesData = SceneObjectEntity.recoveryModulesData[this.index];
+                        if (recoveryModulesData) {
+                            if (recoveryModulesData.needCheckModulesCustomAttributes) {
+                                var sceneData = Common.sceneList.data[Game.currentScene.id];
+                                var sceneObjDatas = sceneData.sceneObjectData;
+                                if (stpIndex == 0) {
+                                    var modulesCustomAttributes = sceneObjDatas.modulesCustomAttributes[this.index];
+                                }
+                                else {
+                                    var stps = sceneObjDatas.statusPages[this.index];
+                                    if (stps) {
+                                        var stp = stps[stpIndex - 1];
+                                        modulesCustomAttributes = stp.modulesCustomAttribute;
+                                    }
+                                }
+                            }
+                            var moduleIDs = this.moduleIDs.concat();
+                            var moduleDisplayList = this.moduleDisplayList.concat();
+                            if (!modulesCustomAttributes) {
+                                modulesCustomAttributes = [];
+                                for (var i = 0; i < moduleIDs.length; i++) {
+                                    var moduleID = moduleIDs[i];
+                                    var moduleData = Common.sceneObjectModuleList.data[moduleID];
+                                    if (!moduleData) {
+                                        moduleIDs.splice(i, 1);
+                                        moduleDisplayList.splice(i, 1);
+                                        i--;
+                                    }
+                                    modulesCustomAttributes.push(CustomAttributeSetting.formatCustomData(null, moduleData.varAttributes));
+                                }
+                            }
+                            this.installModulesByTypeValue(moduleIDs, moduleDisplayList, modulesCustomAttributes, recoveryModulesData.presetData);
+                        }
                     }
                 }
                 else {
                     for (var o in stp.so) {
                         if (SceneObject.statusCommonAttributes[o])
                             continue;
+                        if (o == "moduleIDs" || o == "moduleDisplayList")
+                            continue;
                         this[o] = stp.so[o];
                     }
                     for (var o in SceneObject.compoundAttributes) {
                         var attrName = SceneObject.compoundAttributes[o];
+                        if (attrName == "moduleIDs" || attrName == "moduleDisplayList")
+                            continue;
                         this[attrName] = ObjectUtils.depthClone(stp.so[attrName]);
                     }
                     var customAttributesCache = ObjectUtils.depthClone(this.getCustomAttributeCache(stpIndex));
                     ObjectUtils.clone(customAttributesCache, this);
+                    if (Config.useNewSceneObjectModel) {
+                        if (stp.so.moduleIDs == null)
+                            stp.so.moduleIDs = [];
+                        if (this.moduleIDs == null)
+                            this.moduleIDs = [];
+                        this.removeAllModules();
+                        for (var i = 0; i < stp.so.moduleIDs.length; i++) {
+                            var moduleID = stp.so.moduleIDs[i];
+                            var soModulePresetData = ObjectUtils.depthClone(this.getModuleCustomAttributeCache(stpIndex, i));
+                            var soModule = SceneObject.createModule(moduleID, this, soModulePresetData);
+                            if (soModule)
+                                this.addModule(soModule);
+                        }
+                    }
                 }
                 this.hasCommand = this.hasCommandCache[stpIndex];
                 this.customCommandPages = this.customCommandPagesCache[stpIndex];
@@ -46200,6 +46657,9 @@ var SceneObjectEntity = (function (_super) {
     SceneObjectEntity.EVENT_BEFORE_CHANGE_STATUS_PAGE_FOR_INSTANCE = "SceneObjectEntityEVENT_BEFORE_CHANGE_STATUS_PAGE_FOR_INSTANCE";
     SceneObjectEntity.EVENT_CHANGE_STATUS_PAGE = "SceneObjectEVENT_ENABLED_CHANGE";
     SceneObjectEntity.EVENT_CHANGE_STATUS_PAGE_FOR_INSTANCE = "SceneObjectEntityEVENT_CHANGE_STATUS_PAGE_FOR_INSTANCE";
+    SceneObjectEntity.EVENT_ON_ADD_MODULE = "SceneObjectEntityEVENT_ON_ADD_MODULE";
+    SceneObjectEntity.EVENT_ON_REMOVE_MODULE = "SceneObjectEntityEVENT_ON_REMOVE_MODULE";
+    SceneObjectEntity.recoveryModulesData = [];
     return SceneObjectEntity;
 }(SceneObject));
 var Variable = (function () {
@@ -46473,7 +46933,7 @@ var CustomAttributeSetting = (function () {
                     varTypeStr = "{ uiID: number, compName:string, compID:string, varName:string }";
                 }
                 else if (attr.compData.compType == 43) {
-                    varTypeStr = "{ materials: Material[] }[]";
+                    varTypeStr = "{ materials: MaterialData[] }[]";
                 }
                 else {
                     varTypeStr = "any";
@@ -46566,7 +47026,7 @@ var CustomAttributeSetting = (function () {
         return serializeAttrType;
     };
     CustomAttributeSetting.formatCustomData = function (myCustomAttributes, attrPerSettings) {
-        if (!(attrPerSettings instanceof Array)) {
+        if (!(Array.isArray(attrPerSettings))) {
             attrPerSettings = CustomCompositeSetting.getAllAttributes(attrPerSettings, false);
         }
         var newestDataStructureList = Common.dataStructureList;
@@ -47411,7 +47871,9 @@ var SceneObjectData = (function () {
         this.sceneObjects = [];
         this.customCommands = [];
         this.customAttributes = [];
+        this.modulesCustomAttributes = [];
         this.customAttributesCaches = [];
+        this.modulesCustomAttributesCaches = [];
         this.events = [];
         this.statusPages = [];
         this.statusPagesSelectedIndexs = [];
@@ -47435,11 +47897,13 @@ var SceneObjectData = (function () {
                 var newStatusData = {
                     so: new SceneObject(),
                     event: null,
-                    customAttribute: null
+                    customAttribute: null,
+                    modulesCustomAttribute: null
                 };
                 newStatusData.so = SceneObject.__gcClone(statusPage.so);
                 newStatusData.event = ObjectUtils.depthClone(statusPage.event);
                 newStatusData.customAttribute = ObjectUtils.depthClone(statusPage.customAttribute);
+                newStatusData.modulesCustomAttribute = ObjectUtils.depthClone(statusPage.modulesCustomAttribute);
                 newData.statusPage.push(newStatusData);
             }
         }
@@ -47453,6 +47917,358 @@ var SceneObjectData = (function () {
         };
         sceneObjectData.customAttributes[index] = {};
         sceneObjectData.statusPages[index] = [];
+        this.formatOneStatusPageModuleCustomData(sceneObjectData, index, 1);
+    };
+    SceneObjectData.getStatusPagesSelectedIndex = function (sceneObjectData, soIndex) {
+        var soData = sceneObjectData.sceneObjects[soIndex];
+        if (soData) {
+            var modelData = Game.data.sceneObjectModelList.data[soData.modelID];
+            ;
+            if (!modelData || !modelData.supportStatusPage)
+                return 0;
+            var _statusPagesSelectedIndex = MathUtils.int(sceneObjectData.statusPagesSelectedIndexs[soIndex]);
+            if (_statusPagesSelectedIndex < 0)
+                _statusPagesSelectedIndex = 0;
+            var statusPages = sceneObjectData.statusPages[soIndex];
+            if (!statusPages)
+                return 0;
+            var len = statusPages.length + 1;
+            if (_statusPagesSelectedIndex >= len - 1)
+                _statusPagesSelectedIndex = len - 1;
+            return _statusPagesSelectedIndex;
+        }
+        return 0;
+    };
+    SceneObjectData.getStatusPageInfo = function (sceneID, soIndex, stpIndex) {
+        var bornSceneID = EUISceneMain_SO.bornScene ? EUISceneMain_SO.bornScene.id : Config.BORN.sceneID;
+        var bornSoIndex = EUISceneMain_SO.bornSo ? EUISceneMain_SO.bornSo.index : Config.BORN.so.index;
+        if (bornSceneID == sceneID && soIndex == bornSoIndex) {
+            return {
+                so: Config.BORN.so,
+                customAttribute: Config.BORN.customAttribute,
+                event: null,
+                modulesCustomAttribute: Config.BORN.bornModulesCustomAttribute
+            };
+        }
+        else {
+            var sceneData = Game.data.sceneList.data[sceneID];
+            if (sceneData) {
+                var sceneObjectData = sceneData.sceneObjectData;
+                if (stpIndex == 0) {
+                    return {
+                        so: sceneObjectData.sceneObjects[soIndex],
+                        customAttribute: sceneObjectData.customAttributes[soIndex],
+                        event: sceneObjectData.events[soIndex],
+                        modulesCustomAttribute: sceneObjectData.modulesCustomAttributes[soIndex]
+                    };
+                }
+                else {
+                    var statusPages = sceneObjectData.statusPages[soIndex];
+                    return statusPages ? statusPages[stpIndex - 1] : null;
+                }
+            }
+        }
+        return null;
+    };
+    SceneObjectData.formatAllStatusPageCommonModule = function (sceneObjectData, soIndex) {
+        var fixModelData;
+        if (Config.useNewSceneObjectModel) {
+            fixModelData = Game.data.sceneObjectModelList.data[0];
+        }
+        var soData = sceneObjectData.sceneObjects[soIndex];
+        if (soData) {
+            if (!Config.useNewSceneObjectModel) {
+                fixModelData = Game.data.sceneObjectModelList.data[soData.modelID];
+            }
+            if (fixModelData) {
+                this.formatDisplayList(soData, fixModelData, soData.displayList);
+                var customAttributes = sceneObjectData.customAttributes[soIndex];
+                if (!customAttributes)
+                    customAttributes = sceneObjectData.customAttributes[soIndex] = {};
+                sceneObjectData.customAttributes[soIndex] = CustomAttributeSetting.formatCustomData(customAttributes, fixModelData.varAttributes);
+            }
+        }
+        var statusPage = sceneObjectData.statusPages[soIndex];
+        if (statusPage) {
+            for (var stIndex = 0; stIndex < statusPage.length; stIndex++) {
+                var stp = statusPage[stIndex];
+                if (!Config.useNewSceneObjectModel) {
+                    fixModelData = Game.data.sceneObjectModelList.data[soData.modelID];
+                }
+                if (fixModelData) {
+                    this.formatDisplayList(stp.so, fixModelData, stp.so.displayList);
+                    var customAttributes = stp.customAttribute;
+                    if (!customAttributes)
+                        customAttributes = stp.customAttribute = {};
+                    stp.customAttribute = CustomAttributeSetting.formatCustomData(customAttributes, fixModelData.varAttributes);
+                }
+            }
+        }
+    };
+    SceneObjectData.formatOneStatusPageCommonModuleDisplayList = function (soData, refModelData, displayList) {
+        this.formatDisplayList(soData, refModelData, displayList);
+    };
+    SceneObjectData.formatEntityModules = function (soData, soc, modulesCustomAttributes) {
+        if (!Config.useNewSceneObjectModel)
+            return;
+        if (!soData.moduleIDs) {
+            var modelData = Common.sceneObjectModelList.data[soData.modelID];
+            if (!modelData)
+                return;
+            soData.moduleIDs = modelData.presetModules.concat();
+        }
+        if (!soc.moduleIDs) {
+            soc.moduleIDs = [];
+            soc.moduleDisplayList = [];
+            soc.removeAllModules();
+            for (var i = 0; i < soData.moduleIDs.length; i++) {
+                var moduleID = soData.moduleIDs[i];
+                var moduleData = Common.sceneObjectModuleList.data[moduleID];
+                if (moduleData) {
+                    var modulesCustomAttribute = modulesCustomAttributes ? modulesCustomAttributes[i] : null;
+                    var presetData = {};
+                    if (!modulesCustomAttribute) {
+                        modulesCustomAttribute = {};
+                        CustomAttributeSetting.formatCustomData(modulesCustomAttribute, moduleData.varAttributes);
+                        modulesCustomAttributes[i] = modulesCustomAttribute;
+                    }
+                    CustomAttributeSetting.installAttributeFromEditorSet(presetData, modulesCustomAttribute, moduleData.varAttributes, false, false, GameData.CUSTOM_ATTR_SCENE_OBJECT_MODULE_DATA);
+                    for (var s = 0; s < moduleData.preLayer.length; s++) {
+                        var p = moduleData.preLayer[s];
+                        if (!soData.moduleDisplayList)
+                            soData.moduleDisplayList = [];
+                        var displayInfos = soData.moduleDisplayList[i];
+                        if (displayInfos) {
+                            var displayInfo = displayInfos[p.varName];
+                            if (displayInfo != null) {
+                                presetData[p.varName] = displayInfo.id;
+                            }
+                            else {
+                                presetData[p.varName] = 0;
+                            }
+                        }
+                    }
+                    var soModule = SceneObject.createModule(moduleID, soc, presetData);
+                    if (soModule) {
+                        soc.addModule(soModule);
+                    }
+                }
+            }
+        }
+        for (var m = 0; m < soc.moduleIDs.length; m++) {
+            var moduleID = soc.moduleIDs[m];
+            var modlueData = Common.sceneObjectModuleList.data[moduleID];
+            if (modlueData) {
+                if (!soc.moduleDisplayList)
+                    soc.moduleDisplayList = [];
+                var displayList = soc.moduleDisplayList[m];
+                if (!displayList)
+                    displayList = soc.moduleDisplayList[m] = {};
+                this.formatDisplayList(soc, modlueData, displayList);
+            }
+            else {
+                var soModuleDisplay = soc.moduleDisplayList[m];
+                if (soModuleDisplay) {
+                    soc.moduleDisplayList.splice(m, 1);
+                }
+                soc.moduleIDs.splice(m, 1);
+                m--;
+            }
+        }
+    };
+    SceneObjectData.installEntityCommonData = function (soc, customAttribute) {
+        if (!Config.useNewSceneObjectModel)
+            return;
+        var commonModuleData = Game.data.sceneObjectModelList.data[0];
+        for (var i = 0; i < commonModuleData.varAttributes.length; i++) {
+            var varAttribute = commonModuleData.varAttributes[i];
+            var typeValue = customAttribute[varAttribute.varName];
+            CustomAttributeSetting.typeValue2RealValue(soc, commonModuleData.varAttributes[i], typeValue, false, false, GameData.CUSTOM_ATTR_SCENE_OBJECT_DATA);
+        }
+    };
+    SceneObjectData.resetBornDefaultModules = function () {
+        var modelData = Common.sceneObjectModelList.data[Config.BORN.so.modelID];
+        Config.BORN.so.moduleIDs = modelData.presetModules.concat();
+        Config.BORN.bornModulesCustomAttribute = [];
+        for (var i = 0; i < Config.BORN.so.moduleIDs.length; i++) {
+            var moduleID = Config.BORN.so.moduleIDs[i];
+            var moduleData = Game.data.sceneObjectModuleList.data[moduleID];
+            if (!moduleData) {
+                Config.BORN.so.moduleIDs.splice(i, 1);
+                i--;
+            }
+            Config.BORN.bornModulesCustomAttribute.push(CustomAttributeSetting.formatCustomData(null, moduleData.varAttributes));
+        }
+        SceneObjectData.formatBornModuleCustomData(Config.BORN.so, Config.BORN.bornModulesCustomAttribute);
+        EditorData.updateNeedSaveFile(EditorData.NEED_SAVE_CONFIG);
+    };
+    SceneObjectData.resetDefaultModules = function (sceneID, sceneObjectData, sceneObjectIndex) {
+        if (!Config.useNewSceneObjectModel)
+            return;
+        var mainStatusPageSoData = sceneObjectData.sceneObjects[sceneObjectIndex];
+        if (!mainStatusPageSoData)
+            return;
+        var modelData = Common.sceneObjectModelList.data[Config.BORN.so.modelID];
+        if (!modelData)
+            return;
+        mainStatusPageSoData.moduleIDs = modelData.presetModules.concat();
+        var modulesCustomAttributes = sceneObjectData.modulesCustomAttributes[sceneObjectIndex] = [];
+        for (var i = 0; i < mainStatusPageSoData.moduleIDs.length; i++) {
+            var moduleID = mainStatusPageSoData.moduleIDs[i];
+            var moduleData = Game.data.sceneObjectModuleList.data[moduleID];
+            if (!moduleData) {
+                mainStatusPageSoData.moduleIDs.splice(i, 1);
+                i--;
+            }
+            modulesCustomAttributes.push(CustomAttributeSetting.formatCustomData(null, moduleData.varAttributes));
+        }
+        this.formatOneStatusPageModuleCustomData(sceneObjectData, sceneObjectIndex, 1);
+        var statusPage = sceneObjectData.statusPages[sceneObjectIndex];
+        if (statusPage) {
+            for (var stIndex = 0; stIndex < statusPage.length; stIndex++) {
+                var stpSo = statusPage[stIndex].so;
+                var modulesCustomAttributes = statusPage[stIndex].modulesCustomAttribute = [];
+                stpSo.moduleIDs = modelData.presetModules.concat();
+                for (var i = 0; i < stpSo.moduleIDs.length; i++) {
+                    var moduleID = stpSo.moduleIDs[i];
+                    var moduleData = Game.data.sceneObjectModuleList.data[moduleID];
+                    if (!moduleData) {
+                        stpSo.moduleIDs.splice(i, 1);
+                        i--;
+                    }
+                    modulesCustomAttributes.push(CustomAttributeSetting.formatCustomData(null, moduleData.varAttributes));
+                }
+                this.formatOneStatusPageModuleCustomData(sceneObjectData, sceneObjectIndex, stIndex + 2);
+            }
+        }
+        EditorData.updateNeedSaveFile(EditorData.NEED_SAVE_SCENE_OBJECTS, false, sceneID);
+    };
+    SceneObjectData.formatAllStatusPageModuleCustomData = function (sceneObjectData, sceneObjectIndex) {
+        if (!Config.useNewSceneObjectModel)
+            return;
+        this.formatOneStatusPageModuleCustomData(sceneObjectData, sceneObjectIndex, 1);
+        var statusPage = sceneObjectData.statusPages[sceneObjectIndex];
+        if (statusPage) {
+            for (var stIndex = 0; stIndex < statusPage.length; stIndex++) {
+                this.formatOneStatusPageModuleCustomData(sceneObjectData, sceneObjectIndex, stIndex + 2);
+            }
+        }
+    };
+    SceneObjectData.formatOneStatusPageModuleCustomData = function (sceneObjectData, sceneObjectIndex, stPageID) {
+        if (!Config.useNewSceneObjectModel)
+            return;
+        if (stPageID == 1) {
+            SceneObjectData.initModuleData(sceneObjectData, sceneObjectIndex, 1);
+            var soData = sceneObjectData.sceneObjects[sceneObjectIndex];
+            if (soData) {
+                var customAttributesArr = sceneObjectData.modulesCustomAttributes[sceneObjectIndex];
+                if (!customAttributesArr)
+                    customAttributesArr = sceneObjectData.modulesCustomAttributes[sceneObjectIndex] = [];
+                this.doFormatOneStatusPageModuleCustomData(soData, customAttributesArr);
+            }
+        }
+        else {
+            var statusPage = sceneObjectData.statusPages[sceneObjectIndex];
+            if (statusPage) {
+                SceneObjectData.initModuleData(sceneObjectData, sceneObjectIndex, stPageID);
+                var stIndex = stPageID - 2;
+                var stPage = statusPage[stIndex];
+                var customAttributesArr = stPage.modulesCustomAttribute;
+                if (!customAttributesArr)
+                    customAttributesArr = stPage.modulesCustomAttribute = [];
+                this.doFormatOneStatusPageModuleCustomData(stPage.so, customAttributesArr);
+            }
+        }
+    };
+    SceneObjectData.formatBornModuleCustomData = function (soData, customAttributesArr) {
+        SceneObjectData.initModuleDataBySceneObjectData(soData);
+        this.doFormatOneStatusPageModuleCustomData(soData, customAttributesArr);
+    };
+    SceneObjectData.removeModule = function (sceneObjectData, sceneObjectIndex, stPageIndex, moduleIndex) {
+        if (stPageIndex == 0) {
+            var soData = sceneObjectData.sceneObjects[sceneObjectIndex];
+            var modulesCustomAttribute = sceneObjectData.modulesCustomAttributes[sceneObjectIndex];
+        }
+        else {
+            var stpInfo = sceneObjectData.statusPages[sceneObjectIndex];
+            if (!stpInfo)
+                return;
+            var stp = stpInfo[stPageIndex - 1];
+            if (!stp)
+                return;
+            var soData = stp.so;
+            var modulesCustomAttribute = stp.modulesCustomAttribute;
+        }
+        this.removeModuleData(soData, moduleIndex, modulesCustomAttribute);
+    };
+    SceneObjectData.removeModuleData = function (soData, moduleIndex, modulesCustomAttribute) {
+        if (modulesCustomAttribute) {
+            modulesCustomAttribute.splice(moduleIndex, 1);
+        }
+        if (soData.moduleIDs) {
+            soData.moduleIDs.splice(moduleIndex, 1);
+        }
+        if (soData.moduleDisplayList) {
+            soData.moduleDisplayList.splice(moduleIndex, 1);
+        }
+    };
+    SceneObjectData.addModule = function (sceneObjectData, sceneObjectIndex, stPageIndex, moduleIndex, moduleID) {
+        if (stPageIndex == 0) {
+            var soData = sceneObjectData.sceneObjects[sceneObjectIndex];
+            var modulesCustomAttribute = sceneObjectData.modulesCustomAttributes[sceneObjectIndex];
+        }
+        else {
+            var stpInfo = sceneObjectData.statusPages[sceneObjectIndex];
+            if (!stpInfo)
+                return;
+            var stp = stpInfo[stPageIndex - 1];
+            if (!stp)
+                return;
+            var soData = stp.so;
+            var modulesCustomAttribute = stp.modulesCustomAttribute;
+        }
+        this.addModuleData(soData, moduleIndex, moduleID, modulesCustomAttribute);
+    };
+    SceneObjectData.addModuleData = function (soData, moduleIndex, moduleID, modulesCustomAttribute) {
+        if (!soData.moduleDisplayList)
+            soData.moduleDisplayList = [];
+        if (!soData.moduleIDs)
+            soData.moduleIDs = [];
+        soData.moduleIDs.splice(moduleIndex, 0, moduleID);
+        soData.moduleDisplayList.splice(moduleIndex, 0, {});
+        modulesCustomAttribute.splice(moduleIndex, 0, {});
+        this.doFormatOneStatusPageModuleCustomData(soData, modulesCustomAttribute);
+    };
+    SceneObjectData.setModuleIndexByIndex = function (sceneObjectData, sceneObjectIndex, stPageIndex, moduleIndex, toIndex) {
+        if (stPageIndex == 0) {
+            var soData = sceneObjectData.sceneObjects[sceneObjectIndex];
+            var modulesCustomAttribute = sceneObjectData.modulesCustomAttributes[sceneObjectIndex];
+        }
+        else {
+            var stpInfo = sceneObjectData.statusPages[sceneObjectIndex];
+            if (!stpInfo)
+                return;
+            var stp = stpInfo[stPageIndex - 1];
+            if (!stp)
+                return;
+            var soData = stp.so;
+            var modulesCustomAttribute = stp.modulesCustomAttribute;
+        }
+        this.setModuleDataIndexByIndex(soData, moduleIndex, toIndex, modulesCustomAttribute);
+    };
+    SceneObjectData.setModuleDataIndexByIndex = function (soData, moduleIndex, toIndex, modulesCustomAttribute) {
+        if (modulesCustomAttribute) {
+            var m = modulesCustomAttribute.splice(moduleIndex, 1)[0];
+            modulesCustomAttribute.splice(toIndex, 0, m);
+        }
+        if (soData.moduleIDs) {
+            var m = soData.moduleIDs.splice(moduleIndex, 1)[0];
+            soData.moduleIDs.splice(toIndex, 0, m);
+        }
+        if (soData.moduleDisplayList) {
+            var m = soData.moduleDisplayList.splice(moduleIndex, 1)[0];
+            soData.moduleDisplayList.splice(toIndex, 0, m);
+        }
     };
     SceneObjectData.newStatusPage = function (sceneObjectData, soIndex, stpID, stpData) {
         if (stpData === void 0) { stpData = null; }
@@ -47470,6 +48286,7 @@ var SceneObjectData = (function () {
             }
         };
         statusPages.splice(stpID - 1, 0, statusPageData);
+        this.formatOneStatusPageModuleCustomData(sceneObjectData, soIndex, stpID + 1);
     };
     SceneObjectData.delStatusPage = function (sceneObjectData, soIndex, stpID) {
         if (stpID < 0)
@@ -47482,6 +48299,7 @@ var SceneObjectData = (function () {
             sceneObjectData.sceneObjects[soIndex] = stp.so;
             sceneObjectData.events[soIndex] = stp.event;
             sceneObjectData.customAttributes[soIndex] = stp.customAttribute;
+            sceneObjectData.modulesCustomAttributes[soIndex] = stp.modulesCustomAttribute;
         }
         else {
             statusPages.splice(stpID - 1, 1);
@@ -47497,12 +48315,15 @@ var SceneObjectData = (function () {
                 condition: [],
                 customCommands: []
             },
-            customAttributesCache: null
+            customAttributesCache: null,
+            modulesCustomAttribute: [],
+            modulesCustomAttributesCaches: null
         };
         if (stpID == 0) {
             sceneObjectData.sceneObjects[soIndex] = statusPageData.so;
             sceneObjectData.events[soIndex] = statusPageData.event;
             sceneObjectData.customAttributes[soIndex] = statusPageData.customAttribute;
+            sceneObjectData.modulesCustomAttributes[soIndex] = statusPageData.modulesCustomAttribute;
         }
         else {
             var statusPages = sceneObjectData.statusPages[soIndex];
@@ -47518,7 +48339,8 @@ var SceneObjectData = (function () {
             statusPageData = {
                 so: SceneObject.__gcClone(sceneObjectData.sceneObjects[soIndex]),
                 customAttribute: ObjectUtils.depthClone(sceneObjectData.customAttributes[soIndex]),
-                event: ObjectUtils.depthClone(sceneObjectData.events[soIndex])
+                event: ObjectUtils.depthClone(sceneObjectData.events[soIndex]),
+                modulesCustomAttribute: ObjectUtils.depthClone(sceneObjectData.modulesCustomAttributes[soIndex])
             };
         }
         else if (stpID >= 1) {
@@ -47527,112 +48349,95 @@ var SceneObjectData = (function () {
             var statusPageData = {
                 so: SceneObject.__gcClone(refStp.so),
                 customAttribute: ObjectUtils.depthClone(refStp.customAttribute),
-                event: ObjectUtils.depthClone(refStp.event)
+                event: ObjectUtils.depthClone(refStp.event),
+                modulesCustomAttribute: ObjectUtils.depthClone(refStp.modulesCustomAttribute)
             };
         }
         return statusPageData;
     };
-    return SceneObjectData;
-}());
-
-
-
-
-
-var SceneObjectModelData = (function (_super) {
-    __extends(SceneObjectModelData, _super);
-    function SceneObjectModelData() {
-        _super.apply(this, arguments);
-        this.preLayer = [];
-        this.varAttributes = [];
-        this.serverInstanceClassName = SceneObjectModelData.SERVER_SCENE_OBJECT_CORE_CLASS;
-        this.clientInstanceClassName = SceneObjectModelData.CLIENT_SCENE_OBJECT_CORE_CLASS;
-        this.supportTriggerTypes = [];
-        this.supportStatusPage = true;
-    }
-    SceneObjectModelData.isEmpty = function (data, plugType) {
-        var dataName = GameListData.getName(Game.data.sceneObjectModelList, data.id);
-        if (dataName)
-            return false;
-        return data.preLayer.length == 0 && data.varAttributes.length == 0;
-    };
-    SceneObjectModelData.getServerCode = function (modelData) {
-        var serverVars = CustomAttributeSetting.getAPIRuntimes(modelData.varAttributes);
-        var modelName = GameListData.getName(Common.sceneObjectModelList, modelData.id);
-        var serverSoBaseCode = "/**\n * \u573A\u666F\u5BF9\u8C61\u6A21\u578B\uFF1A" + modelName + "\n */\nclass ServerSceneObject_" + modelData.id + " extends " + this.SERVER_SCENE_OBJECT_CORE_CLASS + " {\n" + serverVars + "    constructor(soData: SceneObject,presetCustomAttrs: { [varName: string]: { varType: number, value: any, copy: boolean } } = null,player: GameServerPlayer) {\n        super(soData,presetCustomAttrs,player);\n    }\n}";
-        return { serverSoBaseCode: serverSoBaseCode };
-    };
-    SceneObjectModelData.getServerJsBaseCode = function (modelData) {
-        return "var ServerSceneObject_" + modelData.id + " = (function (_super) {__extends(ServerSceneObject_" + modelData.id + ", _super);function ServerSceneObject_" + modelData.id + "(soData,presetCustomAttrs,player) {_super.apply(this, [soData,presetCustomAttrs,player]);}return ServerSceneObject_" + modelData.id + ";}(" + this.SERVER_SCENE_OBJECT_CORE_CLASS + "));";
-    };
-    SceneObjectModelData.getAllAPICodeInEditor = function (mode) {
-        var list = Game.data.sceneObjectModelList;
-        var codes = "/**\n * \u8BE5\u6587\u4EF6\u4E3AGameCreator\u7F16\u8F91\u5668\u81EA\u52A8\u751F\u6210\u7684\u4EE3\u7801\uFF0C\u8BF7\u52FF\u4FEE\u6539\n */\n";
-        for (var i in list.data) {
-            var model = list.data[i];
-            if (!model)
-                continue;
-            if (EUIWindowSceneObjectModel.modelData && model.id == EUIWindowSceneObjectModel.modelData.id) {
-                model = EUIWindowSceneObjectModel.modelData;
+    SceneObjectData.initModuleData = function (sceneObjectData, sceneObjectIndex, statusPageID) {
+        if (Config.useNewSceneObjectModel) {
+            if (statusPageID == 1) {
+                var soData = sceneObjectData.sceneObjects[sceneObjectIndex];
             }
-            if (mode == 1) {
-                var serverCode = this.getServerCode(model);
-                codes += serverCode.serverSoBaseCode + "\n";
+            else {
+                var statusPages = sceneObjectData.statusPages[sceneObjectIndex];
+                if (statusPages) {
+                    var page = statusPages[statusPageID - 2];
+                    if (page)
+                        soData = page.so;
+                }
             }
-            else if (mode == 2) {
-                var clientCode = this.getClientCode(model);
-                codes += clientCode.clientSoBaseCode + "\n";
+            if (soData) {
+                this.initModuleDataBySceneObjectData(soData);
             }
         }
-        return codes;
+        return false;
     };
-    SceneObjectModelData.getClientCode = function (modelData) {
-        var clientVars = CustomAttributeSetting.getAPIRuntimes(modelData.varAttributes, true);
-        var clientDisplayVars = "";
-        for (var i in modelData.preLayer) {
-            var preLayer = modelData.preLayer[i];
-            if (preLayer.inEditorShowMode == 2)
-                continue;
-            var varTypeStr = "";
-            if (preLayer.type <= 1) {
-                continue;
-            }
-            else if (preLayer.type == 2) {
-                var uiData = Common.uiList.data[preLayer.id];
-                if (!uiData)
-                    continue;
-                if (uiData.uiDisplayData.instanceClassName) {
-                    varTypeStr += uiData.uiDisplayData.instanceClassName + ";\n";
+    SceneObjectData.initModuleDataBySceneObjectData = function (soData) {
+        if (soData.moduleIDs == null) {
+            var sceneObjectModelList = Common.sceneObjectModelList;
+            if (sceneObjectModelList) {
+                var modelData = sceneObjectModelList.data[soData.modelID];
+                if (modelData) {
+                    soData.moduleIDs = modelData.presetModules.concat();
                 }
                 else {
-                    varTypeStr += "GUI_" + preLayer.id + ";\n";
+                    soData.moduleIDs = [];
                 }
             }
-            else if (preLayer.type == 3) {
-                varTypeStr = "UIRoot;\n";
-            }
-            else if (preLayer.type <= 5) {
-                varTypeStr = "Animation;\n";
-            }
-            clientDisplayVars += "    " + preLayer.varName + ": " + varTypeStr;
         }
-        var modelName = GameListData.getName(Common.sceneObjectModelList, modelData.id);
-        var clientSoBaseCode = "/**\n * \u573A\u666F\u5BF9\u8C61\u6A21\u578B\uFF1A" + modelName + "\n */\nclass ClientSceneObject_" + modelData.id + " extends " + this.CLIENT_SCENE_OBJECT_CORE_CLASS + " {\n" + clientVars + clientDisplayVars + "    constructor(soData: SceneObject, scene: ClientScene) {\n        super(soData,scene);\n    }\n}";
-        return { clientSoBaseCode: clientSoBaseCode };
     };
-    SceneObjectModelData.getClientJsBaseCode = function (modelData) {
-        return "var ClientSceneObject_" + modelData.id + " = (function (_super) {__extends(ClientSceneObject_" + modelData.id + ", _super);function ClientSceneObject_" + modelData.id + "(soData,scene) {_super.apply(this, [soData,scene]);}return ClientSceneObject_" + modelData.id + ";}(" + this.CLIENT_SCENE_OBJECT_CORE_CLASS + "));";
+    SceneObjectData.formatDisplayList = function (soData, refModelData, displayList) {
+        for (var varName in displayList) {
+            var m = ArrayUtils.matchAttributes(refModelData.preLayer, { varName: varName }, true);
+            if (m.length == 0) {
+                delete displayList[varName];
+            }
+        }
+        for (var i = 0; i < refModelData.preLayer.length; i++) {
+            var p = refModelData.preLayer[i];
+            var displayInfo = displayList[p.varName];
+            if (displayInfo == null || displayInfo.type != p.type || p.type == 2 || p.type == 4) {
+                var valueID = (p.type == SceneObjectModelData.TYPE_UI_TYPE || p.type == SceneObjectModelData.TYPE_ANIMATION_TYPE) ? 0 : p.id;
+                displayList[p.varName] = { type: p.type, id: valueID };
+            }
+        }
     };
-    SceneObjectModelData.SERVER_SCENE_OBJECT_CORE_CLASS = "GameServerSceneObject_Core";
-    SceneObjectModelData.CLIENT_SCENE_OBJECT_CORE_CLASS = "GameClientSceneObject_Core";
-    SceneObjectModelData.TYPE_AVATAR_TYPE = 1;
-    SceneObjectModelData.TYPE_UI_DESIGNATION = 2;
-    SceneObjectModelData.TYPE_UI_TYPE = 3;
-    SceneObjectModelData.TYPE_ANIMATION_DESIGNATION = 4;
-    SceneObjectModelData.TYPE_ANIMATION_TYPE = 5;
-    SceneObjectModelData.sceneObjectClass = {};
-    return SceneObjectModelData;
-}(OriginalData));
+    SceneObjectData.doFormatOneStatusPageModuleCustomData = function (soData, customAttributesArr) {
+        if (!Config.useNewSceneObjectModel)
+            return;
+        for (var m = 0; m < soData.moduleIDs.length; m++) {
+            var moduleID = soData.moduleIDs[m];
+            var modlueData = Common.sceneObjectModuleList.data[moduleID];
+            if (modlueData) {
+                var customAttributes = customAttributesArr[m];
+                if (!customAttributes)
+                    customAttributes = customAttributesArr[m] = {};
+                CustomAttributeSetting.formatCustomData(customAttributes, modlueData.varAttributes);
+                if (!soData.moduleDisplayList)
+                    soData.moduleDisplayList = [];
+                var displayList = soData.moduleDisplayList[m];
+                if (!displayList)
+                    displayList = soData.moduleDisplayList[m] = {};
+                this.formatDisplayList(soData, modlueData, displayList);
+            }
+            else {
+                var customAttributes = customAttributesArr[m];
+                if (customAttributes) {
+                    customAttributesArr.splice(m, 1);
+                }
+                var soModuleDisplay = soData.moduleDisplayList[m];
+                if (soModuleDisplay) {
+                    soData.moduleDisplayList.splice(m, 1);
+                }
+                soData.moduleIDs.splice(m, 1);
+                m--;
+            }
+        }
+    };
+    return SceneObjectData;
+}());
 
 
 
@@ -47665,7 +48470,7 @@ var TileData = (function (_super) {
         return Game.data.tileList.data[texID];
     };
     TileData.isEmpty = function (data, plugType) {
-        var tileName = GameListData.getName(Game.data.tileList, data.id);
+        var tileName = GameListData.getName(Game.data.tileList, data.id, true);
         if (tileName)
             return false;
         return !data.url;
@@ -47725,7 +48530,7 @@ var UIData = (function (_super) {
         item.uiDisplayData.id = item.id;
     };
     UIData.isEmpty = function (data) {
-        var uiName = GameListData.getName(Game.data.uiList, data.id);
+        var uiName = GameListData.getName(Game.data.uiList, data.id, true);
         if (uiName)
             return false;
         var hasUiCommandData;
@@ -47893,7 +48698,8 @@ var GameListData = (function () {
     GameListData.getIDRange = function (typeID) {
         return { from: (typeID - 1) * 1000 + 1, to: (typeID - 1) * 1000 + 1000 };
     };
-    GameListData.getName = function (gameListData, id) {
+    GameListData.getName = function (gameListData, id, emptyName) {
+        if (emptyName === void 0) { emptyName = false; }
         if (!gameListData.listData)
             return null;
         var name;
@@ -47907,7 +48713,7 @@ var GameListData = (function () {
         else {
             name = gameListData.listData.list[id];
         }
-        return name != null ? name : "--/--";
+        return name != null ? name : (emptyName ? "" : "--/--");
     };
     GameListData.getNames = function (gameListData, includeID) {
         if (includeID === void 0) { includeID = true; }
@@ -48289,10 +49095,36 @@ var GameData = (function () {
         ], "asset/json/scene/", "sceneList.json", onFin, false, itemNeedMethod);
     };
     GameData.prototype.loadSceneObjectModelList = function (onFin, isServer) {
+        var _this = this;
         if (isServer === void 0) { isServer = false; }
+        var onRealFin = Callback.New(function () {
+            if (Config.useNewSceneObjectModel) {
+                _this.onLoadOne(0, GameData.LIST_TYPE_SCENE_OBJECT_MODEL, SceneObjectModelData, [
+                    { childAttribute: null, path: "asset/json/scene/model/som" }
+                ], "asset/json/scene/", "sceneObjectModelList.json", false, null, null, true);
+                new SyncTask(GameData.loadDataTask, function () {
+                    var commonModelData = _this.sceneObjectModelList.data[0];
+                    SceneObjectModelData.initCommonModelData(commonModelData);
+                    onFin.run();
+                    SyncTask.taskOver(GameData.loadDataTask);
+                });
+            }
+            else {
+                onFin.run();
+            }
+        }, this);
         this.onLoadList(GameData.LIST_TYPE_SCENE_OBJECT_MODEL, SceneObjectModelData, [
             { childAttribute: null, path: "asset/json/scene/model/som" }
-        ], "asset/json/scene/", "sceneObjectModelList.json", onFin, false);
+        ], "asset/json/scene/", "sceneObjectModelList.json", onRealFin, false);
+    };
+    GameData.prototype.loadSceneObjectModuleList = function (onFin) {
+        if (!Config.useNewSceneObjectModel) {
+            onFin.delayRun(0);
+            return;
+        }
+        this.onLoadList(GameData.LIST_TYPE_SCENE_OBJECT_MODULE, SceneObjectModelData, [
+            { childAttribute: null, path: "asset/json/scene/sceneObjectModule/soModule" }
+        ], "asset/json/scene/", "sceneObjectModuleList.json", onFin, false, null, false, null, true);
     };
     GameData.prototype.loadTileList = function (onFin) {
         this.onLoadList(GameData.LIST_TYPE_TILE, TileData, [
@@ -48517,10 +49349,11 @@ var GameData = (function () {
             });
         }, this), !allowNoFiles);
     };
-    GameData.prototype.onLoadOne = function (id, saveAttribute, childCls, childItems, folder, listName, hasType, listData, arrayModeIndex) {
+    GameData.prototype.onLoadOne = function (id, saveAttribute, childCls, childItems, folder, listName, hasType, listData, arrayModeIndex, allowNoFiles) {
         if (hasType === void 0) { hasType = true; }
         if (listData === void 0) { listData = null; }
         if (arrayModeIndex === void 0) { arrayModeIndex = null; }
+        if (allowNoFiles === void 0) { allowNoFiles = false; }
         var gameListData = this[saveAttribute];
         if (arrayModeIndex == null) {
             gameListData = this[saveAttribute];
@@ -48555,6 +49388,9 @@ var GameData = (function () {
             var childItem = childItems[c];
             new SyncTask(GameData.loadDataTask);
             FileUtils.loadJsonFile(childItem.path + id + ".json", new Callback(function (gameData, id, childAttribute, itemData) {
+                if (!itemData && allowNoFiles) {
+                    itemData = {};
+                }
                 if (!itemData) {
                     delete gameListData.data[id];
                     if (gameListData.hasType) {
@@ -48586,6 +49422,7 @@ var GameData = (function () {
     GameData.LIST_TYPE_PLAYER_STRING = "playerStringNameList";
     GameData.LIST_TYPE_SCENE = "sceneList";
     GameData.LIST_TYPE_SCENE_OBJECT_MODEL = "sceneObjectModelList";
+    GameData.LIST_TYPE_SCENE_OBJECT_MODULE = "sceneObjectModuleList";
     GameData.LIST_TYPE_TILE = "tileList";
     GameData.LIST_TYPE_AVATAR = "avatarList";
     GameData.LIST_TYPE_AVATAR_ACT = "avatarActList";
@@ -48617,6 +49454,7 @@ var GameData = (function () {
     GameData.CUSTOM_ATTR_PLAYER_DATA = 1;
     GameData.CUSTOM_ATTR_SCENE_DATA = 2;
     GameData.CUSTOM_ATTR_SCENE_OBJECT_DATA = 3;
+    GameData.CUSTOM_ATTR_SCENE_OBJECT_MODULE_DATA = 4;
     GameData.loadDataTask = "GameData_loadDataTask";
     GameData.customModulePresetDatas = [];
     return GameData;
@@ -48999,6 +49837,21 @@ var FileUtils = (function () {
                 onFin && onFin.runWith([success, localURL]);
                 SyncTask.taskOver(FileUtils.TASK_MODIFY_FILE);
             }, _this);
+            var indiaAppGameInfo = Config.INDIA_APPLICATION_GAME_INFO;
+            if (indiaAppGameInfo) {
+                var rq = new HttpRequest();
+                var dataString = isJson ? (format ? JSON.stringify(dataObject, null, 4) : JSON.stringify(dataObject)) : dataObject;
+                var data = JSON.stringify({ mode: 0, localURL: localURL, content: dataString });
+                var IDEHttpServerURL = "http://127.0.0.1:" + indiaAppGameInfo.gcDebugPort + "/kdsrpg_http_indieapp.js?cmd=3";
+                rq.send(IDEHttpServerURL, data, "post");
+                rq.add_ERROR(function () {
+                    onSaveFin && onSaveFin.delayRun(0, null, [false, localURL]);
+                }, _this);
+                rq.add_COMPLETE(function (str) {
+                    onSaveFin && onSaveFin.delayRun(0, null, [str == "ok", localURL]);
+                }, _this);
+                return;
+            }
             if (!Config.EDIT_MODE && (os.platform != 2)) {
                 if (IndexedDBManager.support && IndexedDBManager.used) {
                     IndexedDBManager.setIndexDBJson(localURL, dataObject, function (success) {
@@ -50231,6 +51084,13 @@ var Common = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Common, "sceneObjectModuleList", {
+        get: function () {
+            return this.getGameDataAttrValue(GameData.LIST_TYPE_SCENE_OBJECT_MODULE);
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Common, "tileList", {
         get: function () {
             return this.getGameDataAttrValue(GameData.LIST_TYPE_TILE);
@@ -50451,6 +51311,20 @@ var Common = (function () {
 var Config = (function () {
     function Config() {
     }
+    Object.defineProperty(Config, "INDIA_APPLICATION_GAME_INFO", {
+        get: function () {
+            return Config.indiaApplicationGameInfo;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Config, "useNewSceneObjectModel", {
+        get: function () {
+            return ((Config.RELEASE_TEMPLATE_GC_VERSION && Config.RELEASE_TEMPLATE_GC_VERSION >= 0.984) || (Config.EDIT_MODE && !Config.BEHAVIOR_EDIT_MODE && !Config.RELEASE_MODE));
+        },
+        enumerable: true,
+        configurable: true
+    });
     Config.init = function () {
         var max = 4096;
         Config.IS_SERVER = Common.runPlatform != 2;
@@ -50497,13 +51371,35 @@ var Config = (function () {
             alert("网格设定有误!");
         }
     };
+    Object.defineProperty(Config, "indiaApplicationGameInfo", {
+        get: function () {
+            if (window.location.href.indexOf("gcDebugPort=") == -1)
+                return null;
+            var params = window.location.href.split("?").pop();
+            var paramsArr = params.split("&");
+            var res = {};
+            for (var i = 0; i < paramsArr.length; i++) {
+                var pStr = paramsArr[i];
+                var pStrArr = pStr.split("=");
+                var pName = pStrArr[0];
+                var pValue = pStrArr[1];
+                res[pName] = pValue;
+            }
+            if (res.gcAppID == null || res.gcDebugPort == null)
+                return null;
+            return res;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Config.USE_FN = true;
-    Config.saveAttrs = ["verManager", "startupPreloadFonts", "FONTS", "EDITOR_MAG_FILTER", "IMAGE_LAYER_DP_COORD_JS", "IMAGE_LAYER_DP_COORD_TS", "CREATED_GC_VERSION"];
+    Config.saveAttrs = ["verManager", "startupPreloadFonts", "FONTS", "EDITOR_MAG_FILTER", "IMAGE_LAYER_DP_COORD_JS", "IMAGE_LAYER_DP_COORD_TS",
+        "CREATED_GC_VERSION", "RELEASE_TEMPLATE_GC_VERSION", "gameSID", "gameProjectName", "gameVersion"];
+    Config.ENGINE_MERGE_STARTUP_FILE = true;
     Config.compatibleOldProgram = true;
     Config.JSON_PATH = "asset/json";
     Config.JSON_CONFIG = Config.JSON_PATH + "/config.json";
     Config.SCENE_BY_DRAWLINES_MAX = 500;
-    Config.ENGINE_MERGE_STARTUP_FILE = true;
     Config.DATA_GRIDS = [];
     Config.FONTS = [];
     Config.startupPreloadFonts = true;
@@ -50548,7 +51444,13 @@ var Player = (function () {
         CustomAttributeSetting.installAttributeFromRecordData(player.data, fileData, attrSettings, customGameAttribute.playerAttributeConfig.attrs, GameData.CUSTOM_ATTR_PLAYER_DATA);
         var modelData = Common.sceneObjectModelList.data[player.data.sceneObject.modelID];
         if (modelData) {
-            CustomAttributeSetting.installAttributeFromRecordData(player.data.sceneObject, fileSceneObjectData, modelData.varAttributes, Config.BORN.customAttribute, GameData.CUSTOM_ATTR_SCENE_OBJECT_DATA);
+            if (Config.useNewSceneObjectModel) {
+                var fixModelData = Common.sceneObjectModelList.data[0];
+            }
+            else {
+                fixModelData = modelData;
+            }
+            CustomAttributeSetting.installAttributeFromRecordData(player.data.sceneObject, fileSceneObjectData, fixModelData.varAttributes, Config.BORN.customAttribute, GameData.CUSTOM_ATTR_SCENE_OBJECT_DATA);
         }
     };
     return Player;
@@ -50868,7 +51770,7 @@ var AnimationData = (function (_super) {
         return layers;
     };
     AnimationData.isEmpty = function (data) {
-        var aniName = GameListData.getName(Game.data.animationList, data.id);
+        var aniName = GameListData.getName(Game.data.animationList, data.id, true);
         if (aniName)
             return false;
         return (data.totalFrame == 0 && data.imageSources.length == 1 && data.imageSources[0] == null && data.layers.length == 0 && !data.isParticle && data.particleData == null);
@@ -50899,7 +51801,7 @@ var AutoTileData = (function (_super) {
         return Game.data.autoTileList.data[texID];
     };
     AutoTileData.isEmpty = function (data, plugType) {
-        var tileName = GameListData.getName(Game.data.autoTileList, data.id);
+        var tileName = GameListData.getName(Game.data.autoTileList, data.id, true);
         if (tileName)
             return false;
         return !data.url;
@@ -50927,12 +51829,12 @@ var AvatarData = (function (_super) {
     }
     AvatarData.isEmpty = function (data, plugType) {
         if (plugType == 0) {
-            var avatarName = GameListData.getName(Game.data.avatarList, data.id);
+            var avatarName = GameListData.getName(Game.data.avatarList, data.id, true);
             if (avatarName)
                 return false;
         }
         else {
-            var standAvatarName = GameListData.getName(Game.data.standingList, data.id);
+            var standAvatarName = GameListData.getName(Game.data.standingList, data.id, true);
             if (standAvatarName)
                 return false;
         }
@@ -51504,7 +52406,12 @@ var CustomCompositeSetting = (function (_super) {
         }
     };
     CustomCompositeSetting.getConditionAPI = function (customSetting) {
-        var customAttributeSetting = CustomCompositeSetting.getAllAttributes(customSetting, false);
+        if (Array.isArray(customSetting)) {
+            var customAttributeSetting = customSetting;
+        }
+        else {
+            var customAttributeSetting = CustomCompositeSetting.getAllAttributes(customSetting, false);
+        }
         var attrs = "var attrs:{";
         for (var i = 0; i < customAttributeSetting.length; i++) {
             var cusAttr = customAttributeSetting[i];
@@ -51585,9 +52492,8 @@ var CustomCompositeAttributeSetting = (function () {
         data.width = 200;
         data.height = 32;
     };
-    CustomCompositeAttributeSetting.meetConditionData = function (ccAttr, idValue, varNameValue, customCompSettings) {
+    CustomCompositeAttributeSetting.meetConditionData = function (conditions, idValue, varNameValue, customCompSettings) {
         if (customCompSettings === void 0) { customCompSettings = null; }
-        var conditions = ccAttr.attrConditions;
         for (var s in conditions) {
             var condition = conditions[s];
             if (!idValue) {
@@ -51890,7 +52796,7 @@ var DialogData = (function (_super) {
     DialogData.isEmpty = function (data) {
         if (!DialogData.emptyData)
             DialogData.emptyData = new DialogData();
-        var dialogName = GameListData.getName(Game.data.dialogList, data.id);
+        var dialogName = GameListData.getName(Game.data.dialogList, data.id, true);
         if (dialogName)
             return false;
         var dataClone = {};
@@ -51902,6 +52808,243 @@ var DialogData = (function (_super) {
         return ObjectUtils.depthSame(dataClone, DialogData.emptyData);
     };
     return DialogData;
+}(OriginalData));
+
+
+
+
+
+var SceneObjectModelData = (function (_super) {
+    __extends(SceneObjectModelData, _super);
+    function SceneObjectModelData() {
+        _super.apply(this, arguments);
+        this.preLayer = [];
+        this.varAttributes = [];
+        this.attrConditions = [];
+        this.presetModules = [];
+        this.serverInstanceClassName = SceneObjectModelData.SERVER_SCENE_OBJECT_CORE_CLASS;
+        this.clientInstanceClassName = SceneObjectModelData.CLIENT_SCENE_OBJECT_CORE_CLASS;
+        this.supportTriggerTypes = [];
+        this.supportStatusPage = true;
+    }
+    SceneObjectModelData.clear = function (modelData) {
+        modelData.preLayer = [];
+        modelData.varAttributes = [];
+        modelData.serverInstanceClassName = null;
+        modelData.clientInstanceClassName = null;
+        delete modelData.presetModules;
+    };
+    SceneObjectModelData.initCommonModelData = function (modelData) {
+        if (modelData.sysInitCommonModelData)
+            return;
+        modelData.serverInstanceClassName = SceneObjectModelData.SERVER_SCENE_OBJECT_COMMON_CLASS;
+        modelData.clientInstanceClassName = SceneObjectModelData.CLIENT_SCENE_OBJECT_COMMON_CLASS;
+        delete modelData.supportTriggerTypes;
+        delete modelData.supportStatusPage;
+        modelData.sysInitCommonModelData = true;
+    };
+    Object.defineProperty(SceneObjectModelData, "commonModelData", {
+        get: function () {
+            return Common.sceneObjectModelList.data[0];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    SceneObjectModelData.getModelAttributeData = function (modelData) {
+        var arr = [];
+        if (Config.useNewSceneObjectModel) {
+            var commonModelData = Game.data.sceneObjectModelList.data[0];
+            arr.push({ moduleID: 0, preLayer: commonModelData.preLayer, varAttributes: commonModelData.varAttributes });
+            for (var i = 0; i < modelData.presetModules.length; i++) {
+                var moduleID = modelData.presetModules[i];
+                var moduleData = Game.data.sceneObjectModuleList.data[moduleID];
+                if (!moduleData)
+                    continue;
+                arr.push({ moduleID: moduleID, preLayer: moduleData.preLayer, varAttributes: moduleData.varAttributes });
+            }
+        }
+        else {
+            arr.push({ preLayer: modelData.preLayer, varAttributes: modelData.varAttributes });
+        }
+        return arr;
+    };
+    SceneObjectModelData.isEmpty = function (data, plugType) {
+        if (plugType == 22) {
+            var dataName = GameListData.getName(Game.data.sceneObjectModuleList, data.id, true);
+        }
+        else {
+            dataName = GameListData.getName(Game.data.sceneObjectModelList, data.id, true);
+        }
+        if (dataName)
+            return false;
+        return data.preLayer.length == 0 && data.varAttributes.length == 0;
+    };
+    SceneObjectModelData.getServerJsBaseCode = function (modelData) {
+        return "var ServerSceneObject_" + modelData.id + " = (function (_super) {__extends(ServerSceneObject_" + modelData.id + ", _super);function ServerSceneObject_" + modelData.id + "(soData,presetCustomAttrs,player) {_super.apply(this, [soData,presetCustomAttrs,player]);}return ServerSceneObject_" + modelData.id + ";}(" + this.SERVER_SCENE_OBJECT_CORE_CLASS + "));";
+    };
+    SceneObjectModelData.getAllAPICodeInEditorNew = function (mode) {
+        var list = Game.data.sceneObjectModuleList;
+        var codes = "/**\n * \u8BE5\u6587\u4EF6\u4E3AGameCreator\u7F16\u8F91\u5668\u81EA\u52A8\u751F\u6210\u7684\u4EE3\u7801\uFF0C\u8BF7\u52FF\u4FEE\u6539\n */\n";
+        var commonModelData = EUIWindowSceneObjectModel.commonModelDataClone ? EUIWindowSceneObjectModel.commonModelDataClone : Game.data.sceneObjectModelList.data[0];
+        var instanceClassName = mode == 1 ? commonModelData.serverInstanceClassName : commonModelData.clientInstanceClassName;
+        codes += "/**\n * \u573A\u666F\u5BF9\u8C61\u6A21\u5757\u57FA\u7C7B\n */\nclass SceneObjectModule {\n    static moduleClassArr:(typeof SceneObjectModule)[] = [];\n    id: number; // \u6A21\u5757ID\n    name: string; // \u6A21\u5757\u540D\u79F0\n    so: " + instanceClassName + "; // \u573A\u666F\u5BF9\u8C61\u5B9E\u4F8B\n    isDisposed:boolean; // \u662F\u5426\u5DF2\u88AB\u9500\u6BC1\n    /**\n     * \u6784\u9020\u51FD\u6570\n     * @param installCB \u7528\u4E8E\u5B89\u88C5\u6A21\u5757\u7684\u5C5E\u6027\u503C\n     */\n    constructor(installCB: Callback) {\n        installCB && installCB.runWith([this]);\n    }\n    /**\n     * \u5F53\u79FB\u9664\u6A21\u5757\u65F6\u6267\u884C\u7684\u51FD\u6570\n     */\n    onRemoved():void {\n        \n    }\n    /**\n     * \u5237\u65B0\uFF1A\u901A\u5E38\u5728\u6539\u53D8\u4E86\u5C5E\u6027\u9700\u8981\u8C03\u7528\u6B64\u51FD\u6570\u7EDF\u4E00\u5237\u65B0\u6548\u679C\n     */\n    refresh():void {\n        \n    }\n    /**\n     * \u5F53\u5378\u8F7D\u6A21\u5757\u65F6\u6267\u884C\u7684\u51FD\u6570\n     */\n    dispose():void {\n        this.so = null;\n        this.name = null;\n        this.isDisposed = true;\n    }\n}\n";
+        var allModuleData = [commonModelData].concat(list.data);
+        for (var i in allModuleData) {
+            var model = allModuleData[i];
+            if (!model)
+                continue;
+            var modelID = model.id;
+            if (EUIWindowSceneObjectModule.cloneData) {
+                var newestModel = EUIWindowSceneObjectModule.cloneData.data[modelID];
+                if (newestModel)
+                    model = newestModel;
+            }
+            if (mode == 1) {
+                var serverCode = this.getServerCodeNew(model, modelID == 0);
+                codes += serverCode.serverSoBaseCode + "\n";
+            }
+            else if (mode == 2) {
+                var clientCode = this.getClientCodeNew(model, modelID == 0);
+                codes += clientCode.clientSoBaseCode + "\n";
+            }
+        }
+        return codes;
+    };
+    SceneObjectModelData.getServerCodeNew = function (modelData, isCommon) {
+        var serverVars = CustomAttributeSetting.getAPIRuntimes(modelData.varAttributes);
+        if (isCommon) {
+            var modelName = "场景对象公共类，任何场景对象都继承该类";
+            var serverSoBaseCode = "/**\n * " + modelName + "\n */\nclass SceneObjectCommon extends ServerSceneObject {\n" + serverVars + "    constructor(soData: SceneObject,presetCustomAttrs: { [varName: string]: { varType: number, value: any, copy: boolean } } = null,player: GameServerPlayer) {\n        super(soData,presetCustomAttrs,player);\n    }\n}";
+        }
+        else {
+            var sceneObjectModuleList = EUIWindowSceneObjectModule.cloneData ? EUIWindowSceneObjectModule.cloneData : Game.data.sceneObjectModuleList;
+            var modelName = GameListData.getName(sceneObjectModuleList, modelData.id);
+            var commonModelData = EUIWindowSceneObjectModel.commonModelDataClone ? EUIWindowSceneObjectModel.commonModelDataClone : Game.data.sceneObjectModelList.data[0];
+            var instanceClassName = commonModelData.serverInstanceClassName;
+            var serverSoBaseCode = "/**\n * \u573A\u666F\u5BF9\u8C61\u6A21\u5757\uFF1A" + modelName + "\n */\nclass SceneObjectModule_" + modelData.id + " extends SceneObjectModule {\n" + serverVars + "    constructor(installCB: Callback) {\n        super(installCB);\n    }\n    dispose() {\n    }\n}\nSceneObjectModule.moduleClassArr[" + modelData.id + "]=SceneObjectModule_" + modelData.id + ";";
+        }
+        return { serverSoBaseCode: serverSoBaseCode };
+    };
+    SceneObjectModelData.getClientCodeNew = function (modelData, isCommon) {
+        var clientVars = CustomAttributeSetting.getAPIRuntimes(modelData.varAttributes, true);
+        var clientDisplayVars = "";
+        for (var i in modelData.preLayer) {
+            var preLayer = modelData.preLayer[i];
+            if (preLayer.inEditorShowMode == 2)
+                continue;
+            var varTypeStr = "";
+            if (preLayer.type <= 1) {
+                continue;
+            }
+            else if (preLayer.type == 2) {
+                var uiData = Common.uiList.data[preLayer.id];
+                if (!uiData)
+                    continue;
+                if (uiData.uiDisplayData.instanceClassName) {
+                    varTypeStr += uiData.uiDisplayData.instanceClassName + ";\n";
+                }
+                else {
+                    varTypeStr += "GUI_" + preLayer.id + ";\n";
+                }
+            }
+            else if (preLayer.type == 3) {
+                varTypeStr = "UIRoot;\n";
+            }
+            else if (preLayer.type <= 5) {
+                varTypeStr = "Animation;\n";
+            }
+            clientDisplayVars += "    " + preLayer.varName + ": " + varTypeStr;
+        }
+        if (isCommon) {
+            var modelName = "场景对象公共类，任何场景对象都继承该类";
+            var clientSoBaseCode = "/**\n * " + modelName + "\n */\nclass SceneObjectCommon extends ClientSceneObject {\n" + clientVars + clientDisplayVars + "    constructor(soData: SceneObject, scene: ClientScene) {\n        super(soData,scene);\n    }\n}";
+        }
+        else {
+            var sceneObjectModuleList = EUIWindowSceneObjectModule.cloneData ? EUIWindowSceneObjectModule.cloneData : Game.data.sceneObjectModuleList;
+            var modelName = GameListData.getName(sceneObjectModuleList, modelData.id);
+            var commonModelData = EUIWindowSceneObjectModel.commonModelDataClone ? EUIWindowSceneObjectModel.commonModelDataClone : Game.data.sceneObjectModelList.data[0];
+            var instanceClassName = commonModelData.clientInstanceClassName;
+            var clientSoBaseCode = "/**\n * \u573A\u666F\u5BF9\u8C61\u6A21\u578B\uFF1A" + modelName + "\n */\nclass SceneObjectModule_" + modelData.id + " extends SceneObjectModule {\n" + clientVars + clientDisplayVars + "    constructor(installCB: Callback) {\n        super(installCB);\n    }\n}\nSceneObjectModule.moduleClassArr[" + modelData.id + "]=SceneObjectModule_" + modelData.id + ";";
+        }
+        return { clientSoBaseCode: clientSoBaseCode };
+    };
+    SceneObjectModelData.getAllAPICodeInEditor = function (mode) {
+        if (Config.useNewSceneObjectModel)
+            return SceneObjectModelData.getAllAPICodeInEditorNew(mode);
+        var list = Game.data.sceneObjectModelList;
+        var codes = "/**\n * \u8BE5\u6587\u4EF6\u4E3AGameCreator\u7F16\u8F91\u5668\u81EA\u52A8\u751F\u6210\u7684\u4EE3\u7801\uFF0C\u8BF7\u52FF\u4FEE\u6539\n */\n";
+        for (var i in list.data) {
+            var model = list.data[i];
+            if (!model)
+                continue;
+            if (EUIWindowSceneObjectModel.modelData && model.id == EUIWindowSceneObjectModel.modelData.id) {
+                model = EUIWindowSceneObjectModel.modelData;
+            }
+            if (mode == 1) {
+                var serverCode = this.getServerCode(model);
+                codes += serverCode.serverSoBaseCode + "\n";
+            }
+            else if (mode == 2) {
+                var clientCode = this.getClientCode(model);
+                codes += clientCode.clientSoBaseCode + "\n";
+            }
+        }
+        return codes;
+    };
+    SceneObjectModelData.getServerCode = function (modelData) {
+        var serverVars = CustomAttributeSetting.getAPIRuntimes(modelData.varAttributes);
+        var modelName = GameListData.getName(Common.sceneObjectModelList, modelData.id);
+        var serverSoBaseCode = "/**\n * \u573A\u666F\u5BF9\u8C61\u6A21\u578B\uFF1A" + modelName + "\n */\nclass ServerSceneObject_" + modelData.id + " extends " + this.SERVER_SCENE_OBJECT_CORE_CLASS + " {\n" + serverVars + "    constructor(soData: SceneObject,presetCustomAttrs: { [varName: string]: { varType: number, value: any, copy: boolean } } = null,player: GameServerPlayer) {\n        super(soData,presetCustomAttrs,player);\n    }\n}";
+        return { serverSoBaseCode: serverSoBaseCode };
+    };
+    SceneObjectModelData.getClientCode = function (modelData) {
+        var clientVars = CustomAttributeSetting.getAPIRuntimes(modelData.varAttributes, true);
+        var clientDisplayVars = "";
+        for (var i in modelData.preLayer) {
+            var preLayer = modelData.preLayer[i];
+            if (preLayer.inEditorShowMode == 2)
+                continue;
+            var varTypeStr = "";
+            if (preLayer.type <= 1) {
+                continue;
+            }
+            else if (preLayer.type == 2) {
+                var uiData = Common.uiList.data[preLayer.id];
+                if (!uiData)
+                    continue;
+                if (uiData.uiDisplayData.instanceClassName) {
+                    varTypeStr += uiData.uiDisplayData.instanceClassName + ";\n";
+                }
+                else {
+                    varTypeStr += "GUI_" + preLayer.id + ";\n";
+                }
+            }
+            else if (preLayer.type == 3) {
+                varTypeStr = "UIRoot;\n";
+            }
+            else if (preLayer.type <= 5) {
+                varTypeStr = "Animation;\n";
+            }
+            clientDisplayVars += "    " + preLayer.varName + ": " + varTypeStr;
+        }
+        var modelName = GameListData.getName(Common.sceneObjectModelList, modelData.id);
+        var clientSoBaseCode = "/**\n * \u573A\u666F\u5BF9\u8C61\u6A21\u578B\uFF1A" + modelName + "\n */\nclass ClientSceneObject_" + modelData.id + " extends " + this.CLIENT_SCENE_OBJECT_CORE_CLASS + " {\n" + clientVars + clientDisplayVars + "    constructor(soData: SceneObject, scene: ClientScene) {\n        super(soData,scene);\n    }\n}";
+        return { clientSoBaseCode: clientSoBaseCode };
+    };
+    SceneObjectModelData.getClientJsBaseCode = function (modelData) {
+        return "var ClientSceneObject_" + modelData.id + " = (function (_super) {__extends(ClientSceneObject_" + modelData.id + ", _super);function ClientSceneObject_" + modelData.id + "(soData,scene) {_super.apply(this, [soData,scene]);}return ClientSceneObject_" + modelData.id + ";}(" + this.CLIENT_SCENE_OBJECT_CORE_CLASS + "));";
+    };
+    SceneObjectModelData.SERVER_SCENE_OBJECT_CORE_CLASS = "GameServerSceneObject_Core";
+    SceneObjectModelData.CLIENT_SCENE_OBJECT_CORE_CLASS = "GameClientSceneObject_Core";
+    SceneObjectModelData.SERVER_SCENE_OBJECT_COMMON_CLASS = "GameServerSceneObject";
+    SceneObjectModelData.CLIENT_SCENE_OBJECT_COMMON_CLASS = "GameClientSceneObject";
+    SceneObjectModelData.TYPE_AVATAR_TYPE = 1;
+    SceneObjectModelData.TYPE_UI_DESIGNATION = 2;
+    SceneObjectModelData.TYPE_UI_TYPE = 3;
+    SceneObjectModelData.TYPE_ANIMATION_DESIGNATION = 4;
+    SceneObjectModelData.TYPE_ANIMATION_TYPE = 5;
+    SceneObjectModelData.sceneObjectClass = {};
+    return SceneObjectModelData;
 }(OriginalData));
 var AvatarAction = (function () {
     function AvatarAction() {
@@ -51948,10 +53091,10 @@ var AvatarRefObj = (function () {
 }());
 var CommandExecuteGame;
 (function (CommandExecuteGame) {
-    function command_11(triggerLineID, dialogID, head, name, speed, comicSceneObjectIndex, msg, audio, exp, cmdID) {
+    function command_11(triggerLineID, dialogID, head, name, speed, comicSceneObjectIndex, msg, audio, exp, nameColor, cmdID) {
         if (!GameCommand.isNeedPlayerInput) {
             GameDialog.fromCommandID = cmdID;
-            GameDialog.showDialog(dialogID, head, name, speed, comicSceneObjectIndex, msg, null, audio, exp);
+            GameDialog.showDialog(dialogID, head, name, speed, comicSceneObjectIndex, msg, null, audio, exp, nameColor);
         }
         return GameCommand.COMMAND_STATE_NEED_INPUT;
     }
@@ -52152,6 +53295,7 @@ var AssetManager = (function () {
         if (autoDispose === void 0) { autoDispose = false; }
         if (prerender === void 0) { prerender = false; }
         var modelData = Common.sceneObjectModelList.data[so.modelID];
+        var fixModuleData = Config.useNewSceneObjectModel ? Common.sceneObjectModelList.data[0] : modelData;
         if (!modelData) {
             complete && (syncCallbackWhenAssetExist ? complete.run() : complete.delayRun(0));
             return;
@@ -52170,32 +53314,22 @@ var AssetManager = (function () {
             loadCount++;
             loads.push(Callback.New(this.preLoadAvatarAsset, this, [so.avatarID, onLoadOneCB, syncCallbackWhenAssetExist, autoDispose, prerender]));
         }
-        for (var i in modelData.preLayer) {
-            var preLayer = modelData.preLayer[i];
+        for (var i in fixModuleData.preLayer) {
+            var preLayer = fixModuleData.preLayer[i];
             var displayInfo = so.displayList[preLayer.varName];
             if (!displayInfo)
                 continue;
-            switch (preLayer.type) {
-                case 2:
-                    loadCount++;
-                    loads.push(Callback.New(this.preLoadUIAsset, this, [preLayer.id, onLoadOneCB, syncCallbackWhenAssetExist, autoDispose, prerender]));
-                    break;
-                case 3:
-                    if (displayInfo) {
-                        loadCount++;
-                        loads.push(Callback.New(this.preLoadUIAsset, this, [displayInfo.id, onLoadOneCB, syncCallbackWhenAssetExist, autoDispose, prerender]));
-                    }
-                    break;
-                case 4:
-                    loadCount++;
-                    loads.push(Callback.New(this.preLoadAnimationAsset, this, [preLayer.id, onLoadOneCB, syncCallbackWhenAssetExist, autoDispose, prerender]));
-                    break;
-                case 5:
-                    if (displayInfo) {
-                        loadCount++;
-                        loads.push(Callback.New(this.preLoadAnimationAsset, this, [displayInfo.id, onLoadOneCB, syncCallbackWhenAssetExist, autoDispose, prerender]));
-                    }
-                    break;
+            addPreloadByLoad.call(this, displayInfo);
+        }
+        if (so.moduleDisplayList) {
+            for (var s = 0; s < so.moduleDisplayList.length; s++) {
+                var moduleDisplayList = so.moduleDisplayList[s];
+                for (var i in moduleDisplayList) {
+                    var displayInfo = moduleDisplayList[i];
+                    if (!displayInfo)
+                        continue;
+                    addPreloadByLoad.call(this, displayInfo);
+                }
             }
         }
         for (var i in loads) {
@@ -52203,6 +53337,16 @@ var AssetManager = (function () {
         }
         if (loadCount == 0) {
             complete && (syncCallbackWhenAssetExist ? complete.run() : complete.delayRun(0));
+        }
+        function addPreloadByLoad(displayInfo) {
+            if (displayInfo.type == SceneObjectModelData.TYPE_UI_DESIGNATION || displayInfo.type == SceneObjectModelData.TYPE_UI_DESIGNATION) {
+                loadCount++;
+                loads.push(Callback.New(this.preLoadUIAsset, this, [displayInfo.id, onLoadOneCB, syncCallbackWhenAssetExist, autoDispose, prerender]));
+            }
+            else if (displayInfo.type == SceneObjectModelData.TYPE_ANIMATION_DESIGNATION || displayInfo.type == SceneObjectModelData.TYPE_ANIMATION_TYPE) {
+                loadCount++;
+                loads.push(Callback.New(this.preLoadAnimationAsset, this, [displayInfo.id, onLoadOneCB, syncCallbackWhenAssetExist, autoDispose, prerender]));
+            }
         }
     };
     AssetManager.preLoadAvatarAsset = function (id, complete, syncCallbackWhenAssetExist, autoDispose, prerender) {
@@ -53667,11 +54811,16 @@ var ClientScene = (function (_super) {
         }
         else {
             if (useModelClass) {
-                var modelData = Common.sceneObjectModelList.data[soData.modelID];
-                if (modelData) {
+                if (Config.useNewSceneObjectModel) {
+                    var fixModelData = Common.sceneObjectModelList.data[0];
+                }
+                else {
+                    var fixModelData = Common.sceneObjectModelList.data[soData.modelID];
+                }
+                if (fixModelData) {
                     var cls;
-                    if (modelData.clientInstanceClassName && window[modelData.clientInstanceClassName]) {
-                        cls = window[modelData.clientInstanceClassName];
+                    if (fixModelData.clientInstanceClassName && window[fixModelData.clientInstanceClassName]) {
+                        cls = window[fixModelData.clientInstanceClassName];
                     }
                     else {
                         cls = SceneObjectModelData.sceneObjectClass[soData.modelID];
@@ -53758,7 +54907,8 @@ var ClientScene = (function (_super) {
             return;
         var modelData = Game.data.sceneObjectModelList.data[modelID];
         if (modelData) {
-            var presetCustomAttrs = CustomAttributeSetting.formatCustomData(null, modelData.varAttributes);
+            var fixModelData = Config.useNewSceneObjectModel ? Game.data.sceneObjectModelList.data[0] : modelData;
+            var presetCustomAttrs = CustomAttributeSetting.formatCustomData(null, fixModelData.varAttributes);
             var so = new SceneObject();
             if (presetSceneObjectData)
                 ObjectUtils.clone(presetSceneObjectData, so);
@@ -53769,6 +54919,20 @@ var ClientScene = (function (_super) {
                 customCommands: []
             };
             var sceneData = Game.data.sceneList.data[Game.currentScene.id];
+            if (Config.useNewSceneObjectModel) {
+                so.moduleIDs = modelData.presetModules.concat();
+                var modulesCustomAttribute = [];
+                for (var i = 0; i < so.moduleIDs.length; i++) {
+                    var moduleID = so.moduleIDs[i];
+                    var moduleData = Game.data.sceneObjectModuleList.data[moduleID];
+                    if (moduleData) {
+                        modulesCustomAttribute.push(CustomAttributeSetting.formatCustomData(null, moduleData.varAttributes));
+                    }
+                    else {
+                        so.moduleIDs.splice(i, 1);
+                    }
+                }
+            }
             so.persetData = {
                 sceneObjectData: sceneData.sceneObjectData,
                 fromSceneObjectindex: Game.player.sceneObject.index,
@@ -53777,7 +54941,8 @@ var ClientScene = (function (_super) {
                 eventData: eventData,
                 soSwitchs: soSwitchs,
                 soIndex: so.index,
-                recordData: recordData
+                recordData: recordData,
+                moduleCustomAttrs: modulesCustomAttribute
             };
             var soc = Game.currentScene.addSceneObject(so, false, true);
             soc.allowAutoSave = true;
@@ -53810,6 +54975,9 @@ var ClientScene = (function (_super) {
         }
         var customAttr = sceneData.sceneObjectData.customAttributes[fromSceneObjectindex];
         var eventData = sceneData.sceneObjectData.events[fromSceneObjectindex];
+        if (Config.useNewSceneObjectModel) {
+            var modulesCustomAttribute = sceneData.sceneObjectData.modulesCustomAttributes[fromSceneObjectindex];
+        }
         var toIndex = recordData ? recordData.index : fromSceneObjectindex;
         if (Game.currentScene.sceneObjects[toIndex]) {
             soData.index = ArrayUtils.getNullPosition(Game.currentScene.sceneObjects);
@@ -53829,7 +54997,8 @@ var ClientScene = (function (_super) {
             eventData: eventData,
             soSwitchs: soSwitchs,
             soIndex: soData.index,
-            recordData: recordData
+            recordData: recordData,
+            moduleCustomAttrs: modulesCustomAttribute
         };
         var soc = this.addSceneObject(soData, false, true);
         soc.allowAutoSave = true;
@@ -54054,8 +55223,40 @@ var ClientSceneObject = (function (_super) {
                 }
             }
             this.____afterInstallAttributeInit();
+            if (Config.useNewSceneObjectModel) {
+                if (!Config.EDIT_MODE && soData == Game.player.data.sceneObject) {
+                    if (!this.moduleIDs)
+                        this.moduleIDs = [];
+                    if (!this.moduleDisplayList)
+                        this.moduleDisplayList = [];
+                    var moduleIDs = this.moduleIDs.concat();
+                    var moduleDisplayList = this.moduleDisplayList.concat();
+                    var presetData = null;
+                    if (Game.player.data.sceneObject.___gcRestoreModules) {
+                        presetData = Game.player.data.sceneObject.___gcRestoreModules;
+                        delete Game.player.data.sceneObject.___gcRestoreModules;
+                    }
+                    this.installModulesByTypeValue(moduleIDs, moduleDisplayList, Config.BORN.bornModulesCustomAttribute, presetData);
+                }
+            }
+            this.refreshDisplayListOrder();
         }
     }
+    ClientSceneObject.createDisplayObjectByPreLayer = function (type, id) {
+        if (type == 2 || type == 3) {
+            return GameUI.load(id, true);
+        }
+        else if (type == 4 || type == 5) {
+            var animation = new Animation();
+            if (Config.EDIT_MODE)
+                animation.silentMode = true;
+            animation.id = id;
+            animation.loop = true;
+            animation.showHitEffect = true;
+            animation.gotoAndPlay();
+            return animation;
+        }
+    };
     ClientSceneObject.prototype.____beforeInstallAttributeInit = function () {
         this.root = new GameSprite();
         this.root.name = "__SOC";
@@ -54078,87 +55279,138 @@ var ClientSceneObject = (function (_super) {
     };
     ClientSceneObject.prototype.____afterInstallAttributeInit = function () {
         this.drawShadow();
-        this.refreshCustomDisplayList();
+        this.refreshCommonDisplayList();
         this.avatar.installMaterialData(this.materialData);
     };
-    ClientSceneObject.prototype.refreshCustomDisplayList = function () {
-        this.clearCustomDisplayList();
+    ClientSceneObject.prototype.refreshCommonDisplayList = function () {
+        this.clearCommonDisplayList();
         var modelData = Game.data.sceneObjectModelList.data[this.modelID];
-        if (!modelData) {
-            this.customLayer.addChild(this.avatarContainer);
-        }
-        else {
-            var layer = this.customLayer;
-            for (var i in modelData.preLayer) {
-                var preLayer = modelData.preLayer[i];
-                if (preLayer.type != 1 && (preLayer.inEditorShowMode == 1 && Config.EDIT_MODE) || (preLayer.inEditorShowMode == 2 && !Config.EDIT_MODE))
-                    continue;
-                var newLayer;
-                switch (preLayer.type) {
-                    case 1:
-                        newLayer = this.avatar;
-                        layer.addChild(this.avatarContainer);
-                        layer = this.customHighLayer;
-                        break;
-                    case 2:
-                        newLayer = GameUI.load(preLayer.id, true);
+        var fixModelData = Config.useNewSceneObjectModel ? Game.data.sceneObjectModelList.data[0] : modelData;
+        if (!fixModelData || !modelData)
+            return;
+        var layer = this.customLayer;
+        for (var i = 0; i < fixModelData.preLayer.length; i++) {
+            var preLayer = fixModelData.preLayer[i];
+            if (preLayer.type != 1 && (preLayer.inEditorShowMode == 1 && Config.EDIT_MODE) || (preLayer.inEditorShowMode == 2 && !Config.EDIT_MODE))
+                continue;
+            var newLayer = null;
+            var needRecordVarName = true;
+            switch (preLayer.type) {
+                case 1:
+                    if (Config.EDIT_MODE) {
+                        if (modelData.editorPreview && modelData.editorPreview.type != 1) {
+                            needRecordVarName = false;
+                            break;
+                        }
+                    }
+                    newLayer = this.avatar;
+                    layer.addChild(this.avatarContainer);
+                    layer = this.customHighLayer;
+                    needRecordVarName = false;
+                    break;
+                case 2:
+                    newLayer = ClientSceneObject.createDisplayObjectByPreLayer(preLayer.type, preLayer.id);
+                    if (newLayer)
+                        layer.addChild(newLayer);
+                    break;
+                case 3:
+                    var displayListInfo = this.displayList[preLayer.varName];
+                    if (displayListInfo) {
+                        newLayer = ClientSceneObject.createDisplayObjectByPreLayer(preLayer.type, displayListInfo.id);
                         if (newLayer)
                             layer.addChild(newLayer);
-                        break;
-                    case 3:
-                        if (this.displayList[preLayer.varName]) {
-                            newLayer = GameUI.load(this.displayList[preLayer.varName].id, true);
-                            if (newLayer)
-                                layer.addChild(newLayer);
-                        }
-                        break;
-                    case 4:
-                        var animation = newLayer = new Animation();
-                        if (Config.EDIT_MODE)
-                            animation.silentMode = true;
+                    }
+                    break;
+                case 4:
+                    var animation = newLayer = ClientSceneObject.createDisplayObjectByPreLayer(preLayer.type, preLayer.id);
+                    animation.sceneObject = this;
+                    layer.addChild(animation);
+                    break;
+                case 5:
+                    var displayListInfo = this.displayList[preLayer.varName];
+                    if (displayListInfo) {
+                        var animation = newLayer = ClientSceneObject.createDisplayObjectByPreLayer(preLayer.type, displayListInfo.id);
                         animation.sceneObject = this;
-                        animation.id = preLayer.id;
                         layer.addChild(animation);
-                        animation.loop = true;
-                        animation.showHitEffect = true;
-                        animation.gotoAndPlay();
-                        break;
-                    case 5:
-                        if (this.displayList[preLayer.varName]) {
-                            var animation = newLayer = new Animation();
-                            if (Config.EDIT_MODE)
-                                animation.silentMode = true;
-                            animation.sceneObject = this;
-                            animation.id = this.displayList[preLayer.varName].id;
-                            layer.addChild(animation);
-                            animation.loop = true;
-                            animation.showHitEffect = true;
-                            animation.gotoAndPlay();
-                        }
-                        break;
-                }
-                if ((!Config.EDIT_MODE || Config.BEHAVIOR_EDIT_MODE)) {
-                    this[preLayer.varName] = newLayer;
-                }
+                    }
+                    break;
+            }
+            if (needRecordVarName) {
+                this[preLayer.varName] = newLayer;
+                this.commonDisplayObjectVarNames.push(preLayer.varName);
             }
         }
+        this.refreshDisplayListOrder();
     };
-    ClientSceneObject.prototype.clearCustomDisplayList = function () {
-        var displays = [];
-        for (var i = 0; i < this.customLayer.numChildren; i++) {
-            displays.push(this.customLayer.getChildAt(i));
+    ClientSceneObject.prototype.refreshDisplayListOrder = function () {
+        var _this = this;
+        if (Config.useNewSceneObjectModel) {
+            var addModuleChildToCustomLayer = function (insertToLayer, startInsertIndex, isLowLayer) {
+                if (_this.moduleIDs) {
+                    for (var s = 0; s < _this.moduleIDs.length; s++) {
+                        var startInsert = isLowLayer;
+                        var moduleID = _this.moduleIDs[s];
+                        var soModule = _this.getModuleAt(s);
+                        if (!soModule)
+                            return;
+                        var moduleData = Game.data.sceneObjectModuleList.data[moduleID];
+                        if (moduleData) {
+                            var preLayers = moduleData.preLayer.concat();
+                            if (ArrayUtils.matchAttributes(preLayers, { type: SceneObjectModelData.TYPE_AVATAR_TYPE }, true).length == 0) {
+                                preLayers.unshift({ type: SceneObjectModelData.TYPE_AVATAR_TYPE });
+                            }
+                            for (var i = 0; i < preLayers.length; i++) {
+                                var preLayerSetting = preLayers[i];
+                                if (preLayerSetting.type == SceneObjectModelData.TYPE_AVATAR_TYPE) {
+                                    if (!startInsert)
+                                        startInsert = true;
+                                    else
+                                        break;
+                                }
+                                else if (startInsert) {
+                                    var commonDisplayObj = soModule[preLayerSetting.varName];
+                                    if (commonDisplayObj) {
+                                        insertToLayer.addChildAt(commonDisplayObj, startInsertIndex++);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            var insertToLayer = this.customLayer;
+            var insertIndex = 0;
+            var commonModuleData = Game.data.sceneObjectModelList.data[0];
+            for (var i = 0; i < commonModuleData.preLayer.length; i++) {
+                var preLayer = commonModuleData.preLayer[i];
+                if (preLayer.type == SceneObjectModelData.TYPE_AVATAR_TYPE) {
+                    addModuleChildToCustomLayer.call(this, insertToLayer, insertIndex, true);
+                    insertToLayer = this.customHighLayer;
+                    insertIndex = 0;
+                    continue;
+                }
+                else {
+                    var commonDisplayObj = this[preLayer.varName];
+                    if (commonDisplayObj)
+                        insertToLayer.addChildAt(commonDisplayObj, insertIndex++);
+                }
+            }
+            addModuleChildToCustomLayer.call(this, insertToLayer, insertIndex, false);
         }
-        for (var i = 0; i < this.customHighLayer.numChildren; i++) {
-            displays.push(this.customHighLayer.getChildAt(i));
+    };
+    ClientSceneObject.prototype.clearCommonDisplayList = function () {
+        if (!this.commonDisplayObjectVarNames)
+            this.commonDisplayObjectVarNames = [];
+        for (var i = 0; i < this.commonDisplayObjectVarNames.length; i++) {
+            var commonDisplayObjectVarName = this.commonDisplayObjectVarNames[i];
+            var commonDisplayObject = this[commonDisplayObjectVarName];
+            if (commonDisplayObject) {
+                commonDisplayObject.dispose && commonDisplayObject.dispose();
+                delete this[commonDisplayObjectVarName];
+            }
         }
-        for (var i = 0; i < displays.length; i++) {
-            var display = displays[i];
-            if (display == this.avatarContainer)
-                continue;
-            display.dispose && display.dispose();
-        }
-        this.customLayer.removeChildren();
-        this.customHighLayer.removeChildren();
+        this.commonDisplayObjectVarNames.length = 0;
+        this.avatarContainer.removeSelf();
     };
     ClientSceneObject.prototype.getCustomDisplayLayers = function () {
         var displays = [];
@@ -54178,16 +55430,101 @@ var ClientSceneObject = (function (_super) {
             this.isDisposed = true;
             this.clearCondition();
             EventUtils.clear(this);
-            this.clearCustomDisplayList();
+            this.clearCommonDisplayList();
+            this.removeAllModules(true);
             this.stopAllAnimation();
             this.avatar && this.avatar.dispose();
             this.avatar = null;
+        }
+    };
+    ClientSceneObject.prototype.addModule = function (soModule) {
+        var res = _super.prototype.addModule.call(this, soModule, false);
+        if (res) {
+            this.refreshDisplayListOrder();
+            EventUtils.happen(SceneObjectEntity, SceneObjectEntity.EVENT_ON_ADD_MODULE, [this, soModule]);
+        }
+        return res;
+    };
+    ClientSceneObject.prototype.addModuleAt = function (soModule, index) {
+        var res = _super.prototype.addModuleAt.apply(this, arguments);
+        return res;
+    };
+    ClientSceneObject.prototype.addModuleByID = function (moduleID) {
+        var res = _super.prototype.addModuleByID.apply(this, arguments);
+        return res;
+    };
+    ClientSceneObject.prototype.addModuleByIDAt = function (moduleID, index) {
+        var res = _super.prototype.addModuleByIDAt.apply(this, arguments);
+        return res;
+    };
+    ClientSceneObject.prototype.removeAllModules = function (isDispose) {
+        if (isDispose === void 0) { isDispose = true; }
+        for (var i = 0; i < this._modules.length; i++) {
+            var m = this._modules[i];
+            if (m)
+                this.removeModuleDisplayObjects(m, i, isDispose);
+        }
+        _super.prototype.removeAllModules.call(this, isDispose);
+    };
+    ClientSceneObject.prototype.removeModuleByID = function (moduleID, isDispose) {
+        if (isDispose === void 0) { isDispose = true; }
+        var index = ArrayUtils.matchAttributes(this._modules, { id: moduleID }, true, "==", true)[0];
+        if (index != null) {
+            this.removeModuleDisplayObjects(this._modules[index], index, isDispose);
+            return _super.prototype.removeModuleByID.call(this, moduleID, isDispose);
+        }
+        return null;
+    };
+    ClientSceneObject.prototype.removeModule = function (soModule, isDispose) {
+        if (isDispose === void 0) { isDispose = true; }
+        var index = this._modules.indexOf(soModule);
+        if (index != -1) {
+            this.removeModuleDisplayObjects(soModule, index, isDispose);
+            return _super.prototype.removeModule.call(this, soModule, isDispose);
+        }
+        return false;
+    };
+    ClientSceneObject.prototype.removeModuleAt = function (index, isDispose) {
+        if (isDispose === void 0) { isDispose = true; }
+        var soModule = this._modules[index];
+        if (soModule) {
+            this.removeModuleDisplayObjects(soModule, index, isDispose);
+            return _super.prototype.removeModuleAt.call(this, index, isDispose);
+        }
+        return false;
+    };
+    ClientSceneObject.prototype.setModuleIndex = function (soModule, toIndex) {
+        var res = _super.prototype.setModuleIndex.apply(this, arguments);
+        return res;
+    };
+    ClientSceneObject.prototype.setModuleIndexByID = function (moduleID, toIndex) {
+        var res = _super.prototype.setModuleIndexByID.apply(this, arguments);
+        return res;
+    };
+    ClientSceneObject.prototype.setModuleIndexByIndex = function (fromIndex, toIndex) {
+        var res = _super.prototype.setModuleIndexByIndex.apply(this, arguments);
+        this.refreshDisplayListOrder();
+        return res;
+    };
+    ClientSceneObject.prototype.removeModuleDisplayObjects = function (soModule, moduleIndex, disposeDisplayObjects) {
+        if (disposeDisplayObjects === void 0) { disposeDisplayObjects = true; }
+        var displayList = this.moduleDisplayList[moduleIndex];
+        for (var varName in displayList) {
+            var displayObj = soModule[varName];
+            if (displayObj) {
+                displayObj.removeSelf();
+                if (disposeDisplayObjects && displayObj.dispose)
+                    displayObj.dispose();
+            }
         }
     };
     ClientSceneObject.prototype.drawShadow = function (scalePer) {
         if (scalePer === void 0) { scalePer = 1.0; }
         if (this.isDisposed)
             return;
+        if (Config.useNewSceneObjectModel) {
+            return;
+        }
         this.shadow.graphics.clear();
         if (this.shadowEnable) {
             this.shadow.graphics.drawCircle(0, 0, this.shadowWidth * scalePer, this.shadowWidth * scalePer, "#000000", 0);
@@ -54442,6 +55779,52 @@ ObjectUtils.reDefineGetSet("ClientSceneObject.prototype", {
         this.drawShadow();
     }
 });
+(function () {
+    var ___soInstallModuleAttributesBeforeConstructor = SceneObject.installModuleAttributesBeforeConstructor;
+    SceneObject.installModuleAttributesBeforeConstructor = function (soc, moduleID, moduleName, moduleData, presetData, soModule) {
+        ___soInstallModuleAttributesBeforeConstructor.apply(this, arguments);
+        if (moduleData.id == 0)
+            return;
+        for (var i = 0; i < moduleData.preLayer.length; i++) {
+            var preLayer = moduleData.preLayer[i];
+            var id;
+            var attributeValue = soModule[preLayer.varName];
+            if (attributeValue) {
+                id = typeof attributeValue == "number" ? attributeValue : attributeValue.id;
+            }
+            else {
+                id = preLayer.id;
+            }
+            var newLayer = null;
+            var layer = soc.customHighLayer;
+            switch (preLayer.type) {
+                case 2:
+                    newLayer = ClientSceneObject.createDisplayObjectByPreLayer(preLayer.type, MathUtils.int(preLayer.id));
+                    if (newLayer)
+                        layer.addChild(newLayer);
+                    break;
+                case 3:
+                    newLayer = ClientSceneObject.createDisplayObjectByPreLayer(preLayer.type, MathUtils.int(id));
+                    if (newLayer)
+                        layer.addChild(newLayer);
+                    break;
+                case 4:
+                    var animation = newLayer = ClientSceneObject.createDisplayObjectByPreLayer(preLayer.type, preLayer.id);
+                    animation.sceneObject = this;
+                    layer.addChild(animation);
+                    break;
+                case 5:
+                    var animation = newLayer = ClientSceneObject.createDisplayObjectByPreLayer(preLayer.type, MathUtils.int(id));
+                    animation.sceneObject = this;
+                    layer.addChild(animation);
+                    break;
+            }
+            if (newLayer) {
+                soModule[preLayer.varName] = newLayer;
+            }
+        }
+    };
+})();
 var FontLoadManager = (function () {
     function FontLoadManager() {
     }
@@ -56140,7 +57523,7 @@ var GameSpriteMaterialPass = (function (_super) {
             returnNullHandle.apply(this);
             return null;
         }
-        var canShow = CustomCompositeAttributeSetting.meetConditionData(attrSetting, idValue, varNameValue);
+        var canShow = CustomCompositeAttributeSetting.meetConditionData(attrSetting.attrConditions, idValue, varNameValue);
         if (!canShow) {
             returnNullHandle.apply(this);
             return null;
@@ -57182,6 +58565,7 @@ var ClientMain = (function () {
         task.execute(Game.data.loadDataStructureList(onloadDataOver));
         task.execute(Game.data.loadCustomModuleList(onloadDataOver));
         task.execute(Game.data.loadGameAttributeConfig(onloadDataOver));
+        task.execute(Game.data.loadSceneObjectModuleList(onloadDataOver));
         task.execute(Game.data.loadSceneObjectModelList(onloadDataOver));
         task.execute(Game.data.loadUIList(onloadDataOver));
         task.execute(Game.data.loadCustomEventType(onloadDataOver));
@@ -58657,7 +60041,12 @@ var Animation = (function (_super) {
                 }
                 if (_this._isPlaying) {
                     _this._isPlaying = false;
-                    _this.play(true);
+                    if (isNaN(_this._currentFrame) || isNaN(_this._startTime)) {
+                        _this.gotoAndPlay();
+                    }
+                    else {
+                        _this.play(true);
+                    }
                 }
                 SyncTask.clear(loadRandName);
             }, [loadRandName], _this);
@@ -59315,6 +60704,8 @@ var AnimationTargetLayer = (function (_super) {
     AnimationTargetLayer.prototype.fromAnimationFrameData = function (framedata) {
         _super.prototype.fromAnimationFrameData.call(this, framedata);
         if (this.destroyed)
+            return;
+        if (!framedata)
             return;
         this.hue = framedata.hue;
         this.blur = framedata.blur;
@@ -61472,6 +62863,8 @@ var UIComponent;
                 return this._scrollWidth;
             },
             set: function (v) {
+                if (this.isDisposed)
+                    return;
                 this._scrollWidth = v;
                 this.vScrollBar = this.vScrollBar;
                 this.hScrollBar = this.hScrollBar;
@@ -61517,9 +62910,9 @@ var UIComponent;
             configurable: true
         });
         UIRoot.prototype.setVScrollBarSkin = function (v) {
-            if (!this._vScrollBar.slider)
-                return;
             if (this.isDisposed)
+                return;
+            if (!this._vScrollBar.slider)
                 return;
             if (v != this._vScroollBarImage2)
                 return;
@@ -61564,9 +62957,9 @@ var UIComponent;
             configurable: true
         });
         UIRoot.prototype.setHScrollBarSkin = function (v) {
-            if (!this._hScrollBar.slider)
-                return;
             if (this.isDisposed)
+                return;
+            if (!this._hScrollBar.slider)
                 return;
             if (v != this._hScroollBarImage2)
                 return;
@@ -65464,9 +66857,9 @@ var GameDialog = (function (_super) {
         this.maskLayer.size(3000, 3000);
         this.maskLayer.mouseEnabled = true;
     };
-    GameDialog.showDialog = function (dialogID, head, name, speed, comicSceneObjectIndex, msg, submitCallback, audio, exp) {
+    GameDialog.showDialog = function (dialogID, head, name, speed, comicSceneObjectIndex, msg, submitCallback, audio, exp, nameColor) {
         if (submitCallback === void 0) { submitCallback = null; }
-        GameDialog.currentDialogInfo = [0, dialogID, head, name, speed, comicSceneObjectIndex, msg, null, audio, exp];
+        GameDialog.currentDialogInfo = [0, dialogID, head, name, speed, comicSceneObjectIndex, msg, null, audio, exp, nameColor];
         GameDialog.currentDialogSign = ObjectUtils.getInstanceID();
         var dialog = GameDialog.getDialog(dialogID);
         dialog.submitCallback = submitCallback;
@@ -65481,8 +66874,8 @@ var GameDialog = (function (_super) {
         GameDialog.optionMode = false;
         GameDialog.isCloseDialog = false;
         GameDialog.addToDialogLayer(dialog);
-        EventUtils.happen(GameDialog, GameDialog.EVENT_DIALOG_START, [false, msg, [], name, head, exp, audio, speed]);
-        dialog.setContent(head, name, speed, msg, audio, exp);
+        EventUtils.happen(GameDialog, GameDialog.EVENT_DIALOG_START, [false, msg, [], name, head, exp, audio, speed, nameColor]);
+        dialog.setContent(head, name, speed, msg, audio, exp, nameColor);
         EventUtils.happen(GameDialog, GameDialog.EVENT_AFTER_DIALOG_START, [false]);
         return dialog;
     };
@@ -65503,10 +66896,10 @@ var GameDialog = (function (_super) {
             return dialog;
         }
         if (isShowOptionWithLastDialog && GameDialog.currentDialogInfo && GameDialog.currentDialogInfo[0] == 0) {
-            GameDialog.currentDialogInfo = [1, dialogID, options, isShowOptionWithLastDialog, defaultIndex, cancelIndex, GameDialog.currentDialogInfo];
+            GameDialog.currentDialogInfo = [1, dialogID, options, isShowOptionWithLastDialog, defaultIndex, cancelIndex, hideIndexs, GameDialog.currentDialogInfo];
         }
         else {
-            GameDialog.currentDialogInfo = [1, dialogID, options, isShowOptionWithLastDialog, defaultIndex, cancelIndex];
+            GameDialog.currentDialogInfo = [1, dialogID, options, isShowOptionWithLastDialog, defaultIndex, cancelIndex, hideIndexs];
         }
         if (GameDialog.lastDialog) {
             var disposeHead = isShowOptionWithLastDialog ? false : true;
@@ -65530,7 +66923,7 @@ var GameDialog = (function (_super) {
         GameDialog.showOptionWithLastDialogParams = [-1, -1, []];
         GameDialog.lastComicSceneObjectIndex || (GameDialog.lastComicSceneObjectIndex = -1);
         GameDialog.addToDialogLayer(dialog);
-        EventUtils.happen(GameDialog, GameDialog.EVENT_DIALOG_START, [true, null, options, null, null, null, null, 5]);
+        EventUtils.happen(GameDialog, GameDialog.EVENT_DIALOG_START, [true, null, options, null, null, null, null, 5, null]);
         dialog.setOption(options, defaultIndex, cancelIndex, hideIndexs);
         EventUtils.happen(GameDialog, GameDialog.EVENT_AFTER_DIALOG_START, [true]);
         return dialog;
@@ -65633,7 +67026,7 @@ var GameDialog = (function (_super) {
             return a.index > b.index ? 1 : -1;
         });
     };
-    GameDialog.prototype.setContent = function (head, name, playSpeed, msg, audio, exp) {
+    GameDialog.prototype.setContent = function (head, name, playSpeed, msg, audio, exp, nameColor) {
         this.clearDelayStop();
         this.playSpeed = playSpeed;
         this.playTextIndex = 0;
@@ -65648,6 +67041,8 @@ var GameDialog = (function (_super) {
         this.dialogText.removeChildren();
         this.headBox.removeChildren();
         this.nameText.text = name;
+        if (nameColor)
+            this.nameText.color = nameColor;
         this.refreshHeadBox(head, exp);
         if (audio) {
             if (GameDialog.tschannel) {
@@ -66485,8 +67880,10 @@ var GameImage = (function (_super) {
                     }
                 }
                 else if (dialogType == 1) {
-                    if (o.dialog.currentDialogInfo[2] && o.dialog.currentDialogInfo[5]) {
-                        var dialogInfo = o.dialog.currentDialogInfo[5];
+                    if (o.dialog.currentDialogInfo.length <= 6)
+                        o.dialog.currentDialogInfo.splice(5, 0, []);
+                    if (o.dialog.currentDialogInfo[2] && o.dialog.currentDialogInfo[6]) {
+                        var dialogInfo = o.dialog.currentDialogInfo[6];
                         dialogInfo.shift();
                         dialogInfo[3] = 5;
                         EventUtils.happen(GameDialog, GameDialog.EVENT_BEFORE_RECOVERY_DIALOG);
@@ -66516,8 +67913,10 @@ var GameImage = (function (_super) {
                     }
                 }
                 else if (dialogType == 1) {
-                    if (o.dialog.currentDialogInfo[2] && o.dialog.currentDialogInfo[5]) {
-                        var dialogInfo = o.dialog.currentDialogInfo[5];
+                    if (o.dialog.currentDialogInfo.length <= 6)
+                        o.dialog.currentDialogInfo.splice(5, 0, []);
+                    if (o.dialog.currentDialogInfo[2] && o.dialog.currentDialogInfo[6]) {
+                        var dialogInfo = o.dialog.currentDialogInfo[6];
                         dialogInfo.shift();
                         dialogInfo[3] = 5;
                         EventUtils.happen(GameDialog, GameDialog.EVENT_BEFORE_RECOVERY_DIALOG);
@@ -66614,7 +68013,7 @@ var GameImage = (function (_super) {
             GameImage.executeGroups[i] = group;
             if (group["_waitDialog"] && o.dialog.submitCallback && gameDialogLayer != -1) {
                 var d = o.dialog.currentDialogInfo;
-                group["doShowDialog"].call(group, d[0], d[1], d[2], d[3], d[4], d[5], d[4], d[6], d[7], o.dialog.submitEnabled, true);
+                group["doShowDialog"].call(group, d[0], d[1], d[2], d[3], d[4], d[5], d[4], d[6], d[7], d[8], o.dialog.submitEnabled, true);
             }
         }
         for (var i = 0; i < o.listeningWaitImagePlayOvers.length; i++) {
@@ -66706,7 +68105,8 @@ var GameImageGroup = (function () {
         imageInfosClone.reverse();
         var lastDialog = ArrayUtils.matchAttributes(imageInfosClone, { "0": 9 }, true)[0];
         if (lastDialog) {
-            lastDialog[10] = true;
+            lastDialog.splice(10, 1);
+            lastDialog[11] = true;
         }
         for (var i = 0; i < imageInfos.length; i++) {
             var imageInfo = imageInfos[i];
@@ -66769,7 +68169,7 @@ var GameImageGroup = (function () {
         this.executeFuncs.push({ func: this.doMoveAnimation, params: arguments, funcName: "doMoveAnimation", cls: null });
         this.update(false);
     };
-    GameImageGroup.prototype.showDialog = function (dialogID, head, name, speed, comicSceneObjectIndex, msg, realComicSceneObjectIndex, audio, exp, submit) {
+    GameImageGroup.prototype.showDialog = function (dialogID, head, name, speed, comicSceneObjectIndex, msg, realComicSceneObjectIndex, audio, exp, nameColor, submit) {
         if (submit === void 0) { submit = false; }
         this.executeFuncs.push({ func: this.doShowDialog, params: arguments, funcName: "doShowDialog", cls: null });
         this.update(false);
@@ -67183,7 +68583,7 @@ var GameImageGroup = (function () {
         var m = { id: id, time: time, curTime: 1, x2: x, y2: y, scaleX2: scaleX, scaleY2: scaleY, rotation2: rotation, alpha2: alpha, tween: GameUtils.getTween(tweenID)[0], tweenID: tweenID };
         this.motionAnimations.push(m);
     };
-    GameImageGroup.prototype.doShowDialog = function (dialogID, head, name, speed, comicSceneObjectIndex, msg, realComicSceneObjectIndex, audio, exp, submitEnabled, force) {
+    GameImageGroup.prototype.doShowDialog = function (dialogID, head, name, speed, comicSceneObjectIndex, msg, realComicSceneObjectIndex, audio, exp, nameColor, submitEnabled, force) {
         var _this = this;
         if (submitEnabled === void 0) { submitEnabled = false; }
         if (force === void 0) { force = false; }
@@ -67211,7 +68611,7 @@ var GameImageGroup = (function () {
                     _this.update(false);
                     GameCommand.inputMessageAndContinueExecute(null, true, 1, _this.triggerLineID);
                 }
-            }, this, [submitEnabled]), audio, exp);
+            }, this, [submitEnabled]), audio, exp, nameColor);
         }
         else {
             this.delayFrame += 1;
@@ -67991,6 +69391,8 @@ var AnimationDisplayLayer = (function (_super) {
     };
     AnimationDisplayLayer.prototype.fromAnimationFrameData = function (framedata) {
         _super.prototype.fromAnimationFrameData.call(this, framedata);
+        if (!framedata)
+            return;
         this.horizontalReversal = framedata.horizontalReversal;
         this.hue = framedata.hue;
         this.blur = framedata.blur;
@@ -68205,6 +69607,8 @@ var AnimationImageLayer = (function (_super) {
     };
     AnimationImageLayer.prototype.fromAnimationFrameData = function (framedata) {
         _super.prototype.fromAnimationFrameData.call(this, framedata);
+        if (!framedata)
+            return;
         this.width = framedata.width;
         this.height = framedata.height;
         this.imageSource = framedata.imageSource;
@@ -69512,6 +70916,8 @@ var UIComponent;
                 return this._focus;
             },
             set: function (list) {
+                if (list && list.isDisposed)
+                    list = null;
                 if (this._focus == list)
                     return;
                 var lastFocus = this._focus;
@@ -70526,6 +71932,8 @@ var AnimationAnimationLayer = (function (_super) {
     };
     AnimationAnimationLayer.prototype.fromAnimationFrameData = function (framedata) {
         _super.prototype.fromAnimationFrameData.call(this, framedata);
+        if (!framedata)
+            return;
         if (framedata.scaleX == undefined)
             framedata.scaleX = 1;
         if (framedata.scaleY == undefined)
@@ -70875,7 +72283,7 @@ var SinglePlayerGame = (function () {
             }
             if (stateInfo.changeStatusPage) {
                 if (so.inScene)
-                    so.refreshCustomDisplayList();
+                    so.refreshCommonDisplayList();
                 if (so.scene) {
                     EventUtils.happen(SceneObjectEntity, SceneObjectEntity.EVENT_CHANGE_STATUS_PAGE, [this]);
                     EventUtils.happen(this, SceneObjectEntity.EVENT_CHANGE_STATUS_PAGE_FOR_INSTANCE, [this]);
@@ -71097,6 +72505,10 @@ var SinglePlayerGame = (function () {
         Game.player.sceneObject.syncAvatarStateToSceneObject();
         ObjectUtils.cloneExcludeNonExistentAttribute(Game.player.sceneObject, Game.player.data.sceneObject);
         var playerData = Game.player.data;
+        var playerSoModuleDatas = null;
+        if (Config.useNewSceneObjectModel) {
+            playerSoModuleDatas = SceneObjectEntity.getModulesSaveData(Game.player.sceneObject);
+        }
         SinglePlayerGame.recordSceneObjectSwitch();
         var audioInfo = [GameAudio.lastBgmURL, GameAudio.lastBGMPitch, GameAudio.lastBGMVolume, GameAudio.lastBgsURL, GameAudio.lastBGSPitch, GameAudio.lastBGSVolume, GameAudio.bgmVolume, GameAudio.bgsVolume, GameAudio.seVolume, GameAudio.tsVolume];
         var sceneObjectData = SinglePlayerGame.getCurrentSceneObject();
@@ -71113,7 +72525,7 @@ var SinglePlayerGame = (function () {
             var cbInfo = SinglePlayerGame.regSaveCustomDataCallbacks[i];
             packageCustomData[cbInfo.dataName] = cbInfo.dataFunction.run();
         }
-        var saveData = [Game.getSaveData(), now, Game.currentScene.id, worldSaveData, playerVarialbeData, playerData, SinglePlayerGame.sceneDatas, audioInfo, triggerEventData, sceneObjectData, gameCommandData, sceneStatus, packageCustomData, needLoadUIs];
+        var saveData = [Game.getSaveData(), now, Game.currentScene.id, worldSaveData, playerVarialbeData, playerData, SinglePlayerGame.sceneDatas, audioInfo, triggerEventData, sceneObjectData, gameCommandData, sceneStatus, packageCustomData, needLoadUIs, playerSoModuleDatas];
         saveData = ObjectUtils.depthClone(saveData);
         new SyncTask(SinglePlayerGame.TASK_MODIFY_FILE, function () {
             var _this = this;
@@ -71211,18 +72623,23 @@ var SinglePlayerGame = (function () {
             return url;
         var locahostURL = window.location.href;
         var newHead;
-        var gcCloudHeadReg = /https{0,1}:\/\/(material|global)\.gamecreator\.com\.cn\//g;
-        if (locahostURL.search(gcCloudHeadReg) == 0) {
-            var projectSID = locahostURL.replace(gcCloudHeadReg, "").split("/")[1];
-            if (projectSID && projectSID.search(/\d+_/g) != -1) {
-                newHead = projectSID + "/";
+        if (Config.INDIA_APPLICATION_GAME_INFO) {
+            newHead = "";
+        }
+        else {
+            var gcCloudHeadReg = /https{0,1}:\/\/(material|global)\.gamecreator\.com\.cn\//g;
+            if (locahostURL.search(gcCloudHeadReg) == 0) {
+                var projectSID = locahostURL.replace(gcCloudHeadReg, "").split("/")[1];
+                if (projectSID && projectSID.search(/\d+_/g) != -1) {
+                    newHead = projectSID + "/";
+                }
+                else {
+                    newHead = locahostURL.split("?").shift() + "/" + (Config.gameSID ? Config.gameSID + "/" : "");
+                }
             }
             else {
                 newHead = locahostURL.split("?").shift() + "/" + (Config.gameSID ? Config.gameSID + "/" : "");
             }
-        }
-        else {
-            newHead = locahostURL.split("?").shift() + "/" + (Config.gameSID ? Config.gameSID + "/" : "");
         }
         if (url.indexOf(newHead) == 0) {
             return url;
@@ -71238,6 +72655,11 @@ var SinglePlayerGame = (function () {
         }
         else {
             url = SinglePlayerGame.toWebSaveFileURL(url);
+            var indiaAppGameInfo = Config.INDIA_APPLICATION_GAME_INFO;
+            if (indiaAppGameInfo) {
+                AssetManager.loadJson(url, complete, syncCallbackWhenAssetExist, useRef, onErrorTips);
+                return;
+            }
             if (IndexedDBManager.support && IndexedDBManager.used) {
                 IndexedDBManager.getIndexDBJson(url, function (value) {
                     complete.delayRun(0, null, [value]);
@@ -71294,6 +72716,10 @@ var SinglePlayerGame = (function () {
         ObjectUtils.clone(playerData.sceneObject, Game.player.data.sceneObject);
         SceneObject.installCustomData(Game.player.data.sceneObject, Config.BORN.customAttribute);
         Player.installFilePlayerData(Game.player, playerData);
+        if (Config.useNewSceneObjectModel) {
+            var playerSoModuleDatas = saveData[14];
+            Game.player.data.sceneObject.___gcRestoreModules = playerSoModuleDatas;
+        }
         SinglePlayerGame.sceneDatas = saveData[6];
         SinglePlayerGame.audioInfo = saveData[7];
         SinglePlayerGame.triggerLinesRecord = saveData[8];
@@ -71551,8 +72977,14 @@ var SinglePlayerGame = (function () {
             ObjectUtils.cloneExcludeNonExistentAttribute(so, soData);
             var modelData = Common.sceneObjectModelList.data[soData.modelID];
             if (modelData) {
-                for (var s = 0; s < modelData.varAttributes.length; s++) {
-                    var attr = modelData.varAttributes[s];
+                if (Config.useNewSceneObjectModel) {
+                    var fixModelData = Common.sceneObjectModelList.data[0];
+                }
+                else {
+                    fixModelData = modelData;
+                }
+                for (var s = 0; s < fixModelData.varAttributes.length; s++) {
+                    var attr = fixModelData.varAttributes[s];
                     soData[attr.varName] = so[attr.varName];
                 }
             }
@@ -71566,7 +72998,12 @@ var SinglePlayerGame = (function () {
             soData["_isCopy"] = so.isCopy;
             soData["_copyFrom"] = so._copyFrom;
             soData["allowAutoSave"] = so.allowAutoSave;
-            soDatas.push({ so: soData, behaviorDatas: behaviorDatas });
+            var soModuleDatas = null;
+            if (Config.useNewSceneObjectModel) {
+                soModuleDatas = SceneObjectEntity.getModulesSaveData(so);
+                soData.moduleIDs = so.moduleIDs.concat();
+            }
+            soDatas.push({ so: soData, behaviorDatas: behaviorDatas, moduleDatas: soModuleDatas });
         }
         return soDatas;
     };
@@ -71593,6 +73030,9 @@ var SinglePlayerGame = (function () {
                 }
             }
             else if (soData.so["allowAutoSave"]) {
+                if (Config.useNewSceneObjectModel) {
+                    SceneObjectEntity.recoveryModulesData[soData.so.index] = { needCheckModulesCustomAttributes: false, presetData: soData.moduleDatas };
+                }
                 soc = Game.currentScene.addNewSceneObject(soData.so.modelID, null, soSwitchs, soData.so);
                 continue;
             }
@@ -71606,8 +73046,32 @@ var SinglePlayerGame = (function () {
                 continue;
             }
             else {
+                if (Config.useNewSceneObjectModel) {
+                    var sceneData = Game.data.sceneList.data[Game.currentScene.id];
+                    SceneObjectEntity.recoveryModulesData[soData.so.index] = { needCheckModulesCustomAttributes: true, presetData: soData.moduleDatas };
+                }
                 soc = Game.currentScene.addSceneObjectFromClone(fromSceneID, fromSceneObjectindex, false, null, soSwitchs, soData.so);
             }
+        }
+        function recoveryCurrentSceneObjectModules(soc, modulesCustomAttribute, presetData) {
+            if (!Config.useNewSceneObjectModel)
+                return;
+            var moduleIDs = soc.moduleIDs.concat();
+            var moduleDisplayList = soc.moduleDisplayList.concat();
+            if (!modulesCustomAttribute) {
+                modulesCustomAttribute = [];
+                for (var i = 0; i < moduleIDs.length; i++) {
+                    var moduleID = moduleIDs[i];
+                    var moduleData = Game.data.sceneObjectModuleList.data[moduleID];
+                    if (!moduleData) {
+                        moduleIDs.splice(i, 1);
+                        moduleDisplayList.splice(i, 1);
+                        i--;
+                    }
+                    modulesCustomAttribute.push(CustomAttributeSetting.formatCustomData(null, moduleData.varAttributes));
+                }
+            }
+            soc.installModulesByTypeValue(moduleIDs, moduleDisplayList, modulesCustomAttribute, presetData);
         }
     };
     SinglePlayerGame.getGameCommandData = function () {

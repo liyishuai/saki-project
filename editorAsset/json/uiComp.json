@@ -2717,6 +2717,14 @@
                 "compType": 15
             },
             {
+                "compParam": {},
+                "enable": true,
+                "attribute": "smooth",
+                "name": "平滑",
+                "tips": "勾选此项后文本边缘会进行简单的平滑处理",
+                "compType": 15
+            },
+            {
                 "enable": true,
                 "attribute": "align",
                 "name": "水平对齐方式",
@@ -3045,14 +3053,6 @@
                 "name": "当确认时处理",
                 "tips": "当Enter键按下时执行的片段事件",
                 "compType": 35
-            },
-            {
-                "compParam": {},
-                "enable": false,
-                "attribute": "smooth",
-                "name": "smooth",
-                "tips": "",
-                "compType": 16
             },
             {
                 "compParam": {},
