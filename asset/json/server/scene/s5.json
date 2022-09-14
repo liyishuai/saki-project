@@ -494,7 +494,9 @@
         ]
     ],
     "customAttributes": [],
+    "modulesCustomAttributes": [],
     "customAttributesCaches": [],
+    "modulesCustomAttributesCaches": [],
     "events": [],
     "statusPages": [],
     "statusPagesSelectedIndexs": [],

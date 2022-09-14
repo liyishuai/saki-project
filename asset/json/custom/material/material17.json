@@ -1,0 +1,64 @@
+{
+    "compAutoOrderLimitHeight": 0,
+    "id": 17,
+    "blockList": [
+        {
+            "name": "未命名块",
+            "blockAttrs": [
+                {
+                    "attr": {
+                        "id": "51679206327_0.18269401236192095",
+                        "varName": "amnient",
+                        "varType": 0,
+                        "compData": {
+                            "compType": 1,
+                            "compParam": {
+                                "lowerLimit": 0,
+                                "upperLimit": 1000,
+                                "stepValue": 0.01,
+                                "limitInteger": false,
+                                "lockTextLimit": false,
+                                "xDragEnabled": true,
+                                "yDragEnabled": true,
+                                "minLimit": 0,
+                                "maxLimit": 0.01,
+                                "tickValue": 0.001
+                            }
+                        },
+                        "defaultValue": "0.001",
+                        "hideMode": false,
+                        "useCommand": false,
+                        "onlyPointTo": false,
+                        "moduleID": 1,
+                        "dataStructureID": 1,
+                        "arrayMode": false,
+                        "arrayLength": 100,
+                        "arrayAllowDelete": false,
+                        "arrayAllowSwap": false,
+                        "arrayAllowUpdate": false,
+                        "accessMode": 1,
+                        "syncMode": 0,
+                        "attrTips": "",
+                        "alias": "模糊程度",
+                        "onlyConfig": false,
+                        "preview": false,
+                        "autoTitleWidth": false,
+                        "titleWidth": 50,
+                        "eyeShow": true,
+                        "lockBlock": false
+                    },
+                    "attrConditions": [],
+                    "y": 10,
+                    "x": 15,
+                    "width": 200,
+                    "height": 32
+                }
+            ],
+            "blockCondition": [],
+            "blockHeight": 50,
+            "autoOrder": true
+        }
+    ],
+    "shaderSize": false,
+    "customShader": "//======================================================================================================\n// SYSTEM START 该段注释由系统自动生成，请勿删改\n//======================================================================================================\n//------------------------------------------------------------------------------------------------------\n// 固定参数\n//------------------------------------------------------------------------------------------------------\n// varying vec2 v_texcoord; //  原始贴图UV坐标\n// uniform sampler2D texture; // 原始贴图\n// uniform float alpha; // 当前对象实际渲染的透明度\n//------------------------------------------------------------------------------------------------------\n// 该材质的自定义参数 判定该变量存在的宏：MU材质编号_变量名称\n//------------------------------------------------------------------------------------------------------\n// uniform float mu17_amnient; // MU17_amnient 模糊程度\n//------------------------------------------------------------------------------------------------------\n// shader 代码规则：\n// 1.由于多材质合并shader代码运行，函数名必须以mf${材质ID}_开头以避免函数名称冲突，如 mf17_myFunc\n// 2.入口函数vec4 mf${材质ID}_main 如 vec4 mf17_main(){return gl_FragColor;}\n// 3.原图采样坐标获取：vec2 texCoord = getInRangeTextureCoord(v_texcoord);\n// 4.原图采样：vec4 color = getTextureColor(texCoord);\n// 5.关于自定义贴图的坐标信息：自定义贴图可能是图集中的一部分，提供了相关信息（mu材质编号_变量名_UVInfo）\n//   相对于0~1的坐标系提供了图集的映射信息 vec4 [UV宽度缩放比例, UV高度缩放比例, UV水平偏移量, UV垂直偏移量]\n// 6.变量宏（可用于判定该变量是否满足出现条件）：#ifdef MU材质编号_变量名称、#else、#endif\n// 7.系统宏 IN_GC_EDITOR=是否在编辑器中运行\n// 8.语法：C语言 更多资料请参考GLSL Shader\n//======================================================================================================\n// SYSTEM END\n//======================================================================================================\nvec4 mf17_main(){\n   vec2 tempUV = v_texcoord;\n   float ambient = mu17_amnient;\n   vec4 col = texture2D(texture, tempUV);\n\t\n   vec4 col2 = texture2D(texture, tempUV + vec2(-ambient, 0.0));\n   vec4 col3 = texture2D(texture, tempUV + vec2(0.0,-ambient));\n   vec4 col4 = texture2D(texture, tempUV + vec2(ambient, 0.0));\n   vec4 col5 = texture2D(texture, tempUV + vec2(0.0,ambient));\n\n   col = (col + col2 + col3 + col4 + col5) / 5.0;\n   return col;\n}"
+}

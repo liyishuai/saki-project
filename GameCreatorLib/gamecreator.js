@@ -1,3 +1,18 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var AsynTask = (function () {
     function AsynTask(onFin) {
         this._asynCount = 0;
@@ -17,14 +32,14 @@ var AsynTask = (function () {
         get: function () {
             return this._asynLength;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(AsynTask.prototype, "currentCount", {
         get: function () {
             return this._asynCount;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     return AsynTask;
@@ -226,8 +241,9 @@ var ArrayUtils = (function () {
         return matchs;
     };
     ;
-    ArrayUtils.matchAttributesD2 = function (arr, attribute, matchData, onlyOne, symbol) {
+    ArrayUtils.matchAttributesD2 = function (arr, attribute, matchData, onlyOne, symbol, indexOfMode) {
         if (symbol === void 0) { symbol = "=="; }
+        if (indexOfMode === void 0) { indexOfMode = false; }
         var matchs = [];
         for (var i in arr) {
             var obj = arr[i];
@@ -246,7 +262,7 @@ var ArrayUtils = (function () {
                 }
             }
             if (isMatch) {
-                matchs.push(obj);
+                matchs.push(indexOfMode ? parseInt(i) : obj);
                 if (onlyOne)
                     break;
             }
@@ -254,8 +270,9 @@ var ArrayUtils = (function () {
         return matchs;
     };
     ;
-    ArrayUtils.matchAttributesD3 = function (arr, attribute, attribute2, matchData, onlyOne, symbol) {
+    ArrayUtils.matchAttributesD3 = function (arr, attribute, attribute2, matchData, onlyOne, symbol, indexOfMode) {
         if (symbol === void 0) { symbol = "=="; }
+        if (indexOfMode === void 0) { indexOfMode = false; }
         var matchs = [];
         for (var i in arr) {
             var obj = arr[i];
@@ -276,7 +293,7 @@ var ArrayUtils = (function () {
                 }
             }
             if (isMatch) {
-                matchs.push(obj);
+                matchs.push(indexOfMode ? parseInt(i) : obj);
                 if (onlyOne)
                     break;
             }
@@ -490,6 +507,9 @@ var Callback = (function () {
             Callback.beforeRenderFuncs[key] = cb;
         }
     };
+    var _a;
+    _a = Callback;
+    Callback.EMPTY = new Callback(function () { }, _a);
     Callback.beforeRenderFuncs = [];
     return Callback;
 }());
@@ -1028,8 +1048,13 @@ catch (e) {
     gcTop = gcParent = window;
 }
 
-if (typeof gcTop.kdsrpg != "undefined") {
-    gcTop.frameRef(1);
+var top_kdsrpg;
+if(gcTop.gcide_common && gcTop.gcide_common.kdsrpg){
+    top_kdsrpg = gcTop.gcide_common.kdsrpg;
+}
+
+if (typeof gcTop.gcide_common != "undefined" && typeof top_kdsrpg != "undefined") {
+    gcTop.gcide_core.frameRef(1);
 }
 
 var console_warn = function () { }
@@ -42957,11 +42982,13 @@ for (var i in osWinFuncs) {
 }
 os.closeWindow = function () {
     if (os.platform != 2) return;
-    if (gcTop != window && typeof gcTop.require != "undefined" && typeof gcTop.kdsrpg != "undefined") { gcParent.close(); }
+    if (gcTop != window && typeof gcTop.require != "undefined" && typeof top_kdsrpg != "undefined") { gcParent.close(); }
     else if (gcTop == window || (typeof process == "undefined" && typeof require == "undefined")) { window.close(); }
 }
-os.inGC = function () {
-    return (gcTop != window && typeof gcTop.require != "undefined" && typeof gcTop.kdsrpg != "undefined")
+os.inGC = function (independentWindow) {
+    if (independentWindow == null) independentWindow = true;
+    var inGC = (gcTop != window && typeof gcTop.require != "undefined" && typeof top_kdsrpg != "undefined");
+    return inGC || (independentWindow && typeof Config != "undefined" && !Config.EDIT_MODE && window.location.href.indexOf("gcDebugPort=") !=-1);
 }
 os.showFPS = function () {
     Stat.show();
@@ -43271,13 +43298,24 @@ UIEventObject.DATA_CHANGE = "DATA_CHANGE";
 
 
 
+
+
+
+
+
+
+
+
+
+
 var ListItemData = (function (_super) {
     __extends(ListItemData, _super);
     function ListItemData() {
-        _super.call(this);
-        this._selected = false;
-        this._group = null;
-        this._label = "";
+        var _this_1 = _super.call(this) || this;
+        _this_1._selected = false;
+        _this_1._group = null;
+        _this_1._label = "";
+        return _this_1;
     }
     Object.defineProperty(ListItemData.prototype, "selected", {
         get: function () { return this._selected; },
@@ -43287,13 +43325,13 @@ var ListItemData = (function (_super) {
                 this.happen_SELECTE_CHANGED();
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(ListItemData.prototype, "label", {
         get: function () { return this._label; },
         set: function (v) { this._label = v; },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     ListItemData.prototype.add_SELECTE_CHANGED = function (onHappen, thisPtr, args) {
@@ -43317,37 +43355,48 @@ var ListItemData = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var TreeItemData = (function (_super) {
     __extends(TreeItemData, _super);
     function TreeItemData() {
-        _super.call(this);
-        this._visible = false;
-        this._isOpen = true;
-        this.isDirectory = false;
-        this._children = [];
-        this._parent = null;
-        this._visible = true;
+        var _this_1 = _super.call(this) || this;
+        _this_1._visible = false;
+        _this_1._isOpen = true;
+        _this_1.isDirectory = false;
+        _this_1._children = [];
+        _this_1._parent = null;
+        _this_1._visible = true;
+        return _this_1;
     }
     Object.defineProperty(TreeItemData.prototype, "isOpen", {
         get: function () { return this._isOpen; },
         set: function (v) { this._isOpen = v; },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(TreeItemData.prototype, "visible", {
         get: function () { return this._visible; },
         set: function (v) { this._visible = v; },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(TreeItemData.prototype, "parent", {
         get: function () { return this._parent; },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(TreeItemData.prototype, "nodeParent", {
         get: function () { return this._parent; },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     TreeItemData.prototype.addChild = function (item) { this._children.push(item); item._parent = this; };
@@ -43365,12 +43414,12 @@ var TreeItemData = (function (_super) {
     } ; return null; };
     Object.defineProperty(TreeItemData.prototype, "numChildren", {
         get: function () { return this._children.length; },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(TreeItemData.prototype, "children", {
         get: function () { return this._children; },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     TreeItemData.prototype.isInherit = function (data) {
@@ -43402,7 +43451,7 @@ var TreeItemData = (function (_super) {
             }
             return p;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     TreeItemData.removeExistChild = function (list) {
@@ -43413,6 +43462,54 @@ var TreeItemData = (function (_super) {
                     break;
                 }
             }
+        }
+    };
+    TreeItemData.searchByKeyResult = function (node, key, firstCheck) {
+        if (firstCheck === void 0) { firstCheck = true; }
+        if (firstCheck) {
+            key = key.toLocaleLowerCase();
+        }
+        node.keyState = null;
+        if (node.label && node.label.toLocaleLowerCase().indexOf(key) != -1) {
+            node.keyState = 1;
+        }
+        if (node.children.length > 0) {
+            for (var i_1 = 0; i_1 < node.children.length; i_1++) {
+                var childNode = node.children[i_1];
+                TreeItemData.searchByKeyResult(childNode, key, false);
+            }
+        }
+        else {
+            var p = node;
+            var startRetain = false;
+            while (1) {
+                var parentNode = p.parent;
+                startRetain = setNodeState(p, startRetain);
+                if (!parentNode)
+                    break;
+                p = parentNode;
+            }
+        }
+        if (firstCheck) {
+            var listArr = [];
+            node.getList(listArr);
+            for (var i_2 = 0; i_2 < listArr.length; i_2++) {
+                var targetNode = listArr[i_2];
+                if (targetNode.keyState == null) {
+                    listArr.splice(i_2, 1);
+                    i_2--;
+                }
+            }
+            return listArr;
+        }
+        function setNodeState(p, startRetain) {
+            if (p.keyState == 1) {
+                startRetain = true;
+            }
+            else if (startRetain && p.keyState != 1) {
+                p.keyState = 0;
+            }
+            return startRetain;
         }
     };
     return TreeItemData;
@@ -43449,10 +43546,21 @@ var TreeItemData = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var HueFilter = (function (_super) {
     __extends(HueFilter, _super);
     function HueFilter(hue) {
         if (hue === void 0) { hue = 0; }
+        var _this_1 = this;
         if (hue < -180)
             hue = -180;
         if (hue > 180)
@@ -43499,8 +43607,9 @@ var HueFilter = (function (_super) {
                 colorArr[s] = (toColor[s] - fromColor[s]) * per + fromColor[s];
             }
         }
-        _super.call(this, colorArr);
-        this.colorMat = colorArr;
+        _this_1 = _super.call(this, colorArr) || this;
+        _this_1.colorMat = colorArr;
+        return _this_1;
     }
     HueFilter.normal = [
         1, 0, 0, 0, 0,
@@ -43545,11 +43654,22 @@ var HueFilter = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var ListRender = (function (_super) {
     __extends(ListRender, _super);
     function ListRender() {
-        _super.call(this);
-        new Handler(this, this._init).delayRun(0);
+        var _this_1 = _super.call(this) || this;
+        new Handler(_this_1, _this_1._init).delayRun(0);
+        return _this_1;
     }
     ListRender.prototype._init = function () {
         this.initEvent();
@@ -43564,14 +43684,14 @@ var ListRender = (function (_super) {
             this._mainComp = this.parent.parent;
             return this._mainComp;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(ListRender.prototype, "dataList", {
         get: function () {
             return this.mainComp.array;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(ListRender.prototype, "lastSelected", {
@@ -43583,7 +43703,7 @@ var ListRender = (function (_super) {
                 this.mainComp.selectedItem = v;
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(ListRender.prototype, "dataSource", {
@@ -43612,7 +43732,7 @@ var ListRender = (function (_super) {
                 this.updateAppearance();
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     ListRender.prototype.addChild = function (node) {
@@ -43776,10 +43896,20 @@ var ListRender = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var TreeRender = (function (_super) {
     __extends(TreeRender, _super);
     function TreeRender() {
-        _super.call(this);
+        return _super.call(this) || this;
     }
     Object.defineProperty(TreeRender.prototype, "mainComp", {
         get: function () {
@@ -43791,7 +43921,7 @@ var TreeRender = (function (_super) {
             this._mainComp = this.parent.parent.parent;
             return this._mainComp;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(TreeRender.prototype, "parentRender", {
@@ -43811,7 +43941,7 @@ var TreeRender = (function (_super) {
             }
             return null;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     TreeRender.prototype.initEvent = function () {
@@ -43880,7 +44010,7 @@ var TreeRender = (function (_super) {
         get: function () {
             return this.mainComp ? (this.mainComp["spaceBottom"] ? this.mainComp["spaceBottom"] : 0) : 0;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     TreeRender.prototype.canDragStart = function () {
@@ -43890,7 +44020,7 @@ var TreeRender = (function (_super) {
     TreeRender.prototype.onDragDrop = function (inItem) {
         console.warn("\u672A\u5B9E\u73B0");
     };
-    TreeRender.prototype.onDragIn = function (inItem) {
+    TreeRender.prototype.onDragIn = function (inItem, isChangeLayer) {
         console.warn("\u672A\u5B9E\u73B0");
     };
     TreeRender.prototype.onDragOut = function () {
@@ -43908,31 +44038,42 @@ var TreeRender = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var PartitionBox = (function (_super) {
     __extends(PartitionBox, _super);
     function PartitionBox() {
-        _super.call(this);
-        this._wallThick = 1;
-        this._wallThickHalf = this._wallThick * 0.5;
-        this._wallTouchThick = 2;
-        this._wallTouchThickHalf = this._wallTouchThick * 0.5;
-        this._horizontalPartition = true;
-        this._partitionPercent = 50;
-        this._limitSizeEnabled = true;
-        this._partitionValue = 50;
-        this._isUseParcent = true;
-        this._wallSprite = new UIImage("comp/progress.png");
-        this._isDragingWall = false;
-        this._cantDragWall = false;
-        this._indentBtn = new Button();
-        this._indentedge = 0;
-        this.firstMin = null;
-        this.firstMax = null;
-        this.secondMin = null;
-        this.secondMax = null;
-        this._wallSprite.alpha = 0;
-        new Handler(this, this.init).delayRun(0);
-        this.on(EventObject.RESIZE, this, this.onPartitionBoxResize);
+        var _this_1 = _super.call(this) || this;
+        _this_1._wallThick = 1;
+        _this_1._wallThickHalf = _this_1._wallThick * 0.5;
+        _this_1._wallTouchThick = 2;
+        _this_1._wallTouchThickHalf = _this_1._wallTouchThick * 0.5;
+        _this_1._horizontalPartition = true;
+        _this_1._partitionPercent = 50;
+        _this_1._limitSizeEnabled = true;
+        _this_1._partitionValue = 50;
+        _this_1._isUseParcent = true;
+        _this_1._wallSprite = new UIImage("comp/progress.png");
+        _this_1._isDragingWall = false;
+        _this_1._cantDragWall = false;
+        _this_1._indentBtn = new Button();
+        _this_1._indentedge = 0;
+        _this_1.firstMin = null;
+        _this_1.firstMax = null;
+        _this_1.secondMin = null;
+        _this_1.secondMax = null;
+        _this_1._wallSprite.alpha = 0;
+        new Handler(_this_1, _this_1.init).delayRun(0);
+        _this_1.on(EventObject.RESIZE, _this_1, _this_1.onPartitionBoxResize);
+        return _this_1;
     }
     PartitionBox.prototype.init = function () {
         this._wallSprite.pivotX = this._wallSprite.pivotY = this._wallThickHalf;
@@ -44049,7 +44190,7 @@ var PartitionBox = (function (_super) {
             this._horizontalPartition = v;
             Callback.CallLater(this.update, this);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(PartitionBox.prototype, "cantDragWall", {
@@ -44057,7 +44198,7 @@ var PartitionBox = (function (_super) {
             this._cantDragWall = v;
             this._wallSprite.visible = !v;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(PartitionBox.prototype, "partitionPercent", {
@@ -44066,7 +44207,7 @@ var PartitionBox = (function (_super) {
             this._partitionPercent = v;
             Callback.CallLater(this.update, this);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(PartitionBox.prototype, "limitSizeEnabled", {
@@ -44074,7 +44215,7 @@ var PartitionBox = (function (_super) {
             this._limitSizeEnabled = v;
             Callback.CallLater(this.update, this);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(PartitionBox.prototype, "partitionValue", {
@@ -44083,18 +44224,18 @@ var PartitionBox = (function (_super) {
             this._partitionValue = v;
             Callback.CallLater(this.update, this);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     PartitionBox.prototype.wallEnabled = function (v) {
         this._wallSprite.mouseEnabled = v;
     };
     PartitionBox.prototype.wallsyncBoxWH = function (box) {
-        var _this = this;
+        var _this_1 = this;
         this.snycBox = box;
         if (this.snycBox)
             this.snycBox.on(EventObject.RESIZE, this, function () {
-                Callback.CallLater(_this.update, _this);
+                Callback.CallLater(_this_1.update, _this_1);
             });
         Callback.CallLater(this.update, this);
     };
@@ -44117,7 +44258,7 @@ var PartitionBox = (function (_super) {
                 this.removeChild(this._indentBtn);
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     PartitionBox.prototype.onWallMouseDown = function () {
@@ -44257,8 +44398,9 @@ var PartitionBox = (function (_super) {
 var PartitionBoxV = (function (_super) {
     __extends(PartitionBoxV, _super);
     function PartitionBoxV() {
-        _super.call(this);
-        this._horizontalPartition = false;
+        var _this_1 = _super.call(this) || this;
+        _this_1._horizontalPartition = false;
+        return _this_1;
     }
     return PartitionBoxV;
 }(PartitionBox));
@@ -44368,6 +44510,7 @@ var FrameSelectUtils = (function () {
     FrameSelectUtils.enabled = true;
     return FrameSelectUtils;
 }());
+var globalThis = this;
 Shader2D.initMaterial = function () {
     ShaderValue.kdsMaterialShaders = [];
     Shader.sharders = [];
@@ -44377,6 +44520,7 @@ Shader2D.initMaterial = function () {
     var materialLogicCode = "// KDS_PS_SHADER_LOGICS\n";
     var materialList = Game.data.materialList;
     var len = GameListData.getLength(materialList);
+    var exit = false;
     for (var i = 1; i <= len; i++) {
         var material = materialList.data[i];
         var mf_mainReg = new RegExp("vec4 +?mf" + i + "_main {0,999}\\(");
@@ -44386,6 +44530,7 @@ Shader2D.initMaterial = function () {
         shaderCode = CustomCompositeSetting.replaceShaderNotes(material, shaderCode, "");
         if (shaderCode.search(mf_mainReg) == -1)
             continue;
+        exit = true;
         var MACRO_START = "\n#ifdef KDS_M" + i + "\n";
         var MACRO_END = "\n#endif\n";
         var uniformsCode = CustomCompositeSetting.getShaderUniformCodes(material, false) + "\n";
@@ -44401,13 +44546,15 @@ Shader2D.initMaterial = function () {
         KDSShaderLogic += MACRO_END;
         Shader.KDSPSShaderLogicArr["KDS_M" + i] = KDSShaderLogic;
     }
-    if (len == 0) {
+    if (len == 0 || !exit) {
         Shader.addInclude("parts/KDS_ps_logic.glsl", " ", true);
         Shader.addInclude("parts/KDS_ps_uniform.glsl", " ", true);
     }
     else {
         Shader.addInclude("parts/KDS_ps_logic.glsl", materialLogicCode, true);
-        Shader.addInclude("parts/KDS_ps_uniform.glsl", materialUniformCode + materialUniformFuncs, true);
+        if (materialUniformCode + materialUniformFuncs != "") {
+            Shader.addInclude("parts/KDS_ps_uniform.glsl", materialUniformCode + materialUniformFuncs, true);
+        }
     }
     var vs, ps;
     vs = "\n\tattribute vec4 position;\n\tattribute vec2 texcoord;\n\tuniform vec2 size;\n\t#ifdef WORLDMAT\n\t uniform mat4 mmat;\n\t#endif\n\tvarying vec2 v_texcoord;\n\tvoid main() {\n\t\t  vec2 sizex = size;\n\t\t  #ifdef WORLDMAT\n\t\t   vec4 pos=mmat*position;\n\t\t   gl_Position =vec4((pos.x/sizex.x-0.5)*2.0,(0.5-pos.y/sizex.y)*2.0,pos.z,1.0);\n\t\t  #else\n\t\t   gl_Position =vec4((position.x/sizex.x-0.5)*2.0,(0.5-position.y/sizex.y)*2.0,position.z,1.0);\n\t\t  #endif\n\t\t v_texcoord = texcoord;\n\t}";
@@ -44496,11 +44643,65 @@ TouchManager.prototype["sendEvents"] = function (eles, type, touchID) {
     }
     oldsendEvents.call(this, eles, type, touchID);
 };
+if (typeof top === "undefined") {
+    top = this;
+}
+var mainDomain_gcide_common = _getAttributeFromParentPages('gcide_common');
+var mainDomain_LGConfig = mainDomain_gcide_common === null || mainDomain_gcide_common === void 0 ? void 0 : mainDomain_gcide_common.LGConfig;
+var mainDomain_kdsrpg = mainDomain_gcide_common === null || mainDomain_gcide_common === void 0 ? void 0 : mainDomain_gcide_common.kdsrpg;
+var mainDomain_gcide = _getAttributeFromParentPages('gcide');
+var mainDomain_LGNative = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.LGNative;
+var mainDomain_TopCanvas = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.TopCanvas;
+var mainDomain_LGPromptSigh = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.LGPromptSigh;
+var mainDomain_LGWindow = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.LGWindow;
+var mainDomain_LGProjectDevDataManager = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.LGProjectDevDataManager;
+var mainDomain_CodeIDE = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.CodeIDE;
+var mainDomain_FileObject = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.FileObject;
+var mainDomain_LGSystem = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.LGSystem;
+var mainDomain_LGQRCode = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.LGQRCode;
+var mainDomain_DownloadFile = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.DownloadFile;
+var mainDomain_LGProjectList = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.LGProjectList;
+var mainDomain_ServerConnUtils = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.ServerConnUtils;
+var mainDomain_GlobalEvent = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.GlobalEvent;
+var mainDomain_LGUser = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.LGUser;
+var mainDomain_LGMainMenu = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.LGMainMenu;
+var mainDomain_setStartupWindowText = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.setStartupWindowText;
+var mainDomain_closeStartupWindow = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.closeStartupWindow;
+var mainDomain_KDSEncode = mainDomain_gcide === null || mainDomain_gcide === void 0 ? void 0 : mainDomain_gcide.KDSEncode;
+var mainDomain_gcide_core = _getAttributeFromParentPages('gcide_core');
+var mainDomain_frameRef = mainDomain_gcide_core === null || mainDomain_gcide_core === void 0 ? void 0 : mainDomain_gcide_core.frameRef;
+var mainDomain_stage = mainDomain_gcide_core === null || mainDomain_gcide_core === void 0 ? void 0 : mainDomain_gcide_core.stage;
+var mainDomain_os = mainDomain_gcide_core === null || mainDomain_gcide_core === void 0 ? void 0 : mainDomain_gcide_core.os;
+var mainDomain_DateUtils = mainDomain_gcide_core === null || mainDomain_gcide_core === void 0 ? void 0 : mainDomain_gcide_core.DateUtils;
+var mainDomain_require = _getAttributeFromParentPages('require');
+var mainDomain_nw_gui = mainDomain_require === null || mainDomain_require === void 0 ? void 0 : mainDomain_require('nw.gui');
+var mainDomain_fs = mainDomain_require === null || mainDomain_require === void 0 ? void 0 : mainDomain_require('fs');
+var mainDomain_child_process = mainDomain_require === null || mainDomain_require === void 0 ? void 0 : mainDomain_require('child_process');
+var mainDomain_process = _getAttributeFromParentPages('process');
+var mainDomain_nw = _getAttributeFromParentPages('nw');
+var mainDomain_serverapi = _getAttributeFromParentPages('serverapi');
+var mainDomain_Buffer = _getAttributeFromParentPages('Buffer');
+function _getAttributeFromParentPages(attribute) {
+    var result = globalThis[attribute];
+    var _host = top;
+    while (!result && !!_host) {
+        result = _host[attribute];
+        if (_host !== _host.top) {
+            _host = _host.top;
+        }
+        else {
+            _host = null;
+        }
+    }
+    return result;
+}
 var Command = (function () {
     function Command(type, params, id) {
         if (id === void 0) { id = null; }
         this.gotoLine = [];
         this.type = type;
+        if (this.type == -1)
+            this.empty = true;
         this.params = params;
         if (!id) {
             id = ObjectUtils.getRandID();
@@ -44517,7 +44718,7 @@ var Command = (function () {
             }
             return CommandPage.getCustomCmdDataID(this.type);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Command.init = function (gameWorld) {
@@ -44554,12 +44755,12 @@ var Command = (function () {
         var cmdType = cmdParam[0];
         if (cmdType < CommandPage.CUSTOM_COMMAND_START_ID) {
             var idInfo = cmdParam[cmdParam.length - 1];
-            if (idInfo && typeof idInfo == "object") {
-                return idInfo.___cmdID;
+            if (idInfo && typeof idInfo == "object" && idInfo.___cmdID) {
+                return idInfo;
             }
         }
         else {
-            return cmdParam[2];
+            return { ___cmdID: cmdParam[2], disabled: cmdParam[3] };
         }
     };
     Command.isCMDID = function (value) {
@@ -44600,7 +44801,6 @@ var CommandExecute;
     }
     CommandExecute.getSceneObject = getSceneObject;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_0(commandPage, cmd, trigger, triggerPlayer) {
         var bool;
@@ -44759,7 +44959,6 @@ var CommandExecute;
     }
     CommandExecute.precompile_0 = precompile_0;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_11(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -44784,7 +44983,7 @@ var CommandExecute;
                 socIndex = triggerPlayer.variable.getVariable(index);
             }
             cmd.callExecuteFunction(trigger.id, trigger.triggerPlayer, [cmd.params[0], cmd.params[1], name, cmd.params[3],
-                socIndex, content, cmd.params[6], cmd.params[7], cmd.params[9], cmd.id]);
+                socIndex, content, cmd.params[6], cmd.params[7], cmd.params[9], cmd.id, cmd.params[10]]);
         }
     }
     CommandExecute.command_11 = command_11;
@@ -44795,7 +44994,6 @@ var CommandExecute;
     }
     CommandExecute.precompile_11 = precompile_11;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_12(commandPage, cmd, trigger, triggerPlayer, playerInput) {
         trigger.pause = true;
@@ -44804,7 +45002,6 @@ var CommandExecute;
     }
     CommandExecute.command_12 = command_12;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_13(commandPage, cmd, trigger, triggerPlayer) {
         cmd.paramsCompiled[0].apply(this, arguments);
@@ -44858,7 +45055,20 @@ var CommandExecute;
             value = "triggerPlayer.variable.getVariable(" + cmd.params[6] + ")";
         }
         else if (valueType == 3) {
-            value = "(MathUtils.rand(" + (cmd.params[7][1] - cmd.params[7][0]) + "+1)+" + cmd.params[7][0] + ")";
+            var min = "triggerPlayer.variable.getVariable(" + cmd.params[20] + ")";
+            var max = "triggerPlayer.variable.getVariable(" + cmd.params[21] + ")";
+            if (cmd.params[19] == 0) {
+                value = "(MathUtils.rand(" + (cmd.params[7][1] - cmd.params[7][0]) + "+1)+" + cmd.params[7][0] + ")";
+            }
+            else if (cmd.params[19] == 1) {
+                value = "(MathUtils.rand(" + max + " - " + min + " +1)+" + min + ")";
+            }
+            else if (cmd.params[19] == 2) {
+                value = "(MathUtils.rand(" + cmd.params[7][1] + " - " + min + " +1)+" + min + ")";
+            }
+            else {
+                value = "(MathUtils.rand(" + max + " - " + cmd.params[7][0] + " +1)+" + cmd.params[7][0] + ")";
+            }
         }
         else if (valueType == 4) {
             value = "CustomValueFunction.f" + (cmd.params[8] + 1) + "(trigger,triggerPlayer)";
@@ -44885,11 +45095,16 @@ var CommandExecute;
                 valueExpression = "CommandExecute.getSqrtNum(" + valueExpression + ")";
             if (cmd.params[11])
                 valueExpression = "(Math.floor(" + valueExpression + "))";
+            if (!cmd.params[11] && cmd.params[17]) {
+                valueExpression = "CommandExecute.fomatFloat(" + valueExpression + "," + cmd.params[17] + ")";
+            }
             if (resultType == 6) {
                 finalExpression = resultVar[1] + ("(" + varID + ", " + valueExpression + ", " + cmd.params[9] + ", trigger, triggerPlayer) ");
             }
             else {
                 finalExpression = resultVar[1] + ("(" + varID + ", " + valueExpression + ") ");
+                if (cmd.params[18])
+                    finalExpression = resultVar[1] + ("(triggerPlayer.variable.getVariable(" + varID + "), " + valueExpression + ") ");
             }
         }
         else {
@@ -44905,6 +45120,9 @@ var CommandExecute;
                 valueExpression = "CommandExecute.getSqrtNum(" + valueExpression + ")";
             if (cmd.params[11])
                 valueExpression = "(Math.floor(" + valueExpression + "))";
+            if (!cmd.params[11] && cmd.params[17]) {
+                valueExpression = "CommandExecute.fomatFloat(" + valueExpression + "," + cmd.params[17] + ")";
+            }
             finalExpression = resultVar[1] + ("[" + varID + "]" + symbolsForArr[cmd.params[2]] + " " + valueExpression + " ");
             if (cmd.params[2] == 4) {
                 finalExpression += "; " + resultVar[1] + " [" + varID + "] = Math.floor(" + resultVar[1] + "[" + varID + "]); ";
@@ -44922,6 +45140,11 @@ var CommandExecute;
             return -Math.sqrt(Math.abs(num));
     }
     CommandExecute.getSqrtNum = getSqrtNum;
+    function fomatFloat(value, n) {
+        var f = value.toFixed(n);
+        return parseFloat(f);
+    }
+    CommandExecute.fomatFloat = fomatFloat;
     function setSwitchs(index, value, id, trigger, triggerPlayer) {
         var targetSo = CommandExecute.getSceneObject(id, trigger, triggerPlayer);
         if (targetSo) {
@@ -44938,14 +45161,12 @@ var CommandExecute;
     }
     CommandExecute.getSwitchs = getSwitchs;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_14(commandPage, cmd, trigger, triggerPlayer) {
         trigger.cmdReturn = true;
     }
     CommandExecute.command_14 = command_14;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     CommandExecute.fragmentEvents = {};
     function command_15(commandPage, cmd, trigger, triggerPlayer) {
@@ -44963,7 +45184,6 @@ var CommandExecute;
     }
     CommandExecute.command_15 = command_15;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_16(commandPage, cmd, trigger, triggerPlayer) {
         var commonEventID = MathUtils.int(cmd.params[0]);
@@ -44982,20 +45202,23 @@ var CommandExecute;
     }
     CommandExecute.command_16 = command_16;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_17(commandPage, cmd, trigger, triggerPlayer) {
         if (cmd.params[2]) {
-            cmd.callExecuteFunction(trigger.id, triggerPlayer, cmd.params);
+            var params = ObjectUtils.depthClone(cmd.params);
+            if (cmd.params[3]) {
+                params[0] = triggerPlayer.variable.getVariable(cmd.params[0]);
+            }
+            cmd.callExecuteFunction(trigger.id, triggerPlayer, params);
         }
         else {
             trigger.pause = true;
             trigger.offset(1);
             if (cmd.params[1] == 1) {
-                trigger.waitTime(cmd.params[0]);
+                trigger.waitTime(cmd.params[3] ? triggerPlayer.variable.getVariable(cmd.params[0]) : cmd.params[0]);
             }
             else {
-                trigger.waitFrame(cmd.params[0]);
+                trigger.waitFrame(cmd.params[3] ? triggerPlayer.variable.getVariable(cmd.params[0]) : cmd.params[0]);
             }
         }
     }
@@ -45004,7 +45227,6 @@ var CommandExecute;
     }
     CommandExecute.commandContinue_17 = commandContinue_17;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_19(commandPage, cmd, trigger, triggerPlayer) {
         cmd.paramsCompiled[0].apply(this, arguments);
@@ -45018,14 +45240,12 @@ var CommandExecute;
     }
     CommandExecute.precompile_19 = precompile_19;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_1(commandPage, cmd, trigger, triggerPlayer) {
         trigger.goto(cmd.gotoLine[0]);
     }
     CommandExecute.command_1 = command_1;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     var serverCallClientCode;
     function command_20(commandPage, cmd, trigger, triggerPlayer, playerInput, customParams) {
@@ -45053,7 +45273,6 @@ var CommandExecute;
     }
     CommandExecute.precompile_20 = precompile_20;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_21(commandPage, cmd, trigger, triggerPlayer) {
         trigger.cmdReturn = true;
@@ -45067,7 +45286,6 @@ var CommandExecute;
     }
     CommandExecute.command_21 = command_21;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_22(commandPage, cmd, trigger, triggerPlayer) {
         var index = cmd.params[0];
@@ -45086,7 +45304,6 @@ var CommandExecute;
     }
     CommandExecute.command_22 = command_22;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_23(commandPage, cmd, trigger, triggerPlayer) {
         if (trigger.hasBehavior) {
@@ -45097,7 +45314,6 @@ var CommandExecute;
     }
     CommandExecute.command_23 = command_23;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_31(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -45106,7 +45322,6 @@ var CommandExecute;
     }
     CommandExecute.command_31 = command_31;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_32(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -45115,7 +45330,6 @@ var CommandExecute;
     }
     CommandExecute.command_32 = command_32;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_35(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -45146,7 +45360,6 @@ var CommandExecute;
     }
     CommandExecute.command_35 = command_35;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_36(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -45155,7 +45368,6 @@ var CommandExecute;
     }
     CommandExecute.command_36 = command_36;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_37(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -45183,7 +45395,6 @@ var CommandExecute;
     }
     CommandExecute.command_37 = command_37;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_38(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -45194,7 +45405,6 @@ var CommandExecute;
     }
     CommandExecute.command_38 = command_38;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_3(commandPage, cmd, trigger, triggerPlayer, playerInput) {
         if (!triggerPlayer)
@@ -45315,14 +45525,12 @@ var CommandExecute;
     }
     CommandExecute.precompile_3 = precompile_3;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_4(commandPage, cmd, trigger, triggerPlayer) {
         trigger.goto(cmd.gotoLine[0]);
     }
     CommandExecute.command_4 = command_4;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_63(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -45331,7 +45539,6 @@ var CommandExecute;
     }
     CommandExecute.command_63 = command_63;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_64(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -45340,7 +45547,6 @@ var CommandExecute;
     }
     CommandExecute.command_64 = command_64;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_65(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -45349,7 +45555,6 @@ var CommandExecute;
     }
     CommandExecute.command_65 = command_65;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_66(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -45358,7 +45563,6 @@ var CommandExecute;
     }
     CommandExecute.command_66 = command_66;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_67(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -45367,7 +45571,6 @@ var CommandExecute;
     }
     CommandExecute.command_67 = command_67;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_68(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -45376,7 +45579,6 @@ var CommandExecute;
     }
     CommandExecute.command_68 = command_68;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_69(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -45385,7 +45587,6 @@ var CommandExecute;
     }
     CommandExecute.command_69 = command_69;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_6(commandPage, cmd, trigger, triggerPlayer) {
         trigger.goto(cmd.gotoLine[0]);
@@ -45420,7 +45621,6 @@ var CommandExecute;
     }
     CommandExecute.precompile_6 = precompile_6;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_70(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -45429,7 +45629,6 @@ var CommandExecute;
     }
     CommandExecute.command_70 = command_70;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_71(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -45439,7 +45638,6 @@ var CommandExecute;
     }
     CommandExecute.command_71 = command_71;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_72(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -45448,7 +45646,6 @@ var CommandExecute;
     }
     CommandExecute.command_72 = command_72;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_73(commandPage, cmd, trigger, triggerPlayer) {
         if (triggerPlayer) {
@@ -45457,7 +45654,6 @@ var CommandExecute;
     }
     CommandExecute.command_73 = command_73;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_7(commandPage, cmd, trigger, triggerPlayer) {
         if (cmd.gotoLine[0] != null)
@@ -45465,7 +45661,6 @@ var CommandExecute;
     }
     CommandExecute.command_7 = command_7;
 })(CommandExecute || (CommandExecute = {}));
-var CommandExecute;
 (function (CommandExecute) {
     function command_9(commandPage, cmd, trigger, triggerPlayer) {
         if (cmd.gotoLine[0] != null)
@@ -45512,16 +45707,27 @@ var CommandPage = (function () {
         for (var i = 0; i < len; i++) {
             var cmdData = commandDatas[i];
             cmdType = cmdData[0];
-            var cmdID = Command.getCMDIDByParam(cmdData);
+            if (!Config.EDIT_MODE) {
+                if (cmdType == -1) {
+                    continue;
+                }
+            }
+            var cmdIDInfo = Command.getCMDIDByParam(cmdData);
+            if (!Config.EDIT_MODE && cmdIDInfo && cmdIDInfo.disabled) {
+                continue;
+            }
             if (cmdType < CommandPage.CUSTOM_COMMAND_START_ID) {
-                if (cmdID) {
+                if (cmdIDInfo && cmdIDInfo.___cmdID) {
                     cmdData = cmdData.concat();
                     cmdData.pop();
                 }
             }
-            var cmd = new Command(cmdType, cmdData.slice(1), cmdID);
+            var cmd = new Command(cmdType, cmdData.slice(1), cmdIDInfo ? cmdIDInfo.___cmdID : null);
+            if (cmdIDInfo)
+                cmd.disabled = cmdIDInfo.disabled;
             this.commands.push(cmd);
         }
+        len = this.commands.length;
         for (var i = 0; i < len; i++) {
             var cmd = this.commands[i];
             cmdType = cmd.type;
@@ -45650,7 +45856,7 @@ var CommandPage = (function () {
         trigger.pause = false;
         var loopTimes = 0;
         var loopStartTime = Date.now();
-        var loopTimeout = !Config.IS_SERVER && os.inGC() ? 5000 : 10000;
+        var loopTimeout = !Config.IS_SERVER && os.inGC(false) ? 5000 : 10000;
         while (1) {
             loopTimes++;
             if (loopTimes > 10000) {
@@ -45781,7 +45987,7 @@ var SceneObject = (function () {
             SceneObject.____self = new SceneObject();
             return SceneObject.____self;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     SceneObject.installCustomData = function (so, presetCustomAttrs, recordModelData) {
@@ -45908,32 +46114,43 @@ var SceneObject = (function () {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var SceneObjectEntity = (function (_super) {
     __extends(SceneObjectEntity, _super);
     function SceneObjectEntity(persetData) {
         if (persetData === void 0) { persetData = null; }
-        _super.call(this);
-        this.inScene = false;
-        this._modules = [];
-        this.customCommandPagesCache = [];
-        this.hasCommandCache = [];
+        var _this_1 = _super.call(this) || this;
+        _this_1.inScene = false;
+        _this_1._modules = [];
+        _this_1.customCommandPagesCache = [];
+        _this_1.hasCommandCache = [];
         if (persetData) {
-            this.____beforeInstallAttributeInit();
+            _this_1.____beforeInstallAttributeInit();
             for (var s in SceneObject.statusCommonAttributes) {
                 if (persetData.recordData)
-                    this[s] = persetData.recordData[s];
+                    _this_1[s] = persetData.recordData[s];
                 else
-                    this[s] = persetData.soData[s];
+                    _this_1[s] = persetData.soData[s];
             }
-            this.index = persetData.soIndex;
-            this.installSwitchs(persetData.soSwitchs, false);
-            this.installStatusPageData(persetData.sceneObjectData, persetData.fromSceneObjectindex, persetData.soData, persetData.customAttr, persetData.eventData, persetData.recordData, persetData.moduleCustomAttrs);
-            this.____afterInstallAttributeInit();
+            _this_1.index = persetData.soIndex;
+            _this_1.installSwitchs(persetData.soSwitchs, false);
+            _this_1.installStatusPageData(persetData.sceneObjectData, persetData.fromSceneObjectindex, persetData.soData, persetData.customAttr, persetData.eventData, persetData.recordData, persetData.moduleCustomAttrs);
+            _this_1.____afterInstallAttributeInit();
         }
+        return _this_1;
     }
     Object.defineProperty(SceneObjectEntity.prototype, "isCopy", {
         get: function () { return this._isCopy; },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     ;
@@ -46386,14 +46603,14 @@ var SceneObjectEntity = (function (_super) {
         get: function () {
             return this._modules.length;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(SceneObjectEntity.prototype, "world", {
         get: function () {
             return Config.IS_SERVER ? ServerWorld : ClientWorld;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     SceneObjectEntity.prototype.clearCondition = function () {
@@ -46967,7 +47184,7 @@ var CustomAttributeSetting = (function () {
                 varTypeStr += " " + attr.alias;
             }
         }
-        return str + ("" + (isStatic ? "static " : "") + attr.varName + ": " + varTypeStr);
+        return str + ("" + (isStatic ? "static " : "") + (attr.onlyConfig ? "readonly " : "") + attr.varName + ": " + varTypeStr);
     };
     CustomAttributeSetting.getTypeName = function (data) {
         var arr = ["数值", "字符串", "布尔值", "{自定义数据结构}", "{自定义模块}", "对象"];
@@ -47031,7 +47248,6 @@ var CustomAttributeSetting = (function () {
         }
         var newestDataStructureList = Common.dataStructureList;
         var newestCustomModuleList = Common.customModuleList;
-        var customModuleDataList = Common.customModuleDataList;
         if (!myCustomAttributes)
             myCustomAttributes = {};
         for (var i in attrPerSettings) {
@@ -47109,7 +47325,6 @@ var CustomAttributeSetting = (function () {
     CustomAttributeSetting.formatCustomDefaultValue = function (varAttrSetting, arrayEnabled) {
         var newestDataStructureList = Common.dataStructureList;
         var newestCustomModuleList = Common.customModuleList;
-        var customModuleDataList = Common.customModuleDataList;
         var perSerializeAttrType = CustomAttributeSetting.getSerializeAttrType(varAttrSetting, arrayEnabled);
         if (perSerializeAttrType == CustomAttributeSetting.ATTR_TYPE_OBJECT) {
             return { varType: perSerializeAttrType, value: {}, copy: false };
@@ -47163,7 +47378,8 @@ var CustomAttributeSetting = (function () {
                                 if (moduleDataID == 0)
                                     moduleDataID = 1;
                                 mAttrObjs.value.id = moduleDataID;
-                                var moduleData = customModuleDataList[moduleID] ? customModuleDataList[moduleID].data[moduleDataID] : null;
+                                var moduleDataList = Common.getCustomModuleDataList(moduleID);
+                                var moduleData = moduleDataList ? moduleDataList.data[moduleDataID] : null;
                                 if (moduleData) {
                                     CustomAttributeSetting.formatCustomModuleFromDataBasePereset(moduleData, mAttrObjs.value);
                                 }
@@ -47232,7 +47448,6 @@ var CustomAttributeSetting = (function () {
         if (readOnly === void 0) { readOnly = false; }
         if (jurisdictionRestriction === void 0) { jurisdictionRestriction = false; }
         if (customAttrMode === void 0) { customAttrMode = -1; }
-        var customModuleList = Common.customModuleList;
         for (var s in attrSettings) {
             var attrSetting = attrSettings[s];
             if (CustomAttributeSetting.ONLY_DISPLAY.indexOf(attrSetting.compData.compType) != -1)
@@ -47251,6 +47466,9 @@ var CustomAttributeSetting = (function () {
         if (customAttrMode === void 0) { customAttrMode = -1; }
         if (!editorSetAttr) {
             editorSetAttr = CustomAttributeSetting.formatCustomDefaultValue(attrSetting, true);
+            if (!editorSetAttr) {
+                return;
+            }
         }
         var customModuleList = Common.customModuleList;
         var varName = attrSetting.varName;
@@ -47289,7 +47507,7 @@ var CustomAttributeSetting = (function () {
         }
         else if (attrSetting.varType == 4) {
             var customModuleSetting = customModuleList.data[attrSetting.moduleID];
-            var customModule = Common.customModuleDataList[attrSetting.moduleID];
+            var customModule = Common.getCustomModuleDataList(attrSetting.moduleID);
             if (customModuleSetting && customModule) {
                 var mdAttrSettings = CustomCompositeSetting.getAllAttributes(customModuleSetting, false);
                 if (attrSetting.arrayMode) {
@@ -47305,7 +47523,7 @@ var CustomAttributeSetting = (function () {
                                 mdArrObj[i] = mdObj;
                                 mdObj.id = preSetValue.id;
                                 mdObj.name = GameListData.getName(customModule, mdObj.id);
-                                var customModuleTypeData = Common.customModuleDataList[attrSetting.moduleID];
+                                var customModuleTypeData = Common.getCustomModuleDataList(attrSetting.moduleID);
                                 if (customModuleTypeData) {
                                     var customModuleData = customModuleTypeData.data[preSetValue.id];
                                     if (customModuleData) {
@@ -47331,7 +47549,7 @@ var CustomAttributeSetting = (function () {
                             setTargetAttr(target, varName, mdObj, attrSetting, true);
                             mdObj.id = editorSetAttr.value.id;
                             mdObj.name = GameListData.getName(customModule, mdObj.id);
-                            var customModuleTypeData = Common.customModuleDataList[attrSetting.moduleID];
+                            var customModuleTypeData = Common.getCustomModuleDataList(attrSetting.moduleID);
                             if (customModuleTypeData) {
                                 var customModuleData = customModuleTypeData.data[editorSetAttr.value.id];
                                 if (customModuleData) {
@@ -47431,7 +47649,7 @@ var CustomAttributeSetting = (function () {
             }
             else if (attrSetting.varType == 4) {
                 var customModuleSetting = Common.customModuleList.data[attrSetting.moduleID];
-                var customModule = Common.customModuleDataList[attrSetting.moduleID];
+                var customModule = Common.getCustomModuleDataList(attrSetting.moduleID);
                 if (customModuleSetting && customModule) {
                     var mdAttrSettings = CustomCompositeSetting.getAllAttributes(customModuleSetting, false);
                     if (attrSetting.arrayMode) {
@@ -47451,7 +47669,7 @@ var CustomAttributeSetting = (function () {
                                             mdObj.gcsysref = recordArrValue.gcsysref;
                                         }
                                         mdObj.name = GameListData.getName(customModule, mdObj.id);
-                                        var customModuleTypeData = Common.customModuleDataList[attrSetting.moduleID];
+                                        var customModuleTypeData = Common.getCustomModuleDataList(attrSetting.moduleID);
                                         if (customModuleTypeData) {
                                             var customModuleData = customModuleTypeData.data[mdObj.id];
                                             if (customModuleData) {
@@ -47481,7 +47699,7 @@ var CustomAttributeSetting = (function () {
                             }
                             mdObj.id = recordValue.id;
                             mdObj.name = GameListData.getName(customModule, mdObj.id);
-                            var customModuleTypeData = Common.customModuleDataList[attrSetting.moduleID];
+                            var customModuleTypeData = Common.getCustomModuleDataList(attrSetting.moduleID);
                             if (customModuleTypeData) {
                                 var customModuleData = customModuleTypeData.data[recordValue.id];
                                 if (customModuleData) {
@@ -47555,7 +47773,7 @@ var CustomAttributeSetting = (function () {
                         typeValue.value.id = value.id;
                     }
                     var customModuleSetting = Common.customModuleList.data[cusAttr.moduleID];
-                    var customModule = Common.customModuleDataList[cusAttr.moduleID];
+                    var customModule = Common.getCustomModuleDataList(cusAttr.moduleID);
                     if (customModuleSetting && customModule) {
                         docreateVarTypeAttrsByValue(typeValueV, value, customModuleSetting, true);
                     }
@@ -47611,7 +47829,7 @@ var CustomAttributeSetting = (function () {
                 else if (typeValue.varType == CustomAttributeSetting.ATTR_TYPE_MODULE_CLONE_ARRAY) {
                     var typeArr = typeValue.value;
                     var customModuleSetting = Common.customModuleList.data[cusAttr.moduleID];
-                    var customModule = Common.customModuleDataList[cusAttr.moduleID];
+                    var customModule = Common.getCustomModuleDataList(cusAttr.moduleID);
                     if (customModuleSetting && customModule) {
                         typeArr = typeValue.value = [];
                         for (var s in value) {
@@ -47675,7 +47893,7 @@ var CustomAttributeSetting = (function () {
                         typeValue.value.id = value.id;
                     }
                     var customModuleSetting = Common.customModuleList.data[cusAttr.moduleID];
-                    var customModule = Common.customModuleDataList[cusAttr.moduleID];
+                    var customModule = Common.getCustomModuleDataList(cusAttr.moduleID);
                     if (customModuleSetting && customModule) {
                         docreateVarTypeAttrsByValue(typeValueV, value, customModuleSetting, true);
                     }
@@ -47731,7 +47949,7 @@ var CustomAttributeSetting = (function () {
                 else if (typeValue.varType == CustomAttributeSetting.ATTR_TYPE_MODULE_CLONE_ARRAY) {
                     var typeArr = typeValue.value;
                     var customModuleSetting = Common.customModuleList.data[cusAttr.moduleID];
-                    var customModule = Common.customModuleDataList[cusAttr.moduleID];
+                    var customModule = Common.getCustomModuleDataList(cusAttr.moduleID);
                     if (customModuleSetting && customModule) {
                         typeArr = typeValue.value = [];
                         for (var s in value) {
@@ -47788,13 +48006,24 @@ var CustomGameAttribute = (function () {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var MapData = (function (_super) {
     __extends(MapData, _super);
     function MapData() {
-        _super.apply(this, arguments);
-        this.preLoadAssets = [];
-        this.serverInstanceClassName = MapData.SERVER_SCENE_CORE_CLASS;
-        this.clientInstanceClassName = MapData.CLIENT_SCENE_CORE_CLASS;
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.preLoadAssets = [];
+        _this_1.serverInstanceClassName = MapData.SERVER_SCENE_CORE_CLASS;
+        _this_1.clientInstanceClassName = MapData.CLIENT_SCENE_CORE_CLASS;
+        return _this_1;
     }
     MapData.SERVER_SCENE_CORE_CLASS = "GameServerScene";
     MapData.CLIENT_SCENE_CORE_CLASS = "GameClientScene";
@@ -47819,6 +48048,21 @@ var OriginalData = (function () {
     }
     return OriginalData;
 }());
+var TypeTreeNode = (function () {
+    function TypeTreeNode() {
+    }
+    return TypeTreeNode;
+}());
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -47827,9 +48071,10 @@ var OriginalData = (function () {
 var SceneData = (function (_super) {
     __extends(SceneData, _super);
     function SceneData() {
-        _super.apply(this, arguments);
-        this.mapData = new MapData();
-        this.sceneObjectData = new SceneObjectData();
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.mapData = new MapData();
+        _this_1.sceneObjectData = new SceneObjectData();
+        return _this_1;
     }
     return SceneData;
 }(OriginalData));
@@ -47838,31 +48083,42 @@ var SceneData = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var SceneLayerData = (function (_super) {
     __extends(SceneLayerData, _super);
     function SceneLayerData() {
-        _super.apply(this, arguments);
-        this.dx = 0;
-        this.dy = 0;
-        this.scaleX = 1;
-        this.scaleY = 1;
-        this.skewX = 0;
-        this.skewY = 0;
-        this.rotation = 0;
-        this.xMove = 0;
-        this.yMove = 0;
-        this.prospectsPerX = 1;
-        this.prospectsPerY = 1;
-        this.xLoop = false;
-        this.yLoop = false;
-        this.opacity = 1;
-        this.blendMode = null;
-        this.drawMode = false;
-        this.tileData = [];
-        this.autoTileDataCache = [];
-        this.img = null;
-        this.modeType = true;
-        this.modeLock = false;
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.dx = 0;
+        _this_1.dy = 0;
+        _this_1.scaleX = 1;
+        _this_1.scaleY = 1;
+        _this_1.skewX = 0;
+        _this_1.skewY = 0;
+        _this_1.rotation = 0;
+        _this_1.xMove = 0;
+        _this_1.yMove = 0;
+        _this_1.prospectsPerX = 1;
+        _this_1.prospectsPerY = 1;
+        _this_1.xLoop = false;
+        _this_1.yLoop = false;
+        _this_1.opacity = 1;
+        _this_1.blendMode = null;
+        _this_1.drawMode = false;
+        _this_1.tileData = [];
+        _this_1.autoTileDataCache = [];
+        _this_1.img = null;
+        _this_1.modeType = true;
+        _this_1.modeLock = false;
+        return _this_1;
     }
     return SceneLayerData;
 }(OriginalData));
@@ -48443,10 +48699,20 @@ var SceneObjectData = (function () {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var ScriptData = (function (_super) {
     __extends(ScriptData, _super);
     function ScriptData() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return ScriptData;
 }(OriginalData));
@@ -48455,14 +48721,25 @@ var ScriptData = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var TileData = (function (_super) {
     __extends(TileData, _super);
     function TileData() {
-        _super.call(this);
-        this.url = "";
-        this.dataLayers = [];
-        this.width = 0;
-        this.height = 0;
+        var _this_1 = _super.call(this) || this;
+        _this_1.url = "";
+        _this_1.dataLayers = [];
+        _this_1.width = 0;
+        _this_1.height = 0;
+        return _this_1;
     }
     TileData.getTileData = function (texID) {
         if (Config.IS_SERVER)
@@ -48505,12 +48782,23 @@ var TransData = (function () {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var UICommandData = (function (_super) {
     __extends(UICommandData, _super);
     function UICommandData() {
-        _super.apply(this, arguments);
-        this.condition = [];
-        this.click = [];
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.condition = [];
+        _this_1.click = [];
+        return _this_1;
     }
     return UICommandData;
 }(OriginalData));
@@ -48519,12 +48807,23 @@ var UICommandData = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var UIData = (function (_super) {
     __extends(UIData, _super);
     function UIData() {
-        _super.apply(this, arguments);
-        this.uiDisplayData = new UIDisplayData();
-        this.uiCommandData = new OriginalData();
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.uiDisplayData = new UIDisplayData();
+        _this_1.uiCommandData = new OriginalData();
+        return _this_1;
     }
     UIData.init = function (item) {
         item.uiDisplayData.id = item.id;
@@ -48551,13 +48850,24 @@ var UIData = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var UIDisplayData = (function (_super) {
     __extends(UIDisplayData, _super);
     function UIDisplayData() {
-        _super.apply(this, arguments);
-        this.root = {
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.root = {
             children: []
         };
+        return _this_1;
     }
     UIDisplayData.init = function (data, runScriptDomain) {
         if (!data)
@@ -48572,6 +48882,9 @@ var UIDisplayData = (function (_super) {
         }
     };
     UIDisplayData.getAllBaseCode = function (uiList) {
+        var allLen = GameListData.getAllLength(uiList);
+        if (allLen == 0)
+            return "";
         var runtimeCode = "/**\n * \u8BE5\u6587\u4EF6\u4E3AGameCreator\u7F16\u8F91\u5668\u81EA\u52A8\u751F\u6210\u7684\u4EE3\u7801\uFF0C\u8BF7\u52FF\u4FEE\u6539\n */\n";
         for (var typeID = 1; typeID <= 16; typeID++) {
             var len = GameListData.getLength(uiList, typeID);
@@ -48639,6 +48952,9 @@ var UIDisplayData = (function (_super) {
             }
             else {
                 type = "" + type;
+            }
+            if (type == "UICustomGameNumber" || type == "UICustomGameString") {
+                type = "UIString";
             }
             varAttributes += "   " + compItem.name + ":" + type + ";";
             var listItemType = listItemTypeMapping[compItem.type];
@@ -48795,11 +49111,53 @@ var GameListData = (function () {
             }
         }
     };
+    GameListData.insertNewData = function (cls, gameListData, newName, dataType) {
+        if (dataType === void 0) { dataType = null; }
+        var newItemData = new cls();
+        var len = dataType == null ? gameListData.data.length : 16 * 1000;
+        var insertID = -1;
+        var startIndex = dataType == null ? 1 : ((dataType - 1) * 1000 + 1);
+        for (var i = startIndex; i < len; i++) {
+            if (!GameListData.getName(gameListData, i, true)) {
+                insertID = i;
+                break;
+            }
+        }
+        if (insertID == -1) {
+            insertID = len == 0 ? 1 : len;
+        }
+        gameListData.data[insertID] = newItemData;
+        newItemData.id = insertID;
+        var typeID = GameListData.getType(insertID);
+        if (gameListData.hasType) {
+            if (!gameListData.listData.list[typeID])
+                gameListData.listData.list[typeID] = [];
+            var localID = GameListData.getLocalID(insertID);
+            gameListData.listData.list[typeID][localID] = newName;
+        }
+        else {
+            gameListData.listData.list[insertID] = newName;
+        }
+        return insertID;
+    };
     GameListData.getLength = function (gameListData, typeID) {
         if (typeID === void 0) { typeID = null; }
         if (gameListData.hasType) {
             var list = gameListData.listData.list[typeID];
             return list ? list.length - 1 : 0;
+        }
+        else {
+            return gameListData.listData.list.length - 1;
+        }
+    };
+    GameListData.getAllLength = function (gameListData) {
+        if (gameListData.hasType) {
+            var allLen = 0;
+            for (var typeID = 1; typeID <= 16; typeID++) {
+                var list = gameListData.listData.list[typeID];
+                allLen += list ? list.length - 1 : 0;
+            }
+            return allLen;
         }
         else {
             return gameListData.listData.list.length - 1;
@@ -48921,7 +49279,7 @@ var UIListItemData = (function () {
                 this._isOpen = v;
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(UIListItemData.prototype, "uiNames", {
@@ -48938,12 +49296,12 @@ var UIListItemData = (function () {
             }
             return _uiNames;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(UIListItemData.prototype, "parent", {
         get: function () { return this._parent; },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     UIListItemData.prototype.addChild = function (item) { this._children.push(item); item._parent = this; };
@@ -48957,12 +49315,12 @@ var UIListItemData = (function () {
     UIListItemData.prototype.getChildIndex = function (item) { return this._children.indexOf(item); };
     Object.defineProperty(UIListItemData.prototype, "numChildren", {
         get: function () { return this._children.length; },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(UIListItemData.prototype, "children", {
         get: function () { return this._children; },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     UIListItemData.prototype.isInherit = function (data) {
@@ -48991,7 +49349,7 @@ var UIListItemData = (function () {
             }
             return p;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(UIListItemData.prototype, "depth", {
@@ -49006,7 +49364,7 @@ var UIListItemData = (function () {
             }
             return d;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(UIListItemData.prototype, "isHideNode", {
@@ -49021,7 +49379,7 @@ var UIListItemData = (function () {
             }
             return false;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     UIListItemData.uiListItemDataHelper = new UIListItemData();
@@ -49064,7 +49422,7 @@ var GameData = (function () {
     };
     GameData.getLength = function (moduleID, typeID) {
         if (typeID === void 0) { typeID = 1; }
-        var list = Common.customModuleDataList[moduleID];
+        var list = Common.getCustomModuleDataList(moduleID);
         if (!list)
             return 0;
         return GameListData.getLength(list, typeID);
@@ -49095,15 +49453,15 @@ var GameData = (function () {
         ], "asset/json/scene/", "sceneList.json", onFin, false, itemNeedMethod);
     };
     GameData.prototype.loadSceneObjectModelList = function (onFin, isServer) {
-        var _this = this;
+        var _this_1 = this;
         if (isServer === void 0) { isServer = false; }
         var onRealFin = Callback.New(function () {
             if (Config.useNewSceneObjectModel) {
-                _this.onLoadOne(0, GameData.LIST_TYPE_SCENE_OBJECT_MODEL, SceneObjectModelData, [
+                _this_1.onLoadOne(0, GameData.LIST_TYPE_SCENE_OBJECT_MODEL, SceneObjectModelData, [
                     { childAttribute: null, path: "asset/json/scene/model/som" }
                 ], "asset/json/scene/", "sceneObjectModelList.json", false, null, null, true);
                 new SyncTask(GameData.loadDataTask, function () {
-                    var commonModelData = _this.sceneObjectModelList.data[0];
+                    var commonModelData = _this_1.sceneObjectModelList.data[0];
                     SceneObjectModelData.initCommonModelData(commonModelData);
                     onFin.run();
                     SyncTask.taskOver(GameData.loadDataTask);
@@ -49132,14 +49490,15 @@ var GameData = (function () {
         ], "asset/json/scene/", "tileList.json", onFin, false);
     };
     GameData.prototype.loadAutoTileList = function (onFin) {
-        this.onLoadList(GameData.LIST_TYPE_AUTO_TILE, AutoTileData, [], "asset/json/scene/", "autoTileList.json", onFin, false, null, false, null, true);
+        var childItems = Config.fragmentFileVersion ? [{ childAttribute: null, path: "asset/json/scene/autoTile/autoTile" }] : [];
+        this.onLoadList(GameData.LIST_TYPE_AUTO_TILE, AutoTileData, childItems, "asset/json/scene/", "autoTileList.json", onFin, false, null, false, null, true);
     };
     GameData.prototype.loadAvatarList = function (onFin) {
-        var _this = this;
+        var _this_1 = this;
         this.onLoadList(GameData.LIST_TYPE_AVATAR, AvatarData, [
             { childAttribute: null, path: "asset/json/avatar/data/avatar" }
         ], "asset/json/avatar/", "avatarList.json", Callback.New(function () {
-            EditorData.avatarJsonVersionUpgrade1(_this, false);
+            EditorData.avatarJsonVersionUpgrade1(_this_1, false);
             onFin.run();
         }, this), true, null, true);
     };
@@ -49153,11 +49512,11 @@ var GameData = (function () {
         this.onLoadList(GameData.LIST_TYPE_AVATAR_REF_OBJ, AvatarRefObjData, [], "asset/json/avatar/", "avatarRefObjList.json", onFin, false);
     };
     GameData.prototype.loadStandingList = function (onFin) {
-        var _this = this;
+        var _this_1 = this;
         this.onLoadList(GameData.LIST_TYPE_STANDING, AvatarData, [
             { childAttribute: null, path: "asset/json/standAvatar/data/standAvatar" }
         ], "asset/json/standAvatar/", "standAvatarList.json", Callback.New(function () {
-            EditorData.avatarJsonVersionUpgrade1(_this, true);
+            EditorData.avatarJsonVersionUpgrade1(_this_1, true);
             onFin.run();
         }, this), true, null, false);
     };
@@ -49191,12 +49550,14 @@ var GameData = (function () {
         this.onLoadList(GameData.LIST_TYPE_UI, UIData, childData, "asset/json/ui/", "uiList.json", onFin);
     };
     GameData.prototype.loadDataStructureList = function (onFin) {
-        this.onLoadList(GameData.LIST_TYPE_DATA_STRUCTURE, CustomCompositeSetting, [], "asset/json/custom/", "dataStructure.json", onFin, true);
+        var childItems = Config.fragmentFileVersion ? [{ childAttribute: null, path: "asset/json/custom/dataStructure/ds" }] : [];
+        this.onLoadList(GameData.LIST_TYPE_DATA_STRUCTURE, CustomCompositeSetting, childItems, "asset/json/custom/", "dataStructure.json", onFin, true);
     };
     GameData.prototype.loadCustomModuleList = function (onFin) {
-        var _this = this;
-        this.onLoadList(GameData.LIST_TYPE_CUSTOM_MODULE, CustomCompositeSetting, [], "asset/json/custom/", "customModuleList.json", Callback.New(function () {
-            var customSettingList = _this.customModuleList;
+        var _this_1 = this;
+        var childItems = Config.fragmentFileVersion ? [{ childAttribute: null, path: "asset/json/custom/customModuleSetting/cmSetting" }] : [];
+        this.onLoadList(GameData.LIST_TYPE_CUSTOM_MODULE, CustomCompositeSetting, childItems, "asset/json/custom/", "customModuleList.json", Callback.New(function () {
+            var customSettingList = _this_1.customModuleList;
             var len = GameListData.getLength(customSettingList);
             var loadCount = len;
             if (loadCount == 0)
@@ -49204,14 +49565,14 @@ var GameData = (function () {
             for (var i = 1; i <= len; i++) {
                 if (!customSettingList.data[i])
                     continue;
-                _this.onLoadList(GameData.LIST_TYPE_CUSTOM_MODULE_DATA, CustomData, [
+                _this_1.onLoadList(GameData.LIST_TYPE_CUSTOM_MODULE_DATA, CustomData, [
                     { childAttribute: null, path: "asset/json/custom/customModule/" + i + "/cm" }
                 ], "asset/json/custom/customModule/", "customModuleDataList" + i + ".json", Callback.New(function () {
                     loadCount--;
                     if (loadCount == 0) {
                         onFin.run();
                     }
-                }, _this), true, null, false, i);
+                }, _this_1), true, null, false, i);
             }
         }, this), false);
     };
@@ -49220,38 +49581,70 @@ var GameData = (function () {
         return gameListData;
     };
     GameData.prototype.loadGameAttributeConfig = function (onFin) {
-        var _this = this;
-        FileUtils.loadJsonFile("asset/json/custom/customGameAttribute.json", Callback.New(function (jsonObj) {
-            _this.customGameAttribute = new CustomGameAttribute();
-            ObjectUtils.clone(jsonObj, _this.customGameAttribute);
-            onFin.run();
-        }, this));
+        var _this_1 = this;
+        if (Config.fragmentFileVersion) {
+            FileUtils.loadJsonFile("asset/json/custom/customWorldSetting.json", Callback.New(function (worldSetting) {
+                FileUtils.loadJsonFile("asset/json/custom/customPlayerSetting.json", Callback.New(function (playerSetting) {
+                    FileUtils.loadJsonFile("asset/json/custom/customWorldData.json", Callback.New(function (worldData) {
+                        FileUtils.loadJsonFile("asset/json/custom/customPlayerData.json", Callback.New(function (playerData) {
+                            _this_1.customGameAttribute = new CustomGameAttribute();
+                            _this_1.customGameAttribute.worldAttributeSetting = worldSetting;
+                            _this_1.customGameAttribute.playerAttributeSetting = playerSetting;
+                            _this_1.customGameAttribute.worldAttributeConfig = worldData;
+                            _this_1.customGameAttribute.playerAttributeConfig = playerData;
+                            onFin.run();
+                        }, _this_1));
+                    }, _this_1));
+                }, _this_1));
+            }, this));
+        }
+        else {
+            FileUtils.loadJsonFile("asset/json/custom/customGameAttribute.json", Callback.New(function (jsonObj) {
+                _this_1.customGameAttribute = new CustomGameAttribute();
+                ObjectUtils.clone(jsonObj, _this_1.customGameAttribute);
+                onFin.run();
+            }, this));
+        }
     };
     GameData.prototype.loadCustomEventType = function (onFin) {
-        var _this = this;
+        var _this_1 = this;
         this.onLoadList(GameData.LIST_TYPE_CUSTOM_OBJECT_EVENT_TYPE, CustomEventType, [], "asset/json/custom/", "customObjectEventType.json", Callback.New(function () {
-            _this.onLoadList(GameData.LIST_TYPE_CUSTOM_UI_EVENT_TYPE, CustomEventType, [], "asset/json/custom/", "customUIEventType.json", Callback.New(function () {
+            _this_1.onLoadList(GameData.LIST_TYPE_CUSTOM_UI_EVENT_TYPE, CustomEventType, [], "asset/json/custom/", "customUIEventType.json", Callback.New(function () {
                 this.onLoadList(GameData.LIST_TYPE_CUSTOM_SCENE_EVENT_TYPE, CustomEventType, [], "asset/json/custom/", "customSceneEventType.json", onFin, false);
-            }, _this), false);
+            }, _this_1), false);
         }, this), false);
     };
     GameData.prototype.loadCustomCommandType = function (onFin) {
-        this.onLoadList(GameData.LIST_TYPE_CUSTOM_COMMAND_TYPE, CustomCompositeSetting, [], "asset/json/custom/", "customCommandType.json", onFin, true);
+        var childItems = Config.fragmentFileVersion ? [{ childAttribute: null, path: "asset/json/custom/cmd/cmd" }] : [];
+        this.onLoadList(GameData.LIST_TYPE_CUSTOM_COMMAND_TYPE, CustomCompositeSetting, childItems, "asset/json/custom/", "customCommandType.json", onFin, true);
     };
     GameData.prototype.loadCustomBehaviorType = function (onFin) {
-        this.onLoadList(GameData.LIST_TYPE_CUSTOM_BEHAVIOR_TYPE, CustomCompositeSetting, [], "asset/json/custom/", "customBehaviorType.json", onFin, false);
+        var childItems = Config.fragmentFileVersion ? [{ childAttribute: null, path: "asset/json/custom/behavior/behavior" }] : [];
+        this.onLoadList(GameData.LIST_TYPE_CUSTOM_BEHAVIOR_TYPE, CustomCompositeSetting, childItems, "asset/json/custom/", "customBehaviorType.json", onFin, false);
     };
     GameData.prototype.loadCustomCondition = function (onFin) {
-        this.onLoadList(GameData.LIST_TYPE_CUSTOM_CONDITION, CustomCompositeSetting, [], "asset/json/custom/", "cumtomCondition.json", onFin, false, null, false, null, true);
+        var conditonJSONName = Config.fragmentFileVersion ? "customCondition.json" : "cumtomCondition.json";
+        var childItems = Config.fragmentFileVersion ? [{ childAttribute: null, path: "asset/json/custom/condition/condition" }] : [];
+        this.onLoadList(GameData.LIST_TYPE_CUSTOM_CONDITION, CustomCompositeSetting, childItems, "asset/json/custom/", conditonJSONName, onFin, false, null, false, null, true);
     };
     GameData.prototype.loadCustomDataDisplayInUI = function (onFin) {
-        this.onLoadList(GameData.LIST_TYPE_CUSTOM_DATA_DISPLAY, CustomCompositeSetting, [], "asset/json/custom/", "customDataDisplayList.json", onFin, false, null, false, null, true);
+        if (Config.fragmentFileVersion) {
+            var childItems = [{ childAttribute: null, path: "asset/json/custom/gameNumber/num" }];
+            var listName = "customGameNumberList.json";
+        }
+        else {
+            childItems = [];
+            var listName = "customDataDisplayList.json";
+        }
+        this.onLoadList(GameData.LIST_TYPE_CUSTOM_DATA_DISPLAY, CustomCompositeSetting, childItems, "asset/json/custom/", listName, onFin, false, null, false, null, true);
     };
     GameData.prototype.loadCustomGameString = function (onFin) {
-        this.onLoadList(GameData.LIST_TYPE_CUSTOM_GAME_STRING, CustomCompositeSetting, [], "asset/json/custom/", "customGameStringList.json", onFin, false, null, false, null, true);
+        var childItems = Config.fragmentFileVersion ? [{ childAttribute: null, path: "asset/json/custom/gameString/str" }] : [];
+        this.onLoadList(GameData.LIST_TYPE_CUSTOM_GAME_STRING, CustomCompositeSetting, childItems, "asset/json/custom/", "customGameStringList.json", onFin, false, null, false, null, true);
     };
     GameData.prototype.loadMaterialList = function (onFin) {
-        this.onLoadList(GameData.LIST_TYPE_MATERIAL, CustomCompositeSetting, [], "asset/json/custom/", "customMaterialList.json", onFin, false, null, false, null, true);
+        var childItems = Config.fragmentFileVersion ? [{ childAttribute: null, path: "asset/json/custom/material/material" }] : [];
+        this.onLoadList(GameData.LIST_TYPE_MATERIAL, CustomCompositeSetting, childItems, "asset/json/custom/", "customMaterialList.json", onFin, false, null, false, null, true);
     };
     GameData.prototype.loadCustomValueFunction = function (onFin) {
         this.onLoadList(GameData.LIST_TYPE_CUSTOM_VALUE_FUNCTION, OriginalData, [], "asset/json/custom/", "customValueFunction.json", onFin, false);
@@ -49287,7 +49680,7 @@ var GameData = (function () {
         this.onLoadOneOver(id, onFin, "standAvatarList");
     };
     GameData.prototype.onLoadList = function (saveAttribute, childCls, childItems, folder, listName, onFin, hasType, itemNeedMethod, loadZero, arrayModeIndex, allowNoFiles) {
-        var _this = this;
+        var _this_1 = this;
         if (hasType === void 0) { hasType = true; }
         if (itemNeedMethod === void 0) { itemNeedMethod = null; }
         if (loadZero === void 0) { loadZero = false; }
@@ -49307,10 +49700,10 @@ var GameData = (function () {
                         gameListData.listData.list = [null];
                     }
                     if (arrayModeIndex == null) {
-                        _this[saveAttribute] = gameListData;
+                        _this_1[saveAttribute] = gameListData;
                     }
                     else {
-                        _this[saveAttribute][arrayModeIndex] = gameListData;
+                        _this_1[saveAttribute][arrayModeIndex] = gameListData;
                     }
                     gameListData.hasType = hasType;
                     new SyncTask(GameData.loadDataTask, function () {
@@ -49322,10 +49715,10 @@ var GameData = (function () {
             }
             var gameListData = new GameListData(folder, listName, listData, saveAttribute, arrayModeIndex);
             if (arrayModeIndex == null) {
-                _this[saveAttribute] = gameListData;
+                _this_1[saveAttribute] = gameListData;
             }
             else {
-                _this[saveAttribute][arrayModeIndex] = gameListData;
+                _this_1[saveAttribute][arrayModeIndex] = gameListData;
             }
             gameListData.hasType = hasType;
             var typeList = hasType ? listData.list : { 1: listData.list };
@@ -49340,7 +49733,7 @@ var GameData = (function () {
                     var id = GameListData.getID(parseInt(typeID), i);
                     if (itemNeedMethod && !itemNeedMethod(id))
                         continue;
-                    _this.onLoadOne(id, saveAttribute, childCls, childItems, folder, listName, hasType, listData, arrayModeIndex);
+                    _this_1.onLoadOne(id, saveAttribute, childCls, childItems, folder, listName, hasType, listData, arrayModeIndex);
                 }
             }
             new SyncTask(GameData.loadDataTask, function () {
@@ -49462,12 +49855,19 @@ var GameData = (function () {
 var FileUtils = (function () {
     function FileUtils() {
     }
+    Object.defineProperty(FileUtils, "hasFileOperationJurisdiction", {
+        get: function () {
+            return Config.IS_SERVER || os.platform == 2 || Config.INDIA_APPLICATION_GAME_INFO != null;
+        },
+        enumerable: false,
+        configurable: true
+    });
     FileUtils.init = function () {
         if (Common.runPlatform == 2) {
             FileUtils.loader = window["loader"];
             FileUtils.Handler = window["Handler"];
-            if (os.inGC())
-                FileUtils.nativePath = gcTop.mainDomain_LGNative.WORK_PATH;
+            if (os.inGC(false))
+                FileUtils.nativePath = mainDomain_LGConfig.WORK_PATH;
             else if (typeof process != "undefined")
                 FileUtils.nativePath = (process.cwd()).replace(/[\\\/]{1,999}/g, "/");
         }
@@ -49475,6 +49875,32 @@ var FileUtils = (function () {
             FileUtils.readFile = eval("readFile");
             FileUtils.nativePath = eval("nativePath");
         }
+    };
+    FileUtils.exists = function (localURL, onFin) {
+        localURL = localURL.split("?")[0];
+        if (FileUtils.hasFileOperationJurisdiction) {
+            var indiaAppGameInfo = Config.INDIA_APPLICATION_GAME_INFO;
+            if (indiaAppGameInfo) {
+                var rq = new HttpRequest();
+                var data = JSON.stringify({ mode: 6, localURL: localURL });
+                var IDEHttpServerURL = "http://127.0.0.1:" + indiaAppGameInfo.gcDebugPort + "/kdsrpg_http_indieapp.js?cmd=3";
+                rq.send(IDEHttpServerURL, data, "post");
+                rq.add_ERROR(function () {
+                    onFin.runWith([false]);
+                }, this);
+                rq.add_COMPLETE(function (str) {
+                    onFin.runWith([str == "ok"]);
+                }, this);
+                return;
+            }
+            if (typeof require != "undefined") {
+                var fs = mainDomain_fs;
+                var isExists = fs.existsSync(FileUtils.nativePath + "/" + localURL);
+                onFin.runWith([isExists]);
+                return;
+            }
+        }
+        onFin.runWith([true]);
     };
     FileUtils.loadJsonFile = function (localURL, onFin, onErrorTips) {
         if (onErrorTips === void 0) { onErrorTips = true; }
@@ -49512,27 +49938,53 @@ var FileUtils = (function () {
             }
             onFin.runWith([txt]);
         }
-        if (Common.runPlatform == 2) {
-            loader.load(localURL, Handler.create(this, function (onFin, localURL, txt) {
-                onloaded(onFin, txt, localURL);
-            }, [onFin, localURL]), null, Loader.TEXT, 0, isJson ? false : true);
+        if (!onErrorTips && !Config.IS_SERVER) {
+            FileUtils.exists(localURL, Callback.New(doLoadFile, this));
         }
         else {
-            var txt = this.readFile(this.nativePath + localURL);
-            if (txt == "[no exist]")
-                txt = null;
-            onloaded(onFin, txt, localURL);
+            doLoadFile.call(this, true);
+        }
+        function doLoadFile(isExists) {
+            if (!isExists) {
+                onloaded(onFin, null, localURL);
+                return;
+            }
+            if (Common.runPlatform == 2) {
+                loader.load(localURL, Handler.create(this, function (onFin, localURL, txt) {
+                    onloaded(onFin, txt, localURL);
+                }, [onFin, localURL]), null, Loader.TEXT, 0, isJson ? false : true);
+            }
+            else {
+                var txt = this.readFile(this.nativePath + localURL);
+                if (txt == "[no exist]")
+                    txt = null;
+                onloaded(onFin, txt, localURL);
+            }
         }
     };
     FileUtils.cloneFile = function (fromLocalURL, toLocalURL, onFin, onProgress) {
-        var _this = this;
+        var _this_1 = this;
         if (onProgress === void 0) { onProgress = null; }
         new SyncTask(FileUtils.TASK_MODIFY_FILE, function () {
             var onCloneFileFin = Callback.New(function (success, fromLocalURL, toLocalURL) {
                 onFin.runWith([success, fromLocalURL, toLocalURL]);
                 SyncTask.taskOver(FileUtils.TASK_MODIFY_FILE);
-            }, _this);
+            }, _this_1);
             if (!Config.EDIT_MODE && (os.platform != 2)) {
+                var indiaAppGameInfo = Config.INDIA_APPLICATION_GAME_INFO;
+                if (indiaAppGameInfo) {
+                    var rq = new HttpRequest();
+                    var data = JSON.stringify({ mode: 1, fromLocalURL: fromLocalURL, toLocalURL: toLocalURL });
+                    var IDEHttpServerURL = "http://127.0.0.1:" + indiaAppGameInfo.gcDebugPort + "/kdsrpg_http_indieapp.js?cmd=3";
+                    rq.send(IDEHttpServerURL, data, "post");
+                    rq.add_ERROR(function () {
+                        onCloneFileFin.delayRun(0, null, [false, fromLocalURL, toLocalURL]);
+                    }, _this_1);
+                    rq.add_COMPLETE(function (str) {
+                        onCloneFileFin.delayRun(0, null, [str == "ok", fromLocalURL, toLocalURL]);
+                    }, _this_1);
+                    return;
+                }
                 if (IndexedDBManager.support && IndexedDBManager.used) {
                     IndexedDBManager.getIndexDBJson(fromLocalURL, function (value) {
                         if (value) {
@@ -49562,9 +50014,8 @@ var FileUtils = (function () {
                 }
                 return;
             }
-            if (os.inGC()) {
-                var FileObject = gcTop.mainDomain_FileObject;
-                new FileObject(fromLocalURL, function (fromFo) {
+            if (os.inGC(false)) {
+                new mainDomain_FileObject(fromLocalURL, function (fromFo) {
                     if (!fromFo.exists) {
                         onCloneFileFin.delayRun(0, null, [false, fromLocalURL, toLocalURL]);
                         return;
@@ -49573,8 +50024,8 @@ var FileUtils = (function () {
                         onCloneFileFin.delayRun(0, null, [true, fromLocalURL, toLocalURL]);
                     }, function () {
                         onCloneFileFin.delayRun(0, null, [false, fromLocalURL, toLocalURL]);
-                    }, _this);
-                }, _this, function () {
+                    }, _this_1);
+                }, _this_1, function () {
                     onCloneFileFin.delayRun(0, null, [false, fromLocalURL, toLocalURL]);
                 });
                 return;
@@ -49594,14 +50045,14 @@ var FileUtils = (function () {
                     FileUtils.doClone(fromLocalURL, toLocalURL, onCloneFileFin, 1);
                 }
                 else {
-                    var _this = _this;
+                    var _this = _this_1;
                     FileUtils.getAllChildFiles(fromLocalURL, Callback.New(function (fos) {
                         if (!fos) {
                             onCloneFileFin.delayRun(0, null, [false, fromLocalURL, toLocalURL]);
                             return;
                         }
                         FileUtils.doClone(fromLocalURL, toLocalURL, onCloneFileFin, fos.length, onProgress, stat);
-                    }, _this), stat);
+                    }, _this_1), stat);
                 }
             }
         });
@@ -49703,15 +50154,38 @@ var FileUtils = (function () {
         }
     };
     FileUtils.getDirectoryListing = function (directoryLocalPath, onFin, stat) {
-        var _this = this;
+        var _this_1 = this;
         if (stat === void 0) { stat = null; }
-        if (os.platform != 2) {
+        var indiaAppGameInfo = Config.INDIA_APPLICATION_GAME_INFO;
+        if (os.platform != 2 && indiaAppGameInfo == null) {
             onFin.delayRun(0, null, [null]);
             return;
         }
-        if (os.inGC()) {
-            var FileObject = gcTop.mainDomain_FileObject;
-            new FileObject(directoryLocalPath, function (directoryLocalFo) {
+        if (indiaAppGameInfo) {
+            var rq = new HttpRequest();
+            var data = JSON.stringify({ mode: 2, directoryLocalPath: directoryLocalPath });
+            var IDEHttpServerURL = "http://127.0.0.1:" + indiaAppGameInfo.gcDebugPort + "/kdsrpg_http_indieapp.js?cmd=3";
+            rq.send(IDEHttpServerURL, data, "post");
+            rq.add_ERROR(function () {
+                onFin.delayRun(0, null, [null]);
+            }, this);
+            rq.add_COMPLETE(function (str) {
+                try {
+                    var localPaths = JSON.parse(str);
+                    for (var i = 0; i < localPaths.length; i++) {
+                        var f = localPaths[i];
+                        f.lastModifyDate = new Date(f.lastModifyDate);
+                    }
+                    onFin.delayRun(0, null, [localPaths]);
+                }
+                catch (e) {
+                    onFin.delayRun(0, null, [null]);
+                }
+            }, this);
+            return;
+        }
+        if (os.inGC(false)) {
+            new mainDomain_FileObject(directoryLocalPath, function (directoryLocalFo) {
                 if (!directoryLocalFo.exists) {
                     onFin.delayRun(0, null, [null]);
                     return;
@@ -49732,7 +50206,7 @@ var FileUtils = (function () {
                     }
                 }, function () {
                     onFin.delayRun(0, null, [null]);
-                }, _this);
+                }, _this_1);
             }, this, function () {
                 onFin.delayRun(0, null, [null]);
             });
@@ -49768,15 +50242,34 @@ var FileUtils = (function () {
         onFin.delayRun(0, null, [fileObjectList]);
     };
     FileUtils.getAllChildFiles = function (directoryLocalPath, onFin, stat) {
-        var _this = this;
+        var _this_1 = this;
         if (stat === void 0) { stat = null; }
-        if (os.platform != 2) {
+        var indiaAppGameInfo = Config.INDIA_APPLICATION_GAME_INFO;
+        if (os.platform != 2 && indiaAppGameInfo == null) {
             onFin.delayRun(0, null, [null]);
             return;
         }
-        if (os.inGC()) {
-            var FileObject = gcTop.mainDomain_FileObject;
-            new FileObject(directoryLocalPath, function (directoryLocalFo) {
+        if (indiaAppGameInfo) {
+            var rq = new HttpRequest();
+            var data = JSON.stringify({ mode: 3, directoryLocalPath: directoryLocalPath });
+            var IDEHttpServerURL = "http://127.0.0.1:" + indiaAppGameInfo.gcDebugPort + "/kdsrpg_http_indieapp.js?cmd=3";
+            rq.send(IDEHttpServerURL, data, "post");
+            rq.add_ERROR(function () {
+                onFin.delayRun(0, null, [null]);
+            }, this);
+            rq.add_COMPLETE(function (str) {
+                try {
+                    var localPaths = JSON.parse(str);
+                    onFin.delayRun(0, null, [localPaths]);
+                }
+                catch (e) {
+                    onFin.delayRun(0, null, [null]);
+                }
+            }, this);
+            return;
+        }
+        if (os.inGC(false)) {
+            new mainDomain_FileObject(directoryLocalPath, function (directoryLocalFo) {
                 if (!directoryLocalFo.exists) {
                     onFin.delayRun(0, null, [null]);
                     return;
@@ -49796,7 +50289,7 @@ var FileUtils = (function () {
                     }
                 }, function () {
                     onFin.delayRun(0, null, [null]);
-                }, _this);
+                }, _this_1);
             }, this, function () {
                 onFin.delayRun(0, null, [null]);
             });
@@ -49828,15 +50321,16 @@ var FileUtils = (function () {
         }
         getChildFiles.call(this, directoryLocalPath, stat);
     };
-    FileUtils.save = function (dataObject, localURL, onFin, format, isJson) {
-        var _this = this;
+    FileUtils.save = function (dataObject, localURL, onFin, format, isJson, forceCreateFolder) {
+        var _this_1 = this;
         if (format === void 0) { format = true; }
         if (isJson === void 0) { isJson = true; }
+        if (forceCreateFolder === void 0) { forceCreateFolder = false; }
         new SyncTask(FileUtils.TASK_MODIFY_FILE, function () {
             var onSaveFin = Callback.New(function (success, localURL) {
                 onFin && onFin.runWith([success, localURL]);
                 SyncTask.taskOver(FileUtils.TASK_MODIFY_FILE);
-            }, _this);
+            }, _this_1);
             var indiaAppGameInfo = Config.INDIA_APPLICATION_GAME_INFO;
             if (indiaAppGameInfo) {
                 var rq = new HttpRequest();
@@ -49846,10 +50340,10 @@ var FileUtils = (function () {
                 rq.send(IDEHttpServerURL, data, "post");
                 rq.add_ERROR(function () {
                     onSaveFin && onSaveFin.delayRun(0, null, [false, localURL]);
-                }, _this);
+                }, _this_1);
                 rq.add_COMPLETE(function (str) {
                     onSaveFin && onSaveFin.delayRun(0, null, [str == "ok", localURL]);
-                }, _this);
+                }, _this_1);
                 return;
             }
             if (!Config.EDIT_MODE && (os.platform != 2)) {
@@ -49887,8 +50381,8 @@ var FileUtils = (function () {
                 catch (e) {
                     trace("打包数据失败:", localURL, e);
                 }
-                if (typeof FileObject != "undefined") {
-                    new FileObject(localURL, function (fo) {
+                if (typeof mainDomain_FileObject != "undefined") {
+                    new mainDomain_FileObject(localURL, function (fo) {
                         if (FileUtils.saveFileExt)
                             dataString = FileUtils.saveFileExt(fo.fullPath, dataString);
                         fo[fo.exists ? "saveFile" : "createFile"](dataString, function () {
@@ -49896,18 +50390,17 @@ var FileUtils = (function () {
                         }, function () {
                             onSaveOver(onSaveFin, [false, fo.path]);
                         }, this);
-                    }, _this, function () {
+                    }, _this_1, function () {
                         onSaveOver(onSaveFin, [false, localURL]);
                     });
                 }
                 else {
                     var head = "";
                     if (Browser.onPC) {
-                        head = (typeof gcTop.mainDomain_LGNative != "undefined") ? gcTop.mainDomain_LGNative.WORK_PATH + "/" : "";
+                        head = (typeof mainDomain_LGConfig !== "undefined") ? mainDomain_LGConfig.WORK_PATH + "/" : "";
                         var fullURL = head + localURL;
-                        var fs;
-                        if (typeof gcTop.require && (fs = gcTop.require("fs"))) {
-                            fs.writeFile(fullURL, dataString, function (err) {
+                        if (mainDomain_fs) {
+                            mainDomain_fs.writeFile(fullURL, dataString, function (err) {
                                 if (err) {
                                     onSaveOver(onSaveFin, [false, localURL]);
                                     return;
@@ -49917,11 +50410,11 @@ var FileUtils = (function () {
                         }
                     }
                 }
-            }, _this), false, true);
+            }, _this_1), false, forceCreateFolder ? false : true);
         });
     };
     FileUtils.createDirectoryForce = function (localURL, onFin, taskLock, inEditorIgnore) {
-        var _this = this;
+        var _this_1 = this;
         if (taskLock === void 0) { taskLock = true; }
         if (inEditorIgnore === void 0) { inEditorIgnore = false; }
         var taskF = function () {
@@ -49933,38 +50426,38 @@ var FileUtils = (function () {
                 onFin && onFin.runWith([success, localURL]);
                 if (taskLock)
                     SyncTask.taskOver(FileUtils.TASK_MODIFY_FILE);
-            }, _this);
+            }, _this_1);
+            var indiaAppGameInfo = Config.INDIA_APPLICATION_GAME_INFO;
+            if (indiaAppGameInfo) {
+                var rq = new HttpRequest();
+                var data = JSON.stringify({ mode: 4, localURL: localURL });
+                var IDEHttpServerURL = "http://127.0.0.1:" + indiaAppGameInfo.gcDebugPort + "/kdsrpg_http_indieapp.js?cmd=3";
+                rq.send(IDEHttpServerURL, data, "post");
+                rq.add_ERROR(function () {
+                    onCreateDirectoryFin.runWith([false, localURL]);
+                }, _this_1);
+                rq.add_COMPLETE(function (str) {
+                    onCreateDirectoryFin.runWith([str == "ok", localURL]);
+                }, _this_1);
+                return;
+            }
             if (Config.EDIT_MODE && inEditorIgnore) {
                 onCreateDirectoryFin.runWith([true, localURL]);
                 return;
             }
-            if (typeof FileObject != "undefined" && 1 == 2) {
-                new FileObject(localURL, function (fo) {
-                    fo.createDirectoryForce(function (fo) {
-                        onCreateDirectoryFin.runWith([true, localURL]);
-                    }, function (fo, state) {
-                        onCreateDirectoryFin.runWith([state == 1, localURL]);
-                    }, this);
-                }, _this, function () {
-                    onCreateDirectoryFin.runWith([false, localURL]);
-                });
+            if (localURL[localURL.length - 1] != "/") {
+                localURL += "/";
             }
-            else {
-                if (localURL[localURL.length - 1] != "/") {
-                    localURL += "/";
-                }
-                var head = "";
-                if (Browser.onPC) {
-                    head = (typeof gcTop.mainDomain_LGNative != "undefined") ? gcTop.mainDomain_LGNative.WORK_PATH + "/" : "";
-                    var fullURL = head + localURL;
-                    var fs;
-                    if (typeof gcTop.require && (fs = gcTop.require("fs"))) {
-                        createDirectoryForce(fullURL, function () {
-                            onCreateDirectoryFin.runWith([true, localURL]);
-                        }, function () {
-                            onCreateDirectoryFin.runWith([false, localURL]);
-                        }, _this);
-                    }
+            var head = "";
+            if (Browser.onPC) {
+                head = (typeof mainDomain_LGConfig != "undefined") ? mainDomain_LGConfig.WORK_PATH + "/" : "";
+                var fullURL = head + localURL;
+                if (mainDomain_fs) {
+                    createDirectoryForce(fullURL, function () {
+                        onCreateDirectoryFin.runWith([true, localURL]);
+                    }, function () {
+                        onCreateDirectoryFin.runWith([false, localURL]);
+                    }, _this_1);
                 }
             }
             function createDirectoryForce(realFullPath, onComplete, onError, thisPtr) {
@@ -49976,8 +50469,7 @@ var FileUtils = (function () {
                     return;
                 }
                 var _this = this;
-                var realFullPathArr = realFullPath.split("/");
-                var fs = gcTop.require("fs");
+                realFullPathArr = realFullPath.split("/");
                 for (var i = 0; i < realFullPathArr.length; i++) {
                     var path = "";
                     for (var s = 0; s <= i; s++) {
@@ -49987,9 +50479,9 @@ var FileUtils = (function () {
                     }
                     if (path == "")
                         continue;
-                    var statInfo = fs.existsSync(path);
+                    var statInfo = mainDomain_fs.existsSync(path);
                     if (!statInfo) {
-                        fs.mkdirSync(path);
+                        mainDomain_fs.mkdirSync(path);
                     }
                 }
                 setTimeout(function () {
@@ -50005,14 +50497,28 @@ var FileUtils = (function () {
         }
     };
     FileUtils.deleteFile = function (localURL, onFin, isFullPath) {
-        var _this = this;
+        var _this_1 = this;
         if (onFin === void 0) { onFin = null; }
         if (isFullPath === void 0) { isFullPath = false; }
         new SyncTask(FileUtils.TASK_MODIFY_FILE, function () {
             var onDeleteFileFin = Callback.New(function (success, localURL) {
                 onFin && onFin.runWith([success, localURL]);
                 SyncTask.taskOver(FileUtils.TASK_MODIFY_FILE);
-            }, _this);
+            }, _this_1);
+            var indiaAppGameInfo = Config.INDIA_APPLICATION_GAME_INFO;
+            if (indiaAppGameInfo) {
+                var rq = new HttpRequest();
+                var data = JSON.stringify({ mode: 5, localURL: localURL });
+                var IDEHttpServerURL = "http://127.0.0.1:" + indiaAppGameInfo.gcDebugPort + "/kdsrpg_http_indieapp.js?cmd=3";
+                rq.send(IDEHttpServerURL, data, "post");
+                rq.add_ERROR(function () {
+                    onDeleteFileFin.runWith([false, localURL]);
+                }, _this_1);
+                rq.add_COMPLETE(function (str) {
+                    onDeleteFileFin.runWith([str == "ok", localURL]);
+                }, _this_1);
+                return;
+            }
             if (!Config.EDIT_MODE && (os.platform != 2)) {
                 if (IndexedDBManager.support && IndexedDBManager.used) {
                     IndexedDBManager.removeIndexDBItem(localURL, function (success) {
@@ -50025,35 +50531,34 @@ var FileUtils = (function () {
                 }
                 return;
             }
-            var fs;
-            if (typeof gcTop.require && (fs = gcTop.require("fs"))) {
-                var head = (typeof gcTop.mainDomain_LGNative != "undefined") ? gcTop.mainDomain_LGNative.WORK_PATH + "/" : "";
+            if (mainDomain_fs) {
+                var head = (typeof mainDomain_LGConfig !== "undefined") ? mainDomain_LGConfig.WORK_PATH + "/" : "";
                 var fullURL = isFullPath ? localURL : (head + localURL);
-                if (!fs.existsSync(fullURL)) {
+                if (!mainDomain_fs.existsSync(fullURL)) {
                     onDeleteFileFin && onDeleteFileFin.delayRun(0, null, [false, localURL]);
                     return;
                 }
-                var stat = fs.statSync(fullURL);
+                var stat = mainDomain_fs.statSync(fullURL);
                 if (stat.isDirectory()) {
                     deleteall(fullURL);
                 }
                 else {
-                    fs.unlinkSync(fullURL);
+                    mainDomain_fs.unlinkSync(fullURL);
                 }
                 function deleteall(path) {
                     var files = [];
-                    if (fs.existsSync(path)) {
-                        files = fs.readdirSync(path);
+                    if (mainDomain_fs.existsSync(path)) {
+                        files = mainDomain_fs.readdirSync(path);
                         files.forEach(function (file, index) {
                             var curPath = path + "/" + file;
-                            if (fs.statSync(curPath).isDirectory()) {
+                            if (mainDomain_fs.statSync(curPath).isDirectory()) {
                                 deleteall(curPath);
                             }
                             else {
-                                fs.unlinkSync(curPath);
+                                mainDomain_fs.unlinkSync(curPath);
                             }
                         });
-                        fs.rmdirSync(path);
+                        mainDomain_fs.rmdirSync(path);
                     }
                 }
             }
@@ -50401,6 +50906,8 @@ var GameUtils = (function () {
     };
     GameUtils.isLegalVarName = function (varName, headFont) {
         if (headFont === void 0) { headFont = true; }
+        if (!varName)
+            return false;
         var reg = /([\$_a-zA-Z]|[\u4e00-\u9fa50-9a-zA-Z_$]){1,255}/g;
         var m = varName.match(reg);
         if (headFont && !isNaN(parseInt(varName[0])))
@@ -50844,7 +51351,7 @@ var IndexedDBManager = (function () {
             onFin && onFin.apply(this, [false]);
         };
     };
-    IndexedDBManager.indexedDB = (typeof window != "undefined" && (window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB));
+    IndexedDBManager.indexedDB = (typeof window != "undefined" && (window.indexedDB || window['webkitIndexedDB'] || window['mozIndexedDB'] || window['msIndexedDB']));
     IndexedDBManager.support = IndexedDBManager.indexedDB ? true : false;
     IndexedDBManager.used = false;
     IndexedDBManager.databaseName = "GameCreator";
@@ -50861,7 +51368,7 @@ var SceneObjectBehaviors = (function () {
         this.loop = loop;
         this.index = startIndex;
         this.onOver = onOver;
-        this.targetPlayerSceneObject = this.targetSceneObject = targetSceneObject;
+        this['targetPlayerSceneObject'] = this.targetSceneObject = targetSceneObject;
         this.executor = executor;
     }
     Object.defineProperty(SceneObjectBehaviors.prototype, "index", {
@@ -50872,7 +51379,7 @@ var SceneObjectBehaviors = (function () {
             this._index = v;
             EventUtils.happen(this, SceneObjectBehaviors.EVENT_INDEX_CHANGE, [v]);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     SceneObjectBehaviors.toBehaviorData = function (behaviorStr) {
@@ -50991,29 +51498,14 @@ var Common = (function () {
                 return 1;
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "inGC", {
         get: function () {
-            return (typeof window == "undefined" || Config.IS_SERVER) ? false : (typeof gcTop != "undefined" && typeof gcTop.mainDomain_LGNative != "undefined");
+            return (typeof window == "undefined" || Config.IS_SERVER) ? false : (typeof mainDomain_gcide != "undefined");
         },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Common, "newestDBData", {
-        get: function () {
-            if (Config.EDIT_MODE) {
-                return Editor.data.dbData ? Editor.data.dbData : Game.data;
-            }
-            else if (Config.IS_SERVER) {
-                return ServerWorld.gameData;
-            }
-            else {
-                return Game.data;
-            }
-        },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "gameData", {
@@ -51025,105 +51517,105 @@ var Common = (function () {
                 return Game.data;
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "variableNameList", {
         get: function () {
             return this.getGameDataAttrValue(GameData.LIST_TYPE_VARIABLE);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "switchNameList", {
         get: function () {
             return this.getGameDataAttrValue(GameData.LIST_TYPE_SWITCH);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "stringNameList", {
         get: function () {
             return this.getGameDataAttrValue(GameData.LIST_TYPE_STRING);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "playerVariableNameList", {
         get: function () {
             return this.getGameDataAttrValue(GameData.LIST_TYPE_PLAYER_VARIABLE);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "playerSwitchNameList", {
         get: function () {
             return this.getGameDataAttrValue(GameData.LIST_TYPE_PLAYER_SWITCH);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "playerStringNameList", {
         get: function () {
             return this.getGameDataAttrValue(GameData.LIST_TYPE_PLAYER_STRING);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "sceneList", {
         get: function () {
             return this.getGameDataAttrValue(GameData.LIST_TYPE_SCENE);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "sceneObjectModelList", {
         get: function () {
             return this.getGameDataAttrValue(GameData.LIST_TYPE_SCENE_OBJECT_MODEL);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "sceneObjectModuleList", {
         get: function () {
             return this.getGameDataAttrValue(GameData.LIST_TYPE_SCENE_OBJECT_MODULE);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "tileList", {
         get: function () {
             return this.getGameDataAttrValue(GameData.LIST_TYPE_TILE);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "avatarActList", {
         get: function () {
             return this.getGameDataAttrValue(GameData.LIST_TYPE_AVATAR_ACT);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "standingExpressionList", {
         get: function () {
             return this.getGameDataAttrValue(GameData.LIST_TYPE_STANDING_EXPRESSION);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "avatarRefObjList", {
         get: function () {
             return this.getGameDataAttrValue(GameData.LIST_TYPE_AVATAR_REF_OBJ);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "animationSignalList", {
         get: function () {
             return this.getGameDataAttrValue(GameData.LIST_TYPE_ANIMATION_SIGNAL);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "dataStructureList", {
@@ -51138,7 +51630,7 @@ var Common = (function () {
                 return Game.data.dataStructureList;
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "customModuleList", {
@@ -51153,27 +51645,40 @@ var Common = (function () {
                 return Game.data.customModuleList;
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "customModuleDataList", {
         get: function () {
             return this.getNewestDBData(GameData.LIST_TYPE_CUSTOM_MODULE_DATA);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
+    Common.getCustomModuleDataList = function (moduleID) {
+        var attr = GameData.LIST_TYPE_CUSTOM_MODULE_DATA;
+        if (Config.EDIT_MODE) {
+            var res = Editor.data && Editor.data.dbData && Editor.data.dbData[attr] && Editor.data.dbData[attr][moduleID] ? Editor.data.dbData[attr][moduleID] : Game.data[attr][moduleID];
+            return res;
+        }
+        else if (Config.IS_SERVER) {
+            return ServerWorld.gameData[attr][moduleID];
+        }
+        else {
+            return Game.data[attr][moduleID];
+        }
+    };
     Object.defineProperty(Common, "customSceneModelList", {
         get: function () {
             return null;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "customGameAttribute", {
         get: function () {
             if (Config.EDIT_MODE) {
-                return Editor.data.dbData ? Editor.data.dbData.customGameAttribute : Game.data.customGameAttribute;
+                return Editor.data.dbData && Editor.data.dbData.customGameAttribute ? Editor.data.dbData.customGameAttribute : Game.data.customGameAttribute;
             }
             else if (Config.IS_SERVER) {
                 return ServerWorld.gameData.customGameAttribute;
@@ -51182,7 +51687,7 @@ var Common = (function () {
                 return Game.data.customGameAttribute;
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "customSceneEventTypeList", {
@@ -51194,7 +51699,7 @@ var Common = (function () {
                 return Game.data.customSceneEventTypeList;
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "customObjectEventTypeList", {
@@ -51206,7 +51711,7 @@ var Common = (function () {
                 return Game.data.customObjectEventTypeList;
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "customUIEventTypeList", {
@@ -51218,7 +51723,7 @@ var Common = (function () {
                 return Game.data.customUIEventTypeList;
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "customCommandTypeList", {
@@ -51230,7 +51735,7 @@ var Common = (function () {
                 return Game.data.customCommandTypeList;
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "customBehaviorTypeList", {
@@ -51242,49 +51747,49 @@ var Common = (function () {
                 return Game.data.customBehaviorTypeList;
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "avatarList", {
         get: function () {
             return this.getNewestDBData(GameData.LIST_TYPE_AVATAR);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "standAvatarList", {
         get: function () {
             return this.getNewestDBData(GameData.LIST_TYPE_STANDING);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "commonEventList", {
         get: function () {
             return this.getNewestDBData(GameData.LIST_TYPE_COMMON_EVENT);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "dialogList", {
         get: function () {
             return this.getNewestDBData(GameData.LIST_TYPE_DIALOG);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "animationList", {
         get: function () {
             return this.getNewestDBData(GameData.LIST_TYPE_ANIMATION);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Common, "uiList", {
         get: function () {
             return this.getNewestDBData(GameData.LIST_TYPE_UI);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Common.getGameDataAttrValue = function (attr) {
@@ -51297,7 +51802,7 @@ var Common = (function () {
     };
     Common.getNewestDBData = function (attr) {
         if (Config.EDIT_MODE) {
-            return Editor.data && Editor.data.dbData ? Editor.data.dbData[attr] : Game.data[attr];
+            return Editor.data && Editor.data.dbData && Editor.data.dbData[attr] ? Editor.data.dbData[attr] : Game.data[attr];
         }
         else if (Config.IS_SERVER) {
             return ServerWorld.gameData[attr];
@@ -51315,14 +51820,14 @@ var Config = (function () {
         get: function () {
             return Config.indiaApplicationGameInfo;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Config, "useNewSceneObjectModel", {
         get: function () {
             return ((Config.RELEASE_TEMPLATE_GC_VERSION && Config.RELEASE_TEMPLATE_GC_VERSION >= 0.984) || (Config.EDIT_MODE && !Config.BEHAVIOR_EDIT_MODE && !Config.RELEASE_MODE));
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Config.init = function () {
@@ -51373,6 +51878,8 @@ var Config = (function () {
     };
     Object.defineProperty(Config, "indiaApplicationGameInfo", {
         get: function () {
+            if (Config.IS_SERVER)
+                return null;
             if (window.location.href.indexOf("gcDebugPort=") == -1)
                 return null;
             var params = window.location.href.split("?").pop();
@@ -51389,12 +51896,12 @@ var Config = (function () {
                 return null;
             return res;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Config.USE_FN = true;
     Config.saveAttrs = ["verManager", "startupPreloadFonts", "FONTS", "EDITOR_MAG_FILTER", "IMAGE_LAYER_DP_COORD_JS", "IMAGE_LAYER_DP_COORD_TS",
-        "CREATED_GC_VERSION", "RELEASE_TEMPLATE_GC_VERSION", "gameSID", "gameProjectName", "gameVersion"];
+        "CREATED_GC_VERSION", "RELEASE_TEMPLATE_GC_VERSION", "gameSID", "gameProjectName", "gameVersion", "fragmentFileVersion", "GAME_MAG_FILTER"];
     Config.ENGINE_MERGE_STARTUP_FILE = true;
     Config.compatibleOldProgram = true;
     Config.JSON_PATH = "asset/json";
@@ -51460,21 +51967,32 @@ var Player = (function () {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var CommandTrigger = (function (_super) {
     __extends(CommandTrigger, _super);
     function CommandTrigger(mainType, indexType, scene, trigger, multiline, executor) {
-        _super.call(this);
-        this.commandScope = [];
-        this.behaviors = [];
-        this._delayPause = false;
-        this.inputMessage = [];
-        this.mainType = mainType;
-        this.indexType = indexType;
-        this.scene = scene;
-        this.trigger = trigger;
-        this.multiline = multiline;
-        this.executor = executor;
-        trigger.triggerLines[this.id] = this;
+        var _this_1 = _super.call(this) || this;
+        _this_1.commandScope = [];
+        _this_1.behaviors = [];
+        _this_1._delayPause = false;
+        _this_1.inputMessage = [];
+        _this_1.mainType = mainType;
+        _this_1.indexType = indexType;
+        _this_1.scene = scene;
+        _this_1.trigger = trigger;
+        _this_1.multiline = multiline;
+        _this_1.executor = executor;
+        trigger.triggerLines[_this_1.id] = _this_1;
+        return _this_1;
     }
     Object.defineProperty(CommandTrigger.prototype, "delayPause", {
         get: function () {
@@ -51494,7 +52012,7 @@ var CommandTrigger = (function (_super) {
                 }
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     CommandTrigger.prototype.initFrom = function (cmdPage) {
@@ -51570,7 +52088,7 @@ var CommandTrigger = (function (_super) {
         get: function () {
             return this.trigger ? (Config.IS_SERVER ? this.trigger.player : Game.player) : null;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     CommandTrigger.prototype.goto = function (index) {
@@ -51600,7 +52118,7 @@ var CommandTrigger = (function (_super) {
         }
     };
     CommandTrigger.prototype.addBehavior = function (targetSo, behaviorData, loop, targetPlayerSceneObject, cover, startIndex, Immediate, forceStopLastBehavior, delayFrame, executor) {
-        var _this = this;
+        var _this_1 = this;
         if (startIndex === void 0) { startIndex = 0; }
         if (Immediate === void 0) { Immediate = true; }
         if (forceStopLastBehavior === void 0) { forceStopLastBehavior = false; }
@@ -51609,7 +52127,7 @@ var CommandTrigger = (function (_super) {
         var isOver = false;
         var soBehavior = targetSo.addBehavior(behaviorData, loop, targetPlayerSceneObject, Callback.New(function (targetSo) {
             isOver = true;
-            _this.removeBehaviorCount(targetSo);
+            _this_1.removeBehaviorCount(targetSo);
         }, this, [targetSo]), cover, startIndex, Immediate, forceStopLastBehavior, delayFrame, executor);
         if (cover)
             this.behaviors = ArrayUtils.matchAttributes(this.behaviors, { so: targetSo }, false, "!=");
@@ -51635,7 +52153,7 @@ var CommandTrigger = (function (_super) {
         get: function () {
             return this.behaviors.length > 0;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     CommandTrigger.prototype.getSaveData = function () {
@@ -51751,14 +52269,25 @@ var CommandTrigger = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var AnimationData = (function (_super) {
     __extends(AnimationData, _super);
     function AnimationData() {
-        _super.apply(this, arguments);
-        this.totalFrame = 0;
-        this.imageSources = [null];
-        this.layers = [];
-        this.isParticle = false;
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.totalFrame = 0;
+        _this_1.imageSources = [null];
+        _this_1.layers = [];
+        _this_1.isParticle = false;
+        return _this_1;
     }
     AnimationData.getAllLayers = function (data) {
         var layers = data.layers.concat();
@@ -51781,9 +52310,19 @@ var AnimationItemType;
 (function (AnimationItemType) {
     AnimationItemType[AnimationItemType["Target"] = 0] = "Target";
     AnimationItemType[AnimationItemType["Image"] = 1] = "Image";
-    AnimationItemType[AnimationItemType["Animation"] = 2] = "Animation";
+    AnimationItemType[AnimationItemType["GCAnimation"] = 2] = "GCAnimation";
     AnimationItemType[AnimationItemType["Audio"] = 3] = "Audio";
 })(AnimationItemType || (AnimationItemType = {}));
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -51792,10 +52331,11 @@ var AnimationItemType;
 var AutoTileData = (function (_super) {
     __extends(AutoTileData, _super);
     function AutoTileData() {
-        _super.apply(this, arguments);
-        this.url = "";
-        this.dataLayers = [];
-        this.GCATMode = 0;
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.url = "";
+        _this_1.dataLayers = [];
+        _this_1.GCATMode = 0;
+        return _this_1;
     }
     AutoTileData.getAutoTileData = function (texID) {
         return Game.data.autoTileList.data[texID];
@@ -51813,19 +52353,32 @@ var AutoTileData = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var AvatarData = (function (_super) {
     __extends(AvatarData, _super);
     function AvatarData() {
-        _super.apply(this, arguments);
-        this.picUrls = ["editorAsset/img/empty.png"];
-        this.oriMode = 4;
-        this.autoFlip = true;
-        this.refObjs = {};
-        this.parts = [{ id: 0, showOnEditor: true, mouseEventEnabledInEditor: true }];
-        this.actionListArr = [{
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.picUrls = ["editorAsset/img/empty.png"];
+        _this_1.oriMode = 4;
+        _this_1.autoFlip = true;
+        _this_1.refObjs = {};
+        _this_1.referenceMode = false;
+        _this_1.referenceID = 1;
+        _this_1.parts = [{ id: 0, showOnEditor: true, mouseEventEnabledInEditor: true }];
+        _this_1.actionListArr = [{
                 id: 1,
                 frameImageInfo: []
             }];
+        return _this_1;
     }
     AvatarData.isEmpty = function (data, plugType) {
         if (plugType == 0) {
@@ -51848,12 +52401,23 @@ var AvatarData = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var AvatarRefObjData = (function (_super) {
     __extends(AvatarRefObjData, _super);
     function AvatarRefObjData() {
-        _super.apply(this, arguments);
-        this.color = "#FFFFFF";
-        this.line = false;
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.color = "#FFFFFF";
+        _this_1.line = false;
+        return _this_1;
     }
     return AvatarRefObjData;
 }(OriginalData));
@@ -51862,14 +52426,25 @@ var AvatarRefObjData = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var CommonEventData = (function (_super) {
     __extends(CommonEventData, _super);
     function CommonEventData() {
-        _super.apply(this, arguments);
-        this.allowClient = false;
-        this.conditionSwitch = 1;
-        this.updateMode = false;
-        this.commands = [];
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.allowClient = false;
+        _this_1.conditionSwitch = 1;
+        _this_1.updateMode = false;
+        _this_1.commands = [];
+        return _this_1;
     }
     return CommonEventData;
 }(OriginalData));
@@ -51878,11 +52453,22 @@ var CommonEventData = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var CustomCompositeSetting = (function (_super) {
     __extends(CustomCompositeSetting, _super);
     function CustomCompositeSetting() {
-        _super.apply(this, arguments);
-        this.compAutoOrderLimitHeight = 0;
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.compAutoOrderLimitHeight = 0;
+        return _this_1;
     }
     CustomCompositeSetting.isEmpty = function (data, plugType) {
         var list = {
@@ -51916,13 +52502,12 @@ var CustomCompositeSetting = (function (_super) {
     };
     CustomCompositeSetting.createPresetCustomModuleDatas = function () {
         var customModuleList = Common.customModuleList;
-        var customModuleDataList = Common.customModuleDataList;
         for (var i in customModuleList.data) {
             var moduleIndex = parseInt(i);
             var cmSetting = customModuleList.data[moduleIndex];
             if (cmSetting) {
                 var singleModuleDataArr = GameData.customModulePresetDatas[moduleIndex] = [];
-                var moduleDataList = customModuleDataList[moduleIndex];
+                var moduleDataList = Common.getCustomModuleDataList(moduleIndex);
                 var cmDatas = moduleDataList.data;
                 var attrSettings = CustomCompositeSetting.getAllAttributes(cmSetting, false);
                 for (var s in cmDatas) {
@@ -52055,6 +52640,10 @@ var CustomCompositeSetting = (function (_super) {
             var len = datas.length;
             for (var i = 0; i < len; i++) {
                 var data = datas[i];
+                if (mode == 0 || mode == 1) {
+                    if (!data.varName)
+                        continue;
+                }
                 runtimeStr += this.getAPIRuntime(mode, data, limitJurisdiction, false, needCreateComboboxItemAPI);
                 if (i != len - 1)
                     runtimeStr += "\n";
@@ -52078,12 +52667,22 @@ var CustomCompositeSetting = (function (_super) {
         var className = this.getVarTypeInEditorCode(mode, cSetting.id);
         if (className == "any")
             return "";
-        var runtimeStr = (cSetting.id ? "/**\n * #" + cSetting.id + "\n */\n" : "") + "class " + className + " {\n";
+        var dataName;
+        if (mode == 0) {
+            dataName = GameListData.getName(Common.dataStructureList, cSetting.id);
+        }
+        else if (mode == 1) {
+            dataName = GameListData.getName(Common.customModuleList, cSetting.id);
+        }
+        else {
+            dataName = "";
+        }
+        var runtimeStr = (cSetting.id ? "/**\n * #" + cSetting.id + " " + dataName + "\n */\n" : "") + "class " + className + " {\n";
         if (mode == 1) {
-            runtimeStr += "    id:number;\n    name:string;\n";
+            runtimeStr += "    id: number;\n    name: string;\n";
         }
         else if (mode == 3) {
-            runtimeStr += "    sceneObject:SceneObject;\n";
+            runtimeStr += "    sceneObject: SceneObject;\n";
         }
         for (var i = 0; i < len; i++) {
             var attr = attrs[i];
@@ -52115,6 +52714,8 @@ var CustomCompositeSetting = (function (_super) {
         return api1;
     };
     CustomCompositeSetting.getCustomParamsAPIBy = function (customList, codePrompt, className) {
+        if (GameListData.getAllLength(customList) == 0)
+            return "";
         var apis = "/**\n * \u8BE5\u6587\u4EF6\u4E3AGameCreator\u7F16\u8F91\u5668\u81EA\u52A8\u751F\u6210\u7684\u4EE3\u7801\n */\n";
         for (var i = 1; i <= 16; i++) {
             var dataLen = GameListData.getLength(customList, i);
@@ -52255,13 +52856,15 @@ var CustomCompositeSetting = (function (_super) {
         return shaderCode;
     };
     CustomCompositeSetting.getShaderDataRuntimes = function () {
-        var str = "/**\n * \u8BE5\u6587\u4EF6\u4E3AGameCreator\u7F16\u8F91\u5668\u81EA\u52A8\u751F\u6210\u7684\u4EE3\u7801\n */\n/**\n * \u6750\u8D28\u6570\u636E\u57FA\u7C7B\n */\nclass MaterialData {\n    id: number; // \u6750\u8D28\u7F16\u53F7\n    ____timeInfo: {[varName:string]: number} = {}; // \u50A8\u5B58\u8FC7\u6E21\u7684\u5F53\u524D\u65F6\u95F4/\u5E27\u4FE1\u606F\uFF0C\u82E5\u540C\u4E00\u4E2A\u6750\u8D28\u6570\u636E\u9700\u8981\u91CD\u7F6E\u65F6\u95F4\u590D\u7528\uFF0C\u53EF\u4FEE\u6539\u8BE5\u5C5E\u6027\u540E\u518D\u91CD\u65B0\u6DFB\u52A0\u6750\u8D28\n}\n";
         var materialList = Game.data.materialList;
         var len = GameListData.getLength(materialList, 1);
+        if (len == 0)
+            return "";
+        var str = "/**\n * \u8BE5\u6587\u4EF6\u4E3AGameCreator\u7F16\u8F91\u5668\u81EA\u52A8\u751F\u6210\u7684\u4EE3\u7801\n */\n/**\n * \u6750\u8D28\u6570\u636E\u57FA\u7C7B\n */\nclass MaterialData {\n    id: number; // \u6750\u8D28\u7F16\u53F7\n    enable: boolean;//\u662F\u5426\u542F\u7528\n    ____timeInfo: {[varName:string]: number} = {}; // \u50A8\u5B58\u8FC7\u6E21\u7684\u5F53\u524D\u65F6\u95F4/\u5E27\u4FE1\u606F\uFF0C\u82E5\u540C\u4E00\u4E2A\u6750\u8D28\u6570\u636E\u9700\u8981\u91CD\u7F6E\u65F6\u95F4\u590D\u7528\uFF0C\u53EF\u4FEE\u6539\u8BE5\u5C5E\u6027\u540E\u518D\u91CD\u65B0\u6DFB\u52A0\u6750\u8D28\n}\n";
         for (var i = 1; i <= len; i++) {
             var materiaSetting = materialList.data[i];
             var attrs = CustomCompositeSetting.getAllAttributes(materiaSetting, false);
-            var varStrs = [("    id: number = " + i + ";")];
+            var varStrs = ["    id: number = " + i + ";"];
             for (var s = 0; s < attrs.length; s++) {
                 var attr = attrs[s];
                 if (CustomAttributeSetting.isHideComp(attr) || (CustomAttributeSetting.ONLY_DISPLAY.indexOf(attr.compData.compType) != -1))
@@ -52290,7 +52893,7 @@ var CustomCompositeSetting = (function (_super) {
                 else {
                     defaultValueStr = "";
                 }
-                varStrs.push("    " + attr.varName + ": " + attrTSType + defaultValueStr + "; // " + attr.alias + " " + attr.attrTips);
+                varStrs.push("    " + (attr.onlyConfig ? "readonly " : "") + attr.varName + ": " + attrTSType + defaultValueStr + "; // " + attr.alias + " " + attr.attrTips);
             }
             str += "/**\n * \u6750\u8D28" + i + "-" + GameListData.getName(materialList, i) + "\n */\nclass MaterialData" + i + " extends MaterialData {\n" + varStrs.join("\n") + "\n}\n";
         }
@@ -52391,7 +52994,12 @@ var CustomCompositeSetting = (function (_super) {
             var list = lists[mode];
             var cSetting = list.data[id];
             if (cSetting) {
-                var settingName = GameListData.getName(list, id);
+                if (mode == 0 || mode == 1) {
+                    var settingName = cSetting.varName;
+                }
+                else {
+                    var settingName = GameListData.getName(list, id);
+                }
                 return nameHeads[mode] + "_" + settingName;
             }
             else {
@@ -52595,11 +53203,22 @@ var CustomCompositeAttributeSetting = (function () {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var CustomData = (function (_super) {
     __extends(CustomData, _super);
     function CustomData() {
-        _super.apply(this, arguments);
-        this.attrs = {};
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.attrs = {};
+        return _this_1;
     }
     return CustomData;
 }(OriginalData));
@@ -52608,10 +53227,20 @@ var CustomData = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var CustomEventType = (function (_super) {
     __extends(CustomEventType, _super);
     function CustomEventType() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return CustomEventType;
 }(OriginalData));
@@ -52620,13 +53249,23 @@ var CustomEventType = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var DialogData = (function (_super) {
     __extends(DialogData, _super);
     function DialogData() {
-        _super.apply(this, arguments);
-        this.initData = false;
-        this.previewMode = false;
-        this.dialogBox = {
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.initData = false;
+        _this_1.previewMode = false;
+        _this_1.dialogBox = {
             x: 52,
             y: 439,
             width: 891,
@@ -52640,7 +53279,7 @@ var DialogData = (function (_super) {
             materialData: [{ materials: [] }],
             index: 0
         };
-        this.headBox = {
+        _this_1.headBox = {
             x: 60,
             y: 511,
             width: 150,
@@ -52664,7 +53303,7 @@ var DialogData = (function (_super) {
             materialData: [{ materials: [] }],
             index: 1,
         };
-        this.optionBox = {
+        _this_1.optionBox = {
             x: 272,
             y: 191,
             width: 231,
@@ -52693,7 +53332,7 @@ var DialogData = (function (_super) {
             materialData: [{ materials: [] }],
             index: 2
         };
-        this.dialog = {
+        _this_1.dialog = {
             x: 221,
             y: 512,
             width: 699,
@@ -52720,7 +53359,7 @@ var DialogData = (function (_super) {
             materialData: [{ materials: [] }],
             index: 3
         };
-        this.option = {
+        _this_1.option = {
             x: 290,
             y: 226,
             width: 196,
@@ -52749,7 +53388,7 @@ var DialogData = (function (_super) {
             materialData: [{ materials: [] }],
             index: 4
         };
-        this.nameBox = {
+        _this_1.nameBox = {
             x: 121,
             y: 456,
             width: 123,
@@ -52776,7 +53415,7 @@ var DialogData = (function (_super) {
             materialData: [{ materials: [] }],
             index: 5
         };
-        this.skipBox = {
+        _this_1.skipBox = {
             x: 895,
             y: 608,
             width: 0,
@@ -52792,6 +53431,7 @@ var DialogData = (function (_super) {
             mouseEventEnabledInEditor: true,
             index: 6
         };
+        return _this_1;
     }
     DialogData.isEmpty = function (data) {
         if (!DialogData.emptyData)
@@ -52814,18 +53454,29 @@ var DialogData = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var SceneObjectModelData = (function (_super) {
     __extends(SceneObjectModelData, _super);
     function SceneObjectModelData() {
-        _super.apply(this, arguments);
-        this.preLayer = [];
-        this.varAttributes = [];
-        this.attrConditions = [];
-        this.presetModules = [];
-        this.serverInstanceClassName = SceneObjectModelData.SERVER_SCENE_OBJECT_CORE_CLASS;
-        this.clientInstanceClassName = SceneObjectModelData.CLIENT_SCENE_OBJECT_CORE_CLASS;
-        this.supportTriggerTypes = [];
-        this.supportStatusPage = true;
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.preLayer = [];
+        _this_1.varAttributes = [];
+        _this_1.attrConditions = [];
+        _this_1.presetModules = [];
+        _this_1.serverInstanceClassName = SceneObjectModelData.SERVER_SCENE_OBJECT_CORE_CLASS;
+        _this_1.clientInstanceClassName = SceneObjectModelData.CLIENT_SCENE_OBJECT_CORE_CLASS;
+        _this_1.supportTriggerTypes = [];
+        _this_1.supportStatusPage = true;
+        return _this_1;
     }
     SceneObjectModelData.clear = function (modelData) {
         modelData.preLayer = [];
@@ -52847,7 +53498,7 @@ var SceneObjectModelData = (function (_super) {
         get: function () {
             return Common.sceneObjectModelList.data[0];
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     SceneObjectModelData.getModelAttributeData = function (modelData) {
@@ -52918,10 +53569,10 @@ var SceneObjectModelData = (function (_super) {
         }
         else {
             var sceneObjectModuleList = EUIWindowSceneObjectModule.cloneData ? EUIWindowSceneObjectModule.cloneData : Game.data.sceneObjectModuleList;
-            var modelName = GameListData.getName(sceneObjectModuleList, modelData.id);
+            var modelName_1 = GameListData.getName(sceneObjectModuleList, modelData.id);
             var commonModelData = EUIWindowSceneObjectModel.commonModelDataClone ? EUIWindowSceneObjectModel.commonModelDataClone : Game.data.sceneObjectModelList.data[0];
             var instanceClassName = commonModelData.serverInstanceClassName;
-            var serverSoBaseCode = "/**\n * \u573A\u666F\u5BF9\u8C61\u6A21\u5757\uFF1A" + modelName + "\n */\nclass SceneObjectModule_" + modelData.id + " extends SceneObjectModule {\n" + serverVars + "    constructor(installCB: Callback) {\n        super(installCB);\n    }\n    dispose() {\n    }\n}\nSceneObjectModule.moduleClassArr[" + modelData.id + "]=SceneObjectModule_" + modelData.id + ";";
+            var serverSoBaseCode = "/**\n * \u573A\u666F\u5BF9\u8C61\u6A21\u5757\uFF1A" + modelName_1 + "\n */\nclass SceneObjectModule_" + modelData.id + " extends SceneObjectModule {\n" + serverVars + "    constructor(installCB: Callback) {\n        super(installCB);\n    }\n    dispose() {\n    }\n}\nSceneObjectModule.moduleClassArr[" + modelData.id + "]=SceneObjectModule_" + modelData.id + ";";
         }
         return { serverSoBaseCode: serverSoBaseCode };
     };
@@ -52951,7 +53602,7 @@ var SceneObjectModelData = (function (_super) {
                 varTypeStr = "UIRoot;\n";
             }
             else if (preLayer.type <= 5) {
-                varTypeStr = "Animation;\n";
+                varTypeStr = "GCAnimation;\n";
             }
             clientDisplayVars += "    " + preLayer.varName + ": " + varTypeStr;
         }
@@ -52961,10 +53612,10 @@ var SceneObjectModelData = (function (_super) {
         }
         else {
             var sceneObjectModuleList = EUIWindowSceneObjectModule.cloneData ? EUIWindowSceneObjectModule.cloneData : Game.data.sceneObjectModuleList;
-            var modelName = GameListData.getName(sceneObjectModuleList, modelData.id);
+            var modelName_2 = GameListData.getName(sceneObjectModuleList, modelData.id);
             var commonModelData = EUIWindowSceneObjectModel.commonModelDataClone ? EUIWindowSceneObjectModel.commonModelDataClone : Game.data.sceneObjectModelList.data[0];
             var instanceClassName = commonModelData.clientInstanceClassName;
-            var clientSoBaseCode = "/**\n * \u573A\u666F\u5BF9\u8C61\u6A21\u578B\uFF1A" + modelName + "\n */\nclass SceneObjectModule_" + modelData.id + " extends SceneObjectModule {\n" + clientVars + clientDisplayVars + "    constructor(installCB: Callback) {\n        super(installCB);\n    }\n}\nSceneObjectModule.moduleClassArr[" + modelData.id + "]=SceneObjectModule_" + modelData.id + ";";
+            var clientSoBaseCode = "/**\n * \u573A\u666F\u5BF9\u8C61\u6A21\u578B\uFF1A" + modelName_2 + "\n */\nclass SceneObjectModule_" + modelData.id + " extends SceneObjectModule {\n" + clientVars + clientDisplayVars + "    constructor(installCB: Callback) {\n        super(installCB);\n    }\n}\nSceneObjectModule.moduleClassArr[" + modelData.id + "]=SceneObjectModule_" + modelData.id + ";";
         }
         return { clientSoBaseCode: clientSoBaseCode };
     };
@@ -53023,7 +53674,7 @@ var SceneObjectModelData = (function (_super) {
                 varTypeStr = "UIRoot;\n";
             }
             else if (preLayer.type <= 5) {
-                varTypeStr = "Animation;\n";
+                varTypeStr = "GCAnimation;\n";
             }
             clientDisplayVars += "    " + preLayer.varName + ": " + varTypeStr;
         }
@@ -53046,6 +53697,16 @@ var SceneObjectModelData = (function (_super) {
     SceneObjectModelData.sceneObjectClass = {};
     return SceneObjectModelData;
 }(OriginalData));
+var SceneObjectModuleBase = (function () {
+    function SceneObjectModuleBase(installCB) {
+        installCB && installCB.runWith([this]);
+    }
+    SceneObjectModuleBase.prototype.onRemoved = function () { };
+    SceneObjectModuleBase.prototype.refresh = function () { };
+    SceneObjectModuleBase.prototype.dispose = function () { };
+    SceneObjectModuleBase.moduleClassArr = [];
+    return SceneObjectModuleBase;
+}());
 var AvatarAction = (function () {
     function AvatarAction() {
         this.frameImageInfo = [];
@@ -53079,7 +53740,7 @@ var AvatarFrameImage = (function () {
                 this._positiveRect = new Rectangle(-this.rect.x, -this.rect.y, this.rect.width, this.rect.height);
             return this._positiveRect;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     return AvatarFrameImage;
@@ -53091,23 +53752,21 @@ var AvatarRefObj = (function () {
 }());
 var CommandExecuteGame;
 (function (CommandExecuteGame) {
-    function command_11(triggerLineID, dialogID, head, name, speed, comicSceneObjectIndex, msg, audio, exp, nameColor, cmdID) {
+    function command_11(triggerLineID, dialogID, head, name, speed, comicSceneObjectIndex, msg, audio, exp, nameColor, cmdID, changeData) {
         if (!GameCommand.isNeedPlayerInput) {
             GameDialog.fromCommandID = cmdID;
-            GameDialog.showDialog(dialogID, head, name, speed, comicSceneObjectIndex, msg, null, audio, exp, nameColor);
+            GameDialog.showDialog(dialogID, head, name, speed, comicSceneObjectIndex, msg, null, audio, exp, nameColor, changeData);
         }
         return GameCommand.COMMAND_STATE_NEED_INPUT;
     }
     CommandExecuteGame.command_11 = command_11;
 })(CommandExecuteGame || (CommandExecuteGame = {}));
-var CommandExecuteGame;
 (function (CommandExecuteGame) {
     function command_12(triggerLineID, dialogID, head, name, speed, comicMode, msg) {
         return GameCommand.COMMAND_STATE_NEED_INPUT;
     }
     CommandExecuteGame.command_12 = command_12;
 })(CommandExecuteGame || (CommandExecuteGame = {}));
-var CommandExecuteGame;
 (function (CommandExecuteGame) {
     function command_17(triggerLineID, delay, unit) {
         if (unit == 1) {
@@ -53120,7 +53779,6 @@ var CommandExecuteGame;
     }
     CommandExecuteGame.command_17 = command_17;
 })(CommandExecuteGame || (CommandExecuteGame = {}));
-var CommandExecuteGame;
 (function (CommandExecuteGame) {
     function command_37(triggerLineID, imageInfos) {
         imageInfos = ObjectUtils.depthClone(imageInfos);
@@ -53143,7 +53801,6 @@ var CommandExecuteGame;
     }
     CommandExecuteGame.command_38 = command_38;
 })(CommandExecuteGame || (CommandExecuteGame = {}));
-var CommandExecuteGame;
 (function (CommandExecuteGame) {
     function command_3(triggerLineID, dialogID, selContents, defaultIndex, cancelIndex, hideIndexs) {
         if (!GameCommand.isNeedPlayerInput || triggerLineID == GameCommand.inputTriggerLine) {
@@ -53369,7 +54026,7 @@ var AssetManager = (function () {
         }
     };
     AssetManager.preLoadAvatarBaseAsset = function (id, complete, syncCallbackWhenAssetExist, autoDispose, isStandAvatar, prerender) {
-        var _this = this;
+        var _this_1 = this;
         if (complete === void 0) { complete = null; }
         if (syncCallbackWhenAssetExist === void 0) { syncCallbackWhenAssetExist = false; }
         if (autoDispose === void 0) { autoDispose = false; }
@@ -53404,7 +54061,7 @@ var AssetManager = (function () {
                         isStandAvatar ? AssetManager.disposeStandAvatarAsset(id) : AssetManager.disposeAvatarAsset(id);
                     complete && (syncCallbackWhenAssetExist ? complete.run() : complete.delayRun(0));
                 }
-            }, _this, [id, complete, syncCallbackWhenAssetExist, autoDispose, isStandAvatar, prerender, avatarData]);
+            }, _this_1, [id, complete, syncCallbackWhenAssetExist, autoDispose, isStandAvatar, prerender, avatarData]);
             AssetManager.loadImages(avatarData.picUrls, onLoaded, syncCallbackWhenAssetExist, true, prerender);
             for (var i = 0; i < avatarData.parts.length; i++) {
                 var avatarPartID = avatarData.parts[i].id;
@@ -53415,7 +54072,7 @@ var AssetManager = (function () {
         }, this, [id, complete, syncCallbackWhenAssetExist, autoDispose, isStandAvatar, prerender]), syncCallbackWhenAssetExist);
     };
     AssetManager.preLoadUIAsset = function (id, complete, syncCallbackWhenAssetExist, autoDispose, prerender) {
-        var _this = this;
+        var _this_1 = this;
         if (complete === void 0) { complete = null; }
         if (syncCallbackWhenAssetExist === void 0) { syncCallbackWhenAssetExist = false; }
         if (autoDispose === void 0) { autoDispose = false; }
@@ -53444,11 +54101,11 @@ var AssetManager = (function () {
             }, [prerender, root]);
             Callback.CallLaterBeforeRender(function () {
                 var ui = GameUI.parse(uiDisData, false, null, id, root, syncCallbackWhenAssetExist);
-            }, _this);
+            }, _this_1);
         }, this), syncCallbackWhenAssetExist, false);
     };
     AssetManager.preLoadAnimationAsset = function (id, complete, syncCallbackWhenAssetExist, autoDispose, prerender) {
-        var _this = this;
+        var _this_1 = this;
         if (complete === void 0) { complete = null; }
         if (syncCallbackWhenAssetExist === void 0) { syncCallbackWhenAssetExist = false; }
         if (autoDispose === void 0) { autoDispose = false; }
@@ -53475,18 +54132,18 @@ var AssetManager = (function () {
                         AssetManager.disposeAnimationAsset(id);
                     complete && (syncCallbackWhenAssetExist ? complete.run() : complete.delayRun(0));
                 }
-            }, _this);
+            }, _this_1);
             if (aniData.isParticle && aniData.particleData) {
                 AssetManager.loadTexture(aniData.particleData.textureName, onLoaded, syncCallbackWhenAssetExist);
             }
             else {
                 for (var index = 0; index < aniData.layers.length; index++) {
                     var layerInfo = aniData.layers[index];
-                    if (layerInfo.type == AnimationItemType.Animation) {
+                    if (layerInfo.type == AnimationItemType.GCAnimation) {
                         var nodes = ArrayUtils.getTreeNodeArray(layerInfo);
                         for (var s in nodes) {
                             var childLayerInfo = nodes[s];
-                            if (childLayerInfo.type == AnimationItemType.Animation) {
+                            if (childLayerInfo.type == AnimationItemType.GCAnimation) {
                                 loadCount++;
                                 AssetManager.preLoadAnimationAsset(childLayerInfo.animationId, onLoaded, syncCallbackWhenAssetExist, false, prerender);
                             }
@@ -53658,7 +54315,7 @@ var AssetManager = (function () {
         }
     };
     AssetManager.preLoadDialog = function (id, complete, syncCallbackWhenAssetExist, autoDispose) {
-        var _this = this;
+        var _this_1 = this;
         if (complete === void 0) { complete = null; }
         if (syncCallbackWhenAssetExist === void 0) { syncCallbackWhenAssetExist = false; }
         if (autoDispose === void 0) { autoDispose = false; }
@@ -53691,14 +54348,14 @@ var AssetManager = (function () {
                     complete && (syncCallbackWhenAssetExist ? complete.run() : complete.delayRun(0));
                 }
             }
-            var onLoadOneCB = Callback.New(onLoadOne, _this, [id, complete, syncCallbackWhenAssetExist, autoDispose]);
+            var onLoadOneCB = Callback.New(onLoadOne, _this_1, [id, complete, syncCallbackWhenAssetExist, autoDispose]);
             var loads = [];
             loadCount += imageUrls.length + seUrls.length + 1;
             for (var s = 0; s < imageUrls.length; s++)
-                loads.push(Callback.New(AssetManager.loadImage, _this, [imageUrls[s], onLoadOneCB, syncCallbackWhenAssetExist, true]));
+                loads.push(Callback.New(AssetManager.loadImage, _this_1, [imageUrls[s], onLoadOneCB, syncCallbackWhenAssetExist, true]));
             for (var s = 0; s < seUrls.length; s++)
-                loads.push(Callback.New(AssetManager.loadAudio, _this, [seUrls[s], onLoadOneCB, syncCallbackWhenAssetExist, true]));
-            _this.preLoadAnimationAsset(aniID, onLoadOneCB, syncCallbackWhenAssetExist, autoDispose);
+                loads.push(Callback.New(AssetManager.loadAudio, _this_1, [seUrls[s], onLoadOneCB, syncCallbackWhenAssetExist, true]));
+            _this_1.preLoadAnimationAsset(aniID, onLoadOneCB, syncCallbackWhenAssetExist, autoDispose);
             for (var f in loads) {
                 loads[f].run();
             }
@@ -53932,11 +54589,11 @@ var AssetManager = (function () {
             else {
                 for (var index = 0; index < aniData.layers.length; index++) {
                     var layerInfo = aniData.layers[index];
-                    if (layerInfo.type == AnimationItemType.Animation) {
+                    if (layerInfo.type == AnimationItemType.GCAnimation) {
                         var nodes = ArrayUtils.getTreeNodeArray(layerInfo);
                         for (var s in nodes) {
                             var childLayerInfo = nodes[s];
-                            if (childLayerInfo.type == AnimationItemType.Animation) {
+                            if (childLayerInfo.type == AnimationItemType.GCAnimation) {
                                 AssetManager.disposeAnimationAsset(childLayerInfo.animationId);
                             }
                         }
@@ -54079,7 +54736,7 @@ var AssetManager = (function () {
         if (useRef === void 0) { useRef = true; }
         if (isTexture === void 0) { isTexture = false; }
         if (prerender === void 0) { prerender = false; }
-        if (!url) {
+        if (!url || typeof url !== "string") {
             complete && (syncCallbackWhenAssetExist ? complete.runWith([]) : complete.delayRun(1));
             return;
         }
@@ -54124,7 +54781,7 @@ var AssetManager = (function () {
         complete && complete.runWith([asset]);
     };
     AssetManager.batchLoadAsset = function (urls, type, complete, syncCallbackWhenAssetExist, useRef, isTexture, prerender) {
-        var _this = this;
+        var _this_1 = this;
         if (complete === void 0) { complete = null; }
         if (syncCallbackWhenAssetExist === void 0) { syncCallbackWhenAssetExist = false; }
         if (useRef === void 0) { useRef = true; }
@@ -54132,7 +54789,7 @@ var AssetManager = (function () {
         if (prerender === void 0) { prerender = false; }
         var loadUrls = [];
         for (var i in urls) {
-            if (urls[i])
+            if (urls[i] && typeof urls[i] === "string")
                 loadUrls.push(urls[i]);
         }
         if (loadUrls.length == 0) {
@@ -54187,7 +54844,7 @@ var AssetManager = (function () {
                     displayCount--;
                     if (displayCount == 0)
                         complete && complete.run();
-                }, _this);
+                }, _this_1);
                 for (var i in loadUrls) {
                     var url = loadUrls[i];
                     var asset = loader.getRes(url);
@@ -54402,13 +55059,39 @@ var AssetManager = (function () {
             offsetX -= sprite.x;
             offsetY -= sprite.y;
             sprite.scaleY *= -1;
+            var oldSpriteScaleX = sprite.scaleX;
+            var oldSpriteScaleY = sprite.scaleY;
+            var sx = stage.width / os.canvas.width;
+            var sy = stage.height / os.canvas.height;
+            var specialHandle = (sx > 1 || sy > 1) && textureWidth >= os.canvas.width && textureHeight >= os.canvas.height;
+            if (specialHandle) {
+                sprite.scaleY /= sy;
+                sprite.scaleX /= sx;
+                var texSx = textureWidth / stage.width;
+                var texSy = textureHeight / stage.height;
+                sprite.scaleX *= texSx;
+                sprite.scaleY *= texSy;
+            }
             var renderTarget = RenderTarget2D.create(textureWidth, textureHeight, 0x1908, 0x1401, 0, mipmap, false, minFifter, magFifter);
+            if (specialHandle) {
+                renderTarget.bitmap["_w"] = Math.ceil(sx * stage.width);
+                renderTarget.bitmap["_h"] = Math.ceil(sy * stage.height);
+                renderTarget["_w"] = os.canvas.width * texSx;
+                renderTarget["_h"] = os.canvas.height * texSy;
+            }
             renderTarget.start();
             renderTarget.clear(0.0, 0.0, 0.0, 0.0);
             Render.context.clear();
             RenderSprite.renders[_renderType]._fun(sprite, Render.context, offsetX, RenderState2D.height + offsetY);
+            if (specialHandle) {
+                os.context.viewport(0, 0, os.canvas.width * texSx, os.canvas.height * texSy);
+            }
             Render.context.flush();
             renderTarget.end();
+            if (specialHandle) {
+                sprite.scaleX = oldSpriteScaleX;
+                sprite.scaleY = oldSpriteScaleY;
+            }
             sprite.scaleY *= -1;
             return renderTarget;
         }
@@ -54636,27 +55319,38 @@ var AssetManager = (function () {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var ClientScene = (function (_super) {
     __extends(ClientScene, _super);
     function ClientScene() {
-        _super.call(this);
-        this.players = [];
-        this.sceneObjects = [];
-        this.settingLayers = [];
-        this.layers = [];
-        this.camera = new Camera();
+        var _this_1 = _super.call(this) || this;
+        _this_1.players = [];
+        _this_1.sceneObjects = [];
+        _this_1.settingLayers = [];
+        _this_1.layers = [];
+        _this_1.camera = new Camera();
         if (typeof GameSprite == "undefined")
-            return;
-        this.displayObject = new GameSprite();
-        this.displayObjectView = new GameSprite();
-        this.displayObject.addChild(this.displayObjectView);
-        this.camera.viewPort.setTo(0, 0, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT);
+            return _this_1;
+        _this_1.displayObject = new GameSprite();
+        _this_1.displayObjectView = new GameSprite();
+        _this_1.displayObject.addChild(_this_1.displayObjectView);
+        _this_1.camera.viewPort.setTo(0, 0, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT);
         if (typeof Game == "undefined")
-            return;
-        EventUtils.addEventListener(Game, Game.EVENT_PAUSE_CHANGE, Callback.New(this.onPauseChange, this));
+            return _this_1;
+        EventUtils.addEventListener(Game, Game.EVENT_PAUSE_CHANGE, Callback.New(_this_1.onPauseChange, _this_1));
+        return _this_1;
     }
     ClientScene.createScene = function (sceneID, onBaseDataLoaded, onLoaded, syncCallbackWhenAssetExist) {
-        var _this = this;
+        var _this_1 = this;
         if (onBaseDataLoaded === void 0) { onBaseDataLoaded = null; }
         if (onLoaded === void 0) { onLoaded = null; }
         if (syncCallbackWhenAssetExist === void 0) { syncCallbackWhenAssetExist = false; }
@@ -54674,7 +55368,7 @@ var ClientScene = (function (_super) {
                 scene.createSceneLoadExt(onBaseDataLoadedFunction);
             }
             else {
-                onBaseDataLoadedFunction.apply(_this);
+                onBaseDataLoadedFunction.apply(_this_1);
             }
             function onBaseDataLoadedFunction() {
                 scene.event(ClientScene.BASE_DATA_LOADED, [scene]);
@@ -54789,6 +55483,9 @@ var ClientScene = (function (_super) {
         this.displayObjectView.setChildIndex(layer, index);
         ArrayUtils.setIndex(this.layers, layer, index);
     };
+    ClientScene.prototype.getLayerLength = function () {
+        return this.layers.length;
+    };
     ClientScene.prototype.getLayer = function (index) {
         return this.layers[index];
     };
@@ -54798,15 +55495,15 @@ var ClientScene = (function (_super) {
     ClientScene.prototype.getLayerByName = function (name) {
         return ArrayUtils.matchAttributes(this.settingLayers, { name: name }, true)[0];
     };
-    ClientScene.prototype.addSceneObject = function (soData, isSoc, useModelClass) {
-        if (isSoc === void 0) { isSoc = false; }
+    ClientScene.prototype.addSceneObject = function (soData, isEntity, useModelClass) {
+        if (isEntity === void 0) { isEntity = false; }
         if (useModelClass === void 0) { useModelClass = false; }
         var lastSo = this.sceneObjects[soData.index];
         if (lastSo && lastSo != soData) {
             return null;
         }
         var soc;
-        if (isSoc) {
+        if (isEntity) {
             soc = soData;
         }
         else {
@@ -55020,7 +55717,7 @@ var ClientScene = (function (_super) {
                 return 0;
             return this.displayObjectView.mouseX - (this.displayObjectView.scrollRect.x / this.displayObjectView.scaleX) + this.displayObjectView.scrollRect.x;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(ClientScene.prototype, "localY", {
@@ -55029,14 +55726,14 @@ var ClientScene = (function (_super) {
                 return 0;
             return this.displayObjectView.mouseY - (this.displayObjectView.scrollRect.y / this.displayObjectView.scaleY) + this.displayObjectView.scrollRect.y;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(ClientScene.prototype, "globalPos", {
         get: function () {
             return this.getGlobalPos(this.displayObjectView.mouseX, this.displayObjectView.mouseY);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     ClientScene.prototype.getGlobalPos = function (localX, localY) {
@@ -55170,23 +55867,23 @@ var ClientScene = (function (_super) {
 }(Scene));
 ObjectUtils.reDefineGetSet("ClientScene.prototype", {
     id: function (v) {
-        var _this = this;
+        var _this_1 = this;
         if (!this.isSetScene) {
             this.isSetScene = true;
             if (!Config.EDIT_MODE) {
                 AssetManager.loadJson("asset/json/scene/data/scene" + this.id + ".json", Callback.New(function (mapData) {
-                    _this.parse(mapData, Common.gameData);
-                    if (_this.createSceneLoadExt) {
-                        _this.createSceneLoadExt(onBaseDataLoadedFunction);
+                    _this_1.parse(mapData, Common.gameData);
+                    if (_this_1.createSceneLoadExt) {
+                        _this_1.createSceneLoadExt(onBaseDataLoadedFunction);
                     }
                     else {
-                        onBaseDataLoadedFunction.apply(_this);
+                        onBaseDataLoadedFunction.apply(_this_1);
                     }
                     function onBaseDataLoadedFunction() {
-                        var _this = this;
+                        var _this_1 = this;
                         this.event(ClientScene.BASE_DATA_LOADED, [this]);
                         this.install(Callback.New(function () {
-                            _this.event(EventObject.LOADED, [_this]);
+                            _this_1.event(EventObject.LOADED, [_this_1]);
                         }, this));
                     }
                 }, this));
@@ -55199,55 +55896,66 @@ ObjectUtils.reDefineGetSet("ClientScene.prototype", {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var ClientSceneObject = (function (_super) {
     __extends(ClientSceneObject, _super);
     function ClientSceneObject(soData, scene) {
         if (scene === void 0) { scene = null; }
-        _super.call(this, soData ? soData.persetData : null);
-        this.___animations = [];
-        this.scene = scene;
+        var _this_1 = _super.call(this, soData ? soData.persetData : null) || this;
+        _this_1.___animations = [];
+        _this_1.scene = scene;
         if (!soData)
-            return;
+            return _this_1;
         if (!soData.persetData) {
-            this.____beforeInstallAttributeInit();
+            _this_1.____beforeInstallAttributeInit();
             if (soData) {
                 if (Config.EDIT_MODE) {
-                    ObjectUtils.clone(soData, this);
+                    ObjectUtils.clone(soData, _this_1);
                     for (var i in SceneObject.compoundAttributes) {
                         var attrName = SceneObject.compoundAttributes[i];
-                        this[attrName] = ObjectUtils.depthClone(soData[attrName]);
+                        _this_1[attrName] = ObjectUtils.depthClone(soData[attrName]);
                     }
                 }
                 else {
-                    ObjectUtils.clone(soData, this);
+                    ObjectUtils.clone(soData, _this_1);
                 }
             }
-            this.____afterInstallAttributeInit();
+            _this_1.____afterInstallAttributeInit();
             if (Config.useNewSceneObjectModel) {
                 if (!Config.EDIT_MODE && soData == Game.player.data.sceneObject) {
-                    if (!this.moduleIDs)
-                        this.moduleIDs = [];
-                    if (!this.moduleDisplayList)
-                        this.moduleDisplayList = [];
-                    var moduleIDs = this.moduleIDs.concat();
-                    var moduleDisplayList = this.moduleDisplayList.concat();
+                    if (!_this_1.moduleIDs)
+                        _this_1.moduleIDs = [];
+                    if (!_this_1.moduleDisplayList)
+                        _this_1.moduleDisplayList = [];
+                    var moduleIDs = _this_1.moduleIDs.concat();
+                    var moduleDisplayList = _this_1.moduleDisplayList.concat();
                     var presetData = null;
                     if (Game.player.data.sceneObject.___gcRestoreModules) {
                         presetData = Game.player.data.sceneObject.___gcRestoreModules;
                         delete Game.player.data.sceneObject.___gcRestoreModules;
                     }
-                    this.installModulesByTypeValue(moduleIDs, moduleDisplayList, Config.BORN.bornModulesCustomAttribute, presetData);
+                    _this_1.installModulesByTypeValue(moduleIDs, moduleDisplayList, Config.BORN.bornModulesCustomAttribute, presetData);
                 }
             }
-            this.refreshDisplayListOrder();
+            _this_1.refreshDisplayListOrder();
         }
+        return _this_1;
     }
     ClientSceneObject.createDisplayObjectByPreLayer = function (type, id) {
         if (type == 2 || type == 3) {
             return GameUI.load(id, true);
         }
         else if (type == 4 || type == 5) {
-            var animation = new Animation();
+            var animation = new GCAnimation();
             if (Config.EDIT_MODE)
                 animation.silentMode = true;
             animation.id = id;
@@ -55343,14 +56051,14 @@ var ClientSceneObject = (function (_super) {
         this.refreshDisplayListOrder();
     };
     ClientSceneObject.prototype.refreshDisplayListOrder = function () {
-        var _this = this;
+        var _this_1 = this;
         if (Config.useNewSceneObjectModel) {
             var addModuleChildToCustomLayer = function (insertToLayer, startInsertIndex, isLowLayer) {
-                if (_this.moduleIDs) {
-                    for (var s = 0; s < _this.moduleIDs.length; s++) {
+                if (_this_1.moduleIDs) {
+                    for (var s = 0; s < _this_1.moduleIDs.length; s++) {
                         var startInsert = isLowLayer;
-                        var moduleID = _this.moduleIDs[s];
-                        var soModule = _this.getModuleAt(s);
+                        var moduleID = _this_1.moduleIDs[s];
+                        var soModule = _this_1.getModuleAt(s);
                         if (!soModule)
                             return;
                         var moduleData = Game.data.sceneObjectModuleList.data[moduleID];
@@ -55548,7 +56256,7 @@ var ClientSceneObject = (function (_super) {
         var customDisplayLayers = this.getCustomDisplayLayers();
         for (var i in customDisplayLayers) {
             var sp = customDisplayLayers[i];
-            if (sp instanceof Animation) {
+            if (sp instanceof GCAnimation) {
                 sp.stop(sp.currentFrame);
             }
         }
@@ -55565,7 +56273,7 @@ var ClientSceneObject = (function (_super) {
         var customDisplayLayers = this.getCustomDisplayLayers();
         for (var i in customDisplayLayers) {
             var sp = customDisplayLayers[i];
-            if (sp instanceof Animation) {
+            if (sp instanceof GCAnimation) {
                 sp.gotoAndPlay(sp.currentFrame);
             }
         }
@@ -55583,7 +56291,7 @@ var ClientSceneObject = (function (_super) {
             this.avatar.actionIndex = v;
             this["_avatarAct"] = this.avatar.actionID;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     ClientSceneObject.prototype.syncAvatarStateToSceneObject = function () {
@@ -55610,18 +56318,18 @@ var ClientSceneObject = (function (_super) {
         }
     };
     ClientSceneObject.prototype.playAnimation = function (aniID, loop, isHit, fps, superposition) {
-        var _this = this;
+        var _this_1 = this;
         if (fps === void 0) { fps = null; }
         if (superposition === void 0) { superposition = false; }
         var animation;
         if (superposition) {
-            animation = new Animation();
+            animation = new GCAnimation();
             this.___animations.push(animation);
         }
         else {
             animation = ArrayUtils.matchAttributes(this.___animations, { id: aniID }, true, "==")[0];
             if (!animation) {
-                animation = new Animation();
+                animation = new GCAnimation();
                 this.___animations.push(animation);
             }
         }
@@ -55630,15 +56338,15 @@ var ClientSceneObject = (function (_super) {
             animation.fps = fps;
         animation.loop = loop;
         animation.showHitEffect = isHit;
-        animation.once(Animation.PLAY_COMPLETED, this, this.stopAnimation, [animation]);
+        animation.once(GCAnimation.PLAY_COMPLETED, this, this.stopAnimation, [animation]);
         animation.once(EventObject.LOADED, this, function (animation) {
             if (animation.isDisposed)
                 return;
             if (animation.isParticle) {
-                _this.animationHighLayer.addChild(animation);
+                _this_1.animationHighLayer.addChild(animation);
             }
             else {
-                animation.addToGameSprite(_this.avatarContainer, _this.animationLowLayer, _this.animationHighLayer);
+                animation.addToGameSprite(_this_1.avatarContainer, _this_1.animationLowLayer, _this_1.animationHighLayer);
             }
         }, [animation]);
         animation.id = aniID;
@@ -55647,7 +56355,7 @@ var ClientSceneObject = (function (_super) {
     };
     ClientSceneObject.prototype.stopAnimation = function (aniID) {
         var animation;
-        if (aniID instanceof Animation) {
+        if (aniID instanceof GCAnimation) {
             animation = aniID;
             var animationIdx = this.___animations.indexOf(animation);
             if (animationIdx == -1)
@@ -56151,7 +56859,7 @@ var GameAudio = (function () {
                 }
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameAudio, "bgsVolume", {
@@ -56178,7 +56886,7 @@ var GameAudio = (function () {
                 }
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameAudio, "seVolume", {
@@ -56193,7 +56901,7 @@ var GameAudio = (function () {
                 c.volume = c["_selfVolume"] * v;
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameAudio, "tsVolume", {
@@ -56208,7 +56916,7 @@ var GameAudio = (function () {
                 c.volume = c["_selfVolume"] * v;
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     GameAudio.setBlurStopMusic = function (isStop) {
@@ -56236,12 +56944,23 @@ var GameAudio = (function () {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var GameCommand = (function (_super) {
     __extends(GameCommand, _super);
     function GameCommand(mainType, indexType) {
-        _super.call(this);
-        this.mainType = mainType;
-        this.indexType = indexType;
+        var _this_1 = _super.call(this) || this;
+        _this_1.mainType = mainType;
+        _this_1.indexType = indexType;
+        return _this_1;
     }
     GameCommand.init = function () {
         this.start();
@@ -56344,7 +57063,7 @@ var GameCommand = (function (_super) {
         if (triggerSceneObject === void 0) { triggerSceneObject = null; }
         if (executorSceneObject === void 0) { executorSceneObject = null; }
         var triggerSceneObjectIndex = triggerSceneObject ? triggerSceneObject.index : null;
-        var executorSceneObjectIndex = triggerSceneObject ? triggerSceneObject.index : null;
+        var executorSceneObjectIndex = executorSceneObject ? executorSceneObject.index : null;
         ClientMsgSender.requestTriggerEvent(2, 0, 0, id, inputMessage, onCommandExecuteOver, triggerSceneObjectIndex, executorSceneObjectIndex);
     };
     GameCommand.rpcCall = function (triggerLineID, params) {
@@ -56442,25 +57161,36 @@ var GameCommand = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var GameSprite = (function (_super) {
     __extends(GameSprite, _super);
     function GameSprite() {
-        _super.call(this);
-        this._tonalParams = [0, 0, 0, 0, 1, 1, 1];
-        this._mouseEventEnabledInEditor = true;
-        this._show = true;
-        this._showOnEditor = true;
-        this._opacity = 1;
-        this._opacityPer = 1;
-        this._rotation1 = 0;
-        this._rotation2 = 0;
-        this._animationTargetEffect = [];
-        this.objectID = ObjectUtils.getInstanceID();
-        this._filterEnabled = true;
-        this._dpZ = 100;
-        this._hue = 0;
-        this._blur = 0;
-        this.materialPassArr = [];
+        var _this_1 = _super.call(this) || this;
+        _this_1._tonalParams = [0, 0, 0, 0, 1, 1, 1];
+        _this_1._mouseEventEnabledInEditor = true;
+        _this_1._show = true;
+        _this_1._showOnEditor = true;
+        _this_1._opacity = 1;
+        _this_1._opacityPer = 1;
+        _this_1._rotation1 = 0;
+        _this_1._rotation2 = 0;
+        _this_1._animationTargetEffect = [];
+        _this_1.objectID = ObjectUtils.getInstanceID();
+        _this_1._filterEnabled = true;
+        _this_1._dpZ = 100;
+        _this_1._hue = 0;
+        _this_1._blur = 0;
+        _this_1.materialPassArr = [];
+        return _this_1;
     }
     GameSprite.prototype.dispose = function () {
         if (!this.__isDisposed) {
@@ -56478,7 +57208,7 @@ var GameSprite = (function (_super) {
         get: function () {
             return this.__isDisposed || this.destroyed;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "rotation1", {
@@ -56489,7 +57219,7 @@ var GameSprite = (function (_super) {
             this._rotation1 = v;
             this.rotation = this._rotation1 + this._rotation2;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "rotation2", {
@@ -56500,7 +57230,7 @@ var GameSprite = (function (_super) {
             this._rotation2 = v;
             this.rotation = this._rotation1 + this._rotation2;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "useDPCoord", {
@@ -56525,7 +57255,7 @@ var GameSprite = (function (_super) {
                 Callback.CallLaterBeforeRender(this.dpCoordToRealCoord, this);
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "dpOpacity", {
@@ -56536,7 +57266,7 @@ var GameSprite = (function (_super) {
             this._dpOpacity = v;
             this.refreshRealAlpha();
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "dpZ", {
@@ -56548,7 +57278,7 @@ var GameSprite = (function (_super) {
             this._dpDirty = true;
             Callback.CallLaterBeforeRender(this.dpCoordToRealCoord, this);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "dpX", {
@@ -56560,7 +57290,7 @@ var GameSprite = (function (_super) {
             this._dpDirty = true;
             Callback.CallLaterBeforeRender(this.dpCoordToRealCoord, this);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "dpY", {
@@ -56572,7 +57302,7 @@ var GameSprite = (function (_super) {
             this._dpDirty = true;
             Callback.CallLaterBeforeRender(this.dpCoordToRealCoord, this);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "dpScaleX", {
@@ -56584,7 +57314,7 @@ var GameSprite = (function (_super) {
             this._dpDirty = true;
             Callback.CallLaterBeforeRender(this.dpCoordToRealCoord, this);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "dpScaleY", {
@@ -56596,7 +57326,7 @@ var GameSprite = (function (_super) {
             this._dpDirty = true;
             Callback.CallLaterBeforeRender(this.dpCoordToRealCoord, this);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "dpCameraX", {
@@ -56608,7 +57338,7 @@ var GameSprite = (function (_super) {
             this._dpDirty = true;
             Callback.CallLaterBeforeRender(this.dpCoordToRealCoord, this);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "dpCameraY", {
@@ -56620,7 +57350,7 @@ var GameSprite = (function (_super) {
             this._dpDirty = true;
             Callback.CallLaterBeforeRender(this.dpCoordToRealCoord, this);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "dpCameraZ", {
@@ -56632,7 +57362,7 @@ var GameSprite = (function (_super) {
             this._dpDirty = true;
             Callback.CallLaterBeforeRender(this.dpCoordToRealCoord, this);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "dpWidth", {
@@ -56644,7 +57374,7 @@ var GameSprite = (function (_super) {
             this._dpDirty = true;
             Callback.CallLaterBeforeRender(this.dpCoordToRealCoord, this);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "dpHeight", {
@@ -56656,7 +57386,7 @@ var GameSprite = (function (_super) {
             this._dpDirty = true;
             Callback.CallLaterBeforeRender(this.dpCoordToRealCoord, this);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     GameSprite.prototype.dpCoordToRealCoord = function () {
@@ -56689,17 +57419,81 @@ var GameSprite = (function (_super) {
         if (!ani)
             return;
         this._animationTargetEffect.push(ani);
-        if (this.isDisposed)
-            return;
-        this.refreshAnimationTargetEffect();
+        if (ani.materialsDataExit) {
+            this.installTargetMaterialsEffect();
+        }
+        else if (!Config.EDIT_MODE || !ani.inAniEditor || Config.BEHAVIOR_EDIT_MODE) {
+            this.refreshAnimationTargetEffect();
+        }
     };
     GameSprite.prototype.removeAnimationTargetEffect = function (ani) {
         ArrayUtils.remove(this._animationTargetEffect, ani);
+        if (ani.materialsDataExit) {
+            this.installTargetMaterialsEffect();
+        }
+        else if (!Config.EDIT_MODE || !ani.inAniEditor || Config.BEHAVIOR_EDIT_MODE) {
+            this.refreshAnimationTargetEffect();
+        }
+    };
+    GameSprite.prototype.installTargetMaterialsEffect = function () {
         if (this.isDisposed)
             return;
-        this.refreshAnimationTargetEffect();
+        var materialGroups = [{ materials: [] }];
+        for (var i = 0; i < this._animationTargetEffect.length; i++) {
+            var t = this._animationTargetEffect[i];
+            if (t.materialData) {
+                materialGroups = materialGroups.concat(t.materialData);
+            }
+        }
+        this.clearMaterials();
+        this.installMaterialData(materialGroups);
+    };
+    GameSprite.prototype.refreshTargetMaterialsEffect = function () {
+        if (this.isDisposed)
+            return;
+        var target = {
+            x: 0,
+            y: 0,
+            rotation: 0,
+            alpha: 1,
+            scaleX: 1,
+            scaleY: 1,
+        };
+        var materialGroups = [{ materials: [] }];
+        for (var i = 0; i < this._animationTargetEffect.length; i++) {
+            var t = this._animationTargetEffect[i];
+            target.x += t.x;
+            target.y += t.y;
+            target.rotation += t.rotation;
+            target.alpha *= t.alpha;
+            target.scaleX *= t.scaleX;
+            target.scaleY *= t.scaleY;
+            if (t.materialData) {
+                materialGroups = materialGroups.concat(t.materialData);
+                continue;
+            }
+        }
+        for (var s in target) {
+            this[s] = target[s];
+        }
+        for (var j = 0; j < materialGroups.length; j++) {
+            var materials = materialGroups[j].materials;
+            for (var m = 0; m < materials.length; m++) {
+                var materialValues = {};
+                var materialData = materials[m];
+                for (var key in materialData) {
+                    var value = materialData[key];
+                    if (typeof value == "number") {
+                        materialValues["mu" + materialData.id + "_" + key] = value;
+                    }
+                }
+                this.setMaterialValueFast(materialValues, j);
+            }
+        }
     };
     GameSprite.prototype.refreshAnimationTargetEffect = function () {
+        if (this.isDisposed)
+            return;
         var target = {
             x: 0,
             y: 0,
@@ -56750,7 +57544,7 @@ var GameSprite = (function (_super) {
             this._filterEnabled = v;
             this.refreshFilters();
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "gameFilters", {
@@ -56759,7 +57553,7 @@ var GameSprite = (function (_super) {
         },
         set: function (v) {
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     GameSprite.prototype.appendGameFilter = function (gameFilter) {
@@ -56831,7 +57625,7 @@ var GameSprite = (function (_super) {
             else
                 this.setTonal(0, 0, 0, 0);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "tips", {
@@ -56847,7 +57641,7 @@ var GameSprite = (function (_super) {
             else
                 Tips.cancelReg(this);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "show", {
@@ -56858,7 +57652,7 @@ var GameSprite = (function (_super) {
             this._show = v;
             this.visible = this._show && this._showOnEditor;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "showOnEditor", {
@@ -56871,7 +57665,7 @@ var GameSprite = (function (_super) {
             this._showOnEditor = v;
             this.visible = this._show && this._showOnEditor;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "opacity", {
@@ -56882,7 +57676,7 @@ var GameSprite = (function (_super) {
             this._opacity = v;
             this.refreshRealAlpha();
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "opacityPer", {
@@ -56893,7 +57687,7 @@ var GameSprite = (function (_super) {
             this._opacityPer = v;
             this.refreshRealAlpha();
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     GameSprite.prototype.refreshRealAlpha = function () {
@@ -56912,7 +57706,7 @@ var GameSprite = (function (_super) {
             this._mouseEventEnabled = v;
             this.mouseEnabled = this._mouseEventEnabled && this._mouseEventEnabledInEditor;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "mouseEventEnabledInEditor", {
@@ -56923,7 +57717,7 @@ var GameSprite = (function (_super) {
             this._mouseEventEnabledInEditor = v;
             this.mouseEnabled = this._mouseEventEnabled && this._mouseEventEnabledInEditor;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     GameSprite.prototype.refreshFilter = function () {
@@ -56947,7 +57741,7 @@ var GameSprite = (function (_super) {
             }
             this.refreshFilters();
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "blur", {
@@ -56963,7 +57757,7 @@ var GameSprite = (function (_super) {
             }
             this.refreshFilters();
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "tonal_r", {
@@ -56975,7 +57769,7 @@ var GameSprite = (function (_super) {
             this._tonalParams[0] = v;
             this.setTonal(this.tonal_r, this._tonalParams[1], this._tonalParams[2], this._tonalParams[3], this._tonalParams[4], this._tonalParams[5], this._tonalParams[6]);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "tonal_g", {
@@ -56987,7 +57781,7 @@ var GameSprite = (function (_super) {
             this._tonalParams[1] = v;
             this.setTonal(this.tonal_r, this._tonalParams[1], this._tonalParams[2], this._tonalParams[3], this._tonalParams[4], this._tonalParams[5], this._tonalParams[6]);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "tonal_b", {
@@ -56999,7 +57793,7 @@ var GameSprite = (function (_super) {
             this._tonalParams[2] = v;
             this.setTonal(this.tonal_r, this._tonalParams[1], this._tonalParams[2], this._tonalParams[3], this._tonalParams[4], this._tonalParams[5], this._tonalParams[6]);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "tonal_gray", {
@@ -57011,7 +57805,7 @@ var GameSprite = (function (_super) {
             this._tonalParams[3] = v;
             this.setTonal(this.tonal_r, this._tonalParams[1], this._tonalParams[2], this._tonalParams[3], this._tonalParams[4], this._tonalParams[5], this._tonalParams[6]);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "tonal_mr", {
@@ -57024,7 +57818,7 @@ var GameSprite = (function (_super) {
             this._tonalParams[4] = v;
             this.setTonal(this.tonal_r, this._tonalParams[1], this._tonalParams[2], this._tonalParams[3], this._tonalParams[4], this._tonalParams[5], this._tonalParams[6]);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "tonal_mb", {
@@ -57037,7 +57831,7 @@ var GameSprite = (function (_super) {
             this._tonalParams[6] = v;
             this.setTonal(this.tonal_r, this._tonalParams[1], this._tonalParams[2], this._tonalParams[3], this._tonalParams[4], this._tonalParams[5], this._tonalParams[6]);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSprite.prototype, "tonal_mg", {
@@ -57050,7 +57844,7 @@ var GameSprite = (function (_super) {
             this._tonalParams[5] = v;
             this.setTonal(this.tonal_r, this._tonalParams[1], this._tonalParams[2], this._tonalParams[3], this._tonalParams[4], this._tonalParams[5], this._tonalParams[6]);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     GameSprite.prototype.getAllMaterialDatas = function () {
@@ -57342,27 +58136,38 @@ Object.defineProperty(GameSprite.prototype, 'height', {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var GameSpriteMaterialPass = (function (_super) {
     __extends(GameSpriteMaterialPass, _super);
     function GameSpriteMaterialPass(gameSprite) {
-        _super.call(this);
-        this.varMacros = [];
-        this.kdsSetMaterialMacros = [];
-        this.materials = [];
-        this.materialsPerShaderFuncs = [];
-        this.materialsTransInfos = [];
-        this.listenVarCallbacks = [];
-        this.listenStrVarCallbacks = [];
-        this.timeFuncs = [];
-        this.imageLoads = [];
+        var _this_1 = _super.call(this) || this;
+        _this_1.varMacros = [];
+        _this_1.kdsSetMaterialMacros = [];
+        _this_1.materials = [];
+        _this_1.materialsPerShaderFuncs = [];
+        _this_1.materialsTransInfos = [];
+        _this_1.listenVarCallbacks = [];
+        _this_1.listenStrVarCallbacks = [];
+        _this_1.timeFuncs = [];
+        _this_1.imageLoads = [];
         if (Render.isWebGL)
             WebGLFilter.enable();
-        this._action = new GameSpriteMaterialPassActionGL();
-        this._action.data = this;
-        this.gameSprite = gameSprite;
+        _this_1._action = new GameSpriteMaterialPassActionGL();
+        _this_1._action.data = _this_1;
+        _this_1.gameSprite = gameSprite;
         if (Config.EDIT_MODE) {
-            EventUtils.addEventListener(EUIWindowDataStructureConfig, EUIWindowDataStructureConfig.EVENT_CUSTOM_DATA_CHANGED, Callback.New(this.onCustomDataChange, this));
+            EventUtils.addEventListener(EUIWindowDataStructureConfig, EUIWindowDataStructureConfig.EVENT_CUSTOM_DATA_CHANGED, Callback.New(_this_1.onCustomDataChange, _this_1));
         }
+        return _this_1;
     }
     GameSpriteMaterialPass.prototype.dispose = function () {
         this.clearRegFuncs();
@@ -57420,14 +58225,14 @@ var GameSpriteMaterialPass = (function (_super) {
         get: function () {
             return this._action;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameSpriteMaterialPass.prototype, "type", {
         get: function () {
             return GameSpriteMaterialPass.shaderType;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     GameSpriteMaterialPass.prototype.refreshRenderData = function () {
@@ -57443,6 +58248,8 @@ var GameSpriteMaterialPass = (function (_super) {
         var len = this.materials.length;
         for (var i = 0; i < len; i++) {
             var material = this.materials[i];
+            if (material.enable != null && !material.enable)
+                continue;
             var materialID = material.id;
             var materialSetting = Game.data.materialList.data[materialID];
             if (!materialSetting)
@@ -57490,7 +58297,7 @@ var GameSpriteMaterialPass = (function (_super) {
                     continue;
                 var mAttr = mAttrs[s];
                 var runtimeValue = this.getMaterialRuntimeValue(material, s, oriValue, mAttr, idValue, varNameValue, varInBlockMapping[s]);
-                this.shaderData[("mu" + materialID + "_") + s] = runtimeValue;
+                this.shaderData["mu" + materialID + "_" + s] = runtimeValue;
                 if (runtimeValue != null) {
                     this.varMacros.push("MU" + materialID + "_" + s);
                     varMacrosForID.push(s);
@@ -57501,7 +58308,7 @@ var GameSpriteMaterialPass = (function (_super) {
         this.kdsSetMaterialMacrosID = "_" + this.kdsSetMaterialMacros.join("_") + "-" + varMacrosForID.join("-") + "-" + this.varMacros.join("-");
     };
     GameSpriteMaterialPass.prototype.getMaterialRuntimeValue = function (material, varName, oriValue, attrSetting, idValue, varNameValue, block) {
-        var _this = this;
+        var _this_1 = this;
         function returnNullHandle() {
             if (compType == 13 || compType == 22 || compType == 14) {
                 var uvInfoName = "mu" + material.id + "_" + varName + "_UVInfo";
@@ -57547,12 +58354,12 @@ var GameSpriteMaterialPass = (function (_super) {
                 var currentFrame = MathUtils.int(material.____timeInfo[varName]);
                 if (currentFrame > totalFrame)
                     currentFrame = totalFrame;
-                var transV = { muVarName: ("mu" + material.id + "_") + varName, currentFrame: currentFrame, totalFrame: totalFrame, transData: transData, isLoop: isLoop, value: null, funcSign: null, lastRefresh: null };
+                var transV = { muVarName: "mu" + material.id + "_" + varName, currentFrame: currentFrame, totalFrame: totalFrame, transData: transData, isLoop: isLoop, value: null, funcSign: null, lastRefresh: null };
                 var f;
                 os.add_ENTERFRAME(f = function (transV, material, varName) {
                     if (transV.currentFrame > transV.totalFrame) {
                         if (!transV.isLoop) {
-                            os.remove_ENTERFRAME(arguments.callee, _this);
+                            os.remove_ENTERFRAME(arguments.callee, _this_1);
                             return;
                         }
                         else {
@@ -57565,9 +58372,11 @@ var GameSpriteMaterialPass = (function (_super) {
                         var per = transV.currentFrame / transV.totalFrame;
                         var value = GameUtils.getValueByTransData(transV.transData, per);
                         transV.value = value;
-                        Callback.CallLaterBeforeRender(_this.gameSprite.doRepaint, _this.gameSprite);
+                        Callback.CallLaterBeforeRender(_this_1.gameSprite.doRepaint, _this_1.gameSprite);
                     }
                     transV.currentFrame++;
+                    if (!material.____timeInfo)
+                        material.____timeInfo = {};
                     material.____timeInfo[varName] = transV.currentFrame;
                 }, this, [transV, material, varName]);
                 transV.funcSign = f;
@@ -57580,7 +58389,7 @@ var GameSpriteMaterialPass = (function (_super) {
                 var currentFrame = MathUtils.int(material.____timeInfo[varName]);
                 if (currentFrame > totalFrame)
                     currentFrame = totalFrame;
-                var transV = { muVarName: ("mu" + material.id + "_") + varName, currentFrame: currentFrame, totalFrame: totalFrame, transData: transData, isLoop: isLoop, value: null, funcSign: null, lastRefresh: null };
+                var transV = { muVarName: "mu" + material.id + "_" + varName, currentFrame: currentFrame, totalFrame: totalFrame, transData: transData, isLoop: isLoop, value: null, funcSign: null, lastRefresh: null };
                 var f;
                 var interSign = setInterval(f = function (transV, material, varName) {
                     if (transV.currentFrame > transV.totalFrame) {
@@ -57596,7 +58405,9 @@ var GameSpriteMaterialPass = (function (_super) {
                     var value = GameUtils.getValueByTransData(transV.transData, per);
                     transV.value = value;
                     transV.currentFrame++;
-                    Callback.CallLaterBeforeRender(_this.gameSprite.doRepaint, _this.gameSprite);
+                    Callback.CallLaterBeforeRender(_this_1.gameSprite.doRepaint, _this_1.gameSprite);
+                    if (!material.____timeInfo)
+                        material.____timeInfo = {};
                     material.____timeInfo[varName] = transV.currentFrame;
                 }, transData.refreshInterval, transV, material, varName);
                 transV.funcSign = interSign;
@@ -57615,9 +58426,9 @@ var GameSpriteMaterialPass = (function (_super) {
             if (varID == 0)
                 return 0;
             var cb = Callback.New(function (shaderValueName, typeID, varID, value) {
-                _this.shaderData[shaderValueName] = value;
-                _this.gameSprite.repaint();
-            }, this, [("mu" + material.id + "_" + varName)]);
+                _this_1.shaderData[shaderValueName] = value;
+                _this_1.gameSprite.repaint();
+            }, this, ["mu" + material.id + "_" + varName]);
             this.listenVarCallbacks.push([varID, cb]);
             Game.player.addListenerPlayerVariable(0, varID, cb, false, false);
             return Game.player.variable.getVariable(oriValue);
@@ -57633,20 +58444,20 @@ var GameSpriteMaterialPass = (function (_super) {
                     }
                     oriValue = Game.player.variable.getString(strVarID);
                     var cb = Callback.New(function (shaderValueName, uvInfoName, oldUrl, material, varName, typeID, varID, value) {
-                        var oldTexIdx = _this.imageLoads.indexOf(oldUrl);
+                        var oldTexIdx = _this_1.imageLoads.indexOf(oldUrl);
                         if (oldTexIdx != -1) {
-                            _this.imageLoads.splice(oldTexIdx, 1);
+                            _this_1.imageLoads.splice(oldTexIdx, 1);
                             AssetManager.disposeImage(oldUrl);
                         }
-                        _this.shaderData[shaderValueName] = getTextureValue.apply(_this, [value, material, varName, uvInfoName]);
-                        _this.gameSprite.repaint();
-                    }, this, [("mu" + material.id + "_" + varName), uvInfoName, oriValue, material, varName]);
+                        _this_1.shaderData[shaderValueName] = getTextureValue.apply(_this_1, [value, material, varName, uvInfoName]);
+                        _this_1.gameSprite.repaint();
+                    }, this, ["mu" + material.id + "_" + varName, uvInfoName, oriValue, material, varName]);
                     this.listenStrVarCallbacks.push([strVarID, cb]);
                     Game.player.addListenerPlayerVariable(2, strVarID, cb, false, false);
                 }
             }
             function getTextureValue(oriValue, material, varName, uvInfoName) {
-                var _this = this;
+                var _this_1 = this;
                 if (typeof oriValue != "string") {
                     returnNullHandle.apply(this);
                     return null;
@@ -57655,13 +58466,13 @@ var GameSpriteMaterialPass = (function (_super) {
                 if (!tex) {
                     this.imageLoads.push(oriValue);
                     AssetManager.loadImage(oriValue, Callback.New(function (shaderValueName, uvInfoName, tex) {
-                        _this.shaderData[shaderValueName] = tex ? tex.source : null;
+                        _this_1.shaderData[shaderValueName] = tex ? tex.source : null;
                         if (tex)
-                            _this.shaderData[uvInfoName] = [tex.uv[2] - tex.uv[0], tex.uv[5] - tex.uv[1], tex.uv[0], tex.uv[1]];
+                            _this_1.shaderData[uvInfoName] = [tex.uv[2] - tex.uv[0], tex.uv[5] - tex.uv[1], tex.uv[0], tex.uv[1]];
                         else
-                            _this.shaderData[uvInfoName] = [0, 0, 0, 0];
-                        _this.gameSprite.repaint();
-                    }, this, [("mu" + material.id + "_" + varName), uvInfoName]), true, true, true);
+                            _this_1.shaderData[uvInfoName] = [0, 0, 0, 0];
+                        _this_1.gameSprite.repaint();
+                    }, this, ["mu" + material.id + "_" + varName, uvInfoName]), true, true, true);
                     this.shaderData[uvInfoName] = [0, 0, 0, 0];
                     return null;
                 }
@@ -57695,7 +58506,7 @@ var GameSpriteMaterialPass = (function (_super) {
 var GameSpriteMaterialPassActionGL = (function (_super) {
     __extends(GameSpriteMaterialPassActionGL, _super);
     function GameSpriteMaterialPassActionGL() {
-        _super.call(this);
+        return _super.call(this) || this;
     }
     GameSpriteMaterialPassActionGL.prototype.apply3d = function (scope, sprite, context, x, y) {
         var b = scope.getValue("bounds");
@@ -57711,7 +58522,7 @@ var GameSpriteMaterialPassActionGL = (function (_super) {
         get: function () {
             return GameSpriteMaterialPass.shaderType;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     GameSpriteMaterialPassActionGL.prototype.setValueMix = function (shader) {
@@ -58017,7 +58828,7 @@ var GameFunction = (function () {
         set: function (scene) {
             this._scene = scene;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     GameFunction.shake = function (strength, duration) {
@@ -58436,6 +59247,8 @@ var ClientMain = (function () {
     function ClientMain(is3D) {
         if (is3D === void 0) { is3D = false; }
         this.initTask = "ClientMainInitTask";
+        if (typeof globalThis["SceneObjectModule"] == "undefined")
+            globalThis["SceneObjectModule"] = SceneObjectModuleBase;
         os.init(0, 0, true, is3D);
         Game.layer = new GameLayer();
         stage.alignH = "center";
@@ -58446,7 +59259,7 @@ var ClientMain = (function () {
         document.addEventListener("keydown", function (e) {
             if (stage.focus instanceof Input && e.keyCode != Keyboard.TAB)
                 return;
-            if (gcTop == window && (os.platform == 2))
+            if (os.platform == 2)
                 return;
             if (!Config.USE_FN || (e.keyCode != Keyboard.F11 && e.keyCode != Keyboard.F5 && e.keyCode != Keyboard.F12)) {
                 e.stopPropagation();
@@ -58502,7 +59315,7 @@ var ClientMain = (function () {
         });
     };
     ClientMain.prototype.loadStartupJson = function () {
-        var _this = this;
+        var _this_1 = this;
         if (!Config.RELEASE_GAME) {
             SyncTask.taskOver(this.initTask);
             return;
@@ -58522,7 +59335,7 @@ var ClientMain = (function () {
                 }
                 oldLoadJson1.apply(FileUtils, [localURL, onFin, onErrorTips]);
             };
-            SyncTask.taskOver(_this.initTask);
+            SyncTask.taskOver(_this_1.initTask);
         }, this));
     };
     ClientMain.prototype.installDataConfig = function (url, configObj) {
@@ -58643,7 +59456,16 @@ var doFrameout = function () {
         arr[0].apply(this, arr[3]);
     }
 };
-var globalThis = this;
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -58653,9 +59475,10 @@ var ClientPlayer = (function (_super) {
     __extends(ClientPlayer, _super);
     function ClientPlayer(isMyPlayer) {
         if (isMyPlayer === void 0) { isMyPlayer = false; }
-        _super.call(this);
+        var _this_1 = _super.call(this) || this;
         if (isMyPlayer)
-            this.initMyPlayer();
+            _this_1.initMyPlayer();
+        return _this_1;
     }
     ClientPlayer.prototype.initMyPlayer = function () {
         this.variable = new Variable();
@@ -58770,6 +59593,7 @@ var GameBase = (function () {
     function GameBase() {
         this.EVENT_PAUSE_CHANGE = "GameEVENT_PAUSE_CHANGE";
         this.data = new GameData();
+        this._frameCount = 0;
         this._startTime = new Date().getTime();
         this._staticTime = 0;
         this._staticInterval = 0;
@@ -58779,23 +59603,30 @@ var GameBase = (function () {
         this.__initGameTime();
     }
     GameBase.prototype.__initGameTime = function () {
-        var _this = this;
+        var _this_1 = this;
         EventUtils.addEventListener(ClientWorld, ClientWorld.EVENT_INITED, Callback.New(function () {
-            os.add_ENTERFRAME(_this.onEnterFrame, _this);
+            os.add_ENTERFRAME(_this_1.onEnterFrame, _this_1);
         }, this), true);
     };
+    Object.defineProperty(GameBase.prototype, "frameCount", {
+        get: function () {
+            return this._frameCount;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(GameBase.prototype, "oneFrame", {
         get: function () {
             return 1000 / os['fps'];
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameBase.prototype, "now", {
         get: function () {
             return this._now;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameBase.prototype, "pause", {
@@ -58808,12 +59639,14 @@ var GameBase = (function () {
             Game._pause = v;
             EventUtils.happen(this, this.EVENT_PAUSE_CHANGE);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     GameBase.prototype.onEnterFrame = function () {
-        if (!Game._pause)
+        if (!Game._pause) {
             this._now += this._timeMultiplier * this.oneFrame;
+            this._frameCount++;
+        }
     };
     GameBase.prototype.setLoginData = function (playerID, worldData, heartBeatInterval) {
         Game.player.uid = playerID;
@@ -58841,6 +59674,17 @@ var GameBase = (function () {
     };
     return GameBase;
 }());
+var Game = new GameBase;
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -58850,34 +59694,35 @@ var ClientSceneLayer = (function (_super) {
     __extends(ClientSceneLayer, _super);
     function ClientSceneLayer(scene, autoUpdate) {
         if (autoUpdate === void 0) { autoUpdate = true; }
-        _super.call(this);
-        this.dx = 0;
-        this.dy = 0;
-        this.xMove = 0;
-        this.yMove = 0;
-        this.dxMove = 0;
-        this.dyMove = 0;
-        this.prospectsPerX = 1.0;
-        this.prospectsPerY = 1.0;
-        this.autoUpdate = true;
-        this.tileLayer = new Sprite();
-        this.tileData = [];
-        this.imgWidth = 0;
-        this.imgHeight = 0;
-        this.imgBigWidth = 0;
-        this.imgBigHeight = 0;
-        this.modeType = true;
-        this.modeLock = false;
-        this.tileSplitMap = [];
-        this.needFlushTileSplit = {};
-        this.needFlushAutoPos = [];
-        this.hasTilingAttribute = true;
-        this.scene = scene;
-        this.autoUpdate = autoUpdate;
-        this.addChild(this.tileLayer);
+        var _this_1 = _super.call(this) || this;
+        _this_1.dx = 0;
+        _this_1.dy = 0;
+        _this_1.xMove = 0;
+        _this_1.yMove = 0;
+        _this_1.dxMove = 0;
+        _this_1.dyMove = 0;
+        _this_1.prospectsPerX = 1.0;
+        _this_1.prospectsPerY = 1.0;
+        _this_1.autoUpdate = true;
+        _this_1.tileLayer = new Sprite();
+        _this_1.tileData = [];
+        _this_1.imgWidth = 0;
+        _this_1.imgHeight = 0;
+        _this_1.imgBigWidth = 0;
+        _this_1.imgBigHeight = 0;
+        _this_1.modeType = true;
+        _this_1.modeLock = false;
+        _this_1.tileSplitMap = [];
+        _this_1.needFlushTileSplit = {};
+        _this_1.needFlushAutoPos = [];
+        _this_1.hasTilingAttribute = true;
+        _this_1.scene = scene;
+        _this_1.autoUpdate = autoUpdate;
+        _this_1.addChild(_this_1.tileLayer);
+        return _this_1;
     }
     ClientSceneLayer.prototype.install = function (layerData, onFin) {
-        var _this = this;
+        var _this_1 = this;
         if (onFin === void 0) { onFin = null; }
         ObjectUtils.clone(layerData, this);
         this.installMaterialData(layerData.materialData);
@@ -58921,9 +59766,9 @@ var ClientSceneLayer = (function (_super) {
             }
             this.__loadImages = urls;
             AssetManager.loadImages(urls, Callback.New(function () {
-                if (_this.isDisposed)
+                if (_this_1.isDisposed)
                     return;
-                _this.setTilefromJsonData();
+                _this_1.setTilefromJsonData();
                 onFin && onFin.run();
             }, this), !Config.EDIT_MODE);
         }
@@ -58931,9 +59776,9 @@ var ClientSceneLayer = (function (_super) {
             if (layerData.img) {
                 this.__loadImages = [layerData.img];
                 AssetManager.loadImage(layerData.img, Callback.New(function () {
-                    if (_this.isDisposed)
+                    if (_this_1.isDisposed)
                         return;
-                    _this.setBigImage(layerData.img);
+                    _this_1.setBigImage(layerData.img);
                     onFin && onFin.run();
                 }, this), false, true);
             }
@@ -59231,7 +60076,7 @@ var ClientSceneLayer = (function (_super) {
         this.needFlushTileSplit = [];
     };
     ClientSceneLayer.prototype.flushAutoTile = function () {
-        var _this = this;
+        var _this_1 = this;
         var needFlushTileGrids = [];
         var autoTileListDatas = Game.data.autoTileList.data;
         for (var i = 0; i < this.needFlushAutoPos.length; i++) {
@@ -59250,7 +60095,7 @@ var ClientSceneLayer = (function (_super) {
             }
         }
         needFlushTileGrids.forEach(function (needFlushTileGrid, index) {
-            _this.drawTile(needFlushTileGrid.grid.x, needFlushTileGrid.grid.y, { tex: needFlushTileGrid.tex, texID: 0, x: needFlushTileGrid.x, y: needFlushTileGrid.y, w: needFlushTileGrid.w, h: needFlushTileGrid.h }, true);
+            _this_1.drawTile(needFlushTileGrid.grid.x, needFlushTileGrid.grid.y, { tex: needFlushTileGrid.tex, texID: 0, x: needFlushTileGrid.x, y: needFlushTileGrid.y, w: needFlushTileGrid.w, h: needFlushTileGrid.h }, true);
         }, this);
         this.needFlushAutoPos.length = 0;
     };
@@ -59326,11 +60171,11 @@ var ClientSceneLayer = (function (_super) {
             }
             this._drawMode = v;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     ClientSceneLayer.prototype.setBigImage = function (imgURL) {
-        var _this = this;
+        var _this_1 = this;
         if (this.drawMode)
             return;
         AssetManager.disposeImage(this.mapUrl);
@@ -59347,7 +60192,7 @@ var ClientSceneLayer = (function (_super) {
             AssetManager.disposeImages(this.__loadImages);
         this.__loadImages = [imgURL];
         AssetManager.loadImage(imgURL, Callback.New(function (tex) {
-            _this.setBigTexture(tex, false);
+            _this_1.setBigTexture(tex, false);
         }, this), true);
     };
     ClientSceneLayer.prototype.setBigTexture = function (t, disposeBitImage) {
@@ -59688,30 +60533,41 @@ var ClientSceneLayer = (function (_super) {
 
 
 
-var Animation = (function (_super) {
-    __extends(Animation, _super);
-    function Animation() {
-        _super.call(this);
-        this.autoID = ObjectUtils.getInstanceID();
-        this._fps = Config.ANIMATION_FPS ? Config.ANIMATION_FPS : 20;
-        this.silentMode = false;
-        this._showHitEffect = false;
-        this._currentFrame = 1;
-        this.loop = false;
-        this.imageSources = [null];
-        this._totalFrame = 0;
-        this._preAnimationlayers = [];
-        this._isloading = false;
-        this._isloaded = false;
-        this._loadState = 0;
-        this.isParticle = false;
-        this.topAnimation = this;
-        this.syncLoadWhenAssetExist = !Config.EDIT_MODE;
+
+
+
+
+
+
+
+
+
+
+var GCAnimation = (function (_super) {
+    __extends(GCAnimation, _super);
+    function GCAnimation() {
+        var _this_1 = _super.call(this) || this;
+        _this_1.autoID = ObjectUtils.getInstanceID();
+        _this_1._fps = Config.ANIMATION_FPS ? Config.ANIMATION_FPS : 20;
+        _this_1.silentMode = false;
+        _this_1._showHitEffect = false;
+        _this_1._currentFrame = 1;
+        _this_1.loop = false;
+        _this_1.imageSources = [null];
+        _this_1._totalFrame = 0;
+        _this_1._preAnimationlayers = [];
+        _this_1._isloading = false;
+        _this_1._isloaded = false;
+        _this_1._loadState = 0;
+        _this_1.isParticle = false;
+        _this_1.topAnimation = _this_1;
+        _this_1.syncLoadWhenAssetExist = !Config.EDIT_MODE;
         if (Config.EDIT_MODE) {
-            this.mouseEnabled = true;
+            _this_1.mouseEnabled = true;
         }
+        return _this_1;
     }
-    Object.defineProperty(Animation.prototype, "id", {
+    Object.defineProperty(GCAnimation.prototype, "id", {
         get: function () { return this._id; },
         set: function (v) {
             if (this.isDisposed)
@@ -59723,10 +60579,10 @@ var Animation = (function (_super) {
             this._loadIDRD = Math.random();
             this.loadData(v, this._loadIDRD);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Animation.prototype, "fps", {
+    Object.defineProperty(GCAnimation.prototype, "fps", {
         get: function () {
             return this._fps;
         },
@@ -59734,10 +60590,10 @@ var Animation = (function (_super) {
             this._fps = Math.max(Math.floor(v), 1);
             this._totalPlayTime = (this._totalFrame - 1) / this._fps * 1000;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Animation.prototype, "showHitEffect", {
+    Object.defineProperty(GCAnimation.prototype, "showHitEffect", {
         get: function () { return this._showHitEffect; },
         set: function (v) {
             if (this.isDisposed)
@@ -59746,10 +60602,10 @@ var Animation = (function (_super) {
                 this._showHitEffect = v;
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Animation.prototype, "currentFrame", {
+    Object.defineProperty(GCAnimation.prototype, "currentFrame", {
         get: function () { return this._currentFrame; },
         set: function (v) {
             if (this.isDisposed)
@@ -59760,15 +60616,15 @@ var Animation = (function (_super) {
             this._startTime = Date.now() - (v - 1) * 1000 / this.fps;
             this.onRender();
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Animation.prototype, "isPlaying", {
+    Object.defineProperty(GCAnimation.prototype, "isPlaying", {
         get: function () { return this._isPlaying; },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Animation.prototype, "target", {
+    Object.defineProperty(GCAnimation.prototype, "target", {
         get: function () {
             return this._target;
         },
@@ -59782,24 +60638,24 @@ var Animation = (function (_super) {
             if (this._target)
                 this._target.addAnimationTargetEffect(this.animationTargetLayer);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Animation.prototype, "totalFrame", {
+    Object.defineProperty(GCAnimation.prototype, "totalFrame", {
         get: function () {
             return this._totalFrame;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Animation.prototype, "isLoading", {
+    Object.defineProperty(GCAnimation.prototype, "isLoading", {
         get: function () {
             return this._isloading;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
-    Animation.prototype.clear = function () {
+    GCAnimation.prototype.clear = function () {
         for (var i = this.numChildren - 1; i >= 0; i--) {
             var layer = this.getChildAt(i);
             if (layer instanceof AnimationLayer) {
@@ -59816,8 +60672,8 @@ var Animation = (function (_super) {
             this.particleData = null;
         }
     };
-    Animation.prototype.loadData = function (animationID, loadIDRD) {
-        var _this = this;
+    GCAnimation.prototype.loadData = function (animationID, loadIDRD) {
+        var _this_1 = this;
         if (this.isDisposed)
             return;
         this._isloading = true;
@@ -59841,15 +60697,16 @@ var Animation = (function (_super) {
             this._loadState = 1;
             this.___loadJsonURL = "asset/json/animation/data/ani" + animationID + ".json";
             AssetManager.loadJson(this.___loadJsonURL, Callback.New(function (animationData) {
-                _this.parseData(animationData, loadIDRD);
+                _this_1.parseData(animationData, loadIDRD);
             }, this), this.syncLoadWhenAssetExist);
         }
     };
-    Animation.prototype.parseData = function (animationData, loadIDRD) {
+    GCAnimation.prototype.parseData = function (animationData, loadIDRD, inAniEditor) {
         if (loadIDRD === void 0) { loadIDRD = null; }
+        if (inAniEditor === void 0) { inAniEditor = false; }
         var loadRandName = "loadAnimation" + this.autoID;
         if (this.isDisposed || this.topAnimation.isDisposed || (loadIDRD && this._loadIDRD != loadIDRD)) {
-            this.event(Animation.LOAD_EXPIRE);
+            this.event(GCAnimation.LOAD_EXPIRE);
             return;
         }
         if (loadIDRD && this._loadIDRD != loadIDRD)
@@ -59865,14 +60722,15 @@ var Animation = (function (_super) {
         }
         this.clear();
         if (animationData.isParticle) {
-            this.particleParseData(animationData, loadIDRD);
+            this.particleParseData(animationData, loadIDRD, inAniEditor);
         }
         else {
-            this.sFrameParseData(animationData, loadIDRD);
+            this.sFrameParseData(animationData, loadIDRD, inAniEditor);
         }
     };
-    Animation.prototype.particleParseData = function (animationData, loadIDRD) {
-        var _this = this;
+    GCAnimation.prototype.particleParseData = function (animationData, loadIDRD, inAniEditor) {
+        var _this_1 = this;
+        if (inAniEditor === void 0) { inAniEditor = false; }
         this._id = animationData.id;
         this.isParticle = true;
         this.particleData = animationData.particleData;
@@ -59893,13 +60751,13 @@ var Animation = (function (_super) {
         else
             this.___loadPicUrls = [textureName];
         AssetManager.loadTexture(textureName, Callback.New(function (texture) {
-            if (_this.isDisposed || _this.topAnimation.isDisposed || (loadIDRD && _this._loadIDRD != loadIDRD)) {
-                _this.event(Animation.LOAD_EXPIRE);
+            if (_this_1.isDisposed || _this_1.topAnimation.isDisposed || (loadIDRD && _this_1._loadIDRD != loadIDRD)) {
+                _this_1.event(GCAnimation.LOAD_EXPIRE);
                 return;
             }
-            if (!loadIDRD || loadIDRD == _this._loadIDRD) {
-                _this._isloading = false;
-                _this._isloaded = true;
+            if (!loadIDRD || loadIDRD == _this_1._loadIDRD) {
+                _this_1._isloading = false;
+                _this_1._isloaded = true;
             }
             if (!texture) {
                 if (!loadIDRD || loadIDRD == _this._loadIDRD)
@@ -59917,8 +60775,8 @@ var Animation = (function (_super) {
             }
             _this.onRender(false);
             if (Config.EDIT_MODE) {
-                if (_this.stage && _this.isInherit(EUIRoot.uiSceneMain.sceneBox)) {
-                    var rect = _this.hitArea = new Rectangle(-Config.SCENE_GRID_SIZE / 4, -Config.SCENE_GRID_SIZE / 4, Config.SCENE_GRID_SIZE - 1, Config.SCENE_GRID_SIZE - 1);
+                if (_this.stage && _this_1.isInherit(EUIRoot.uiSceneMain.sceneBox)) {
+                    var rect = _this_1.hitArea = new Rectangle(-Config.SCENE_GRID_SIZE / 4, -Config.SCENE_GRID_SIZE / 4, Config.SCENE_GRID_SIZE - 1, Config.SCENE_GRID_SIZE - 1);
                     _this.graphics.clear();
                     _this.graphics.drawLines(rect.x, rect.y, [rect.x, rect.y, rect.right, rect.y, rect.right, rect.bottom, rect.x, rect.bottom, rect.x, rect.y], "#FFFFFF", 2);
                 }
@@ -59932,7 +60790,7 @@ var Animation = (function (_super) {
             }
         }, this), this.syncLoadWhenAssetExist);
     };
-    Animation.prototype.refreshParticleSetting = function () {
+    GCAnimation.prototype.refreshParticleSetting = function () {
         if (!this.particleData || !this.particleData.textureName || this.particleData.textureName.length < 1) {
             if (this.particleAni) {
                 this.particleAni.emitter.stop();
@@ -59968,8 +60826,9 @@ var Animation = (function (_super) {
             }
         }, this), this.syncLoadWhenAssetExist);
     };
-    Animation.prototype.sFrameParseData = function (animationData, loadIDRD) {
-        var _this = this;
+    GCAnimation.prototype.sFrameParseData = function (animationData, loadIDRD, inAniEditor) {
+        var _this_1 = this;
+        if (inAniEditor === void 0) { inAniEditor = false; }
         var loadRandName = "loadAnimation" + this.autoID;
         if (Config.EDIT_MODE)
             this.graphics.clear();
@@ -59988,71 +60847,72 @@ var Animation = (function (_super) {
             this.___loadPicUrls = picUrls;
         this._loadState = 2;
         AssetManager.loadImages(picUrls, Callback.New(function () {
-            if (_this.isDisposed || _this.topAnimation.isDisposed || (loadIDRD && _this._loadIDRD != loadIDRD)) {
-                _this.event(Animation.LOAD_EXPIRE);
+            if (_this_1.isDisposed || _this_1.topAnimation.isDisposed || (loadIDRD && _this_1._loadIDRD != loadIDRD)) {
+                _this_1.event(GCAnimation.LOAD_EXPIRE);
                 return;
             }
             var layers = animationData.layers;
             var isHighLayer = false;
             for (var index = 0; index < layers.length; index++) {
                 var layerData = layers[index];
-                var layer = Animation.createAnimationLayer(layerData);
-                layer.topAnimation = _this.topAnimation;
-                if (layer instanceof AnimationTargetLayer && _this.animationTargetLayer) {
+                var layer = GCAnimation.createAnimationLayer(layerData);
+                layer.topAnimation = _this_1.topAnimation;
+                layer.inAniEditor = inAniEditor;
+                if (layer instanceof AnimationTargetLayer && _this_1.animationTargetLayer) {
                     isHighLayer = true;
                     continue;
                 }
                 else if (layer instanceof AnimationTargetLayer)
-                    _this.animationTargetLayer = layer;
+                    _this_1.animationTargetLayer = layer;
                 if (layer instanceof AnimationAnimationLayer) {
                     new SyncTask(loadRandName);
-                    layer.once(EventObject.LOADED, _this, function (loadRandName) {
+                    layer.once(EventObject.LOADED, _this_1, function (loadRandName) {
                         SyncTask.taskOver(loadRandName);
                     }, [loadRandName]);
-                    layer.once(Animation.LOAD_EXPIRE, _this, function (loadRandName) {
+                    layer.once(GCAnimation.LOAD_EXPIRE, _this_1, function (loadRandName) {
                         SyncTask.taskOver(loadRandName);
                     }, [loadRandName]);
                 }
-                Animation.setAnimationLayerData(layer, layerData);
-                _this._preAnimationlayers.push(layer);
-                layer.animation = _this;
-                _this.addChild(layer);
+                GCAnimation.setAnimationLayerData(layer, layerData);
+                _this_1._preAnimationlayers.push(layer);
+                layer.animation = _this_1;
+                _this_1.addChild(layer);
                 layer.showFrame(0);
             }
-            _this._loadState = 3;
+            _this_1._loadState = 3;
             new SyncTask(loadRandName, function (loadRandName) {
-                if (_this.isDisposed || _this.topAnimation.isDisposed || (loadIDRD && _this._loadIDRD != loadIDRD)) {
-                    _this.event(Animation.LOAD_EXPIRE);
+                if (_this_1.isDisposed || _this_1.topAnimation.isDisposed || (loadIDRD && _this_1._loadIDRD != loadIDRD)) {
+                    _this_1.event(GCAnimation.LOAD_EXPIRE);
                     SyncTask.taskOver(loadRandName);
                     return;
                 }
-                if (_this._openAutoHitArea || _this.mouseEnabled) {
-                    _this.openAutoHitArea(_this._openAutoHitAreaForce);
+                if (_this_1._openAutoHitArea || _this_1.mouseEnabled) {
+                    _this_1.openAutoHitArea(_this_1._openAutoHitAreaForce);
                 }
-                if (!loadIDRD || loadIDRD == _this._loadIDRD) {
-                    _this._isloading = false;
-                    _this._isloaded = true;
+                if (!loadIDRD || loadIDRD == _this_1._loadIDRD) {
+                    _this_1._isloading = false;
+                    _this_1._isloaded = true;
                 }
-                _this.target = _this.target;
-                _this.updateParent();
-                _this.onRender(false);
-                if (!loadIDRD || loadIDRD == _this._loadIDRD) {
-                    _this.event(EventObject.LOADED);
+                _this_1.target = _this_1.target;
+                _this_1.updateParent();
+                _this_1.onRender(false);
+                if (!loadIDRD || loadIDRD == _this_1._loadIDRD) {
+                    _this_1.event(EventObject.LOADED);
                 }
-                if (_this._isPlaying) {
-                    _this._isPlaying = false;
-                    if (isNaN(_this._currentFrame) || isNaN(_this._startTime)) {
-                        _this.gotoAndPlay();
+                if (_this_1._isPlaying) {
+                    _this_1._isPlaying = false;
+                    if (isNaN(_this_1._currentFrame) || isNaN(_this_1._startTime)) {
+                        _this_1.gotoAndPlay();
                     }
                     else {
-                        _this.play(true);
+                        _this_1.play(true);
                     }
                 }
                 SyncTask.clear(loadRandName);
-            }, [loadRandName], _this);
+            }, [loadRandName], _this_1);
         }, this), this.syncLoadWhenAssetExist, true, this.prerender);
     };
-    Animation.prototype.addToGameSprite = function (target, lowLayer, highLayer) {
+    GCAnimation.prototype.addToGameSprite = function (target, lowLayer, highLayer) {
         if (this.isDisposed)
             return;
         this.target = target;
@@ -60060,11 +60920,11 @@ var Animation = (function (_super) {
         this._highLayer = highLayer;
         this.updateParent();
     };
-    Animation.prototype.removeFromGameSprite = function () {
+    GCAnimation.prototype.removeFromGameSprite = function () {
         this.addToGameSprite(null, null, null);
     };
-    Animation.prototype.updateParent = function () {
-        var _this = this;
+    GCAnimation.prototype.updateParent = function () {
+        var _this_1 = this;
         if (this.isDisposed || !this._isloaded)
             return;
         if (this._lowLayer != null || this._highLayer != null) {
@@ -60075,21 +60935,21 @@ var Animation = (function (_super) {
                 }
                 else {
                     if (isLowLayer) {
-                        if (_this._lowLayer)
-                            _this._lowLayer.addChild(element);
+                        if (_this_1._lowLayer)
+                            _this_1._lowLayer.addChild(element);
                     }
                     else {
-                        if (_this._highLayer)
-                            _this._highLayer.addChild(element);
+                        if (_this_1._highLayer)
+                            _this_1._highLayer.addChild(element);
                     }
                 }
             });
         }
         else {
-            this._preAnimationlayers.forEach(function (v) { return _this.addChild(v); });
+            this._preAnimationlayers.forEach(function (v) { return _this_1.addChild(v); });
         }
     };
-    Animation.prototype.dispose = function () {
+    GCAnimation.prototype.dispose = function () {
         if (!this.isDisposed) {
             os.remove_ENTERFRAME(this.onEnterFrame, this);
             this.stop(this.currentFrame);
@@ -60114,19 +60974,19 @@ var Animation = (function (_super) {
         }
         _super.prototype.dispose.call(this);
     };
-    Animation.prototype.___clearTask = function () {
+    GCAnimation.prototype.___clearTask = function () {
         SyncTask.clear("loadAnimation" + this.autoID);
-        Animation.getChildrenLayers(this).forEach(function (layer) {
+        GCAnimation.getChildrenLayers(this).forEach(function (layer) {
             if (layer instanceof AnimationAnimationLayer) {
                 if (layer.animationInstance)
                     layer.animationInstance.___clearTask();
             }
         });
     };
-    Animation.prototype.___disposeAsset = function () {
+    GCAnimation.prototype.___disposeAsset = function () {
         if (this._loadState == 3) {
             var needDisposeAnis = [];
-            Animation.getChildrenLayers(this).forEach(function (layer) {
+            GCAnimation.getChildrenLayers(this).forEach(function (layer) {
                 if (layer instanceof AnimationAnimationLayer) {
                     if (layer.animationInstance)
                         needDisposeAnis.push(layer.animationInstance);
@@ -60151,7 +61011,7 @@ var Animation = (function (_super) {
         this.___loadPicUrls = null;
         this._loadState = 0;
     };
-    Animation.prototype.gotoAndPlay = function (frame) {
+    GCAnimation.prototype.gotoAndPlay = function (frame) {
         if (frame === void 0) { frame = 1; }
         if (frame <= 1)
             frame = 1;
@@ -60159,7 +61019,7 @@ var Animation = (function (_super) {
         this._startTime = Date.now() - (frame - 1) * 1000 / this.fps;
         this.play();
     };
-    Animation.prototype.play = function (forcePlay) {
+    GCAnimation.prototype.play = function (forcePlay) {
         if (forcePlay === void 0) { forcePlay = false; }
         if (this.isDisposed)
             return;
@@ -60174,7 +61034,7 @@ var Animation = (function (_super) {
             if (!this._isPlaying) {
                 this._currentFrame = ((this._currentFrame - 1) % this._totalFrame) + 1;
                 this._startTime = Date.now() - (this._currentFrame - 1) * 1000 / this.fps;
-                this.event(Animation.PLAY_START);
+                this.event(GCAnimation.PLAY_START);
             }
             this._isPlaying = true;
             if (this.isParticle) {
@@ -60189,7 +61049,7 @@ var Animation = (function (_super) {
             }
             function refreshAnimationShowHitEffect(ani, showHitEffect) {
                 ani.showHitEffect = showHitEffect;
-                Animation.getChildrenLayers(ani).forEach(function (layer) {
+                GCAnimation.getChildrenLayers(ani).forEach(function (layer) {
                     if (layer instanceof AnimationAnimationLayer) {
                         if (layer.animationInstance)
                             refreshAnimationShowHitEffect(layer.animationInstance, showHitEffect);
@@ -60202,7 +61062,7 @@ var Animation = (function (_super) {
             this.onEnterFrame();
         }
     };
-    Animation.prototype.stop = function (frame) {
+    GCAnimation.prototype.stop = function (frame) {
         if (frame === void 0) { frame = 1; }
         if (this.isDisposed)
             return;
@@ -60210,7 +61070,7 @@ var Animation = (function (_super) {
             frame = 1;
         if (this._isPlaying) {
             this._isPlaying = false;
-            this.event(Animation.PLAY_STOP);
+            this.event(GCAnimation.PLAY_STOP);
             os.remove_ENTERFRAME(this.onEnterFrame, this);
             if (this.particleAni) {
                 this.particleAni.emitter.stop();
@@ -60218,31 +61078,31 @@ var Animation = (function (_super) {
             }
         }
         this.currentFrame = frame;
-        var animationAudioLayers = Animation.getAllLayers(this).filter(function (v) { return v instanceof AnimationAudioLayer; });
+        var animationAudioLayers = GCAnimation.getAllLayers(this).filter(function (v) { return v instanceof AnimationAudioLayer; });
         animationAudioLayers.forEach(function (v) {
             v.stopAudio();
         });
-        var animationAnimationLayers = Animation.getAllLayers(this).filter(function (v) { return v instanceof AnimationAnimationLayer; });
+        var animationAnimationLayers = GCAnimation.getAllLayers(this).filter(function (v) { return v instanceof AnimationAnimationLayer; });
         animationAnimationLayers.forEach(function (v) {
             if (v.animationInstance)
                 v.animationInstance.stop(frame);
         });
     };
-    Object.defineProperty(Animation.prototype, "__renderEnabled", {
+    Object.defineProperty(GCAnimation.prototype, "__renderEnabled", {
         get: function () {
             return this.displayedInStage || (this._lowLayer && this._lowLayer.stage) || (this._highLayer && this._highLayer.stage) || (this._target && this._target.stage);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Animation.prototype, "__inEditorRenderEnabled", {
+    Object.defineProperty(GCAnimation.prototype, "__inEditorRenderEnabled", {
         get: function () {
             return !Config.EDIT_MODE || (Config.EDIT_MODE && this.__renderEnabled);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
-    Animation.prototype.onEnterFrame = function () {
+    GCAnimation.prototype.onEnterFrame = function () {
         if (this.isDisposed)
             return;
         if (!this.__inEditorRenderEnabled)
@@ -60266,11 +61126,11 @@ var Animation = (function (_super) {
         if (!this.loop && dt >= this._totalPlayTime) {
             this.currentFrame = this._totalFrame;
             this.stop(this.currentFrame);
-            this.event(Animation.PLAY_COMPLETED);
+            this.event(GCAnimation.PLAY_COMPLETED);
         }
     };
-    Animation.prototype.onRender = function (sendEvent) {
-        var _this = this;
+    GCAnimation.prototype.onRender = function (sendEvent) {
+        var _this_1 = this;
         if (sendEvent === void 0) { sendEvent = true; }
         if (this.isDisposed || this.topAnimation.isDisposed)
             return;
@@ -60278,14 +61138,14 @@ var Animation = (function (_super) {
             return;
         if (!this.__inEditorRenderEnabled)
             return;
-        Animation.getChildrenLayers(this).forEach(function (layer) {
-            layer.showFrame(_this._currentFrame - 1);
+        GCAnimation.getChildrenLayers(this).forEach(function (layer) {
+            layer.showFrame(_this_1._currentFrame - 1);
         });
         if (sendEvent)
-            this.event(Animation.RENDER);
+            this.event(GCAnimation.RENDER);
     };
-    Animation.prototype.updateTotalFrame = function () {
-        var totalFrame = Animation.getAllLayers(this).reduce(function (pv, cv) {
+    GCAnimation.prototype.updateTotalFrame = function () {
+        var totalFrame = GCAnimation.getAllLayers(this).reduce(function (pv, cv) {
             var v = cv.frames.reduce(function (pv1, cv1) {
                 return Math.max(pv1, cv1.index + 1);
             }, 0);
@@ -60293,16 +61153,19 @@ var Animation = (function (_super) {
         }, 0);
         return this._totalFrame = totalFrame;
     };
-    Animation.prototype.addAnimationLayer = function (layer, toIndex) {
+    GCAnimation.prototype.addAnimationLayer = function (layer, toIndex) {
         if (toIndex === void 0) { toIndex = -1; }
         if (toIndex == -1 || toIndex > this.numChildren)
             this.addChild(layer);
         else
             this.addChildAt(layer, toIndex);
+        layer.materialData = [{ materials: [] }];
+        layer.materialsDataExit = true;
+        layer.installMaterialData(layer.materialData);
         layer.animation = this;
         layer.showFrame(this.currentFrame - 1);
     };
-    Animation.prototype.toAnimationData = function () {
+    GCAnimation.prototype.toAnimationData = function () {
         var animationData = {};
         animationData.id = this.id;
         if (this.isParticle) {
@@ -60316,23 +61179,23 @@ var Animation = (function (_super) {
         else {
             animationData.totalFrame = this.totalFrame;
             animationData.imageSources = this.imageSources;
-            animationData.layers = Animation.getChildrenLayers(this).map(function (v) { return v.toAnimationLayerData(); });
+            animationData.layers = GCAnimation.getChildrenLayers(this).map(function (v) { return v.toAnimationLayerData(); });
             animationData.particleData = null;
         }
         animationData.isParticle = this.isParticle;
         return animationData;
     };
-    Animation.getAllLayers = function (sprite) {
-        var childrenLayers = Animation.getChildrenLayers(sprite);
+    GCAnimation.getAllLayers = function (sprite) {
+        var childrenLayers = GCAnimation.getChildrenLayers(sprite);
         var layers = [];
         childrenLayers.forEach(function (v) {
             layers.push(v);
-            layers = layers.concat(Animation.getAllLayers(v));
+            layers = layers.concat(GCAnimation.getAllLayers(v));
         });
         return layers;
     };
-    Animation.getChildrenLayers = function (sprite) {
-        if ((!Config.EDIT_MODE || Config.BEHAVIOR_EDIT_MODE) && sprite instanceof Animation) {
+    GCAnimation.getChildrenLayers = function (sprite) {
+        if ((!Config.EDIT_MODE || Config.BEHAVIOR_EDIT_MODE) && sprite instanceof GCAnimation) {
             if (sprite._preAnimationlayers)
                 return sprite._preAnimationlayers;
         }
@@ -60345,48 +61208,48 @@ var Animation = (function (_super) {
         }
         return layers;
     };
-    Animation.createAnimationLayer = function (layerdata) {
+    GCAnimation.createAnimationLayer = function (layerdata) {
         var cls = AnimationLayer.typeClsMap[layerdata.type];
         var layer = new cls();
         return layer;
     };
-    Animation.setAnimationLayerData = function (aniLayer, layerdata) {
+    GCAnimation.setAnimationLayerData = function (aniLayer, layerdata) {
         aniLayer.setData(layerdata);
     };
-    Animation.prototype.on = function (type, caller, listener, args) {
+    GCAnimation.prototype.on = function (type, caller, listener, args) {
         var t = _super.prototype.on.apply(this, arguments);
         if (this.hasMouseEvent)
             this.openAutoHitArea();
         return t;
     };
     ;
-    Animation.prototype.once = function (type, caller, listener, args) {
-        var _this = this;
+    GCAnimation.prototype.once = function (type, caller, listener, args) {
+        var _this_1 = this;
         var t = _super.prototype.once.apply(this, [type, caller, function (caller, listener, args, e) {
                 listener.apply(caller, args ? args.concat([e]) : [e]);
-                if (!_this.hasMouseEvent)
-                    _this.closeAutoHitArea();
+                if (!_this_1.hasMouseEvent)
+                    _this_1.closeAutoHitArea();
             }, [caller, listener, args]]);
         if (this.hasMouseEvent)
             this.openAutoHitArea();
         return t;
     };
     ;
-    Animation.prototype.off = function (type, caller, listener, onceOnly) {
+    GCAnimation.prototype.off = function (type, caller, listener, onceOnly) {
         var t = _super.prototype.off.apply(this, arguments);
         if (!this.hasMouseEvent)
             this.closeAutoHitArea();
         return t;
     };
     ;
-    Animation.prototype.offAll = function (type) {
+    GCAnimation.prototype.offAll = function (type) {
         var t = _super.prototype.offAll.apply(this, arguments);
         if (!this.hasMouseEvent)
             this.closeAutoHitArea();
         return t;
     };
     ;
-    Animation.prototype.openAutoHitArea = function (force) {
+    GCAnimation.prototype.openAutoHitArea = function (force) {
         if (force === void 0) { force = false; }
         if (this.isDisposed)
             return;
@@ -60400,7 +61263,7 @@ var Animation = (function (_super) {
             aniLayer.openAutoHitArea(force);
         }
     };
-    Animation.prototype.closeAutoHitArea = function (force) {
+    GCAnimation.prototype.closeAutoHitArea = function (force) {
         if (force === void 0) { force = false; }
         if (this.isDisposed || Config.EDIT_MODE)
             return;
@@ -60414,14 +61277,25 @@ var Animation = (function (_super) {
             aniLayer.closeAutoHitArea(force);
         }
     };
-    Animation.RENDER = "RENDER";
-    Animation.PLAY_START = "playStart";
-    Animation.PLAY_STOP = "playStop";
-    Animation.PLAY_COMPLETED = "playCompleted";
-    Animation.SIGNAL = "Animation_SIGNAL";
-    Animation.LOAD_EXPIRE = "AvatarLOAD_EXPIRE";
-    return Animation;
+    GCAnimation.RENDER = "RENDER";
+    GCAnimation.PLAY_START = "playStart";
+    GCAnimation.PLAY_STOP = "playStop";
+    GCAnimation.PLAY_COMPLETED = "playCompleted";
+    GCAnimation.SIGNAL = "Animation_SIGNAL";
+    GCAnimation.LOAD_EXPIRE = "AvatarLOAD_EXPIRE";
+    return GCAnimation;
 }(GameSprite));
+window['Animation'] = GCAnimation;
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -60430,14 +61304,16 @@ var Animation = (function (_super) {
 var AnimationLayer = (function (_super) {
     __extends(AnimationLayer, _super);
     function AnimationLayer() {
-        _super.call(this);
-        this.frames = [];
-        this._frameinterpolationEnabled = true;
-        this._frameIndex = 0;
-        this._isOpenAutoHitArea = false;
+        var _this_1 = _super.call(this) || this;
+        _this_1.frames = [];
+        _this_1._frameinterpolationEnabled = true;
+        _this_1._frameIndex = 0;
+        _this_1._isOpenAutoHitArea = false;
         if (Config.EDIT_MODE) {
-            this.mouseEnabled = true;
+            _this_1.mouseEnabled = true;
         }
+        _this_1.blendMode = "normal";
+        return _this_1;
     }
     Object.defineProperty(AnimationLayer.prototype, "animation", {
         get: function () {
@@ -60446,7 +61322,7 @@ var AnimationLayer = (function (_super) {
             return this._animation;
         },
         set: function (v) { this._animation = v; },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(AnimationLayer.prototype, "isHitEffect", {
@@ -60457,29 +61333,29 @@ var AnimationLayer = (function (_super) {
                 this.updateFrame();
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(AnimationLayer.prototype, "frameinterpolationEnabled", {
         get: function () { return this._frameinterpolationEnabled; },
         set: function (v) {
-            var _this = this;
+            var _this_1 = this;
             if (this._frameinterpolationEnabled != v) {
                 this._frameinterpolationEnabled = v;
-                var framedata = this.frames.filter(function (v) { return v.index == _this._frameIndex; })[0];
+                var framedata = this.frames.filter(function (v) { return v.index == _this_1._frameIndex; })[0];
                 if (framedata)
                     framedata.frameinterpolationEnabled = v;
                 this.updateFrame();
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(AnimationLayer.prototype, "frameIndex", {
         get: function () {
             return this._frameIndex;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     AnimationLayer.prototype.setData = function (data) {
@@ -60496,6 +61372,21 @@ var AnimationLayer = (function (_super) {
         }
         this.showOnEditor = !data.ishide;
         this.mouseEventEnabledInEditor = !data.islock;
+    };
+    AnimationLayer.prototype.fixFramesMaterialsData = function () {
+        this.frames.forEach(function (v) {
+            if (!v.materialData)
+                v.materialData = [{ materials: [] }];
+            delete v.hue;
+            delete v.blur;
+            delete v.tonal_r;
+            delete v.tonal_g;
+            delete v.tonal_b;
+            delete v.tonal_gray;
+            delete v.tonal_mr;
+            delete v.tonal_mg;
+            delete v.tonal_mb;
+        });
     };
     AnimationLayer.prototype.openAutoHitArea = function (force) {
         if (force === void 0) { force = false; }
@@ -60515,22 +61406,22 @@ var AnimationLayer = (function (_super) {
         this.showFrame(this._frameIndex);
     };
     AnimationLayer.prototype.showFrame = function (frameIndex) {
-        var _this = this;
+        var _this_1 = this;
         if (frameIndex < 0)
             return;
         var preFrameIndex = this._frameIndex;
         var animationFrame = this.getFrameData(frameIndex);
         this.fromAnimationFrameData(animationFrame);
-        Animation.getChildrenLayers(this).forEach(function (layer) {
+        GCAnimation.getChildrenLayers(this).forEach(function (layer) {
             layer.showFrame(frameIndex);
         });
         if (!this.animation || !this.animation.isPlaying)
             return;
         var frames = this.frames;
-        var signalNames = frames.filter(function (f) { return f.signalId && ((preFrameIndex < f.index || _this._frameIndex < preFrameIndex) && f.index <= _this._frameIndex); }).map(function (v) { return v.signalId; });
+        var signalNames = frames.filter(function (f) { return f.signalId && ((preFrameIndex < f.index || _this_1._frameIndex < preFrameIndex) && f.index <= _this_1._frameIndex); }).map(function (v) { return v.signalId; });
         signalNames.forEach(function (signalID) {
             if (signalID > 0) {
-                _this.animation.event(Animation.SIGNAL, [signalID]);
+                _this_1.animation.event(GCAnimation.SIGNAL, [signalID]);
             }
         });
     };
@@ -60581,20 +61472,28 @@ var AnimationLayer = (function (_super) {
             }
             return pv;
         }, null);
-        if (result) {
-            if (result.nf.frameinterpolationEnabled == null || result.nf.frameinterpolationEnabled) {
-                frame = this.interpolationFrame(result.pf, result.nf, frameIndex);
+        if (!result)
+            return frame;
+        var interpolationEnabled = false;
+        if (result.nf.trans != null) {
+            interpolationEnabled = result.nf.trans && result.nf.trans.transType != 3;
+        }
+        else {
+            interpolationEnabled = (result.nf.frameinterpolationEnabled == null || result.nf.frameinterpolationEnabled);
+        }
+        if (interpolationEnabled) {
+            frame = this.interpolationFrame(result.pf, result.nf, frameIndex);
+        }
+        else {
+            if (frameIndex + 1 > frames[frames.length - 1].index) {
+                frame = ObjectUtils.depthClone(frames[frames.length - 1]);
             }
             else {
-                if (frameIndex + 1 > frames[frames.length - 1].index) {
-                    frame = ObjectUtils.depthClone(frames[frames.length - 1]);
-                }
-                else {
-                    frame = ObjectUtils.depthClone(result.pf);
-                }
-                frame.index = frameIndex;
-                frame.frameinterpolationEnabled = result.nf.frameinterpolationEnabled;
+                frame = ObjectUtils.depthClone(result.pf);
             }
+            frame.index = frameIndex;
+            if (result.nf.trans == null)
+                frame.frameinterpolationEnabled = result.nf.frameinterpolationEnabled;
         }
         return frame;
     };
@@ -60602,14 +61501,14 @@ var AnimationLayer = (function (_super) {
         this.removeSelf();
     };
     AnimationLayer.prototype.isOnKeyFrame = function () {
-        var _this = this;
-        var framedata = this.frames.filter(function (v) { return v.index == _this._frameIndex; })[0];
+        var _this_1 = this;
+        var framedata = this.frames.filter(function (v) { return v.index == _this_1._frameIndex; })[0];
         return !!framedata;
     };
     AnimationLayer.prototype.saveCurrentFrameData = function (canNew) {
-        var _this = this;
+        var _this_1 = this;
         if (canNew === void 0) { canNew = false; }
-        var framedata = this.frames.filter(function (v) { return v.index == _this._frameIndex; })[0];
+        var framedata = this.frames.filter(function (v) { return v.index == _this_1._frameIndex; })[0];
         if (framedata) {
             this.toAnimationFrameData(framedata);
         }
@@ -60624,22 +61523,29 @@ var AnimationLayer = (function (_super) {
         if (!framedata)
             return;
         this._frameIndex = framedata.index;
-        if (framedata.frameinterpolationEnabled == null)
-            framedata.frameinterpolationEnabled = true;
-        this.frameinterpolationEnabled = framedata.frameinterpolationEnabled;
+        if (framedata.trans == null) {
+            if (framedata.frameinterpolationEnabled == null)
+                framedata.frameinterpolationEnabled = true;
+            this.frameinterpolationEnabled = framedata.frameinterpolationEnabled;
+        }
     };
     AnimationLayer.prototype.toAnimationFrameData = function (framedata) {
         framedata = framedata || {};
         framedata.index = this._frameIndex;
-        framedata.frameinterpolationEnabled = this.frameinterpolationEnabled;
+        if (framedata.trans == null) {
+            framedata.frameinterpolationEnabled = this.frameinterpolationEnabled;
+        }
+        if (this.materialsDataExit) {
+            framedata.materialData = ObjectUtils.depthClone(this.materialData);
+        }
         return framedata;
     };
     AnimationLayer.prototype.toAnimationLayerData = function () {
         this.saveCurrentFrameData();
         var data = {
-            name: this.name,
             type: this.type,
-            children: Animation.getChildrenLayers(this).map(function (v) { return v.toAnimationLayerData(); }),
+            name: this.name,
+            children: GCAnimation.getChildrenLayers(this).map(function (v) { return v.toAnimationLayerData(); }),
             frames: this.frames,
             isHitEffect: !!this.isHitEffect,
             ishide: !this.showOnEditor,
@@ -60648,7 +61554,90 @@ var AnimationLayer = (function (_super) {
         return data;
     };
     AnimationLayer.prototype.interpolationFrame = function (pf, nf, frameIndex) {
-        return { index: frameIndex, frameinterpolationEnabled: nf.frameinterpolationEnabled };
+        return { index: frameIndex, frameinterpolationEnabled: nf.frameinterpolationEnabled, trans: nf.trans, materialData: [{ materials: [] }] };
+    };
+    AnimationLayer.prototype.refreshInterpolationFrameMaterials = function (frame, pf, nf, value) {
+        frame.materialData = [{ materials: [] }];
+        var pfmaterials = pf.materialData[0].materials;
+        var nfmaterials = nf.materialData[0].materials;
+        for (var i = 0; i < pfmaterials.length; i++) {
+            var pmaterial = pfmaterials[i];
+            var material = {};
+            var nmaterial = nfmaterials[i];
+            for (var key in pmaterial) {
+                if (typeof pmaterial[key] != "boolean" && typeof pmaterial[key] != "number" && typeof pmaterial[key] != "string")
+                    continue;
+                var pvalue = pmaterial[key];
+                if (typeof pvalue != "number")
+                    material[key] = pvalue;
+                else
+                    material[key] = (nmaterial[key] - pmaterial[key]) * value + pmaterial[key];
+            }
+            frame.materialData[0].materials.push(material);
+        }
+    };
+    AnimationLayer.prototype.setFrameMaterialsEffect = function (materialData) {
+        if (!this.materialData || !materialData)
+            return;
+        var frameMaterials = materialData[0];
+        if (!frameMaterials || !frameMaterials.materials)
+            return;
+        for (var i = 0; i < frameMaterials.materials.length; i++) {
+            var frameMaterialsData = frameMaterials.materials[i];
+            if (!frameMaterialsData)
+                continue;
+            var materialValues = {};
+            for (var key in frameMaterialsData) {
+                var frameMaterial = frameMaterialsData[key];
+                if (typeof frameMaterial != "boolean" && typeof frameMaterial != "number" && typeof frameMaterial != "string")
+                    continue;
+                if (typeof frameMaterial == "number") {
+                    materialValues["mu" + frameMaterialsData.id + "_" + key] = frameMaterial;
+                }
+            }
+            this.setMaterialValueFast(materialValues, i);
+        }
+    };
+    AnimationLayer.prototype.refreshInterpolationFrameTonal = function (frame, pf, nf, value, tween) {
+        if (!tween)
+            return;
+        frame.hue = Math.round(tween(value, pf.hue, nf.hue - pf.hue, 1));
+        frame.blur = tween(value, pf.blur, nf.blur - pf.blur, 1);
+        frame.tonal_r = Math.round(tween(value, pf.tonal_r, nf.tonal_r - pf.tonal_r, 1));
+        frame.tonal_g = Math.round(tween(value, pf.tonal_g, nf.tonal_g - pf.tonal_g, 1));
+        frame.tonal_b = Math.round(tween(value, pf.tonal_b, nf.tonal_b - pf.tonal_b, 1));
+        frame.tonal_gray = Math.round(tween(value, pf.tonal_gray, nf.tonal_gray - pf.tonal_gray, 1));
+        frame.tonal_mr = tween(value, pf.tonal_mr, nf.tonal_mr - pf.tonal_mr, 1);
+        frame.tonal_mg = tween(value, pf.tonal_mg, nf.tonal_mg - pf.tonal_mg, 1);
+        frame.tonal_mb = tween(value, pf.tonal_mb, nf.tonal_mb - pf.tonal_mb, 1);
+    };
+    AnimationLayer.prototype.checkMaterialsTransChange = function (frameData) {
+        if (this.frames.length <= 1)
+            return false;
+        var currentFrameData = this.materialData;
+        if (!frameData.materialData || !currentFrameData)
+            return false;
+        var materialsA = frameData.materialData[0];
+        var materialsB = currentFrameData[0];
+        if (!materialsA || !materialsA.materials || !materialsB || !materialsB.materials)
+            return false;
+        var isChange = false;
+        for (var i = 0; i < materialsA.materials.length; i++) {
+            var materialA = materialsA.materials[i];
+            var materialB = materialsB.materials[i];
+            if (!materialA || !materialB)
+                continue;
+            for (var key in materialA) {
+                var frameMaterial = materialA[key];
+                if (typeof frameMaterial != "boolean" && typeof frameMaterial != "number" && typeof frameMaterial != "string")
+                    continue;
+                if (!isChange && typeof frameMaterial != "number" && frameMaterial != materialB[key]) {
+                    isChange = true;
+                }
+                materialB[key] = frameMaterial;
+            }
+        }
+        return isChange;
     };
     AnimationLayer.typeClsMap = {};
     return AnimationLayer;
@@ -60658,12 +61647,23 @@ var AnimationLayer = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var AnimationTargetLayer = (function (_super) {
     __extends(AnimationTargetLayer, _super);
     function AnimationTargetLayer() {
-        _super.apply(this, arguments);
-        this.type = AnimationItemType.Target;
-        this.showEnable = true;
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.type = AnimationItemType.Target;
+        _this_1.showEnable = true;
+        return _this_1;
     }
     AnimationTargetLayer.prototype._updateView = function () {
         if (!this.animation)
@@ -60673,6 +61673,40 @@ var AnimationTargetLayer = (function (_super) {
             return;
         if (target instanceof GameSprite) {
             target.refreshAnimationTargetEffect();
+        }
+    };
+    AnimationTargetLayer.prototype._installTargetEffect = function () {
+        if (!this.animation)
+            return;
+        var target = this.animation.target;
+        if (!target || target.isDisposed)
+            return;
+        if (target instanceof GameSprite) {
+            target.installTargetMaterialsEffect();
+        }
+    };
+    AnimationTargetLayer.prototype._updateTargetEffect = function () {
+        if (!this.animation)
+            return;
+        var target = this.animation.target;
+        if (!target || target.isDisposed)
+            return;
+        if (target instanceof GameSprite) {
+            target.refreshTargetMaterialsEffect();
+        }
+    };
+    AnimationTargetLayer.prototype.setData = function (data) {
+        _super.prototype.setData.call(this, data);
+        if (this.frames[0] && this.frames[0].materialData) {
+            this.materialData = ObjectUtils.depthClone(this.frames[0].materialData);
+        }
+        else if (Config.EDIT_MODE && this.inAniEditor) {
+            this.fixFramesMaterialsData();
+            this.materialData = [{ materials: [] }];
+        }
+        if (this.materialData) {
+            this.materialsDataExit = true;
+            this.installMaterialData(this.materialData);
         }
     };
     AnimationTargetLayer.prototype.showFrame = function (frameIndex) {
@@ -60707,9 +61741,6 @@ var AnimationTargetLayer = (function (_super) {
             return;
         if (!framedata)
             return;
-        this.hue = framedata.hue;
-        this.blur = framedata.blur;
-        this.setTonal(framedata.tonal_r, framedata.tonal_g, framedata.tonal_b, framedata.tonal_gray, framedata.tonal_mr, framedata.tonal_mg, framedata.tonal_mb);
         this.x = framedata.x;
         this.y = framedata.y;
         this.rotation = framedata.rotation;
@@ -60720,20 +61751,27 @@ var AnimationTargetLayer = (function (_super) {
             framedata.scaleY = 1;
         this.scaleX = framedata.scaleX;
         this.scaleY = framedata.scaleY;
-        this._updateView();
+        if (this.materialsDataExit) {
+            if (this.checkMaterialsTransChange(framedata)) {
+                this.clearMaterials();
+                this.installMaterialData(this.materialData);
+                this._installTargetEffect();
+            }
+            else {
+                this.setFrameMaterialsEffect(framedata.materialData);
+                this._updateTargetEffect();
+            }
+        }
+        else if (!Config.EDIT_MODE || !this.inAniEditor || Config.BEHAVIOR_EDIT_MODE) {
+            this.hue = framedata.hue;
+            this.blur = framedata.blur;
+            this.setTonal(framedata.tonal_r, framedata.tonal_g, framedata.tonal_b, framedata.tonal_gray, framedata.tonal_mr, framedata.tonal_mg, framedata.tonal_mb);
+            this._updateView();
+        }
     };
     AnimationTargetLayer.prototype.toAnimationFrameData = function (framedata) {
         framedata = _super.prototype.toAnimationFrameData.call(this, framedata);
         if (this.showEnable) {
-            framedata.hue = this.hue;
-            framedata.blur = this.blur;
-            framedata.tonal_r = this.tonal_r;
-            framedata.tonal_g = this.tonal_g;
-            framedata.tonal_b = this.tonal_b;
-            framedata.tonal_gray = this.tonal_gray;
-            framedata.tonal_mr = this.tonal_mr;
-            framedata.tonal_mg = this.tonal_mg;
-            framedata.tonal_mb = this.tonal_mb;
             framedata.x = this.x;
             framedata.y = this.y;
             framedata.rotation = this.rotation;
@@ -60745,31 +61783,35 @@ var AnimationTargetLayer = (function (_super) {
     };
     AnimationTargetLayer.prototype.interpolationFrame = function (pf, nf, frameIndex) {
         var frame = _super.prototype.interpolationFrame.call(this, pf, nf, frameIndex);
-        var t = (frameIndex - pf.index) / (nf.index - pf.index);
-        var tween = GameUtils.getTween(nf.tweenID)[0];
-        frame.tweenID = nf.tweenID;
-        frame.horizontalReversal = pf.horizontalReversal;
-        frame.hue = Math.round(tween(t, pf.hue, nf.hue - pf.hue, 1));
-        frame.blur = tween(t, pf.blur, nf.blur - pf.blur, 1);
-        frame.tonal_r = Math.round(tween(t, pf.tonal_r, nf.tonal_r - pf.tonal_r, 1));
-        frame.tonal_g = Math.round(tween(t, pf.tonal_g, nf.tonal_g - pf.tonal_g, 1));
-        frame.tonal_b = Math.round(tween(t, pf.tonal_b, nf.tonal_b - pf.tonal_b, 1));
-        frame.tonal_gray = Math.round(tween(t, pf.tonal_gray, nf.tonal_gray - pf.tonal_gray, 1));
-        frame.tonal_mr = tween(t, pf.tonal_mr, nf.tonal_mr - pf.tonal_mr, 1);
-        frame.tonal_mg = tween(t, pf.tonal_mg, nf.tonal_mg - pf.tonal_mg, 1);
-        frame.tonal_mb = tween(t, pf.tonal_mb, nf.tonal_mb - pf.tonal_mb, 1);
-        frame.x = tween(t, pf.x, nf.x - pf.x, 1);
-        frame.y = tween(t, pf.y, nf.y - pf.y, 1);
-        frame.rotation = tween(t, pf.rotation, nf.rotation - pf.rotation, 1);
-        frame.alpha = tween(t, pf.alpha, nf.alpha - pf.alpha, 1);
         if (pf.scaleX == undefined)
             pf.scaleX = 1;
         if (pf.scaleY == undefined)
             pf.scaleY = 1;
+        frame.horizontalReversal = pf.horizontalReversal;
         var t = (frameIndex - pf.index) / (nf.index - pf.index);
-        var tween = GameUtils.getTween(nf.tweenID)[0];
-        frame.scaleX = tween(t, pf.scaleX, nf.scaleX - pf.scaleX, 1);
-        frame.scaleY = tween(t, pf.scaleY, nf.scaleY - pf.scaleY, 1);
+        if (this.materialsDataExit) {
+            var value = GameUtils.getValueByTransData(nf.trans, t);
+            frame.x = (nf.x - pf.x) * value + pf.x;
+            frame.y = (nf.y - pf.y) * value + pf.y;
+            frame.rotation = (nf.rotation - pf.rotation) * value + pf.rotation;
+            frame.alpha = (nf.alpha - pf.alpha) * value + pf.alpha;
+            frame.scaleX = (nf.scaleX - pf.scaleX) * value + pf.scaleX;
+            frame.scaleY = (nf.scaleY - pf.scaleY) * value + pf.scaleY;
+            if (pf.materialData && nf.materialData) {
+                this.refreshInterpolationFrameMaterials(frame, pf, nf, t);
+            }
+        }
+        else {
+            var tween = GameUtils.getTween(nf.tweenID)[0];
+            frame.tweenID = nf.tweenID;
+            frame.x = tween(t, pf.x, nf.x - pf.x, 1);
+            frame.y = tween(t, pf.y, nf.y - pf.y, 1);
+            frame.rotation = tween(t, pf.rotation, nf.rotation - pf.rotation, 1);
+            frame.alpha = tween(t, pf.alpha, nf.alpha - pf.alpha, 1);
+            frame.scaleX = tween(t, pf.scaleX, nf.scaleX - pf.scaleX, 1);
+            frame.scaleY = tween(t, pf.scaleY, nf.scaleY - pf.scaleY, 1);
+            this.refreshInterpolationFrameTonal(frame, pf, nf, t, tween);
+        }
         return frame;
     };
     return AnimationTargetLayer;
@@ -60780,26 +61822,37 @@ AnimationLayer.typeClsMap[AnimationItemType.Target] = AnimationTargetLayer;
 
 
 
+
+
+
+
+
+
+
+
+
+
 var UIComponent;
 (function (UIComponent) {
     var UIBase = (function (_super) {
         __extends(UIBase, _super);
         function UIBase() {
-            _super.call(this);
-            this.condition = [];
-            this.hasCommand = [];
-            this.isOpen = true;
-            this.materialData = [{ materials: [] }];
-            this._needLoad = true;
-            this.modifyWidthHeightEnabled = true;
-            this.mouseEventEnabledData = true;
-            this.id = ObjectUtils.getRandID();
-            this.className = "UIBase";
-            this.mouseEventEnabled = true;
+            var _this_1 = _super.call(this) || this;
+            _this_1.condition = [];
+            _this_1.hasCommand = [];
+            _this_1.isOpen = true;
+            _this_1.materialData = [{ materials: [] }];
+            _this_1._needLoad = true;
+            _this_1.modifyWidthHeightEnabled = true;
+            _this_1.mouseEventEnabledData = true;
+            _this_1.id = ObjectUtils.getRandID();
+            _this_1.className = "UIBase";
+            _this_1.mouseEventEnabled = true;
             if (!Config.EDIT_MODE) {
-                this.add_DISPLAY(this.initCondition, this, [true]);
-                this.add_UNDISPLAY(this.initCondition, this, [false]);
+                _this_1.add_DISPLAY(_this_1.initCondition, _this_1, [true]);
+                _this_1.add_UNDISPLAY(_this_1.initCondition, _this_1, [false]);
             }
+            return _this_1;
         }
         UIBase.prototype.refImageRecord = function (index, imageURL) {
             if (this.___currentRequestLoadImages && this.___currentRequestLoadImages[index]) {
@@ -60909,9 +61962,6 @@ var UIComponent;
             if (this.firstConditionCheckCount == 0 || Config.SINGLE_PLAYER_CORE) {
                 this.visible = visible;
             }
-            if (this.visible != lastVisible) {
-                this.event(UIBase.ON_VISIBLE_CHANGE);
-            }
         };
         UIBase.prototype.inEditorInit = function () {
         };
@@ -60945,31 +61995,51 @@ var UIComponent;
     }(GameSprite));
     UIComponent.UIBase = UIBase;
 })(UIComponent || (UIComponent = {}));
+getset(false, UIComponent.UIBase.prototype, 'visible', function () {
+    return this._style.visible;
+}, function (value) {
+    if (this._style && this._style.visible !== value) {
+        this.getStyle().visible = value;
+        this.conchModel && this.conchModel.visible(value);
+        this.parentRepaint();
+        this.event(UIComponent.UIBase.ON_VISIBLE_CHANGE);
+    }
+});
 
 
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UIBitmap = (function (_super) {
         __extends(UIBitmap, _super);
         function UIBitmap() {
-            _super.call(this);
-            this._image = "";
-            this._grid9 = "0,0,0,0,0";
-            this._pivotType = 0;
-            this._uiImage = new UIImage();
-            this.addChild(this._uiImage);
-            this.className = "UIBitmap";
-            this.on(EventObject.RESIZE, this, this.onResize);
+            var _this_1 = _super.call(this) || this;
+            _this_1._image = "";
+            _this_1._grid9 = "0,0,0,0,0";
+            _this_1._pivotType = 0;
+            _this_1._uiImage = new UIImage();
+            _this_1.addChild(_this_1._uiImage);
+            _this_1.className = "UIBitmap";
+            _this_1.on(EventObject.RESIZE, _this_1, _this_1.onResize);
             if (!Config.EDIT_MODE) {
-                this.add_DISPLAY(this.onAdded, this);
-                this.add_UNDISPLAY(this.onRemoved, this);
+                _this_1.add_DISPLAY(_this_1.onAdded, _this_1);
+                _this_1.add_UNDISPLAY(_this_1.onRemoved, _this_1);
             }
+            return _this_1;
         }
         UIBitmap.prototype.loadAssetTest = function () {
-            var _this = this;
+            var _this_1 = this;
             var varID = GameUtils.getVarID(this.image);
             if (varID != 0) {
                 if (typeof SinglePlayerGame == "undefined" && (!ClientMain.conn || !ClientMain.conn.isConnect)) {
@@ -60978,7 +62048,7 @@ var UIComponent;
                 }
                 var cb;
                 Game.player.addListenerPlayerVariable(2, varID, cb = Callback.New(function (typeID, varID, value) {
-                    doLoadAssetTest.apply(_this, [value]);
+                    doLoadAssetTest.apply(_this_1, [value]);
                     setTimeout(function () {
                         Game.player.removeListenerPlayerVariable(2, varID, cb);
                     }, 5000);
@@ -61025,7 +62095,7 @@ var UIComponent;
                     return null;
                 return AssetManager.getImage(this.image);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIBitmap.prototype.onResize = function () {
@@ -61052,7 +62122,7 @@ var UIComponent;
                 return this._image;
             },
             set: function (v) {
-                var _this = this;
+                var _this_1 = this;
                 if (this.isDisposed)
                     return;
                 this.__imageURLAutoID = ObjectUtils.getInstanceID();
@@ -61072,7 +62142,7 @@ var UIComponent;
                 if (!Config.EDIT_MODE) {
                     if (this.displayedInStage && varID != 0) {
                         this._onVarChange = Callback.New(function (__imageURLAutoID, typeID, varID, value) {
-                            _this.onImageChange(value, __imageURLAutoID);
+                            _this_1.onImageChange(value, __imageURLAutoID);
                         }, this, [this.__imageURLAutoID]);
                         Game.player.addListenerPlayerVariable(2, varID, this._onVarChange);
                     }
@@ -61082,7 +62152,7 @@ var UIComponent;
                 if (lastImage != v && !this.__forceChange)
                     this.event(EventObject.CHANGE);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIBitmap.prototype.setImageForce = function (v) {
@@ -61098,7 +62168,7 @@ var UIComponent;
                 this._pivotType = v;
                 this.refreshPivotType();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIBitmap.prototype.refreshPivotType = function () {
@@ -61115,21 +62185,21 @@ var UIComponent;
             get: function () {
                 return this._uiImage.width;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIBitmap.prototype, "grid9Height", {
             get: function () {
                 return this._uiImage.height;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIBitmap.prototype, "grid9Skin", {
             get: function () {
                 return this._image;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIBitmap.prototype, "grid9", {
@@ -61141,7 +62211,7 @@ var UIComponent;
                     v = "0,0,0,0,0";
                 this._grid9 = this._uiImage.sizeGrid = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIBitmap.prototype, "texture", {
@@ -61155,7 +62225,7 @@ var UIComponent;
                 this._uiImage.graphics.drawTexture(v, 0, 0, this.width, this.height);
                 this._imageByTexture = true;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIBitmap.prototype, "flip", {
@@ -61166,17 +62236,17 @@ var UIComponent;
                 this._flip = v;
                 this.refreshFlip();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIBitmap.prototype.onAdded = function (e) {
-            var _this = this;
+            var _this_1 = this;
             if (this.isDisposed)
                 return;
             var varID = GameUtils.getVarID(this.image);
             if (varID != 0) {
                 this._onVarChange = Callback.New(function (__imageURLAutoID, typeID, varID, value) {
-                    _this.onImageChange(value, __imageURLAutoID);
+                    _this_1.onImageChange(value, __imageURLAutoID);
                 }, this, [this.__imageURLAutoID]);
                 Game.player.addListenerPlayerVariable(2, varID, this._onVarChange);
             }
@@ -61188,7 +62258,7 @@ var UIComponent;
             }
         };
         UIBitmap.prototype.onImageChange = function (v, imageURLAutoID) {
-            var _this = this;
+            var _this_1 = this;
             if (imageURLAutoID === void 0) { imageURLAutoID = null; }
             if (this instanceof UIComponent.UIVideo)
                 return;
@@ -61212,29 +62282,29 @@ var UIComponent;
                 this.refImageRecord(0, v);
                 this._uiImage.skin = v;
                 AssetManager.loadImage(v, Callback.New(function (tex) {
-                    if (_this.isDisposed || (imageURLAutoID != _this.__imageURLAutoID))
+                    if (_this_1.isDisposed || (imageURLAutoID != _this_1.__imageURLAutoID))
                         return;
-                    _this._texture = tex;
-                    if (((_this.width == 0 && _this.height == 0) || _this._emptyImage || _this.useDPCoord) && tex) {
-                        if (_this.useDPCoord) {
-                            _this._dpTextureWidth = tex.width;
-                            _this._dpTextureHeight = tex.height;
-                            _this.width = tex.width;
-                            _this.height = tex.height;
-                            _this._uiImage.width = _this.width;
-                            _this._uiImage.height = _this.height;
-                            _this._dpDirty = true;
-                            _this.dpCoordToRealCoord();
+                    _this_1._texture = tex;
+                    if (((_this_1.width == 0 && _this_1.height == 0) || _this_1._emptyImage || _this_1.useDPCoord) && tex) {
+                        if (_this_1.useDPCoord) {
+                            _this_1._dpTextureWidth = tex.width;
+                            _this_1._dpTextureHeight = tex.height;
+                            _this_1.width = tex.width;
+                            _this_1.height = tex.height;
+                            _this_1._uiImage.width = _this_1.width;
+                            _this_1._uiImage.height = _this_1.height;
+                            _this_1._dpDirty = true;
+                            _this_1.dpCoordToRealCoord();
                         }
                         else {
-                            _this.width = tex.width;
-                            _this.height = tex.height;
-                            _this._uiImage.width = _this.width;
-                            _this._uiImage.height = _this.height;
+                            _this_1.width = tex.width;
+                            _this_1.height = tex.height;
+                            _this_1._uiImage.width = _this_1.width;
+                            _this_1._uiImage.height = _this_1.height;
                         }
-                        _this._emptyImage = false;
+                        _this_1._emptyImage = false;
                     }
-                    _this.event(EventObject.LOADED);
+                    _this_1.event(EventObject.LOADED);
                 }, this), true);
             }
             else {
@@ -61252,6 +62322,7 @@ var UIComponent;
                 this._uiImage.x = 0;
             }
         };
+        UIBitmap.customCompFunctionNames = ["image", "grid9", "flip", "pivotType"];
         return UIBitmap;
     }(UIComponent.UIBase));
     UIComponent.UIBitmap = UIBitmap;
@@ -61261,37 +62332,47 @@ var UIComponent;
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UIButton = (function (_super) {
         __extends(UIButton, _super);
         function UIButton() {
-            _super.call(this);
-            this._image1 = "";
-            this._image2 = "";
-            this._image3 = "";
-            this._grid9img1 = "0,0,0,0,0";
-            this._grid9img2 = "0,0,0,0,0";
-            this._grid9img3 = "0,0,0,0,0";
-            this._color = "#000000";
-            this._state = 1;
-            this._image = new UIImage();
-            this.addChild(this._image);
-            this._tfBox = new Sprite();
-            this._tf = new UIComponent.UIString();
-            this._tf.mouseEventEnabled = false;
-            this._tfBox.addChild(this._tf);
-            this.addChild(this._tfBox);
-            this.className = "UIButton";
-            this.add_MOUSEOVER(this.onmouseover, this);
-            this.add_MOUSEOUT(this.onmouseout, this);
-            this.add_MOUSEDOWN(this.onmousedown, this);
-            this.add_MOUSEUP(this.onmouseup, this);
-            this.on(EventObject.RESIZE, this, this.onResize);
-            this.color = "#999999";
-            this.align = 1;
-            this.valign = 1;
-            this.fontSize = 16;
+            var _this_1 = _super.call(this) || this;
+            _this_1._image1 = "";
+            _this_1._image2 = "";
+            _this_1._image3 = "";
+            _this_1._grid9img1 = "0,0,0,0,0";
+            _this_1._grid9img2 = "0,0,0,0,0";
+            _this_1._grid9img3 = "0,0,0,0,0";
+            _this_1._color = "#000000";
+            _this_1._state = 1;
+            _this_1._image = new UIImage();
+            _this_1.addChild(_this_1._image);
+            _this_1._tfBox = new Sprite();
+            _this_1._tf = new UIComponent.UIString();
+            _this_1._tf.mouseEventEnabled = false;
+            _this_1._tfBox.addChild(_this_1._tf);
+            _this_1.addChild(_this_1._tfBox);
+            _this_1.className = "UIButton";
+            _this_1.add_MOUSEOVER(_this_1.onmouseover, _this_1);
+            _this_1.add_MOUSEOUT(_this_1.onmouseout, _this_1);
+            _this_1.add_MOUSEDOWN(_this_1.onmousedown, _this_1);
+            _this_1.add_MOUSEUP(_this_1.onmouseup, _this_1);
+            _this_1.on(EventObject.RESIZE, _this_1, _this_1.onResize);
+            _this_1.color = "#999999";
+            _this_1.align = 1;
+            _this_1.valign = 1;
+            _this_1.fontSize = 16;
+            return _this_1;
         }
         Object.defineProperty(UIButton.prototype, "image1", {
             get: function () {
@@ -61305,7 +62386,7 @@ var UIComponent;
                 AssetManager.loadImage(v);
                 this.onImageChange(v, 1);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "image2", {
@@ -61320,7 +62401,7 @@ var UIComponent;
                 AssetManager.loadImage(v);
                 this.onImageChange(v, 2);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "image3", {
@@ -61335,7 +62416,7 @@ var UIComponent;
                 AssetManager.loadImage(v);
                 this.onImageChange(v, 3);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "smooth", {
@@ -61346,7 +62427,7 @@ var UIComponent;
                 this._smooth = v;
                 this._tf.smooth = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIButton.prototype.inEditorInit = function () {
@@ -61367,9 +62448,9 @@ var UIComponent;
             this.remove_MOUSEUP(this.onmouseup, this);
         };
         UIButton.prototype.loadAssetTest = function () {
-            var _this = this;
+            var _this_1 = this;
             AssetManager.loadImages([this.image1, this.image2, this.image3], Callback.New(function () {
-                _this.event(GameUI.EVENT_TEST_LOAD_CHILD_UI);
+                _this_1.event(GameUI.EVENT_TEST_LOAD_CHILD_UI);
             }, this), this._syncLoadedEventWhenAssetExist, false);
         };
         UIButton.prototype.dispose = function () {
@@ -61389,21 +62470,21 @@ var UIComponent;
             get: function () {
                 return this.width;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "grid9img1Height", {
             get: function () {
                 return this.height;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "grid9img1Skin", {
             get: function () {
                 return this._image1;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "grid9img1", {
@@ -61416,28 +62497,28 @@ var UIComponent;
                 this._grid9img1 = v;
                 this.refresImage(1);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "grid9img2Width", {
             get: function () {
                 return this.width;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "grid9img2Height", {
             get: function () {
                 return this.height;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "grid9img2Skin", {
             get: function () {
                 return this._image2;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "grid9img2", {
@@ -61450,28 +62531,28 @@ var UIComponent;
                 this._grid9img2 = v;
                 this.refresImage(2);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "grid9img3Width", {
             get: function () {
                 return this.width;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "grid9img3Height", {
             get: function () {
                 return this.height;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "grid9img3Skin", {
             get: function () {
                 return this._image3;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "grid9img3", {
@@ -61484,7 +62565,7 @@ var UIComponent;
                 this._grid9img3 = v;
                 this.refresImage(3);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIButton.prototype.refresImage = function (state) {
@@ -61500,7 +62581,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.text = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "align", {
@@ -61510,7 +62591,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.align = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "valign", {
@@ -61520,7 +62601,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.valign = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "bold", {
@@ -61530,7 +62611,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.bold = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "italic", {
@@ -61540,7 +62621,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.italic = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "font", {
@@ -61550,7 +62631,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.font = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "color", {
@@ -61561,7 +62642,7 @@ var UIComponent;
                 this._color = v;
                 this.setFontColorState(this._state);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "overColor", {
@@ -61572,7 +62653,7 @@ var UIComponent;
                 this._overColor = v;
                 this.setFontColorState(this._state);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "clickColor", {
@@ -61583,7 +62664,7 @@ var UIComponent;
                 this._clickColor = v;
                 this.setFontColorState(this._state);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "fontSize", {
@@ -61593,7 +62674,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.fontSize = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "letterSpacing", {
@@ -61603,7 +62684,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.letterSpacing = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "textDx", {
@@ -61613,7 +62694,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.x = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "textDy", {
@@ -61623,7 +62704,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.y = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "textStroke", {
@@ -61633,7 +62714,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.stroke = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIButton.prototype, "textStrokeColor", {
@@ -61643,7 +62724,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.strokeColor = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIButton.prototype.onmouseover = function (e) {
@@ -61699,6 +62780,8 @@ var UIComponent;
                     break;
             }
         };
+        UIButton.customCompFunctionNames = ["label", "image1", "grid9img1", "image2", "grid9img2", "image3", "grid9img3", "fontSize", "color", "overColor",
+            "clickColor", "bold", "italic", "smooth", "align", "valign", "letterSpacing", "font", "textDx", "textDy", "textStroke", "textStrokeColor"];
         return UIButton;
     }(UIComponent.UIBase));
     UIComponent.UIButton = UIButton;
@@ -61708,23 +62791,33 @@ var UIComponent;
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UICheckBox = (function (_super) {
         __extends(UICheckBox, _super);
         function UICheckBox() {
-            _super.call(this);
-            this._grid9img1 = "0,0,0,0,0";
-            this._grid9img2 = "0,0,0,0,0";
-            this._image = new UIImage();
-            this.addChild(this._image);
-            this.className = "UICheckBox";
-            this.on(EventObject.RESIZE, this, this.refresh);
+            var _this_1 = _super.call(this) || this;
+            _this_1._grid9img1 = "0,0,0,0,0";
+            _this_1._grid9img2 = "0,0,0,0,0";
+            _this_1._image = new UIImage();
+            _this_1.addChild(_this_1._image);
+            _this_1.className = "UICheckBox";
+            _this_1.on(EventObject.RESIZE, _this_1, _this_1.refresh);
             if (!Config.EDIT_MODE) {
-                this.add_CLICK(function () {
+                _this_1.add_CLICK(function () {
                     this.selected = !this.selected;
-                }, this);
+                }, _this_1);
             }
+            return _this_1;
         }
         UICheckBox.prototype.inEditorInit = function () {
             this.width = 14;
@@ -61757,7 +62850,7 @@ var UIComponent;
                 AssetManager.loadImage(v);
                 this.refresh();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UICheckBox.prototype, "image2", {
@@ -61771,7 +62864,7 @@ var UIComponent;
                 ;
                 this.refresh();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UICheckBox.prototype, "selected", {
@@ -61787,7 +62880,7 @@ var UIComponent;
                     }
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UICheckBox.prototype.setSelectedForce = function (v) {
@@ -61799,21 +62892,21 @@ var UIComponent;
             get: function () {
                 return this._image.width;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UICheckBox.prototype, "grid9img1Height", {
             get: function () {
                 return this._image.height;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UICheckBox.prototype, "grid9img1Skin", {
             get: function () {
                 return this._image1;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UICheckBox.prototype, "grid9img1", {
@@ -61826,28 +62919,28 @@ var UIComponent;
                 this._grid9img1 = v;
                 this.refresh();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UICheckBox.prototype, "grid9img2Width", {
             get: function () {
                 return this._image.width;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UICheckBox.prototype, "grid9img2Height", {
             get: function () {
                 return this._image.height;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UICheckBox.prototype, "grid9img2Skin", {
             get: function () {
                 return this._image2;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UICheckBox.prototype, "grid9img2", {
@@ -61860,11 +62953,11 @@ var UIComponent;
                 this._grid9img2 = v;
                 this.refresh();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UICheckBox.prototype.refresh = function () {
-            var _this = this;
+            var _this_1 = this;
             if (this.isDisposed)
                 return;
             this.graphics.clear();
@@ -61872,15 +62965,15 @@ var UIComponent;
             var gridText = this._selected ? this._grid9img2 : this._grid9img1;
             if (url) {
                 AssetManager.loadImage(url, Callback.New(function (url, tex) {
-                    if (_this.isDisposed)
+                    if (_this_1.isDisposed)
                         return;
-                    var thisUrl = _this._selected ? _this.image2 : _this.image1;
+                    var thisUrl = _this_1._selected ? _this_1.image2 : _this_1.image1;
                     if (thisUrl != url)
                         return;
-                    _this._image.skin = url;
-                    _this._image.width = _this.width;
-                    _this._image.height = _this.height;
-                    _this._image.sizeGrid = gridText;
+                    _this_1._image.skin = url;
+                    _this_1._image.width = _this_1.width;
+                    _this_1._image.height = _this_1.height;
+                    _this_1._image.sizeGrid = gridText;
                 }, this, [url]), true, false);
             }
         };
@@ -61898,7 +62991,7 @@ var UIComponent;
                     this.off(EventObject.CHANGE, this, this.onChange_private);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UICheckBox.prototype.onChange_private = function () {
@@ -61908,6 +63001,7 @@ var UIComponent;
                 }
             }
         };
+        UICheckBox.customCompFunctionNames = ["selected", "image1", "grid9img1", "image2", "grid9img2"];
         return UICheckBox;
     }(UIComponent.UIBase));
     UIComponent.UICheckBox = UICheckBox;
@@ -61917,85 +63011,94 @@ var UIComponent;
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UIComboBox = (function (_super) {
         __extends(UIComboBox, _super);
         function UIComboBox() {
-            var _this = this;
-            _super.call(this);
-            this._displayItemSize = 5;
-            this._selectedIndex = 0;
-            this._itemAlign = 0;
-            this._itemValign = 1;
-            this._itemBold = false;
-            this._itemItalic = false;
-            this._itemOverColor = "#FFFFFF";
-            this._itemOverBgColor = "#000000";
-            this._itemFontSize = 12;
-            this._itemLetterSpacing = 0;
-            this._itemTextDx = 2;
-            this._itemTextDy = 0;
-            this._itemTextStroke = 0;
-            this._itemTextStrokeColor = "#000000";
-            this._listScrollBg = "asset/image/picture/control/uicomboboxbg.png";
-            this._listScrollBar = "asset/image/picture/control/uicomboboxslider.png";
-            this._root = new Sprite();
-            this.addChild(this._root);
-            this.className = "UIComboBox";
-            this._bgImg = new UIComponent.UIBitmap();
-            this._tf = new UIComponent.UIString();
-            this._root.addChild(this._bgImg);
-            this._root.addChild(this._tf);
-            this._tf.valign = 1;
-            this._tf.align = 1;
+            var _this_1 = _super.call(this) || this;
+            _this_1._displayItemSize = 5;
+            _this_1._selectedIndex = 0;
+            _this_1._itemAlign = 0;
+            _this_1._itemValign = 1;
+            _this_1._itemBold = false;
+            _this_1._itemItalic = false;
+            _this_1._itemOverColor = "#FFFFFF";
+            _this_1._itemOverBgColor = "#000000";
+            _this_1._itemFontSize = 12;
+            _this_1._itemLetterSpacing = 0;
+            _this_1._itemTextDx = 2;
+            _this_1._itemTextDy = 0;
+            _this_1._itemTextStroke = 0;
+            _this_1._itemTextStrokeColor = "#000000";
+            _this_1._listScrollBg = "asset/image/picture/control/uicomboboxbg.png";
+            _this_1._listScrollBar = "asset/image/picture/control/uicomboboxslider.png";
+            _this_1._root = new Sprite();
+            _this_1.addChild(_this_1._root);
+            _this_1.className = "UIComboBox";
+            _this_1._bgImg = new UIComponent.UIBitmap();
+            _this_1._tf = new UIComponent.UIString();
+            _this_1._root.addChild(_this_1._bgImg);
+            _this_1._root.addChild(_this_1._tf);
+            _this_1._tf.valign = 1;
+            _this_1._tf.align = 1;
             if (!Config.EDIT_MODE) {
-                this.on(EventObject.MOUSE_DOWN, this, this.onMouseDown);
-                this._list = new UIComponent.UIList();
-                this._list.alpha = this._listAlpha;
-                this._list.spaceY = 0;
-                this._list.overImageOnTop = false;
-                this._list.overImageAlpha = 1;
-                this._list.onCreateItem = Callback.New(function (ui, data, index) {
-                    ui.on(EventObject.MOUSE_DOWN, _this, _this.closeList, [index]);
-                    ui.hitArea = new Rectangle(0, 0, _this.width, _this.itemHeight);
-                    if (_this.itemFont)
-                        ui.label.font = _this.itemFont;
-                    ui.label.color = _this.itemColor;
-                    ui.label.smooth = _this.smooth;
-                    ui.label.align = _this.itemAlign;
-                    ui.label.valign = _this.itemValign;
-                    ui.label.fontSize = _this.itemFontSize;
-                    ui.label.letterSpacing = _this.itemLetterSpacing;
-                    ui.label.bold = _this.itemBold;
-                    ui.label.italic = _this.itemItalic;
-                    ui.label.x = _this.itemTextDx;
-                    ui.label.y = _this.itemTextDy;
-                    ui.label.stroke = _this.itemTextStroke;
-                    ui.label.strokeColor = _this.itemTextStrokeColor;
-                    ui.label.height = _this.itemHeight;
-                    ui.label.width = _this.width;
-                    ui.on(EventObject.MOUSE_OVER, _this, _this.onItemOver, [ui]);
-                    ui.on(EventObject.MOUSE_OUT, _this, _this.onItemOut, [ui]);
-                }, this);
-                this._list.on(EventObject.MOUSE_DOWN, this, function (e) {
+                _this_1.on(EventObject.MOUSE_DOWN, _this_1, _this_1.onMouseDown);
+                _this_1._list = new UIComponent.UIList();
+                _this_1._list.alpha = _this_1._listAlpha;
+                _this_1._list.spaceY = 0;
+                _this_1._list.overImageOnTop = false;
+                _this_1._list.overImageAlpha = 1;
+                _this_1._list.onCreateItem = Callback.New(function (ui, data, index) {
+                    ui.on(EventObject.MOUSE_DOWN, _this_1, _this_1.closeList, [index]);
+                    ui.hitArea = new Rectangle(0, 0, _this_1.width, _this_1.itemHeight);
+                    if (_this_1.itemFont)
+                        ui.label.font = _this_1.itemFont;
+                    ui.label.color = _this_1.itemColor;
+                    ui.label.smooth = _this_1.smooth;
+                    ui.label.align = _this_1.itemAlign;
+                    ui.label.valign = _this_1.itemValign;
+                    ui.label.fontSize = _this_1.itemFontSize;
+                    ui.label.letterSpacing = _this_1.itemLetterSpacing;
+                    ui.label.bold = _this_1.itemBold;
+                    ui.label.italic = _this_1.itemItalic;
+                    ui.label.x = _this_1.itemTextDx;
+                    ui.label.y = _this_1.itemTextDy;
+                    ui.label.stroke = _this_1.itemTextStroke;
+                    ui.label.strokeColor = _this_1.itemTextStrokeColor;
+                    ui.label.height = _this_1.itemHeight;
+                    ui.label.width = _this_1.width;
+                    ui.on(EventObject.MOUSE_OVER, _this_1, _this_1.onItemOver, [ui]);
+                    ui.on(EventObject.MOUSE_OUT, _this_1, _this_1.onItemOut, [ui]);
+                }, _this_1);
+                _this_1._list.on(EventObject.MOUSE_DOWN, _this_1, function (e) {
                     e.stopPropagation();
                 });
-                this._list.scrollShowType = 2;
+                _this_1._list.scrollShowType = 2;
             }
-            this.on(EventObject.RESIZE, this, this.onResize);
-            this.width = 200;
-            this.height = 30;
-            this.itemHeight = 20;
-            this.listBgColor = "#FFFFFF";
-            this.listAlpha = 1;
-            this.color = "#FFFFFF";
-            this.itemColor = "#000000";
-            this.fontSize = 16;
+            _this_1.on(EventObject.RESIZE, _this_1, _this_1.onResize);
+            _this_1.width = 200;
+            _this_1.height = 30;
+            _this_1.itemHeight = 20;
+            _this_1.listBgColor = "#FFFFFF";
+            _this_1.listAlpha = 1;
+            _this_1.color = "#FFFFFF";
+            _this_1.itemColor = "#000000";
+            _this_1.fontSize = 16;
             if (Config.EDIT_MODE) {
-                this._tf.text = "选项文字";
-                this.itemLabels = "选项1,选项2,选项3";
+                _this_1._tf.text = "选项文字";
+                _this_1.itemLabels = "选项1,选项2,选项3";
             }
+            return _this_1;
         }
         UIComboBox.prototype.dispose = function () {
             if (!this.isDisposed) {
@@ -62040,7 +63143,7 @@ var UIComponent;
             set: function (v) {
                 this._bgImg.image = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "align", {
@@ -62051,7 +63154,7 @@ var UIComponent;
                 v = Math.floor(v);
                 this._tf.align = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "valign", {
@@ -62062,7 +63165,7 @@ var UIComponent;
                 v = Math.floor(v);
                 this._tf.valign = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "bold", {
@@ -62072,7 +63175,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.bold = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "italic", {
@@ -62082,7 +63185,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.italic = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "font", {
@@ -62092,7 +63195,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.font = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "color", {
@@ -62102,7 +63205,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.color = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "fontSize", {
@@ -62112,7 +63215,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.fontSize = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "letterSpacing", {
@@ -62122,7 +63225,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.letterSpacing = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "textDx", {
@@ -62132,7 +63235,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.x = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "textDy", {
@@ -62142,7 +63245,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.y = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "textStroke", {
@@ -62152,7 +63255,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.stroke = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "textStrokeColor", {
@@ -62162,28 +63265,28 @@ var UIComponent;
             set: function (v) {
                 this._tf.strokeColor = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "bgGrid9Width", {
             get: function () {
                 return this._bgImg.width;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "bgGrid9Height", {
             get: function () {
                 return this._bgImg.height;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "bgGrid9Skin", {
             get: function () {
                 return this._bgImg.image;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "bgGrid9", {
@@ -62198,7 +63301,7 @@ var UIComponent;
                     v = "0,0,0,0,0";
                 this._bgImg.grid9 = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "smooth", {
@@ -62209,11 +63312,11 @@ var UIComponent;
                 this._smooth = v;
                 this._tf.smooth = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIComboBox.prototype.onMouseDown = function (e) {
-            var _this = this;
+            var _this_1 = this;
             if (!this._itemLabelArr || this._list.stage)
                 return;
             this._overItem = null;
@@ -62240,8 +63343,8 @@ var UIComponent;
                 this._overItem.label.color = this.itemOverColor;
             }
             Callback.CallLater(function () {
-                stage.once(EventObject.MOUSE_DOWN, _this, _this.closeList, [null]);
-                os.add_ENTERFRAME(_this.refreshListPosition, _this);
+                stage.once(EventObject.MOUSE_DOWN, _this_1, _this_1.closeList, [null]);
+                os.add_ENTERFRAME(_this_1.refreshListPosition, _this_1);
             }, this);
         };
         UIComboBox.prototype.refreshListPosition = function () {
@@ -62287,7 +63390,7 @@ var UIComponent;
                 }
                 this.event(EventObject.CHANGE);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIComboBox.prototype.setSelectedForce = function (v) {
@@ -62306,7 +63409,7 @@ var UIComponent;
                 this._itemLabelArr = v.split(",");
                 this.selectedIndex = this.selectedIndex;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "itemHeight", {
@@ -62318,7 +63421,7 @@ var UIComponent;
                 if (this._list)
                     this._list.itemHeight = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "displayItemSize", {
@@ -62328,7 +63431,7 @@ var UIComponent;
             set: function (v) {
                 this._displayItemSize = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "listScrollBg", {
@@ -62340,7 +63443,7 @@ var UIComponent;
                 if (this._list)
                     this._list.vScrollBg = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "listScrollBar", {
@@ -62352,7 +63455,7 @@ var UIComponent;
                 if (this._list)
                     this._list.vScrollBar = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "listBgColor", {
@@ -62362,7 +63465,7 @@ var UIComponent;
             set: function (v) {
                 this._listBgColor = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "listAlpha", {
@@ -62374,7 +63477,7 @@ var UIComponent;
                 if (this._list)
                     this._list.alpha = this._listAlpha;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "itemAlign", {
@@ -62385,7 +63488,7 @@ var UIComponent;
                 v = Math.floor(v);
                 this._itemAlign = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "itemValign", {
@@ -62396,7 +63499,7 @@ var UIComponent;
                 v = Math.floor(v);
                 this._itemValign = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "itemBold", {
@@ -62406,7 +63509,7 @@ var UIComponent;
             set: function (v) {
                 this._itemBold = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "itemItalic", {
@@ -62416,7 +63519,7 @@ var UIComponent;
             set: function (v) {
                 this._itemItalic = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "itemFont", {
@@ -62426,7 +63529,7 @@ var UIComponent;
             set: function (v) {
                 this._itemFont = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "itemColor", {
@@ -62436,7 +63539,7 @@ var UIComponent;
             set: function (v) {
                 this._itemColor = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "itemOverColor", {
@@ -62446,7 +63549,7 @@ var UIComponent;
             set: function (v) {
                 this._itemOverColor = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "itemOverBgColor", {
@@ -62456,7 +63559,7 @@ var UIComponent;
             set: function (v) {
                 this._itemOverBgColor = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "itemFontSize", {
@@ -62466,7 +63569,7 @@ var UIComponent;
             set: function (v) {
                 this._itemFontSize = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "itemLetterSpacing", {
@@ -62476,7 +63579,7 @@ var UIComponent;
             set: function (v) {
                 this._itemLetterSpacing = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "itemTextDx", {
@@ -62486,7 +63589,7 @@ var UIComponent;
             set: function (v) {
                 this._itemTextDx = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "itemTextDy", {
@@ -62496,7 +63599,7 @@ var UIComponent;
             set: function (v) {
                 this._itemTextDy = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "itemTextStroke", {
@@ -62506,7 +63609,7 @@ var UIComponent;
             set: function (v) {
                 this._itemTextStroke = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "itemTextStrokeColor", {
@@ -62516,7 +63619,7 @@ var UIComponent;
             set: function (v) {
                 this._itemTextStrokeColor = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIComboBox.prototype, "onChangeFragEvent", {
@@ -62533,7 +63636,7 @@ var UIComponent;
                     this.off(EventObject.CHANGE, this, this.onChange_private);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIComboBox.prototype.onChange_private = function () {
@@ -62543,16 +63646,18 @@ var UIComponent;
                 }
             }
         };
+        UIComboBox.customCompFunctionNames = ["itemLabels", "selectedIndex", "bgSkin", "bgGrid9", "fontSize", "color", "bold", "italic", "smooth", "align", "valign", "letterSpacing", "font", "textDx", "textStroke", "textStrokeColor", "displayItemSize", "listScrollBg", "listScrollBar", "listAlpha", "listBgColor", "itemHeight", "itemFontSize", "itemColor", "itemBold", "itemItalic", "itemAlign", "itemValign", "itemLetterSpacing", "itemFont", "itemOverColor", "itemOverBgColor", "itemTextDx", "itemTextDy", "itemTextStroke", "itemTextStrokeColor", "onChangeFragEvent"];
         return UIComboBox;
     }(UIComponent.UIBase));
     UIComponent.UIComboBox = UIComboBox;
     var ComboboxListRender = (function (_super) {
         __extends(ComboboxListRender, _super);
         function ComboboxListRender() {
-            _super.call(this);
-            this.label = new UIComponent.UIString();
-            this.label.wordWrap = false;
-            this.addChild(this.label);
+            var _this_1 = _super.call(this) || this;
+            _this_1.label = new UIComponent.UIString();
+            _this_1.label.wordWrap = false;
+            _this_1.addChild(_this_1.label);
+            return _this_1;
         }
         ComboboxListRender.prototype.dispose = function () {
             if (this.label)
@@ -62568,19 +63673,29 @@ var UIComponent;
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UIGUI = (function (_super) {
         __extends(UIGUI, _super);
         function UIGUI() {
-            _super.call(this);
-            this._guiID = 0;
-            this._root = new Sprite();
-            this._instanceClassName = "";
-            this.addChild(this._root);
-            this.className = "UIGUI";
-            this.modifyWidthHeightEnabled = false;
-            this._lastRect = this.getSelfBounds().clone();
+            var _this_1 = _super.call(this) || this;
+            _this_1._guiID = 0;
+            _this_1._root = new Sprite();
+            _this_1._instanceClassName = "";
+            _this_1.addChild(_this_1._root);
+            _this_1.className = "UIGUI";
+            _this_1.modifyWidthHeightEnabled = false;
+            _this_1._lastRect = _this_1.getSelfBounds().clone();
+            return _this_1;
         }
         UIGUI.prototype.inEditorInit = function () {
             this.clear(0);
@@ -62611,7 +63726,7 @@ var UIComponent;
                     this.loadGUI(v);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIGUI.prototype, "instanceClassName", {
@@ -62621,27 +63736,27 @@ var UIComponent;
             set: function (v) {
                 this._instanceClassName = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIGUI.prototype, "root", {
             get: function () {
                 return this._ui;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIGUI.prototype.loadGUI = function (guiID) {
-            var _this = this;
+            var _this_1 = this;
             this._guiID = guiID;
             this.clear(guiID);
             if (guiID == 0)
                 return;
             if (Config.EDIT_MODE) {
                 Callback.New(function () {
-                    if (_this.isDeepLoop(_this._guiID)) {
-                        AlertUtils.alert("不允许循环嵌套!");
-                        var p = _this.parent;
+                    if (_this_1.isDeepLoop(_this_1._guiID)) {
+                        gcide_canvasbuilder.AlertUtils.alert("不允许循环嵌套!");
+                        var p = _this_1.parent;
                         while (p) {
                             if (p instanceof UIGUI) {
                                 p.guiID = 0;
@@ -62651,22 +63766,22 @@ var UIComponent;
                             }
                             p = p.parent;
                         }
-                        _this.loadGUI(0);
+                        _this_1.loadGUI(0);
                         return;
                     }
                     var uiData = Common.uiList.data[guiID];
                     if (!uiData) {
                         return;
                     }
-                    _this._ui = GameUI.parse(uiData.uiDisplayData);
-                    _this._ui.once(EventObject.LOADED, _this, function () {
-                        _this.event(GameUI.EVENT_TEST_LOAD_CHILD_UI);
+                    _this_1._ui = GameUI.parse(uiData.uiDisplayData);
+                    _this_1._ui.once(EventObject.LOADED, _this_1, function () {
+                        _this_1.event(GameUI.EVENT_TEST_LOAD_CHILD_UI);
                     });
-                    os.add_ENTERFRAME(_this.onEditorCheckLoaded, _this);
-                    if (_this._root)
-                        _this._root.addChild(_this._ui);
-                    EUIRoot.dataBaseWindow.win7.off(EUIWindowUI.EVENT_GUI_DATA_SYNC_COMPLETE, _this, _this.onGUIDataChange);
-                    EUIRoot.dataBaseWindow.win7.on(EUIWindowUI.EVENT_GUI_DATA_SYNC_COMPLETE, _this, _this.onGUIDataChange);
+                    os.add_ENTERFRAME(_this_1.onEditorCheckLoaded, _this_1);
+                    if (_this_1._root)
+                        _this_1._root.addChild(_this_1._ui);
+                    EUIRoot.dataBaseWindow.win7.off(EUIWindowUI.EVENT_GUI_DATA_SYNC_COMPLETE, _this_1, _this_1.onGUIDataChange);
+                    EUIRoot.dataBaseWindow.win7.on(EUIWindowUI.EVENT_GUI_DATA_SYNC_COMPLETE, _this_1, _this_1.onGUIDataChange);
                 }, this).delayRun(0);
             }
             else {
@@ -62745,6 +63860,7 @@ var UIComponent;
                 this.event(EventObject.LOADED);
             }
         };
+        UIGUI.customCompFunctionNames = ["guiID", "instanceClassName"];
         return UIGUI;
     }(UIComponent.UIBase));
     UIComponent.UIGUI = UIGUI;
@@ -62754,48 +63870,58 @@ var UIComponent;
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UIRoot = (function (_super) {
         __extends(UIRoot, _super);
         function UIRoot(isRoot, guiID) {
             if (isRoot === void 0) { isRoot = false; }
             if (guiID === void 0) { guiID = null; }
-            _super.call(this);
-            this._myScrollRect = new Rectangle(0, 0, 0, 0);
-            this._scrollShowType = 2;
-            this._scrollWidth = 16;
-            this._slowmotionType = 0;
-            this._rollRatio = 0.95;
-            this.guiID = guiID;
-            this._isRoot = isRoot;
-            this.className = "UIRoot";
-            this._vScrollBar = new VScrollBar();
-            this._hScrollBar = new HScrollBar();
-            this._vScrollBar.showButtons = false;
-            this._hScrollBar.showButtons = false;
+            var _this_1 = _super.call(this) || this;
+            _this_1._myScrollRect = new Rectangle(0, 0, 0, 0);
+            _this_1._scrollShowType = 2;
+            _this_1._scrollWidth = 16;
+            _this_1._slowmotionType = 0;
+            _this_1._rollRatio = 0.95;
+            _this_1.guiID = guiID;
+            _this_1._isRoot = isRoot;
+            _this_1.className = "UIRoot";
+            _this_1._vScrollBar = new VScrollBar();
+            _this_1._hScrollBar = new HScrollBar();
+            _this_1._vScrollBar.showButtons = false;
+            _this_1._hScrollBar.showButtons = false;
             if (Config.EDIT_MODE) {
-                this.width = this._contentWidth = 100;
-                this.height = this._contentHeight = 100;
+                _this_1.width = _this_1._contentWidth = 100;
+                _this_1.height = _this_1._contentHeight = 100;
             }
-            this._vScrollBar.max = 100;
-            this._vScrollBar.min = 0;
-            this._hScrollBar.max = 100;
-            this._hScrollBar.min = 0;
-            this._vScrollValue = 0;
-            this._hScrollValue = 0;
-            this._enabledWheel = true;
-            this.on(EventObject.MOUSE_WHEEL, this, this.onMouseWheel);
-            this.on(EventObject.RESIZE, this, this.onResize);
-            this._vScrollBar.add_CHANGE(this.onScrollBarChange, this, [1]);
-            this._hScrollBar.add_CHANGE(this.onScrollBarChange, this, [2]);
+            _this_1._vScrollBar.max = 100;
+            _this_1._vScrollBar.min = 0;
+            _this_1._hScrollBar.max = 100;
+            _this_1._hScrollBar.min = 0;
+            _this_1._vScrollValue = 0;
+            _this_1._hScrollValue = 0;
+            _this_1._enabledWheel = true;
+            _this_1.on(EventObject.MOUSE_WHEEL, _this_1, _this_1.onMouseWheel);
+            _this_1.on(EventObject.RESIZE, _this_1, _this_1.onResize);
+            _this_1._vScrollBar.add_CHANGE(_this_1.onScrollBarChange, _this_1, [1]);
+            _this_1._hScrollBar.add_CHANGE(_this_1.onScrollBarChange, _this_1, [2]);
             if (Config.EDIT_MODE) {
-                this._vScrollBar.mouseEnabled = this._hScrollBar.mouseEnabled = false;
+                _this_1._vScrollBar.mouseEnabled = _this_1._hScrollBar.mouseEnabled = false;
             }
-            this._mask = new Sprite();
-            this._mask.pos(0, 0);
-            this._mask.mouseEnabled = true;
-            this.onResize();
+            _this_1._mask = new Sprite();
+            _this_1._mask.pos(0, 0);
+            _this_1._mask.mouseEnabled = true;
+            _this_1.onResize();
+            return _this_1;
         }
         UIRoot.prototype.inEditorInit = function () {
             this._vScroollBarImage1 = "asset/image/picture/control/vscroll_bg.png";
@@ -62827,7 +63953,7 @@ var UIComponent;
                 }
                 this.refreshSlowmotion();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIRoot.prototype, "enabledWheel", {
@@ -62843,7 +63969,7 @@ var UIComponent;
                     this.off(EventObject.MOUSE_WHEEL, this, this.onMouseWheel);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIRoot.prototype, "scrollShowType", {
@@ -62855,7 +63981,7 @@ var UIComponent;
                 this._scrollShowType = v;
                 this.refresh();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIRoot.prototype, "scrollWidth", {
@@ -62873,7 +63999,7 @@ var UIComponent;
                 this.refreshScrollPos();
                 this.onResize();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIRoot.prototype, "vScrollBg", {
@@ -62892,7 +64018,7 @@ var UIComponent;
                 this._vScrollBar.slider["callLater"](this._vScrollBar.slider["changeValue"]);
                 this.refreshScrollPos();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIRoot.prototype, "vScrollBar", {
@@ -62906,7 +64032,7 @@ var UIComponent;
                 this._vScroollBarImage2 = v;
                 AssetManager.loadImage(v, Callback.New(this.setVScrollBarSkin, this, [v]), true);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIRoot.prototype.setVScrollBarSkin = function (v) {
@@ -62939,7 +64065,7 @@ var UIComponent;
                 this._hScrollBar.slider["callLater"](this._hScrollBar.slider["changeValue"]);
                 this.refreshScrollPos();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIRoot.prototype, "hScrollBar", {
@@ -62953,7 +64079,7 @@ var UIComponent;
                 this._hScroollBarImage2 = v;
                 AssetManager.loadImage(v, Callback.New(this.setHScrollBarSkin, this, [v]), true);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIRoot.prototype.setHScrollBarSkin = function (v) {
@@ -63132,7 +64258,7 @@ var UIComponent;
                     return;
                 this._vScrollBar.value = this._vScrollValue;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIRoot.prototype, "hScrollValue", {
@@ -63150,7 +64276,7 @@ var UIComponent;
                     return;
                 this._hScrollBar.value = this._hScrollValue;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIRoot.prototype, "slowmotionType", {
@@ -63161,7 +64287,7 @@ var UIComponent;
                 this._slowmotionType = v;
                 this.refreshSlowmotion();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIRoot.prototype.refreshSlowmotion = function () {
@@ -63277,7 +64403,7 @@ var UIComponent;
         UIRoot.prototype.addChildren = function () {
             var args = [];
             for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i - 0] = arguments[_i];
+                args[_i] = arguments[_i];
             }
             _super.prototype.addChildren.apply(this, args);
             this.refreshAddchild();
@@ -63393,18 +64519,21 @@ var UIComponent;
             }
             _super.prototype.dispose.call(this);
         };
+        UIRoot.customCompFunctionNames = ["enabledLimitView", "scrollShowType", "hScrollBar", "hScrollBg", "vScrollBar", "vScrollBg", "scrollWidth",
+            "slowmotionType", "enabledWheel", "hScrollValue", "vScrollValue"];
         return UIRoot;
     }(UIComponent.UIBase));
     UIComponent.UIRoot = UIRoot;
     var GUI_BASE = (function (_super) {
         __extends(GUI_BASE, _super);
         function GUI_BASE(guiID) {
-            _super.call(this, true, guiID);
-            this.compsIDInfo = {};
+            var _this_1 = _super.call(this, true, guiID) || this;
+            _this_1.compsIDInfo = {};
             var data = Game.data.uiList.data[guiID];
             if (!data)
-                return;
-            GameUI.parse(data.uiDisplayData, false, null, guiID, this);
+                return _this_1;
+            GameUI.parse(data.uiDisplayData, false, null, guiID, _this_1);
+            return _this_1;
         }
         return GUI_BASE;
     }(UIRoot));
@@ -63415,112 +64544,121 @@ var UIComponent;
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UISlider = (function (_super) {
         __extends(UISlider, _super);
         function UISlider() {
-            var _this = this;
-            _super.call(this);
-            this._image1 = "";
-            this._image2 = "";
-            this._image3 = "";
-            this._blockFillMask = new UIImage();
-            this._blockFillMode = 2;
-            this._bgImg = new UIImage();
-            this._blockImg = new UIImage();
-            this._blockFillImg = new UIImage();
-            this._blockGrid9 = "0,0,0,0,0";
-            this._bgGrid9 = "0,0,0,0,0";
-            this._blockFillGrid9 = "0,0,0,0,0";
-            this.addChild(this._bgImg);
-            this._bgImg.addChild(this._blockImg);
-            this.className = "UISlider";
-            this.on(EventObject.RESIZE, this, this.refreshSize);
+            var _this_1 = _super.call(this) || this;
+            _this_1._image1 = "";
+            _this_1._image2 = "";
+            _this_1._image3 = "";
+            _this_1._blockFillMask = new UIImage();
+            _this_1._blockFillMode = 2;
+            _this_1._bgImg = new UIImage();
+            _this_1._blockImg = new UIImage();
+            _this_1._blockFillImg = new UIImage();
+            _this_1._blockGrid9 = "0,0,0,0,0";
+            _this_1._bgGrid9 = "0,0,0,0,0";
+            _this_1._blockFillGrid9 = "0,0,0,0,0";
+            _this_1.addChild(_this_1._bgImg);
+            _this_1._bgImg.addChild(_this_1._blockImg);
+            _this_1.className = "UISlider";
+            _this_1.on(EventObject.RESIZE, _this_1, _this_1.refreshSize);
             if (!Config.EDIT_MODE) {
-                this._blockImg.add_MOUSEDOWN(this.onMouseDown, this);
-                this._bgImg.add_MOUSEDOWN(function (e) {
-                    if (e.target != _this._bgImg)
+                _this_1._blockImg.add_MOUSEDOWN(_this_1.onMouseDown, _this_1);
+                _this_1._bgImg.add_MOUSEDOWN(function (e) {
+                    if (e.target != _this_1._bgImg)
                         return;
-                    if (_this.step == 0)
+                    if (_this_1.step == 0)
                         return;
-                    var blockTex = AssetManager.getImage(_this.image2);
+                    var blockTex = AssetManager.getImage(_this_1.image2);
                     if (!blockTex)
                         return;
-                    if (_this._blockFillMode == 1 || _this._blockFillMode == 2) {
-                        if (!_this._blockFillImg.stage)
-                            _this._bgImg.addChildAt(_this._blockFillImg, 0);
+                    if (_this_1._blockFillMode == 1 || _this_1._blockFillMode == 2) {
+                        if (!_this_1._blockFillImg.stage)
+                            _this_1._bgImg.addChildAt(_this_1._blockFillImg, 0);
                     }
-                    var lastValue = _this._value;
+                    var lastValue = _this_1._value;
                     var per = 0;
-                    if (_this.transverseMode) {
-                        _this._blockImg.x = _this._bgImg.mouseX - blockTex.width * 0.5;
-                        if (_this._blockPosMode == 0) {
-                            _this._blockImg.x = Math.max(Math.min(_this._blockImg.x, _this.width - blockTex.width), 0);
-                            per = _this._blockImg.x / (_this.width - blockTex.width);
+                    if (_this_1.transverseMode) {
+                        _this_1._blockImg.x = _this_1._bgImg.mouseX - blockTex.width * 0.5;
+                        if (_this_1._blockPosMode == 0) {
+                            _this_1._blockImg.x = Math.max(Math.min(_this_1._blockImg.x, _this_1.width - blockTex.width), 0);
+                            per = _this_1._blockImg.x / (_this_1.width - blockTex.width);
                         }
-                        else if (_this._blockPosMode == 1) {
-                            _this._blockImg.x = Math.max(Math.min(_this._blockImg.x, _this.width - blockTex.width * 0.5), -blockTex.width * 0.5);
-                            per = (_this._blockImg.x + blockTex.width * 0.5) / _this.width;
+                        else if (_this_1._blockPosMode == 1) {
+                            _this_1._blockImg.x = Math.max(Math.min(_this_1._blockImg.x, _this_1.width - blockTex.width * 0.5), -blockTex.width * 0.5);
+                            per = (_this_1._blockImg.x + blockTex.width * 0.5) / _this_1.width;
                         }
-                        else if (_this._blockPosMode == 2) {
-                            _this._blockImg.x = Math.max(Math.min(_this._blockImg.x, _this.width), -blockTex.width);
-                            per = (_this._blockImg.x + blockTex.width) / (_this.width + blockTex.width);
+                        else if (_this_1._blockPosMode == 2) {
+                            _this_1._blockImg.x = Math.max(Math.min(_this_1._blockImg.x, _this_1.width), -blockTex.width);
+                            per = (_this_1._blockImg.x + blockTex.width) / (_this_1.width + blockTex.width);
                         }
-                        if (_this._blockFillImg.stage) {
-                            if (_this._fillStrething) {
-                                _this._blockFillImg.width = _this.width;
-                                _this._blockFillMask.x = -_this.width + _this._blockImg.x + blockTex.width * 0.5;
+                        if (_this_1._blockFillImg.stage) {
+                            if (_this_1._fillStrething) {
+                                _this_1._blockFillImg.width = _this_1.width;
+                                _this_1._blockFillMask.x = -_this_1.width + _this_1._blockImg.x + blockTex.width * 0.5;
                             }
                             else {
-                                _this._blockFillImg.width = _this._blockImg.x + blockTex.width * 0.5;
+                                _this_1._blockFillImg.width = _this_1._blockImg.x + blockTex.width * 0.5;
                             }
                         }
                     }
                     else {
-                        _this._blockImg.y = _this._bgImg.mouseY - blockTex.height * 0.5;
-                        if (_this._blockPosMode == 0) {
-                            _this._blockImg.y = Math.max(Math.min(_this._blockImg.y, _this.height - blockTex.height), 0);
-                            per = _this._blockImg.y / (_this.height - blockTex.height);
+                        _this_1._blockImg.y = _this_1._bgImg.mouseY - blockTex.height * 0.5;
+                        if (_this_1._blockPosMode == 0) {
+                            _this_1._blockImg.y = Math.max(Math.min(_this_1._blockImg.y, _this_1.height - blockTex.height), 0);
+                            per = _this_1._blockImg.y / (_this_1.height - blockTex.height);
                         }
-                        else if (_this._blockPosMode == 1) {
-                            _this._blockImg.y = Math.max(Math.min(_this._blockImg.y, _this.height - blockTex.height * 0.5), -blockTex.height * 0.5);
-                            per = (_this._blockImg.y + blockTex.height * 0.5) / _this.height;
+                        else if (_this_1._blockPosMode == 1) {
+                            _this_1._blockImg.y = Math.max(Math.min(_this_1._blockImg.y, _this_1.height - blockTex.height * 0.5), -blockTex.height * 0.5);
+                            per = (_this_1._blockImg.y + blockTex.height * 0.5) / _this_1.height;
                         }
-                        else if (_this._blockPosMode == 2) {
-                            _this._blockImg.y = Math.max(Math.min(_this._blockImg.y, _this.height), -blockTex.height);
-                            per = (_this._blockImg.y + blockTex.height) / (_this.height + blockTex.height);
+                        else if (_this_1._blockPosMode == 2) {
+                            _this_1._blockImg.y = Math.max(Math.min(_this_1._blockImg.y, _this_1.height), -blockTex.height);
+                            per = (_this_1._blockImg.y + blockTex.height) / (_this_1.height + blockTex.height);
                         }
-                        if (_this._blockFillImg.stage) {
-                            if (_this._fillStrething) {
-                                _this._blockFillImg.height = _this.height;
-                                _this._blockFillMask.y = -_this.height + _this._blockImg.y + blockTex.height * 0.5;
+                        if (_this_1._blockFillImg.stage) {
+                            if (_this_1._fillStrething) {
+                                _this_1._blockFillImg.height = _this_1.height;
+                                _this_1._blockFillMask.y = -_this_1.height + _this_1._blockImg.y + blockTex.height * 0.5;
                             }
                             else {
-                                _this._blockFillImg.height = _this._blockImg.y + blockTex.height * 0.5;
+                                _this_1._blockFillImg.height = _this_1._blockImg.y + blockTex.height * 0.5;
                             }
                         }
                     }
                     per = Math.max(Math.min(per, 1), 0);
-                    var value = (_this.max - _this.min == 0) ? 0 : (per * (_this.max - _this.min) + _this.min);
-                    var pow = Math.pow(10, (_this._step + "").length - 1);
-                    _this._value = Math.round(Math.round(value / _this._step) * _this._step * pow) / pow;
-                    _this._value = Math.max(Math.min(_this._value, _this.max), _this.min);
-                    if (_this._value != lastValue) {
-                        _this.event(EventObject.CHANGE);
+                    var value = (_this_1.max - _this_1.min == 0) ? 0 : (per * (_this_1.max - _this_1.min) + _this_1.min);
+                    var pow = Math.pow(10, (_this_1._step + "").length - 1);
+                    _this_1._value = Math.round(Math.round(value / _this_1._step) * _this_1._step * pow) / pow;
+                    _this_1._value = Math.max(Math.min(_this_1._value, _this_1.max), _this_1.min);
+                    if (_this_1._value != lastValue) {
+                        _this_1.event(EventObject.CHANGE);
                     }
-                    _this.onMouseDown(e);
-                }, this);
+                    _this_1.onMouseDown(e);
+                }, _this_1);
             }
-            this.min = 0;
-            this.max = 100;
-            this.width = 191;
-            this.height = 6;
-            this.step = 1;
-            this.value = 50;
-            this.transverseMode = true;
-            this.blockPosMode = 0;
-            this.fillStrething = false;
+            _this_1.min = 0;
+            _this_1.max = 100;
+            _this_1.width = 191;
+            _this_1.height = 6;
+            _this_1.step = 1;
+            _this_1.value = 50;
+            _this_1.transverseMode = true;
+            _this_1.blockPosMode = 0;
+            _this_1.fillStrething = false;
+            return _this_1;
         }
         UISlider.prototype.inEditorInit = function () {
             this.image1 = "asset/image/picture/control/slider_bg.png";
@@ -63563,7 +64701,7 @@ var UIComponent;
                 AssetManager.loadImage(v);
                 this.refresh();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "image2", {
@@ -63578,7 +64716,7 @@ var UIComponent;
                 AssetManager.loadImage(v);
                 this.refresh();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "image3", {
@@ -63593,7 +64731,7 @@ var UIComponent;
                 AssetManager.loadImage(v);
                 this.refresh();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "blockFillMode", {
@@ -63605,7 +64743,7 @@ var UIComponent;
                 this._blockFillMode = v;
                 this.refreshSize();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "blockPosMode", {
@@ -63617,7 +64755,7 @@ var UIComponent;
                 v = Math.floor(v);
                 this.refreshSize();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "fillStrething", {
@@ -63635,7 +64773,7 @@ var UIComponent;
                 }
                 this.refreshSize();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "transverseMode", {
@@ -63646,7 +64784,7 @@ var UIComponent;
                 this._transverseMode = v;
                 this.refreshSize();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "min", {
@@ -63657,7 +64795,7 @@ var UIComponent;
                 this._min = v;
                 this.refreshSize();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "max", {
@@ -63668,7 +64806,7 @@ var UIComponent;
                 this._max = v;
                 this.refreshSize();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "value", {
@@ -63687,7 +64825,7 @@ var UIComponent;
                     }
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UISlider.prototype.setValueForce = function (v) {
@@ -63702,7 +64840,7 @@ var UIComponent;
             set: function (v) {
                 this._step = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UISlider.prototype.onmouseover = function (e) {
@@ -63813,21 +64951,21 @@ var UIComponent;
             get: function () {
                 return this._blockImg.width;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "blockGrid9Height", {
             get: function () {
                 return this._blockImg.height;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "blockGrid9Skin", {
             get: function () {
                 return this._blockImg.skin;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "blockGrid9", {
@@ -63839,28 +64977,28 @@ var UIComponent;
                     v = "0,0,0,0,0";
                 this._blockGrid9 = this._blockImg.sizeGrid = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "bgGrid9Width", {
             get: function () {
                 return this._bgImg.width;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "bgGrid9Height", {
             get: function () {
                 return this._bgImg.height;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "bgGrid9Skin", {
             get: function () {
                 return this._bgImg.skin;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "bgGrid9", {
@@ -63872,28 +65010,28 @@ var UIComponent;
                     v = "0,0,0,0,0";
                 this._bgGrid9 = this._bgImg.sizeGrid = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "blockFillGrid9Width", {
             get: function () {
                 return this._blockFillImg.width;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "blockFillGrid9Height", {
             get: function () {
                 return this._blockFillImg.height;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "blockFillGrid9Skin", {
             get: function () {
                 return this._blockFillImg.skin;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISlider.prototype, "blockFillGrid9", {
@@ -63905,24 +65043,24 @@ var UIComponent;
                     v = "0,0,0,0,0";
                 this._blockFillGrid9 = this._blockFillImg.sizeGrid = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UISlider.prototype.refresh = function () {
-            var _this = this;
+            var _this_1 = this;
             if (this.isDisposed)
                 return;
             AssetManager.loadImages([this.image1, this.image2, this.image3], Callback.New(function (image1, image2, image3) {
-                if (_this.isDisposed)
+                if (_this_1.isDisposed)
                     return;
-                if (_this.image1 != image1 || _this.image2 != image2 || _this.image3 != image3)
+                if (_this_1.image1 != image1 || _this_1.image2 != image2 || _this_1.image3 != image3)
                     return;
-                _this._bgImg.skin = _this.image1;
-                _this._blockImg.skin = _this.image2;
-                _this._blockFillImg.skin = _this.image3;
-                if (_this._fillStrething)
-                    _this._blockFillMask.skin = _this.image3;
-                _this.refreshSize();
+                _this_1._bgImg.skin = _this_1.image1;
+                _this_1._blockImg.skin = _this_1.image2;
+                _this_1._blockFillImg.skin = _this_1.image3;
+                if (_this_1._fillStrething)
+                    _this_1._blockFillMask.skin = _this_1.image3;
+                _this_1.refreshSize();
             }, this, [this.image1, this.image2, this.image3]), true, false);
         };
         UISlider.prototype.refreshSize = function () {
@@ -64024,7 +65162,7 @@ var UIComponent;
                     this.off(EventObject.CHANGE, this, this.onChange_private);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UISlider.prototype.onChange_private = function () {
@@ -64034,6 +65172,8 @@ var UIComponent;
                 }
             }
         };
+        UISlider.customCompFunctionNames = ["image1", "bgGrid9", "image2", "blockGrid9", "image3", "blockFillGrid9", "step", "min", "max", "value",
+            "transverseMode", "blockFillMode", "blockPosMode", "fillStrething"];
         return UISlider;
     }(UIComponent.UIBase));
     UIComponent.UISlider = UISlider;
@@ -64043,45 +65183,55 @@ var UIComponent;
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UIString = (function (_super) {
         __extends(UIString, _super);
         function UIString(inputMode) {
             if (inputMode === void 0) { inputMode = false; }
-            _super.call(this);
-            this._shadowColor = "#000000";
-            this._shadowDx = 1;
-            this._shadowDy = 1;
-            this._align = 0;
-            this._valign = 0;
-            this._overflow = 0;
-            this._fontSize = 16;
-            this._stroke = 0;
-            this._strokeColor = "#000000";
-            this._lastVarID = 0;
-            this.className = "UIString";
-            this._tf = inputMode ? new TextInput() : new Label();
-            this._tf.wordWrap = !inputMode;
-            this._input = inputMode;
-            this.on(EventObject.RESIZE, this, this.onResize);
-            this.addChild(this._tf);
-            this._tf.font = Config.DEFAULT_FONT ? Config.DEFAULT_FONT : "宋体";
-            this._needLoad = false;
-            this.width = 200;
-            this.height = 30;
-            this.fontSize = 16;
+            var _this_1 = _super.call(this) || this;
+            _this_1._shadowColor = "#000000";
+            _this_1._shadowDx = 1;
+            _this_1._shadowDy = 1;
+            _this_1._align = 0;
+            _this_1._valign = 0;
+            _this_1._overflow = 0;
+            _this_1._fontSize = 16;
+            _this_1._stroke = 0;
+            _this_1._strokeColor = "#000000";
+            _this_1._lastVarID = 0;
+            _this_1.className = "UIString";
+            _this_1._tf = inputMode ? new TextInput() : new Label();
+            _this_1._tf.wordWrap = !inputMode;
+            _this_1._input = inputMode;
+            _this_1.on(EventObject.RESIZE, _this_1, _this_1.onResize);
+            _this_1.addChild(_this_1._tf);
+            _this_1._tf.font = Config.DEFAULT_FONT ? Config.DEFAULT_FONT : "宋体";
+            _this_1._needLoad = false;
+            _this_1.width = 200;
+            _this_1.height = 30;
+            _this_1.fontSize = 16;
             if (!Config.EDIT_MODE) {
-                this._onVarChange = Callback.New(this.onVarChange, this);
-                this.add_DISPLAY(this.onAdded, this);
-                this.add_UNDISPLAY(this.onRemoved, this);
-                this.mouseEventEnabled = false;
+                _this_1._onVarChange = Callback.New(_this_1.onVarChange, _this_1);
+                _this_1.add_DISPLAY(_this_1.onAdded, _this_1);
+                _this_1.add_UNDISPLAY(_this_1.onRemoved, _this_1);
+                _this_1.mouseEventEnabled = false;
             }
             else {
-                this.tips = Callback.New(function () {
+                _this_1.tips = Callback.New(function () {
                     return this.inEditorInfo();
-                }, this);
+                }, _this_1);
             }
+            return _this_1;
         }
         UIString.prototype.dispose = function () {
             if (!this.isDisposed) {
@@ -64118,14 +65268,14 @@ var UIComponent;
             get: function () {
                 return this._tf.textField.textWidth;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "textHeight", {
             get: function () {
                 return this._tf.textField.textHeight;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "smooth", {
@@ -64136,7 +65286,7 @@ var UIComponent;
                 this._smooth = v;
                 this.refreshStroke();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "text", {
@@ -64185,7 +65335,7 @@ var UIComponent;
                     }
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIString.prototype.setTextForce = function (v) {
@@ -64202,7 +65352,7 @@ var UIComponent;
                 this.text = "$" + v;
                 this._lastVarID = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "color", {
@@ -64214,7 +65364,7 @@ var UIComponent;
                 this.width += 1;
                 this.width -= 1;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "fontSize", {
@@ -64225,7 +65375,7 @@ var UIComponent;
                 this._fontSize = v;
                 this.refreshStroke();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "leading", {
@@ -64237,7 +65387,7 @@ var UIComponent;
                 if (this._shadowEnabled)
                     this._tf2.leading = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "letterSpacing", {
@@ -64249,7 +65399,7 @@ var UIComponent;
                 if (this._shadowEnabled)
                     this._tf2.letterSpacing = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "align", {
@@ -64277,7 +65427,7 @@ var UIComponent;
                         break;
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "valign", {
@@ -64305,7 +65455,7 @@ var UIComponent;
                         break;
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "bold", {
@@ -64317,7 +65467,7 @@ var UIComponent;
                 if (this._shadowEnabled)
                     this._tf2.bold = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "italic", {
@@ -64329,7 +65479,7 @@ var UIComponent;
                 if (this._shadowEnabled)
                     this._tf2.italic = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "width", {
@@ -64341,7 +65491,7 @@ var UIComponent;
                 if (this._shadowEnabled)
                     this._tf2.width = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "height", {
@@ -64353,7 +65503,7 @@ var UIComponent;
                 if (this._shadowEnabled)
                     this._tf2.height = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "font", {
@@ -64365,7 +65515,7 @@ var UIComponent;
                 if (this._shadowEnabled)
                     this._tf2.font = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "overflow", {
@@ -64385,7 +65535,7 @@ var UIComponent;
                     this._tf2.text = this._tf.text;
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "wordWrap", {
@@ -64397,7 +65547,7 @@ var UIComponent;
                 if (this._shadowEnabled)
                     this._tf2.wordWrap = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "stroke", {
@@ -64410,7 +65560,7 @@ var UIComponent;
                     this.refreshStroke();
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "strokeColor", {
@@ -64423,7 +65573,7 @@ var UIComponent;
                     this.refreshStroke();
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIString.prototype.refreshStroke = function () {
@@ -64492,7 +65642,7 @@ var UIComponent;
                 else
                     this.removeChild(this._tf2);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIString.prototype.onInputFoucs = function () {
@@ -64517,7 +65667,7 @@ var UIComponent;
                 if (this._shadowEnabled)
                     this._tf2.color = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "shadowDx", {
@@ -64529,7 +65679,7 @@ var UIComponent;
                 if (this._shadowEnabled)
                     this._tf2.x = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIString.prototype, "shadowDy", {
@@ -64541,7 +65691,7 @@ var UIComponent;
                 if (this._shadowEnabled)
                     this._tf2.y = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIString.prototype.inEditorInfo = function () {
@@ -64585,7 +65735,7 @@ var UIComponent;
                     this.off(EventObject.CHANGE, this, this.onChange_private);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIString.prototype.onChange_private = function () {
@@ -64595,6 +65745,8 @@ var UIComponent;
                 }
             }
         };
+        UIString.customCompFunctionNames = ["text", "fontSize", "color", "bold", "italic", "smooth", "align", "valign", "leading", "letterSpacing",
+            "font", "wordWrap", "overflow", "shadowEnabled", "shadowColor", "shadowDx", "shadowDy", "stroke", "strokeColor", "onChangeFragEvent"];
         return UIString;
     }(UIComponent.UIBase));
     UIComponent.UIString = UIString;
@@ -64605,24 +65757,34 @@ var UIComponent;
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UISwitch = (function (_super) {
         __extends(UISwitch, _super);
         function UISwitch() {
-            _super.call(this);
-            this.className = "UISwitch";
-            this._selected = 1;
+            var _this_1 = _super.call(this) || this;
+            _this_1.className = "UISwitch";
+            _this_1._selected = 1;
             if (!Config.EDIT_MODE) {
-                this._selected = 0;
-                this._onVarChange = Callback.New(this.onVarChange, this);
-                this.add_DISPLAY(this.onAdded, this);
-                this.add_UNDISPLAY(this.onRemoved, this);
-                this.offAll(EventObject.CLICK);
+                _this_1._selected = 0;
+                _this_1._onVarChange = Callback.New(_this_1.onVarChange, _this_1);
+                _this_1.add_DISPLAY(_this_1.onAdded, _this_1);
+                _this_1.add_UNDISPLAY(_this_1.onRemoved, _this_1);
+                _this_1.offAll(EventObject.CLICK);
             }
             else {
-                this._previewselected = true;
+                _this_1._previewselected = true;
             }
+            return _this_1;
         }
         Object.defineProperty(UISwitch.prototype, "switchID", {
             get: function () {
@@ -64638,7 +65800,7 @@ var UIComponent;
                 if (this.displayedInStage && varID != 0)
                     Game.player.addListenerPlayerVariable(1, varID, this._onVarChange);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UISwitch.prototype, "selected", {
@@ -64651,7 +65813,7 @@ var UIComponent;
                     this.switchID = v;
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UISwitch.prototype.onVarChange = function (typeID, varID, value) {
@@ -64675,7 +65837,7 @@ var UIComponent;
                     this._image.sizeGrid = gridText;
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UISwitch.prototype.getVarID = function () {
@@ -64694,7 +65856,7 @@ var UIComponent;
             }
         };
         UISwitch.prototype.refresh = function () {
-            var _this = this;
+            var _this_1 = this;
             if (this.isDisposed)
                 return;
             this.graphics.clear();
@@ -64712,16 +65874,16 @@ var UIComponent;
                     }
                     if (url) {
                         AssetManager.loadImage(url, Callback.New(function (url, tex) {
-                            if (_this.isDisposed)
+                            if (_this_1.isDisposed)
                                 return;
-                            var varID = _this.getVarID();
-                            var thisUrl = Game.player.variable.getSwitch(varID) ? _this.image2 : _this.image1;
+                            var varID = _this_1.getVarID();
+                            var thisUrl = Game.player.variable.getSwitch(varID) ? _this_1.image2 : _this_1.image1;
                             if (thisUrl != url)
                                 return;
-                            _this._image.skin = url;
-                            _this._image.width = _this.width;
-                            _this._image.height = _this.height;
-                            _this._image.sizeGrid = gridText;
+                            _this_1._image.skin = url;
+                            _this_1._image.width = _this_1.width;
+                            _this_1._image.height = _this_1.height;
+                            _this_1._image.sizeGrid = gridText;
                         }, this, [url]), true, false);
                     }
                 }
@@ -64731,15 +65893,15 @@ var UIComponent;
                 var gridText = this._previewselected ? this._grid9img2 : this._grid9img1;
                 if (url) {
                     AssetManager.loadImage(url, Callback.New(function (url, tex) {
-                        if (_this.isDisposed)
+                        if (_this_1.isDisposed)
                             return;
-                        var thisUrl = _this._previewselected ? _this.image2 : _this.image1;
+                        var thisUrl = _this_1._previewselected ? _this_1.image2 : _this_1.image1;
                         if (thisUrl != url)
                             return;
-                        _this._image.skin = url;
-                        _this._image.width = _this.width;
-                        _this._image.height = _this.height;
-                        _this._image.sizeGrid = gridText;
+                        _this_1._image.skin = url;
+                        _this_1._image.width = _this_1.width;
+                        _this_1._image.height = _this_1.height;
+                        _this_1._image.sizeGrid = gridText;
                     }, this, [url]), true, false);
                 }
             }
@@ -64755,6 +65917,7 @@ var UIComponent;
                 _super.prototype.dispose.call(this);
             }
         };
+        UISwitch.customCompFunctionNames = ["selected", "image1", "grid9img1", "image2", "grid9img2", "previewselected"];
         return UISwitch;
     }(UIComponent.UICheckBox));
     UIComponent.UISwitch = UISwitch;
@@ -64764,39 +65927,49 @@ var UIComponent;
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UITabBox = (function (_super) {
         __extends(UITabBox, _super);
         function UITabBox() {
-            _super.call(this);
-            this._selectedIndex = -1;
-            this._rowMode = false;
-            this._grid9img1 = "0,0,0,0,0";
-            this._grid9img2 = "0,0,0,0,0";
-            this._spacing = 0;
-            this._labelSelectedColor = "#FFFFFF";
-            this._labelColor = "#666666";
-            this._labelSize = 16;
-            this._labelLetterSpacing = 0;
-            this._labelAlign = 1;
-            this._labelValign = 1;
-            this._tabRoot = new Sprite();
-            this._itemButtons = [];
-            this._itemLabels = [];
-            this._labelDx = 0;
-            this._labelDy = 0;
-            this._labelStroke = 0;
-            this._labelStrokeColor = "#000000";
-            this.addChild(this._tabRoot);
-            this.className = "UITabBox";
+            var _this_1 = _super.call(this) || this;
+            _this_1._selectedIndex = -1;
+            _this_1._rowMode = false;
+            _this_1._grid9img1 = "0,0,0,0,0";
+            _this_1._grid9img2 = "0,0,0,0,0";
+            _this_1._spacing = 0;
+            _this_1._labelSelectedColor = "#FFFFFF";
+            _this_1._labelColor = "#666666";
+            _this_1._labelSize = 16;
+            _this_1._labelLetterSpacing = 0;
+            _this_1._labelAlign = 1;
+            _this_1._labelValign = 1;
+            _this_1._tabRoot = new Sprite();
+            _this_1._itemButtons = [];
+            _this_1._itemLabels = [];
+            _this_1._labelDx = 0;
+            _this_1._labelDy = 0;
+            _this_1._labelStroke = 0;
+            _this_1._labelStrokeColor = "#000000";
+            _this_1.addChild(_this_1._tabRoot);
+            _this_1.className = "UITabBox";
             if (Config.EDIT_MODE) {
-                this.modifyWidthHeightEnabled = false;
+                _this_1.modifyWidthHeightEnabled = false;
             }
-            this.rowMode = false;
-            this.spacing = 5;
-            this.selectedIndex = 0;
-            this._labelFont = Config.DEFAULT_FONT;
+            _this_1.rowMode = false;
+            _this_1.spacing = 5;
+            _this_1.selectedIndex = 0;
+            _this_1._labelFont = Config.DEFAULT_FONT;
+            return _this_1;
         }
         UITabBox.prototype.inEditorInit = function () {
             this.itemWidth = 141;
@@ -64810,9 +65983,9 @@ var UIComponent;
             this.items = "标签项1,标签项2,标签项3";
         };
         UITabBox.prototype.loadAssetTest = function () {
-            var _this = this;
+            var _this_1 = this;
             AssetManager.loadImages([this.itemImage1, this.itemImage2], Callback.New(function () {
-                _this.event(GameUI.EVENT_TEST_LOAD_CHILD_UI);
+                _this_1.event(GameUI.EVENT_TEST_LOAD_CHILD_UI);
             }, this), this._syncLoadedEventWhenAssetExist, false);
         };
         UITabBox.prototype.dispose = function () {
@@ -64838,7 +66011,7 @@ var UIComponent;
                         this.event(EventObject.CHANGE);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UITabBox.prototype.setSelectedForce = function (v) {
@@ -64854,14 +66027,14 @@ var UIComponent;
                 this._items = v;
                 this.refreshItems();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "length", {
             get: function () {
                 return this._itemButtons.length;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "itemImage1", {
@@ -64872,7 +66045,7 @@ var UIComponent;
                 this._itemImage1 = v;
                 this.refreshButtonImage();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "itemImage2", {
@@ -64883,28 +66056,28 @@ var UIComponent;
                 this._itemImage2 = v;
                 this.refreshButtonImage();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "grid9img1Width", {
             get: function () {
                 return this.itemWidth;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "grid9img1Height", {
             get: function () {
                 return this.itemHeight;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "grid9img1Skin", {
             get: function () {
                 return this._itemImage1;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "grid9img1", {
@@ -64917,28 +66090,28 @@ var UIComponent;
                 this._grid9img1 = v;
                 this.refreshButtonImage(false);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "grid9img2Width", {
             get: function () {
                 return this.itemWidth;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "grid9img2Height", {
             get: function () {
                 return this.itemHeight;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "grid9img2Skin", {
             get: function () {
                 return this._itemImage2;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "grid9img2", {
@@ -64951,7 +66124,7 @@ var UIComponent;
                 this._grid9img2 = v;
                 this.refreshButtonImage(false);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "smooth", {
@@ -64962,7 +66135,7 @@ var UIComponent;
                 this._smooth = v;
                 this.refreshItems();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "rowMode", {
@@ -64973,7 +66146,7 @@ var UIComponent;
                 this._rowMode = v;
                 this.refreshItemSize();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "itemWidth", {
@@ -64984,7 +66157,7 @@ var UIComponent;
                 this._itemWidth = v;
                 this.refreshItemSize();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "itemHeight", {
@@ -64995,7 +66168,7 @@ var UIComponent;
                 this._itemHeight = v;
                 this.refreshItemSize();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "spacing", {
@@ -65006,7 +66179,7 @@ var UIComponent;
                 this._spacing = v;
                 this.refreshItemSize();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "labelFont", {
@@ -65017,7 +66190,7 @@ var UIComponent;
                 this._labelFont = v;
                 this.refreshLabels();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "labelSelectedColor", {
@@ -65028,7 +66201,7 @@ var UIComponent;
                 this._labelSelectedColor = v;
                 this.refreshSelected();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "labelColor", {
@@ -65039,7 +66212,7 @@ var UIComponent;
                 this._labelColor = v;
                 this.refreshSelected();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "labelSize", {
@@ -65050,7 +66223,7 @@ var UIComponent;
                 this._labelSize = v;
                 this.refreshLabels();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "labelLetterSpacing", {
@@ -65061,7 +66234,7 @@ var UIComponent;
                 this._labelLetterSpacing = v;
                 this.refreshLabels();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "labelAlign", {
@@ -65073,7 +66246,7 @@ var UIComponent;
                 this._labelAlign = v;
                 this.refreshLabels();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "labelValign", {
@@ -65085,7 +66258,7 @@ var UIComponent;
                 this._labelValign = v;
                 this.refreshLabels();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "labelBold", {
@@ -65096,7 +66269,7 @@ var UIComponent;
                 this._labelBold = v;
                 this.refreshLabels();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "labelItalic", {
@@ -65107,7 +66280,7 @@ var UIComponent;
                 this._labelItalic = v;
                 this.refreshLabels();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "labelDx", {
@@ -65118,7 +66291,7 @@ var UIComponent;
                 this._labelDx = v;
                 this.refreshLabels();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "labelDy", {
@@ -65129,7 +66302,7 @@ var UIComponent;
                 this._labelDy = v;
                 this.refreshLabels();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "labelStroke", {
@@ -65140,7 +66313,7 @@ var UIComponent;
                 this._labelStroke = v;
                 this.refreshLabels();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UITabBox.prototype, "labelStrokeColor", {
@@ -65151,7 +66324,7 @@ var UIComponent;
                 this._labelStrokeColor = v;
                 this.refreshLabels();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UITabBox.prototype.clearItems = function () {
@@ -65296,7 +66469,7 @@ var UIComponent;
         UITabBox.prototype.addChildren = function () {
             var args = [];
             for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i - 0] = arguments[_i];
+                args[_i] = arguments[_i];
             }
             var n = _super.prototype.addChildren.apply(this, args);
             this.onSelected();
@@ -65315,7 +66488,7 @@ var UIComponent;
                     this.off(EventObject.CHANGE, this, this.onChange_private);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UITabBox.prototype.onChange_private = function () {
@@ -65325,6 +66498,9 @@ var UIComponent;
                 }
             }
         };
+        UITabBox.customCompFunctionNames = ["selectedIndex", "itemImage1", "grid9img1", "itemImage2", "grid9img2", "itemWidth", "itemHeight", "items", "rowMode", "spacing",
+            "labelSize", "labelColor", "labelFont", "labelBold", "labelItalic", "smooth", "labelAlign", "labelValign", "labelLetterSpacing", "labelSelectedColor", "labelDx", "labelDy",
+            "labelStroke", "labelStrokeColor", "onChangeFragEvent"];
         return UITabBox;
     }(UIComponent.UIBase));
     UIComponent.UITabBox = UITabBox;
@@ -65334,14 +66510,24 @@ var UIComponent;
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UIVariable = (function (_super) {
         __extends(UIVariable, _super);
         function UIVariable() {
-            _super.call(this);
-            this.className = "UIVariable";
-            this._tf.text = "";
+            var _this_1 = _super.call(this) || this;
+            _this_1.className = "UIVariable";
+            _this_1._tf.text = "";
+            return _this_1;
         }
         UIVariable.prototype.dispose = function () {
             if (!this.isDisposed) {
@@ -65411,7 +66597,7 @@ var UIComponent;
                     }
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIVariable.prototype.inEditorInfo = function () {
@@ -65435,6 +66621,8 @@ var UIComponent;
                 this._tf2.text = this._tf.text;
             }
         };
+        UIVariable.customCompFunctionNames = ["varID", "fontSize", "color", "bold", "italic", "smooth", "align", "valign", "leading", "letterSpacing",
+            "font", "wordWrap", "overflow", "shadowEnabled", "shadowColor", "shadowDx", "shadowDy", "stroke", "strokeColor", "onChangeFragEvent"];
         return UIVariable;
     }(UIComponent.UIString));
     UIComponent.UIVariable = UIVariable;
@@ -65444,45 +66632,53 @@ var UIComponent;
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UIVideo = (function (_super) {
         __extends(UIVideo, _super);
         function UIVideo(editorCompMode) {
-            var _this = this;
             if (editorCompMode === void 0) { editorCompMode = true; }
-            _super.call(this);
-            this._videoURL = "";
-            this._playbackRate = 1;
-            this._volume = 1;
-            this._currentTime = 0;
-            this._playType = 0;
-            this.className = "UIVideo";
+            var _this_1 = _super.call(this) || this;
+            _this_1._videoURL = "";
+            _this_1._playbackRate = 1;
+            _this_1._volume = 1;
+            _this_1._currentTime = 0;
+            _this_1._playType = 0;
+            _this_1.className = "UIVideo";
             if (Config.EDIT_MODE && editorCompMode) {
-                this.editorCompMode = true;
+                _this_1.editorCompMode = true;
             }
-            this._dpTextureWidth = 1000;
-            this._dpTextureHeight = 1000;
-            this.width = 1000;
-            this.height = 1000;
-            this._uiImage.width = this.width;
-            this._uiImage.height = this.height;
-            this._dpDirty = true;
-            this.onResize();
-            if (this.editorCompMode) {
-                return;
+            _this_1._dpTextureWidth = 1000;
+            _this_1._dpTextureHeight = 1000;
+            _this_1.width = 1000;
+            _this_1.height = 1000;
+            _this_1._uiImage.width = _this_1.width;
+            _this_1._uiImage.height = _this_1.height;
+            _this_1._dpDirty = true;
+            _this_1.onResize();
+            if (_this_1.editorCompMode) {
+                return _this_1;
             }
             if (Config.EDIT_MODE) {
-                this.add_DISPLAY(this.onAdded, this);
-                this.add_UNDISPLAY(this.onRemoved, this);
+                _this_1.add_DISPLAY(_this_1.onAdded, _this_1);
+                _this_1.add_UNDISPLAY(_this_1.onRemoved, _this_1);
             }
-            var video = this.videoElement = document.createElement("video");
+            var video = _this_1.videoElement = document.createElement("video");
             if (os.platform != 2) {
                 video.muted = true;
                 os.canvas.addEventListener("click", function () {
-                    if (!_this.muted)
+                    if (!_this_1.muted)
                         video.muted = false;
-                    _this.canSetMuted = true;
+                    _this_1.canSetMuted = true;
                     os.canvas.removeEventListener("click", arguments.callee);
                 });
             }
@@ -65492,23 +66688,24 @@ var UIComponent;
             video.height = 1;
             video.style.opacity = "0.1";
             video.addEventListener("loadedmetadata", function () {
-                _this.event(EventObject.LOADED);
-                if (_this.stage && _this.videoElement && _this._playType == 0 && !_this._metaDataLoaded)
-                    _this.videoElement.play();
-                _this._metaDataLoaded = true;
-                _this.webGLCanvas.recreateResource();
-                stage.on(EventObject.RENDER, _this, _this.onVideoRender);
+                _this_1.event(EventObject.LOADED);
+                if (_this_1.stage && _this_1.videoElement && _this_1._playType == 0 && !_this_1._metaDataLoaded)
+                    _this_1.videoElement.play();
+                _this_1._metaDataLoaded = true;
+                _this_1.webGLCanvas.recreateResource();
+                stage.on(EventObject.RENDER, _this_1, _this_1.onVideoRender);
             });
             video.addEventListener("error", function () {
-                _this.event(EventObject.ERROR);
+                _this_1.event(EventObject.ERROR);
             });
             video.addEventListener("ended", function () {
-                _this.event(EventObject.COMPLETE);
+                _this_1.event(EventObject.COMPLETE);
             });
-            var canvas = this.webGLCanvas = HTMLCanvas.create("2D", video);
-            this.webGLCanvas.size(1, 1);
-            var tex = this.videoTex = new Texture(canvas);
-            this.texture = tex;
+            var canvas = _this_1.webGLCanvas = HTMLCanvas.create("2D", video);
+            _this_1.webGLCanvas.size(1, 1);
+            var tex = _this_1.videoTex = new Texture(canvas);
+            _this_1.texture = tex;
+            return _this_1;
         }
         UIVideo.prototype.clear = function () {
             this.webGLCanvas.disposeResource();
@@ -65551,7 +66748,7 @@ var UIComponent;
                     return NaN;
                 return this.videoElement.duration;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIVideo.prototype, "networkState", {
@@ -65560,7 +66757,7 @@ var UIComponent;
                     return 0;
                 return this.videoElement.networkState;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIVideo.prototype, "videoURL", {
@@ -65574,7 +66771,7 @@ var UIComponent;
                 this._metaDataLoaded = false;
                 this.videoElement.src = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIVideo.prototype, "playbackRate", {
@@ -65587,7 +66784,7 @@ var UIComponent;
                     return;
                 this.videoElement.playbackRate = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIVideo.prototype, "volume", {
@@ -65600,7 +66797,7 @@ var UIComponent;
                     return;
                 this.videoElement.volume = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIVideo.prototype, "currentTime", {
@@ -65615,7 +66812,7 @@ var UIComponent;
                     return;
                 this.videoElement.currentTime = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIVideo.prototype, "playType", {
@@ -65634,7 +66831,7 @@ var UIComponent;
                     this.pause();
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIVideo.prototype, "muted", {
@@ -65653,7 +66850,7 @@ var UIComponent;
                         this.videoElement.muted = false;
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIVideo.prototype, "loop", {
@@ -65666,7 +66863,7 @@ var UIComponent;
                     return;
                 this.videoElement.loop = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIVideo.prototype.play = function () {
@@ -65744,7 +66941,7 @@ var UIComponent;
                     this.off(EventObject.LOADED, this, this.onLoaded_private);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIVideo.prototype.onLoaded_private = function () {
@@ -65766,7 +66963,7 @@ var UIComponent;
                     this.off(EventObject.ERROR, this, this.onError_private);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIVideo.prototype.onError_private = function () {
@@ -65788,7 +66985,7 @@ var UIComponent;
                     this.off(EventObject.COMPLETE, this, this.onComplete_private);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIVideo.prototype.onComplete_private = function () {
@@ -65796,6 +66993,7 @@ var UIComponent;
                 CommandPage.startTriggerFragmentEvent(this._onCompleteFragEvent, Game.player.sceneObject, Game.player.sceneObject);
             }
         };
+        UIVideo.customCompFunctionNames = ["videoURL", "playType", "volume", "playbackRate", "currentTime", "muted", "loop", "pivotType", "flip", "onLoadedFragEvent", "onErrorFragEvent", "onCompleteFragEvent"];
         return UIVideo;
     }(UIComponent.UIBitmap));
     UIComponent.UIVideo = UIVideo;
@@ -65805,57 +67003,68 @@ var UIComponent;
 
 
 
+
+
+
+
+
+
+
+
+
+
 var Avatar = (function (_super) {
     __extends(Avatar, _super);
     function Avatar() {
-        _super.call(this);
-        this.autoID = ObjectUtils.getInstanceID();
-        this.isLoading = false;
-        this._loadState = 0;
-        this.picUrls = [];
-        this.oriMode = 8;
-        this._fps = 12;
-        this._currentFrame = 1;
-        this.ori = 2;
-        this.actIndex = -1;
-        this.actID = 0;
-        this.actionListArr = [];
-        this.avatarList = [];
-        this._body = new GameSprite();
-        this._bodyGraphics = new GameSprite();
-        this.autoFlip = true;
-        this._actionPlayCompleteRecord = 0;
-        this.refObjs = {};
-        this.syncLoadWhenAssetExist = !Config.EDIT_MODE;
-        this.addChild(this._body);
-        this._body.addChild(this._bodyGraphics);
+        var _this_1 = _super.call(this) || this;
+        _this_1.autoID = ObjectUtils.getInstanceID();
+        _this_1.isLoading = false;
+        _this_1._loadState = 0;
+        _this_1.picUrls = [];
+        _this_1.oriMode = 8;
+        _this_1._fps = 12;
+        _this_1._currentFrame = 1;
+        _this_1.ori = 2;
+        _this_1.actIndex = -1;
+        _this_1.actID = 0;
+        _this_1.actionListArr = [];
+        _this_1.avatarList = [];
+        _this_1._body = new GameSprite();
+        _this_1._bodyGraphics = new GameSprite();
+        _this_1.autoFlip = true;
+        _this_1._actionPlayCompleteRecord = 0;
+        _this_1.refObjs = {};
+        _this_1.syncLoadWhenAssetExist = !Config.EDIT_MODE;
+        _this_1.addChild(_this_1._body);
+        _this_1._body.addChild(_this_1._bodyGraphics);
+        return _this_1;
     }
     Object.defineProperty(Avatar.prototype, "gameDataAvatarList", {
         get: function () {
             return Common.avatarList;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Avatar.prototype, "gameDataAvatarURL", {
         get: function () {
             return "asset/json/avatar/data/avatar";
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Avatar.prototype, "disposeAvatarAsset", {
         get: function () {
             return AssetManager.disposeAvatarAsset;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Avatar.prototype, "myClass", {
         get: function () {
             return Avatar;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Avatar.prototype, "id", {
@@ -65870,7 +67079,7 @@ var Avatar = (function (_super) {
             this._loadIDRD = Math.random();
             this.loadData(v, this._loadIDRD);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Avatar.prototype, "fps", {
@@ -65887,7 +67096,7 @@ var Avatar = (function (_super) {
                 avatarPart.fps = v;
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Avatar.prototype, "currentFrame", {
@@ -65897,11 +67106,11 @@ var Avatar = (function (_super) {
         set: function (v) {
             this.setCurrentFrame(v);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Avatar.prototype.loadData = function (avatarID, loadIDRD, topAvatar) {
-        var _this = this;
+        var _this_1 = this;
         if (topAvatar === void 0) { topAvatar = null; }
         this.isLoading = true;
         if (!Config.EDIT_MODE && avatarID == 0) {
@@ -65918,7 +67127,7 @@ var Avatar = (function (_super) {
             this._loadState = 1;
             this.___loadJsonURL = this.gameDataAvatarURL + avatarID + ".json";
             AssetManager.loadJson(this.___loadJsonURL, Callback.New(function (avatarJson) {
-                _this.parseData(avatarJson, null, loadIDRD, topAvatar);
+                _this_1.parseData(avatarJson, null, loadIDRD, topAvatar);
             }, this), this.syncLoadWhenAssetExist);
         }
     };
@@ -65936,7 +67145,7 @@ var Avatar = (function (_super) {
         this.actionListArr = [];
     };
     Avatar.prototype.parseData = function (avatarJson, avatarListData, loadIDRD, topAvatar) {
-        var _this = this;
+        var _this_1 = this;
         if (avatarListData === void 0) { avatarListData = null; }
         if (loadIDRD === void 0) { loadIDRD = null; }
         if (topAvatar === void 0) { topAvatar = null; }
@@ -65948,9 +67157,8 @@ var Avatar = (function (_super) {
             return;
         }
         if (!avatarJson) {
-            avatarListData = avatarListData ? avatarListData : this.gameDataAvatarList;
-            if (Config.EDIT_MODE && avatarListData.data[0]) {
-                this.parseData(avatarListData.data[0], avatarListData, loadIDRD);
+            if (Config.EDIT_MODE && Common.avatarList.data[0]) {
+                this.parseData(Common.avatarList.data[0], Common.avatarList, loadIDRD);
                 return;
             }
             this.clear(false);
@@ -65960,18 +67168,18 @@ var Avatar = (function (_super) {
         var oriArr = [1, 2, 3, 4, 6, 7, 8, 9];
         this.picUrls = avatarJson.picUrls;
         var h = Callback.New(function () {
-            if (_this.isDisposed || _this.topAvatar.isDisposed || (loadIDRD && _this._loadIDRD != loadIDRD)) {
-                _this.event(Avatar.LOAD_EXPIRE);
+            if (_this_1.isDisposed || _this_1.topAvatar.isDisposed || (loadIDRD && _this_1._loadIDRD != loadIDRD)) {
+                _this_1.event(Avatar.LOAD_EXPIRE);
                 return;
             }
-            _this.clear(false);
-            _this.oriMode = avatarJson.oriMode;
+            _this_1.clear(false);
+            _this_1.oriMode = avatarJson.oriMode;
             if (avatarJson.autoFlip == null)
                 avatarJson.autoFlip = true;
             if (avatarJson.id == 0)
                 avatarJson.autoFlip = false;
-            _this.autoFlip = avatarJson.autoFlip;
-            _this.name = avatarJson.name;
+            _this_1.autoFlip = avatarJson.autoFlip;
+            _this_1.name = avatarJson.name;
             for (var i = 0; i < avatarJson.actionListArr.length; i++) {
                 var actData = avatarJson.actionListArr[i];
                 var act = new AvatarAction();
@@ -65980,13 +67188,15 @@ var Avatar = (function (_super) {
                 var frameImageInfoData = actData.frameImageInfo;
                 for (var s = 0; s < frameImageInfoData.length; s++) {
                     var oriActData = frameImageInfoData[s];
-                    var ori = GameUtils.getOriByIndex(s, _this.oriMode);
+                    var ori = GameUtils.getOriByIndex(s, _this_1.oriMode);
                     act.frameImageInfo[ori] = [];
                     for (var f = 0; f < oriActData.length; f++) {
                         var frameData = oriActData[f];
                         var aImg = new AvatarFrameImage();
                         aImg.index = f;
                         aImg.picUrlIndex = frameData.picUrlIndex;
+                        frameData.rect[2] = frameData.rect[2] ? frameData.rect[2] : 1;
+                        frameData.rect[3] = frameData.rect[3] ? frameData.rect[3] : 1;
                         aImg.rect = new Rectangle(frameData.rect[0], frameData.rect[1], frameData.rect[2], frameData.rect[3]);
                         aImg.x = frameData.x;
                         aImg.y = frameData.y;
@@ -66005,31 +67215,33 @@ var Avatar = (function (_super) {
                         aImg.tonal_mr = frameData.tonal_mr;
                         aImg.tonal_mg = frameData.tonal_mg;
                         aImg.tonal_mb = frameData.tonal_mb;
+                        aImg.wait_type = frameData.wait_type;
+                        aImg.wait_count = frameData.wait_count;
                         act.frameImageInfo[ori][f] = aImg;
                     }
                 }
-                _this.actionListArr[i] = act;
+                _this_1.actionListArr[i] = act;
             }
             if (avatarJson.refObjs)
-                _this.refObjs = avatarJson.refObjs;
+                _this_1.refObjs = avatarJson.refObjs;
             for (var i = 0; i < avatarJson.parts.length; i++) {
                 var partData = ObjectUtils.depthClone(avatarJson.parts[i]);
                 if (partData.id == 0) {
-                    if (!_this.partData)
-                        _this.partData = partData;
-                    _this.addChild(_this._body);
-                    _this.avatarList.push(_this);
+                    if (!_this_1.partData)
+                        _this_1.partData = partData;
+                    _this_1.addChild(_this_1._body);
+                    _this_1.avatarList.push(_this_1);
                     continue;
                 }
                 new SyncTask(loadRandName);
-                var avatarPart = new _this.myClass();
-                avatarPart.prerender = _this.prerender;
-                avatarPart.syncLoadWhenAssetExist = _this.syncLoadWhenAssetExist;
+                var avatarPart = new _this_1.myClass();
+                avatarPart.prerender = _this_1.prerender;
+                avatarPart.syncLoadWhenAssetExist = _this_1.syncLoadWhenAssetExist;
                 avatarPart._loadIDRD = loadIDRD;
-                avatarPart.once(EventObject.LOADED, _this, function (loadRandName, i, partData) {
+                avatarPart.once(EventObject.LOADED, _this_1, function (loadRandName, i, partData) {
                     SyncTask.taskOver(loadRandName);
                 }, [loadRandName, i, partData]);
-                avatarPart.once(Avatar.LOAD_EXPIRE, _this, function (loadRandName, i, partData) {
+                avatarPart.once(Avatar.LOAD_EXPIRE, _this_1, function (loadRandName, i, partData) {
                     SyncTask.taskOver(loadRandName);
                 }, [loadRandName, i, partData]);
                 avatarPart.partData = partData;
@@ -66039,15 +67251,15 @@ var Avatar = (function (_super) {
                 else {
                     avatarPart.loadData(partData.id, loadIDRD, topAvatar);
                 }
-                _this.addPart(avatarPart);
+                _this_1.addPart(avatarPart);
                 var avatarPartobj = {};
                 ObjectUtils.clone(partData, avatarPartobj);
                 delete avatarPartobj["id"];
                 ObjectUtils.clone(avatarPartobj, avatarPart);
             }
-            _this._loadState = 3;
-            for (var s = 0; s < _this.actionListArr.length; s++) {
-                var avatarAct = _this.actionListArr[s];
+            _this_1._loadState = 3;
+            for (var s = 0; s < _this_1.actionListArr.length; s++) {
+                var avatarAct = _this_1.actionListArr[s];
                 if (!avatarAct)
                     continue;
                 for (var o in oriArr) {
@@ -66057,7 +67269,7 @@ var Avatar = (function (_super) {
                         var frame = avatarAct.getFrameImage(ori, f);
                         if (!frame)
                             continue;
-                        var imgUrl = _this.picUrls[frame.picUrlIndex];
+                        var imgUrl = _this_1.picUrls[frame.picUrlIndex];
                         var g = AssetManager.getClipImage(imgUrl, 0, 0, frame.rect);
                         frame.graphics = g;
                     }
@@ -66089,7 +67301,7 @@ var Avatar = (function (_super) {
                     this.event(EventObject.LOADED);
                 }
                 SyncTask.clear(loadRandName);
-            }, [loadRandName], _this);
+            }, [loadRandName], _this_1);
         }, this);
         this._loadState = 2;
         AssetManager.loadImages(this.picUrls, h, this.syncLoadWhenAssetExist, true, this.prerender);
@@ -66145,7 +67357,7 @@ var Avatar = (function (_super) {
             var myRect = this.getSelfBounds();
             return myRect;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Avatar.prototype, "orientation", {
@@ -66164,7 +67376,7 @@ var Avatar = (function (_super) {
             this.ori = v;
             this.delayOnRender(false);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Avatar.prototype, "actionIndex", {
@@ -66192,7 +67404,7 @@ var Avatar = (function (_super) {
             }
             this.delayOnRender(false);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Avatar.prototype, "actionID", {
@@ -66224,14 +67436,14 @@ var Avatar = (function (_super) {
             }
             this.delayOnRender(false);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Avatar.prototype, "actionList", {
         get: function () {
             return this.actionListArr;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Avatar.prototype.hasActionID = function (actionID) {
@@ -66408,7 +67620,7 @@ var Avatar = (function (_super) {
         get: function () {
             return this.avatarList.length;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Avatar.prototype.setCurrentFrame = function (v) {
@@ -66432,25 +67644,21 @@ var Avatar = (function (_super) {
             var avatarAct = this.actionListArr[this.actIndex];
             return avatarAct ? avatarAct.getFrameLength(this.ori, true) : 0;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(Avatar.prototype, "totalFrame", {
         get: function () {
             return this.frameCount;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
-    Avatar.prototype.gotoAndPlay = function (frame, isHit, loop) {
+    Avatar.prototype.gotoAndPlay = function (frame) {
         if (frame === void 0) { frame = 1; }
-        if (isHit === void 0) { isHit = true; }
-        if (loop === void 0) { loop = false; }
         if (frame <= 1)
             frame = 1;
         this.setCurrentFrame(frame);
-        this.isHit = isHit;
-        this.loop = loop;
         this.play();
     };
     Avatar.prototype.play = function () {
@@ -66479,13 +67687,20 @@ var Avatar = (function (_super) {
         if (useMapping === void 0) { useMapping = true; }
         if (playFrame === void 0) { playFrame = null; }
         if (sendEvent === void 0) { sendEvent = true; }
-        Callback.CallLaterBeforeRender(this.onRender, this, arguments);
+        if (this.forceRender) {
+            this.waitRender_waitCount = null;
+            this.onRender.apply(this, [autoPlay, useMapping, playFrame, sendEvent, true]);
+        }
+        else {
+            Callback.CallLaterBeforeRender(this.onRender, this, arguments);
+        }
     };
-    Avatar.prototype.onRender = function (autoPlay, useMapping, playFrame, sendEvent) {
+    Avatar.prototype.onRender = function (autoPlay, useMapping, playFrame, sendEvent, forceRender) {
         if (autoPlay === void 0) { autoPlay = true; }
         if (useMapping === void 0) { useMapping = true; }
         if (playFrame === void 0) { playFrame = null; }
         if (sendEvent === void 0) { sendEvent = true; }
+        if (forceRender === void 0) { forceRender = false; }
         if (this.isLoading || (!Config.EDIT_MODE && this.id == 0))
             return;
         var cautoPlay = autoPlay;
@@ -66496,10 +67711,30 @@ var Avatar = (function (_super) {
         var now;
         if (playFrame == null) {
             if (autoPlay) {
-                now = new Date().getTime();
-                var timeIntervalMs = now - this._startPlayTime;
-                playFrame = Math.floor(timeIntervalMs / (1000 / this.fps)) + this._startPlayFrame;
-                if (playFrame == this._currentFrame && timeIntervalMs >= 5) {
+                now = Date.now();
+                if (this.waitRender_waitCount != null) {
+                    if (this.waitRender_useTime) {
+                        var dtime = now - this.waitRender_startCount;
+                        if (dtime < this.waitRender_waitCount) {
+                            return;
+                        }
+                    }
+                    else {
+                        var dFrame = __fCount - this.waitRender_startCount;
+                        if (dFrame < this.waitRender_waitCount) {
+                            return;
+                        }
+                    }
+                    this.waitRender_waitCount = null;
+                    playFrame = this._currentFrame + 1;
+                    this._startPlayTime = now;
+                    this._startPlayFrame = playFrame;
+                }
+                else {
+                    var timeIntervalMs = now - this._startPlayTime;
+                    playFrame = Math.floor(timeIntervalMs / (1000 / this.fps)) + this._startPlayFrame;
+                }
+                if (!forceRender && playFrame == this._currentFrame && timeIntervalMs >= 5) {
                     return;
                 }
             }
@@ -66525,7 +67760,7 @@ var Avatar = (function (_super) {
             this._bodyGraphicsFlip = (this.oriMode % 2 == 1) && (this.ori == 3 || this.ori == 6 || this.ori == 9) && this.autoFlip;
             if (this._bodyGraphicsFlip) {
                 this._bodyGraphics.scaleX = -1;
-                this._bodyGraphics.x = frame.width > 0 ? -frame.x * 2 : frame.x * 2;
+                this._bodyGraphics.x = frame.rect.width;
             }
             else {
                 this._bodyGraphics.scaleX = 1;
@@ -66543,13 +67778,25 @@ var Avatar = (function (_super) {
             if (this._openAutoHitArea) {
                 this._body.hitArea = new Rectangle(0, 0, frame.width / this._body.scaleX, frame.height / this._body.scaleY);
             }
+            if (this.topAvatar == this) {
+                if (frame.wait_type == 1) {
+                    this.waitRender_startCount = __fCount;
+                    this.waitRender_useTime = false;
+                    this.waitRender_waitCount = Math.round(frame.wait_count * os['fps'] / this.fps);
+                }
+                else if (frame.wait_type == 2) {
+                    this.waitRender_startCount = Date.now();
+                    this.waitRender_useTime = true;
+                    this.waitRender_waitCount = frame.wait_count;
+                }
+            }
         }
         var isRender = false;
         for (var i = 0; i < this.avatarList.length; i++) {
             var avatarPart = this.avatarList[i];
             if (avatarPart == this)
                 continue;
-            if (avatarPart.onRender(autoPlay, useMapping, playFrame, sendEvent)) {
+            if (avatarPart.onRender(autoPlay, useMapping, playFrame, sendEvent, forceRender)) {
                 isRender = true;
             }
         }
@@ -66605,11 +67852,11 @@ var Avatar = (function (_super) {
     };
     ;
     Avatar.prototype.once = function (type, caller, listener, args) {
-        var _this = this;
+        var _this_1 = this;
         var t = _super.prototype.once.apply(this, [type, caller, function (caller, listener, args, e) {
                 listener.apply(caller, args ? args.concat([e]) : [e]);
-                if (!_this.hasMouseEvent)
-                    _this.closeAutoHitArea();
+                if (!_this_1.hasMouseEvent)
+                    _this_1.closeAutoHitArea();
             }, [caller, listener, args]]);
         if (this.hasMouseEvent)
             this.openAutoHitArea();
@@ -66685,102 +67932,67 @@ var Avatar = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var GameDialog = (function (_super) {
     __extends(GameDialog, _super);
     function GameDialog(dialogID, dialogList) {
-        _super.call(this);
-        this.dialogBox = new UIComponent.UIBitmap();
-        this.headBox = new UIComponent.UIRoot();
-        this.optionBox = new GameSprite();
-        this.optionText = new GameSprite();
-        this.nameText = new UIComponent.UIString();
-        this.dialogText = new UIComponent.UIString();
-        this.skipAni = new Animation();
-        this.skipAniPoint = new Point();
-        this.lastTextPosX = 0;
-        this.lastTextPosY = 0;
-        this.playTextLabels = [];
-        this.nameMapping = {
-            dialogBox: this.dialogBox,
-            headBox: this.headBox,
-            optionBox: this.optionBox,
-            dialog: this.dialogText,
-            option: this.optionText,
-            nameBox: this.nameText,
-            skipBox: this.skipAni
+        var _this_1 = _super.call(this) || this;
+        _this_1.dialogBox = new UIComponent.UIBitmap();
+        _this_1.headBox = new UIComponent.UIRoot();
+        _this_1.optionBox = new GameSprite();
+        _this_1.optionText = new GameSprite();
+        _this_1.nameText = new UIComponent.UIString();
+        _this_1.dialogText = new UIComponent.UIString();
+        _this_1.skipAni = new GCAnimation();
+        _this_1.skipAniPoint = new Point();
+        _this_1.lastTextPosX = 0;
+        _this_1.lastTextPosY = 0;
+        _this_1.waitTimeArr = [];
+        _this_1.dialogMaterialEnabled = true;
+        _this_1.playTextLabels = [];
+        _this_1.nameMapping = {
+            dialogBox: _this_1.dialogBox,
+            headBox: _this_1.headBox,
+            optionBox: _this_1.optionBox,
+            dialog: _this_1.dialogText,
+            option: _this_1.optionText,
+            nameBox: _this_1.nameText,
+            skipBox: _this_1.skipAni
         };
-        this.id = dialogID;
-        this.dialogList = dialogList;
-        var dialogData = this.dialogData = this.dialogList.data[dialogID];
+        _this_1.id = dialogID;
+        _this_1.dialogList = dialogList;
+        var dialogData = _this_1.dialogData = _this_1.dialogList.data[dialogID];
         var list = [];
-        for (var key in this.nameMapping) {
+        for (var key in _this_1.nameMapping) {
             var data = dialogData[key];
             if (!data)
                 continue;
-            var content = { box: this.nameMapping[key], index: data.index ? data.index : 0 };
+            var content = { box: _this_1.nameMapping[key], index: data.index ? data.index : 0 };
             list.push(content);
         }
-        this.orderByIndex(list);
+        _this_1.orderByIndex(list);
         for (var i = 0; i < list.length; i++) {
-            this.addChild(list[i].box);
+            _this_1.addChild(list[i].box);
         }
-        if (!dialogData.dialogBox.grid9)
-            dialogData.dialogBox.grid9 = "0,0,0,0,0";
-        ObjectUtils.clone(dialogData.dialogBox, this.dialogBox);
-        ObjectUtils.clone(dialogData.nameBox, this.nameText);
-        var url = dialogData.dialogBox.image;
-        if (!url)
-            url = dialogData.dialogBox["skin"] ? dialogData.dialogBox["skin"] : "";
-        this.dialogBox.image = url;
-        this.nameText.wordWrap = false;
-        this.dialogBox.installMaterialData(dialogData.dialogBox.materialData);
-        this.nameText.installMaterialData(dialogData.nameBox.materialData);
-        this.headBox.x = dialogData.headBox.x;
-        this.headBox.y = dialogData.headBox.y;
-        this.headBox.width = dialogData.headBox.width;
-        this.headBox.height = dialogData.headBox.height;
-        this.headBox.scaleX = dialogData.headBox.flip ? -1 : 1;
-        this.headBox.alpha = dialogData.headBox.alpha;
-        this.headBox.installMaterialData(dialogData.headBox.materialData);
-        if (!dialogData.optionBox.grid9img1)
-            dialogData.optionBox.grid9img1 = "0,0,0,0,0";
-        if (!dialogData.optionBox.grid9img2)
-            dialogData.optionBox.grid9img2 = "0,0,0,0,0";
-        if (!dialogData.optionBox.grid9img3)
-            dialogData.optionBox.grid9img3 = "0,0,0,0,0";
-        if (!dialogData.optionBox.grid9img4)
-            dialogData.optionBox.grid9img4 = "0,0,0,0,0";
-        this.optionBox.x = dialogData.optionBox.x;
-        this.optionBox.y = dialogData.optionBox.y;
-        this.optionBox.alpha = dialogData.optionBox.alpha;
-        this.optionBox.installMaterialData(dialogData.optionBox.materialData);
-        this.optionText.x = dialogData.option.x;
-        this.optionText.y = dialogData.option.y;
-        this.optionText.alpha = dialogData.option.alpha;
-        this.optionText.installMaterialData(dialogData.option.materialData);
-        this.dialogText.x = dialogData.dialog.x;
-        this.dialogText.y = dialogData.dialog.y;
-        this.dialogText.width = dialogData.dialog.width;
-        this.dialogText.height = dialogData.dialog.height;
-        this.dialogText.alpha = dialogData.dialog.alpha;
-        this.dialogText.installMaterialData(dialogData.dialog.materialData);
-        this.skipAni.visible = false;
-        this.skipAni.scaleX = this.skipAni.scaleY = dialogData.skipBox.scaleNumber;
-        this.skipAni.id = dialogData.skipBox.animationID;
-        this.skipAni.loop = dialogData.skipBox.playType == 2 ? true : false;
-        this.skipAniPoint.x = dialogData.skipBox.posX ? dialogData.skipBox.posX : 0;
-        this.skipAniPoint.y = dialogData.skipBox.posY ? dialogData.skipBox.posY : 0;
-        ;
-        this.skipAni.alpha = dialogData.skipBox.alpha;
-        this.size(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT);
-        this.add_CLICK(this.onSelfClick, this);
+        _this_1.size(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT);
+        _this_1.add_CLICK(_this_1.onSelfClick, _this_1);
         if ((!Config.EDIT_MODE || GameDialog.container) && GameDialog.maskLayer) {
             GameDialog.maskLayer.offAll(EventObject.CLICK);
             GameDialog.maskLayer.add_CLICK(function () {
                 if (GameDialog.lastDialog)
                     GameDialog.lastDialog.onClick.apply(GameDialog.lastDialog, [null, false]);
-            }, this);
+            }, _this_1);
         }
+        return _this_1;
     }
     GameDialog.showall = function () {
         if (!GameDialog.lastDialog)
@@ -66790,6 +68002,7 @@ var GameDialog = (function (_super) {
             GameDialog.lastDialog.forceShow = true;
             GameDialog.lastDialog.playSpeed = 5;
             GameDialog.lastDialog.playText();
+            GameDialog.lastDialog.clearTextMaterials();
             if (GameDialog.showOptionWithLastDialog) {
                 GameDialog.showOption(GameDialog.lastDialog.id, GameDialog.showOptionWithLastDialog, true, GameDialog.showOptionWithLastDialogParams[0], GameDialog.showOptionWithLastDialogParams[1], GameDialog.showOptionWithLastDialogParams[2]);
             }
@@ -66827,6 +68040,15 @@ var GameDialog = (function (_super) {
         }
         return true;
     };
+    GameDialog.skipWaitPlayerOperation = function () {
+        if (!GameDialog.lastDialog)
+            return false;
+        if (GameDialog.lastDialog.playing && GameDialog.lastDialog.waitPlayerClick) {
+            GameDialog.lastDialog.waitPlayerClick = false;
+            return true;
+        }
+        return false;
+    };
     GameDialog.stop = function () {
         if (GameDialog.lastDialog) {
             GameDialog.lastDialog.stop();
@@ -66837,7 +68059,7 @@ var GameDialog = (function (_super) {
         get: function () {
             return GameDialog.lastDialog != null && GameDialog.lastDialog.stage != null && !GameDialog.isCloseDialog;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameDialog, "isPlaying", {
@@ -66846,7 +68068,7 @@ var GameDialog = (function (_super) {
                 return false;
             return GameDialog.lastDialog.playing;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     GameDialog.init = function () {
@@ -66857,11 +68079,13 @@ var GameDialog = (function (_super) {
         this.maskLayer.size(3000, 3000);
         this.maskLayer.mouseEnabled = true;
     };
-    GameDialog.showDialog = function (dialogID, head, name, speed, comicSceneObjectIndex, msg, submitCallback, audio, exp, nameColor) {
+    GameDialog.showDialog = function (dialogID, head, name, speed, comicSceneObjectIndex, msg, submitCallback, audio, exp, nameColor, changeData, dialogMaterialEnabled) {
         if (submitCallback === void 0) { submitCallback = null; }
-        GameDialog.currentDialogInfo = [0, dialogID, head, name, speed, comicSceneObjectIndex, msg, null, audio, exp, nameColor];
+        if (dialogMaterialEnabled === void 0) { dialogMaterialEnabled = true; }
+        GameDialog.currentDialogInfo = [0, dialogID, head, name, speed, comicSceneObjectIndex, msg, null, audio, exp, nameColor, changeData];
         GameDialog.currentDialogSign = ObjectUtils.getInstanceID();
         var dialog = GameDialog.getDialog(dialogID);
+        dialog.dialogMaterialEnabled = dialogMaterialEnabled;
         dialog.submitCallback = submitCallback;
         if (GameDialog.lastDialog) {
             GameDialog.lastDialog.stop();
@@ -66874,8 +68098,8 @@ var GameDialog = (function (_super) {
         GameDialog.optionMode = false;
         GameDialog.isCloseDialog = false;
         GameDialog.addToDialogLayer(dialog);
-        EventUtils.happen(GameDialog, GameDialog.EVENT_DIALOG_START, [false, msg, [], name, head, exp, audio, speed, nameColor]);
-        dialog.setContent(head, name, speed, msg, audio, exp, nameColor);
+        EventUtils.happen(GameDialog, GameDialog.EVENT_DIALOG_START, [false, msg, [], name, head, exp, audio, speed, nameColor, changeData]);
+        dialog.setContent(head, name, speed, msg, audio, exp, nameColor, changeData);
         EventUtils.happen(GameDialog, GameDialog.EVENT_AFTER_DIALOG_START, [false]);
         return dialog;
     };
@@ -66985,8 +68209,9 @@ var GameDialog = (function (_super) {
         if (dialogID == 0) {
             if (GameDialog.lastDialog)
                 dialogID = GameDialog.lastDialog.id;
-            else
+            else {
                 dialogID = 1;
+            }
         }
         var dialogData = Common.dialogList.data[dialogID];
         if (!dialogData) {
@@ -67002,7 +68227,7 @@ var GameDialog = (function (_super) {
         }
         return dialog;
     };
-    GameDialog.handleText = function (text, defaultColor) {
+    GameDialog.handleText = function (text, defaultColor, dialog) {
         var re = /\[p[0-9]{1,3}\]/g;
         var arr = text.match(re);
         for (var c in arr) {
@@ -67010,6 +68235,7 @@ var GameDialog = (function (_super) {
             var colorKey = i.substr(2, i.length - 3);
             var waitF = parseInt(colorKey);
             var waitT = "";
+            dialog.waitTimeArr.push(waitF);
             for (var s = 0; s < waitF; s++) {
                 waitT += GameDialog.KEY_SYMBOL_DELAY;
             }
@@ -67019,6 +68245,82 @@ var GameDialog = (function (_super) {
         text = text.replace(/\[\.s\]/g, GameDialog.KEY_SYMBOL_SKIP);
         return "" + text;
     };
+    Object.defineProperty(GameDialog.prototype, "dialogHeadBox", {
+        get: function () {
+            var mode = this.dialogData.headBox.perviewMode;
+            if (!mode) {
+                return this.headImg;
+            }
+            else if (mode == 1) {
+                return this.headStand;
+            }
+            else if (mode == 2) {
+                return this.headAni;
+            }
+            else if (mode == 3) {
+                return this.headUI;
+            }
+            return null;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    GameDialog.prototype.updateDialogPostion = function () {
+        var dialogData = (GameDialog.changeData && GameDialog.changeData.id == this.dialogData.id) ? this.changeDialog(GameDialog.changeData) : this.dialogData;
+        if (!dialogData.dialogBox.grid9)
+            dialogData.dialogBox.grid9 = "0,0,0,0,0";
+        ObjectUtils.clone(dialogData.dialogBox, this.dialogBox);
+        ObjectUtils.clone(dialogData.nameBox, this.nameText);
+        var url = dialogData.dialogBox.image;
+        if (!url)
+            url = dialogData.dialogBox["skin"] ? dialogData.dialogBox["skin"] : "";
+        this.dialogBox.image = url;
+        this.nameText.wordWrap = false;
+        this.dialogBoxMaterial = this.dialogData.dialogBox.materialData && this.dialogData.dialogBox.materialData.length > 0 && this.dialogData.dialogBox.materialData[0].materials.length > 0;
+        this.dialogNameTextMaterial = this.dialogData.nameBox.materialData && this.dialogData.nameBox.materialData.length > 0 && this.dialogData.nameBox.materialData[0].materials.length > 0;
+        this.headBox.x = dialogData.headBox.x;
+        this.headBox.y = dialogData.headBox.y;
+        this.headBox.width = dialogData.headBox.width;
+        this.headBox.height = dialogData.headBox.height;
+        this.headBox.scaleX = dialogData.headBox.flip ? -1 : 1;
+        this.headBox.alpha = dialogData.headBox.alpha;
+        this.dialogHeadBoxMaterial = this.dialogData.headBox.materialData && this.dialogData.headBox.materialData.length > 0 && this.dialogData.headBox.materialData[0].materials.length > 0;
+        this.dialogText.x = dialogData.dialog.x;
+        this.dialogText.y = dialogData.dialog.y;
+        this.dialogText.width = dialogData.dialog.width;
+        this.dialogText.height = dialogData.dialog.height;
+        this.dialogText.alpha = dialogData.dialog.alpha;
+        this.dialogTextMaterial = this.dialogData.dialog.materialData && this.dialogData.dialog.materialData.length > 0 && this.dialogData.dialog.materialData[0].materials.length > 0;
+        this.skipAni.visible = false;
+        this.skipAni.scaleX = this.skipAni.scaleY = dialogData.skipBox.scaleNumber;
+        this.skipAni.id = dialogData.skipBox.animationID;
+        this.skipAni.loop = dialogData.skipBox.playType == 2 ? true : false;
+        this.skipAniPoint.x = dialogData.skipBox.posX ? dialogData.skipBox.posX : 0;
+        this.skipAniPoint.y = dialogData.skipBox.posY ? dialogData.skipBox.posY : 0;
+        ;
+        this.skipAni.alpha = dialogData.skipBox.alpha;
+        return dialogData;
+    };
+    GameDialog.prototype.updateOptionPostion = function () {
+        var dialogData = (GameDialog.changeData && GameDialog.changeData.id == this.dialogData.id) ? this.changeDialog(GameDialog.changeData) : this.dialogData;
+        if (!dialogData.optionBox.grid9img1)
+            dialogData.optionBox.grid9img1 = "0,0,0,0,0";
+        if (!dialogData.optionBox.grid9img2)
+            dialogData.optionBox.grid9img2 = "0,0,0,0,0";
+        if (!dialogData.optionBox.grid9img3)
+            dialogData.optionBox.grid9img3 = "0,0,0,0,0";
+        if (!dialogData.optionBox.grid9img4)
+            dialogData.optionBox.grid9img4 = "0,0,0,0,0";
+        this.optionBox.x = dialogData.optionBox.x;
+        this.optionBox.y = dialogData.optionBox.y;
+        this.optionBox.alpha = dialogData.optionBox.alpha;
+        this.dialogOptionBoxTextMaterial = this.dialogData.optionBox.materialData && this.dialogData.optionBox.materialData.length > 0 && this.dialogData.optionBox.materialData[0].materials.length > 0;
+        this.optionText.x = dialogData.option.x;
+        this.optionText.y = dialogData.option.y;
+        this.optionText.alpha = dialogData.option.alpha;
+        this.dialogOptionTextMaterial = this.dialogData.option.materialData && this.dialogData.option.materialData.length > 0 && this.dialogData.option.materialData[0].materials.length > 0;
+        return dialogData;
+    };
     GameDialog.prototype.orderByIndex = function (list) {
         list.sort(function (a, b) {
             if (a.index == b.index)
@@ -67026,7 +68328,10 @@ var GameDialog = (function (_super) {
             return a.index > b.index ? 1 : -1;
         });
     };
-    GameDialog.prototype.setContent = function (head, name, playSpeed, msg, audio, exp, nameColor) {
+    GameDialog.prototype.setContent = function (head, name, playSpeed, msg, audio, exp, nameColor, changeData) {
+        GameDialog.changeData = changeData;
+        var dialogData = this.updateDialogPostion();
+        this.changeDialogData = dialogData;
         this.clearDelayStop();
         this.playSpeed = playSpeed;
         this.playTextIndex = 0;
@@ -67041,6 +68346,9 @@ var GameDialog = (function (_super) {
         this.dialogText.removeChildren();
         this.headBox.removeChildren();
         this.nameText.text = name;
+        if (this.dialogMaterialEnabled && name && this.dialogNameTextMaterial) {
+            this.nameText.installMaterialData(ObjectUtils.depthClone(dialogData.nameBox.materialData));
+        }
         if (nameColor)
             this.nameText.color = nameColor;
         this.refreshHeadBox(head, exp);
@@ -67060,15 +68368,20 @@ var GameDialog = (function (_super) {
                 }, [audio]);
             }
         }
-        var textContent = GameDialog.handleText(msg, this.dialogData.dialog.color);
+        if (this.dialogMaterialEnabled && this.dialogBoxMaterial) {
+            this.dialogBox.installMaterialData(ObjectUtils.depthClone(dialogData.dialogBox.materialData));
+        }
+        this.waitTimeArr.length = 0;
+        this.waitStart = 0;
+        var textContent = GameDialog.handleText(msg, dialogData.dialog.color, this);
         var Labels = textContent.match(GameDialog.COLOR_FORMAT);
         if (!Labels) {
             EventUtils.happen(GameDialog, GameDialog.EVENT_DIALOG_WORD_PLAY_COMPLETE, [true]);
             this.playing = false;
             this.skipAni.visible = true;
-            if (this.dialogData.skipBox.posIndex == 0) {
-                this.skipAni.x = this.dialogData.skipBox.x;
-                this.skipAni.y = this.dialogData.skipBox.y;
+            if (dialogData.skipBox.posIndex == 0) {
+                this.skipAni.x = dialogData.skipBox.x;
+                this.skipAni.y = dialogData.skipBox.y;
             }
             else {
                 this.skipAni.x = this.dialogText.x + this.lastTextPosX + this.skipAniPoint.x;
@@ -67077,6 +68390,22 @@ var GameDialog = (function (_super) {
             this.skipAni.gotoAndPlay();
             return;
         }
+        if (this.dialogTextMaterial) {
+            var newLabels = [];
+            for (var i = 0; i < Labels.length; i++) {
+                var Label = Labels[i];
+                var LabelHeadIndex = Label.indexOf(">") + 1;
+                var LabelHead = Label.substr(0, LabelHeadIndex);
+                var LabelTailIndex = Label.lastIndexOf("<");
+                var LabelTail = Label.substr(LabelTailIndex);
+                var LabelContent = Label.substr(LabelHeadIndex, LabelTailIndex - LabelHeadIndex);
+                for (var s = 0; s < LabelContent.length; s++) {
+                    var newLabelContent = LabelHead + LabelContent[s] + LabelTail;
+                    newLabels.push(newLabelContent);
+                }
+            }
+            Labels = newLabels;
+        }
         var rowIndex = 0;
         var startX = 0;
         var letterSpaceing = 0;
@@ -67084,7 +68413,7 @@ var GameDialog = (function (_super) {
             var unitSpan = Labels[i];
             var color = unitSpan.match(/#[0-9a-zA-Z]{6,6}/g)[0];
             if (color == GameDialog.TRANS_PARENT_COLOR) {
-                color = this.dialogData.dialog.color;
+                color = dialogData.dialog.color;
             }
             var lines = unitSpan.split("\n");
             for (var s = 0; s < lines.length; s++) {
@@ -67093,24 +68422,24 @@ var GameDialog = (function (_super) {
                     startX = 0;
                     letterSpaceing = 0;
                 }
-                letterSpaceing = this.dialogData.dialog.letterSpacing ? this.dialogData.dialog.letterSpacing : 0;
+                letterSpaceing = dialogData.dialog.letterSpacing ? dialogData.dialog.letterSpacing : 0;
                 var text = StringUtils.clearHtmlTag(lines[s]);
                 var realText = text.replace(GameDialog.KEY_SYMBOL_reg, "");
                 var tf = new UIComponent.UIString();
-                ObjectUtils.clone(this.dialogData.dialog, tf);
+                ObjectUtils.clone(dialogData.dialog, tf);
                 tf.wordWrap = false;
                 tf.text = realText;
                 tf.color = color;
                 tf.x = startX + letterSpaceing;
                 var tfStartX = startX + letterSpaceing;
-                this.lastTextPosY = tf.y = rowIndex * (tf.fontSize + this.dialogData.dialog.leading);
+                this.lastTextPosY = tf.y = rowIndex * (tf.fontSize + dialogData.dialog.leading);
                 this.lastTextPosX = tf.x + tf.textWidth;
                 startX = tfStartX + tf.textWidth;
                 this.dialogText.addChild(tf);
                 this.playTextLabels.push(tf);
                 tf["playText"] = text;
-                if (this.dialogData.dialog.wordWrap) {
-                    var minTextAreaWidth = Math.max(0, this.dialogData.dialog.width);
+                if (dialogData.dialog.wordWrap) {
+                    var minTextAreaWidth = Math.max(0, dialogData.dialog.width);
                     if (tfStartX + tf.textWidth > minTextAreaWidth) {
                         var keySymbolMatchs = text.match(GameDialog.KEY_SYMBOL_reg);
                         var keySymbolIndexArr = {};
@@ -67163,6 +68492,85 @@ var GameDialog = (function (_super) {
         os.remove_ENTERFRAME(this.playText, this);
         os.add_ENTERFRAME(this.playText, this);
     };
+    GameDialog.prototype.changeDialog = function (change) {
+        var dialogData = new DialogData();
+        for (var attID in this.dialogData) {
+            var att = this.dialogData[attID];
+            for (var a in att) {
+                dialogData[attID][a] = att[a];
+            }
+        }
+        if (!change)
+            return dialogData;
+        if (change.mode == 0) {
+            for (var compID in change.atts) {
+                var comp = dialogData[compID];
+                if (comp) {
+                    var attsValues = change.atts[compID][0];
+                    for (var attName in attsValues) {
+                        var attValue = attsValues[attName];
+                        comp[attName] = attValue;
+                    }
+                }
+            }
+        }
+        return dialogData;
+    };
+    GameDialog.prototype.dialogMoveFrameUpdate = function (m, nonTweenType) {
+        var per = m.curTime / m.time;
+        for (var i = 0; i < m.attrInfos.length; i++) {
+            var attrInfo = m.attrInfos[i];
+            if (!attrInfo.needTween) {
+                if ((nonTweenType == 0 && m.curTime == 1) || (nonTweenType == 1 && per == 1)) {
+                    this.changes(attrInfo.uiComp, attrInfo.compID, attrInfo.attName, attrInfo.newValue);
+                }
+            }
+            else {
+                var valuePer = GameUtils.getValueByTransData(m.transData, per);
+                this.changes(attrInfo.uiComp, attrInfo.compID, attrInfo.attName, (attrInfo.newValue - attrInfo.oldValue) * valuePer + attrInfo.oldValue);
+            }
+        }
+        m.curTime++;
+    };
+    GameDialog.prototype.changes = function (uiComp, compID, attName, v) {
+        if (compID == "skipBox") {
+            switch (attName) {
+                case "scaleNumber":
+                    this.skipAni.scaleX = this.skipAni.scaleY = v;
+                    return;
+                case "animationID":
+                    this.skipAni.id = v;
+                    return;
+                case "playType":
+                    this.skipAni.loop = v == 2 ? true : false;
+                    return;
+                case "posX":
+                    this.skipAniPoint.x = v;
+                    return;
+                case "posY":
+                    this.skipAniPoint.y = v;
+                    return;
+                case "posIndex":
+                    this.dialogData.skipBox.posIndex = v;
+                    return;
+            }
+        }
+        if (compID == "headBox") {
+            switch (attName) {
+                case "flip":
+                    this.headBox.scaleX = v ? -1 : 1;
+                    return;
+            }
+        }
+        if (compID == "dialog" && (attName != "x" && attName != "y" && attName != "height" && attName != "width")) {
+            this.playTextLabels.forEach(function (a, i) {
+                a[attName] = v;
+            });
+            return;
+        }
+        if (uiComp[attName])
+            uiComp[attName] = v;
+    };
     GameDialog.prototype.disposeHead = function () {
         if (this.headImg) {
             this.headImg.dispose();
@@ -67186,8 +68594,7 @@ var GameDialog = (function (_super) {
             return;
         var mode = this.dialogData.headBox.perviewMode;
         if (!mode) {
-            var regPos = /^\d+(\.\d+)?$/;
-            if (!regPos.test(param)) {
+            if (typeof param === "string") {
                 if (!this.headImg)
                     this.headImg = new UIComponent.UIBitmap();
                 this.headImg.visible = false;
@@ -67198,20 +68605,26 @@ var GameDialog = (function (_super) {
                 this.headBox.addChild(this.headImg);
                 this.headImg.image = param;
             }
+            else {
+                param = null;
+            }
         }
         else if (mode == 1) {
             var standID = MathUtils.int(param);
             if (standID > 0) {
                 if (!this.headStand)
                     this.headStand = new UIComponent.UIStandAvatar();
+                this.headStand.avatar.syncLoadWhenAssetExist = true;
+                if (Config.EDIT_MODE)
+                    this.headStand.avatar.forceRender = true;
                 this.headStand.avatarID = standID;
                 if (!exp || exp < 1)
                     exp = 1;
                 this.headStand.actionID = exp;
-                this.headStand.scale(this.dialogData.headBox.viewscaleX, this.dialogData.headBox.viewscaleY);
+                this.headStand.scale(this.changeDialogData.headBox.viewscaleX, this.changeDialogData.headBox.viewscaleY);
                 this.headStand.isPlay = true;
-                this.headStand.playOnce = this.dialogData.headBox.viewPlayOnce;
-                this.headStand.avatarFPS = this.dialogData.headBox.viewFps;
+                this.headStand.playOnce = this.changeDialogData.headBox.viewPlayOnce;
+                this.headStand.avatarFPS = this.changeDialogData.headBox.viewFps;
                 this.headBox.addChild(this.headStand);
             }
         }
@@ -67221,11 +68634,12 @@ var GameDialog = (function (_super) {
                 if (!this.headAni)
                     this.headAni = new UIComponent.UIAnimation();
                 this.headBox.addChild(this.headAni);
+                this.headAni.animation.syncLoadWhenAssetExist = true;
                 this.headAni.animation.showHitEffect = true;
                 this.headAni.animationID = aniID;
-                this.headAni.playFps = this.dialogData.headBox.viewFps;
-                this.headAni.scale(this.dialogData.headBox.viewscaleX, this.dialogData.headBox.viewscaleY);
-                this.headAni.playType = this.dialogData.headBox.viewPlayOnce ? 1 : 2;
+                this.headAni.playFps = this.changeDialogData.headBox.viewFps;
+                this.headAni.scale(this.changeDialogData.headBox.viewscaleX, this.changeDialogData.headBox.viewscaleY);
+                this.headAni.playType = this.changeDialogData.headBox.viewPlayOnce ? 1 : 2;
             }
         }
         else if (mode == 3) {
@@ -67239,13 +68653,16 @@ var GameDialog = (function (_super) {
                 this.headBox.addChild(this.headUI);
             }
         }
+        if (this.dialogMaterialEnabled && this.dialogHeadBoxMaterial) {
+            this.headBox.installMaterialData(ObjectUtils.depthClone(this.dialogData.headBox.materialData));
+        }
     };
     GameDialog.prototype.refreshBitmapSize = function () {
         var tex = loader.getRes(this.headImg.image);
         if (!tex)
             return;
-        if (this.dialogData.headBox.locksize) {
-            if (!this.dialogData.headBox.adaptation) {
+        if (this.changeDialogData.headBox.locksize) {
+            if (!this.changeDialogData.headBox.adaptation) {
                 this.headImg.width = this.headBox.width;
                 this.headImg.height = this.headBox.height;
             }
@@ -67262,17 +68679,17 @@ var GameDialog = (function (_super) {
         this.headImg.visible = true;
     };
     GameDialog.prototype.refreshUISize = function () {
-        var _this = this;
+        var _this_1 = this;
         this.headUI.scale(1, 1);
         var uiRect = this.headUI.getBounds();
         if (!uiRect.width || !uiRect.height) {
             Callback.New(function () {
-                _this.refreshUISize();
+                _this_1.refreshUISize();
             }, this).delayRun(100);
         }
         else {
-            if (this.dialogData.headBox.locksize) {
-                if (!this.dialogData.headBox.adaptation) {
+            if (this.changeDialogData.headBox.locksize) {
+                if (!this.changeDialogData.headBox.adaptation) {
                     var perx = this.headBox.width / uiRect.width;
                     var pery = this.headBox.height / uiRect.height;
                     this.headUI.scale(perx, pery);
@@ -67323,22 +68740,24 @@ var GameDialog = (function (_super) {
         if (cancelIndex === void 0) { cancelIndex = -1; }
         if (hideIndexs === void 0) { hideIndexs = []; }
         this.optionClear();
-        var column = this.dialogData.optionBox.column;
+        var dialogData = this.updateOptionPostion();
+        this.changeDialogData = dialogData;
+        var column = dialogData.optionBox.column;
         if (!this.optionList) {
             this.optionList = new UIComponent.UIList();
             this.optionList.overSelectMode = true;
         }
         this.hidedIndexs = hideIndexs;
         this.optionList.itemModelClass = GameDialogOption;
-        this.optionList.itemWidth = this.dialogData.optionBox.width;
-        this.optionList.itemHeight = this.dialogData.optionBox.height;
-        this.optionList.spaceX = this.dialogData.optionBox.columnSpaceing;
-        this.optionList.spaceY = this.dialogData.optionBox.rowSpaceing;
+        this.optionList.itemWidth = dialogData.optionBox.width;
+        this.optionList.itemHeight = dialogData.optionBox.height;
+        this.optionList.spaceX = dialogData.optionBox.columnSpaceing;
+        this.optionList.spaceY = dialogData.optionBox.rowSpaceing;
         this.optionList.repeatX = column;
-        this.optionList.width = column * (this.dialogData.optionBox.width + this.dialogData.optionBox.columnSpaceing) + this.optionList.scrollWidth;
-        this.optionList.height = Math.ceil(options.length / column) * (this.dialogData.optionBox.height + this.dialogData.optionBox.rowSpaceing) + this.optionList.scrollWidth;
-        this.optionList.selectImageURL = this.dialogData.optionBox.selectImageURL;
-        this.optionList.selectImageGrid9 = this.dialogData.optionBox.grid9img4;
+        this.optionList.width = column * (dialogData.optionBox.width + dialogData.optionBox.columnSpaceing) + this.optionList.scrollWidth;
+        this.optionList.height = Math.ceil(options.length / column) * (dialogData.optionBox.height + dialogData.optionBox.rowSpaceing) + this.optionList.scrollWidth;
+        this.optionList.selectImageURL = dialogData.optionBox.selectImageURL;
+        this.optionList.selectImageGrid9 = dialogData.optionBox.grid9img4;
         this.optionList.cancelSelectedIndex = (cancelIndex != null && cancelIndex >= 0) ? cancelIndex : -1;
         this.optionList.once(UIComponent.UIList.ITEM_CLICK, this, this.onClick, [{ target: null }, true]);
         if (!UIComponent.UIList.KEY_BOARD_ENABLED) {
@@ -67346,26 +68765,35 @@ var GameDialog = (function (_super) {
             if (cancelIndex >= 0)
                 stage.on(EventObject.KEY_DOWN, this, this.onKeyDow);
         }
+        if (cancelIndex > -1 && hideIndexs.indexOf(cancelIndex) < 0) {
+            stage.off(EventObject.RIGHT_MOUSE_DOWN, this, this.rightDown);
+            stage.once(EventObject.RIGHT_MOUSE_DOWN, this, this.rightDown);
+        }
         var items = [];
         for (var i = 0; i < options.length; i++) {
             var d = new UIListItemData();
             items.push(d);
         }
         this.optionList.items = items;
+        this.optionTexts = [];
         for (var i = 0; i < options.length; i++) {
             var optionSp = this.optionList.getItemUI(i);
-            optionSp.setData(this.dialogData);
+            optionSp.setData(dialogData);
             var opText = new UIComponent.UIString();
-            ObjectUtils.clone(this.dialogData.option, opText);
+            ObjectUtils.clone(dialogData.option, opText);
             opText.wordWrap = false;
             opText.text = options[i];
             opText.x = optionSp.x;
             opText.y = optionSp.y;
             this.optionText.addChild(opText);
+            this.optionTexts.push(opText);
             optionSp.add_MOUSEDOWN(this.onOptionMouseDown, this, [i]);
             optionSp.add_MOUSEOVER(this.onOptionMouseOver, this, [i]);
             optionSp.add_MOUSEUP(this.onOptionMouseOut, this, [i]);
             optionSp.add_MOUSEOUT(this.onOptionMouseOut, this, [i]);
+            if (this.dialogMaterialEnabled && this.dialogOptionTextMaterial) {
+                opText.installMaterialData(ObjectUtils.depthClone(dialogData.option.materialData));
+            }
         }
         this.optionBox.addChild(this.optionList);
         UIComponent.UIList.focus = this.optionList;
@@ -67374,15 +68802,18 @@ var GameDialog = (function (_super) {
         EventUtils.happen(GameDialog, GameDialog.EVENT_DIALOG_WORD_PLAY_COMPLETE, [true]);
         if (this.dialogText.visible && this.nameText.visible && this.headBox.visible && this.dialogBox.visible) {
             this.skipAni.visible = true;
-            if (this.dialogData.skipBox.posIndex == 0) {
-                this.skipAni.x = this.dialogData.skipBox.x;
-                this.skipAni.y = this.dialogData.skipBox.y;
+            if (dialogData.skipBox.posIndex == 0) {
+                this.skipAni.x = dialogData.skipBox.x;
+                this.skipAni.y = dialogData.skipBox.y;
             }
             else {
                 this.skipAni.x = this.dialogText.x + this.lastTextPosX + this.skipAniPoint.x;
                 this.skipAni.y = this.dialogText.y + this.lastTextPosY + this.skipAniPoint.y;
             }
             this.skipAni.gotoAndPlay();
+        }
+        if (this.dialogMaterialEnabled && this.dialogOptionBoxTextMaterial) {
+            this.optionList.installMaterialData(ObjectUtils.depthClone(dialogData.optionBox.materialData));
         }
     };
     GameDialog.prototype.onKeyDow = function (e) {
@@ -67395,25 +68826,29 @@ var GameDialog = (function (_super) {
             }
         }
     };
+    GameDialog.prototype.rightDown = function () {
+        this.optionList.selectedIndex = this.optionList.cancelSelectedIndex;
+        this.onClick({ target: null }, true);
+    };
     GameDialog.prototype.onOptionMouseDown = function (index) {
         var text = this.optionText.getChildAt(index);
         if (!text)
             return;
-        text.color = this.dialogData.option.clickColor;
+        text.color = this.changeDialogData.option.clickColor;
     };
     GameDialog.prototype.onOptionMouseOver = function (index) {
         if (this.dialogData.optionBox.overSe) {
-            GameAudio.playSE(this.optionOverSE, this.dialogData.optionBox.overVolume, this.dialogData.optionBox.overPitch);
+            GameAudio.playSE(this.optionOverSE, this.changeDialogData.optionBox.overVolume, this.changeDialogData.optionBox.overPitch);
         }
         for (var i = 0; i < this.optionText.numChildren; i++) {
             var text = this.optionText.getChildAt(i);
             if (!text)
                 continue;
             if (i == index) {
-                text.color = this.dialogData.option.overColor;
+                text.color = this.changeDialogData.option.overColor;
             }
             else {
-                text.color = this.dialogData.option.color;
+                text.color = this.changeDialogData.option.color;
             }
         }
     };
@@ -67421,7 +68856,7 @@ var GameDialog = (function (_super) {
         var text = this.optionText.getChildAt(index);
         if (!text)
             return;
-        text.color = this.dialogData.option.color;
+        text.color = this.changeDialogData.option.color;
     };
     GameDialog.prototype.playText = function (waitFrame) {
         if (waitFrame === void 0) { waitFrame = true; }
@@ -67435,9 +68870,9 @@ var GameDialog = (function (_super) {
             this.playing = false;
             os.remove_ENTERFRAME(this.playText, this);
             this.skipAni.visible = true;
-            if (this.dialogData.skipBox.posIndex == 0) {
-                this.skipAni.x = this.dialogData.skipBox.x;
-                this.skipAni.y = this.dialogData.skipBox.y;
+            if (this.changeDialogData.skipBox.posIndex == 0) {
+                this.skipAni.x = this.changeDialogData.skipBox.x;
+                this.skipAni.y = this.changeDialogData.skipBox.y;
             }
             else {
                 this.skipAni.x = this.dialogText.x + this.lastTextPosX + this.skipAniPoint.x;
@@ -67453,14 +68888,22 @@ var GameDialog = (function (_super) {
             this.playText(false);
             return;
         }
+        if (this.dialogMaterialEnabled && this.dialogTextMaterial && this.playSpeed != 5) {
+            tf.installMaterialData(ObjectUtils.depthClone(this.dialogData.dialog.materialData));
+        }
         this.playTextLabelIndex++;
         if (word == GameDialog.KEY_SYMBOL_DELAY) {
+            if (this.waitStart == 0) {
+                this.waitStart = this.waitTimeArr.shift();
+                EventUtils.happen(GameDialog, GameDialog.EVENT_DIALOG_TEXT_WAIT_TIME, [this.waitStart]);
+            }
+            this.waitStart--;
         }
         else if (word == GameDialog.KEY_SYMBOL_SKIP) {
             this.hasSkip = true;
             if (!this.forceShow && this.playSpeed != 5) {
                 this.playing = false;
-                this.onClick(null);
+                this.onClick(null, true, true);
             }
             return;
         }
@@ -67478,13 +68921,19 @@ var GameDialog = (function (_super) {
         if (this.playSpeed == 5)
             this.playText();
     };
+    GameDialog.prototype.clearTextMaterials = function () {
+        for (var i_3 = 0; i_3 < this.playTextLabels.length; i_3++) {
+            this.playTextLabels[i_3].clearMaterials();
+        }
+    };
     GameDialog.prototype.onSelfClick = function (e) {
         if (GameDialog.optionMode) {
             this.onClick(e, false);
         }
     };
-    GameDialog.prototype.onClick = function (e, listItemClick) {
+    GameDialog.prototype.onClick = function (e, listItemClick, fromAutoPlaySkipSign) {
         if (listItemClick === void 0) { listItemClick = true; }
+        if (fromAutoPlaySkipSign === void 0) { fromAutoPlaySkipSign = false; }
         if (Config.EDIT_MODE && !GameDialog.container)
             return;
         if (!listItemClick && GameDialog.optionMode)
@@ -67497,9 +68946,12 @@ var GameDialog = (function (_super) {
                 EventUtils.happen(GameDialog, GameDialog.EVENT_WAIT_PALYER_OPERATION, [1]);
                 return;
             }
+            if (!GameDialog.dialogTextShowAllEnabled)
+                return;
             this.forceShow = true;
             this.playSpeed = 5;
             this.playText();
+            this.clearTextMaterials();
         }
         else if (GameDialog.showOptionWithLastDialog) {
             GameDialog.showOption(this.id, GameDialog.showOptionWithLastDialog, true, GameDialog.showOptionWithLastDialogParams[0], GameDialog.showOptionWithLastDialogParams[1], GameDialog.showOptionWithLastDialogParams[2]);
@@ -67507,7 +68959,7 @@ var GameDialog = (function (_super) {
         else {
             var lastCurrentDialogSign = GameDialog.currentDialogSign;
             GameDialog.isCloseDialog = true;
-            EventUtils.happen(GameDialog, GameDialog.EVENT_DIALOG_END, [GameDialog.lastDialog]);
+            EventUtils.happen(GameDialog, GameDialog.EVENT_DIALOG_END, [GameDialog.lastDialog, fromAutoPlaySkipSign]);
             if (GameDialog.currentDialogSign == lastCurrentDialogSign) {
                 if (GameDialog.lastDialog) {
                     GameDialog.lastDialog.clearDelayStop();
@@ -67518,7 +68970,7 @@ var GameDialog = (function (_super) {
             }
             if (GameDialog.optionMode) {
                 if (this.optionClickSE)
-                    GameAudio.playSE(this.optionClickSE, this.dialogData.optionBox.clickVolume, this.dialogData.optionBox.clikcPitch);
+                    GameAudio.playSE(this.optionClickSE, this.changeDialogData.optionBox.clickVolume, this.changeDialogData.optionBox.clikcPitch);
                 if (e.target && !(e.target.parent instanceof GameDialogOption))
                     return;
                 var index = this.optionList.selectedIndex;
@@ -67526,6 +68978,8 @@ var GameDialog = (function (_super) {
                     if (this.hidedIndexs[i] <= index)
                         index += 1;
                 }
+                stage.off(EventObject.KEY_DOWN, this, this.onKeyDow);
+                stage.off(EventObject.RIGHT_MOUSE_DOWN, this, this.rightDown);
                 GameCommand.inputMessageAndContinueExecute([index]);
             }
             else {
@@ -67540,20 +68994,20 @@ var GameDialog = (function (_super) {
     };
     Object.defineProperty(GameDialog.prototype, "optionClickSE", {
         get: function () {
-            if (!this.dialogData.optionBox.clickSe)
-                this.dialogData.optionBox.clickSe = "";
-            return this.dialogData.optionBox.clickSe.split(",")[0];
+            if (!this.changeDialogData.optionBox.clickSe)
+                this.changeDialogData.optionBox.clickSe = "";
+            return this.changeDialogData.optionBox.clickSe.split(",")[0];
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameDialog.prototype, "optionOverSE", {
         get: function () {
-            if (!this.dialogData.optionBox.overSe)
-                this.dialogData.optionBox.overSe = "";
-            return this.dialogData.optionBox.overSe.split(",")[0];
+            if (!this.changeDialogData.optionBox.overSe)
+                this.changeDialogData.optionBox.overSe = "";
+            return this.changeDialogData.optionBox.overSe.split(",")[0];
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameDialog.prototype, "optionUIs", {
@@ -67568,7 +69022,7 @@ var GameDialog = (function (_super) {
             }
             return arr;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     GameDialog.EVENT_DIALOG_START = "GameDialogEVENT_DIALOG_START";
@@ -67579,7 +69033,9 @@ var GameDialog = (function (_super) {
     GameDialog.EVENT_DIALOG_WORD_PLAY_COMPLETE = "GameDialogEVENT_DIALOG_WORD_PLAY_COMPLETE";
     GameDialog.EVENT_TS_PLAY_COMPLETE = "GameDialogEVENT_TS_PLAY_COMPLETE";
     GameDialog.EVENT_WAIT_PALYER_OPERATION = "GameDialogEVENT_WAIT_PALYER_OPERATION";
+    GameDialog.EVENT_DIALOG_TEXT_WAIT_TIME = "GameDialogEVENT_DIALOG_TEXT_WAIT_TIME";
     GameDialog.EVENT_BEFORE_RECOVERY_DIALOG = "GameDialogEVENT_BEFORE_RECOVERY_DIALOG";
+    GameDialog.dialogTextShowAllEnabled = true;
     GameDialog.TRANS_PARENT_COLOR = "#FfFffF";
     GameDialog.COLOR_FORMAT = /<span style=['"]color:#[0-9a-zA-Z]{6,6}['"]>(.|\n)*?<\/span>/g;
     GameDialog.KEY_SYMBOL_DELAY = String.fromCharCode(1);
@@ -67593,7 +69049,7 @@ var GameDialog = (function (_super) {
 var GameDialogOption = (function (_super) {
     __extends(GameDialogOption, _super);
     function GameDialogOption() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     GameDialogOption.prototype.setData = function (dialogData) {
         if (this.isDisposed)
@@ -67626,11 +69082,22 @@ var GameDialogOption = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var GameImage = (function (_super) {
     __extends(GameImage, _super);
     function GameImage() {
-        _super.call(this);
-        this.mouseEnabled = true;
+        var _this_1 = _super.call(this) || this;
+        _this_1.mouseEnabled = true;
+        return _this_1;
     }
     Object.defineProperty(GameImage, "imageLayer", {
         get: function () {
@@ -67642,7 +69109,7 @@ var GameImage = (function (_super) {
         set: function (v) {
             GameImage._imageLayer = v;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameImage, "uiLayer", {
@@ -67655,7 +69122,7 @@ var GameImage = (function (_super) {
         set: function (v) {
             GameImage._uiLayer = v;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     GameImage.init = function () {
@@ -67798,7 +69265,7 @@ var GameImage = (function (_super) {
                 var p = imageInfo.image;
                 o.imageInfos.push([0, passageID, p.image, p.pivotType, p.x, p.y, p.width, p.height, p.rotation, p.alpha, p.blendMode]);
             }
-            else if (imageInfo.image instanceof Animation) {
+            else if (imageInfo.image instanceof GCAnimation) {
                 var a = imageInfo.image;
                 o.imageInfos.push([1, passageID, a.id, a.x, a.y, a.scaleX, a.scaleY, a.rotation, a.alpha, a.loop, a.fps]);
             }
@@ -67965,7 +69432,7 @@ var GameImage = (function (_super) {
                 GameImage.addImageToLayer(p[0], img);
             }
             else if (type == 1) {
-                var ani = new Animation();
+                var ani = new GCAnimation();
                 ani.id = p[1];
                 ani.x = p[2];
                 ani.y = p[3];
@@ -68058,7 +69525,7 @@ var GameImageGroup = (function () {
         }
     };
     GameImageGroup.prototype.setData = function (triggerLineID, imageInfos) {
-        var _this = this;
+        var _this_1 = this;
         this.triggerLineID = triggerLineID;
         imageInfos = ObjectUtils.depthClone(imageInfos);
         var funcMapping = [
@@ -68073,14 +69540,14 @@ var GameImageGroup = (function () {
             this.delay,
             this.showDialog,
             function () {
-                _this.addDoFunction(GameAudio.playSE, arguments, true, "GameAudio", "playSE");
+                _this_1.addDoFunction(GameAudio.playSE, arguments, true, "GameAudio", "playSE");
             },
             this.showStandAvatar,
             function () {
                 var args = [];
                 for (var i = 0; i < arguments.length; i++)
                     args.push(arguments[i]);
-                _this.moveStandAvatar.apply(_this, args);
+                _this_1.moveStandAvatar.apply(_this_1, args);
             },
             function () {
                 var args = [];
@@ -68088,7 +69555,7 @@ var GameImageGroup = (function () {
                     if (i != 0 && i != 7)
                         args.push(arguments[i]);
                 args.unshift(arguments[7]);
-                _this.showUI.apply(_this, args);
+                _this_1.showUI.apply(_this_1, args);
             },
             function () {
                 var args = [];
@@ -68096,7 +69563,7 @@ var GameImageGroup = (function () {
                     if (i != 0 && i != 7 && i != 9)
                         args.push(arguments[i]);
                 args.unshift(arguments[9], arguments[7]);
-                _this.moveUI.apply(_this, args);
+                _this_1.moveUI.apply(_this_1, args);
             },
             this.hideUI,
             this.changeUICompAttrs
@@ -68241,7 +69708,7 @@ var GameImageGroup = (function () {
         get: function () {
             return !this._pause && (this.executeFuncs.length > 0 || this.delayFrame > 0 || this.motionImages.length > 0 || this.motionAnimations.length > 0 || this.motionUICompAttrs.length > 0);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     GameImageGroup.prototype.checkMainPlayOver = function () {
@@ -68326,7 +69793,7 @@ var GameImageGroup = (function () {
                 if (imageInfo.image instanceof UIComponent.UIStandAvatar) {
                     standAvatar = imageInfo.image;
                 }
-                if (imageInfo && ((imageInfo.image instanceof Animation) || standAvatar || (imageInfo.image instanceof UIComponent.UIRoot))) {
+                if (imageInfo && ((imageInfo.image instanceof GCAnimation) || standAvatar || (imageInfo.image instanceof UIComponent.UIRoot))) {
                     var ani = imageInfo.image;
                     if (a.curTime == 1) {
                         a.x = ani.x;
@@ -68512,7 +69979,7 @@ var GameImageGroup = (function () {
         var imageInfo = GameImage.imageInfos[id];
         if (imageInfo) {
             GameImage.imageLayer.removeChild(imageInfo.image);
-            if (imageInfo.image instanceof Animation) {
+            if (imageInfo.image instanceof GCAnimation) {
                 imageInfo.image.dispose();
             }
             else if (imageInfo.image instanceof UIComponent.UIStandAvatar) {
@@ -68534,7 +70001,7 @@ var GameImageGroup = (function () {
         if (fps === void 0) { fps = 20; }
         var imageInfo = GameImage.imageInfos[id];
         this.doDeleteImage(id);
-        var animation = new Animation();
+        var animation = new GCAnimation();
         animation.id = aniId;
         animation.loop = loop == 1 ? true : false;
         animation.gotoAndPlay();
@@ -68573,7 +70040,7 @@ var GameImageGroup = (function () {
         if (time < 1)
             time = 1;
         var imageInfo = GameImage.imageInfos[id];
-        if (!imageInfo || !(imageInfo.image instanceof Animation))
+        if (!imageInfo || !(imageInfo.image instanceof GCAnimation))
             return;
         var mArr = ArrayUtils.matchAttributes(this.motionAnimations, { id: id }, true);
         if (mArr.length == 1) {
@@ -68584,7 +70051,7 @@ var GameImageGroup = (function () {
         this.motionAnimations.push(m);
     };
     GameImageGroup.prototype.doShowDialog = function (dialogID, head, name, speed, comicSceneObjectIndex, msg, realComicSceneObjectIndex, audio, exp, nameColor, submitEnabled, force) {
-        var _this = this;
+        var _this_1 = this;
         if (submitEnabled === void 0) { submitEnabled = false; }
         if (force === void 0) { force = false; }
         if (force || !GameCommand.isNeedPlayerInput) {
@@ -68594,24 +70061,24 @@ var GameImageGroup = (function () {
             GameImage.submitEnabled = submitEnabled;
             if (!submitEnabled) {
                 EventUtils.addEventListener(GameDialog, GameDialog.EVENT_DIALOG_END, Callback.New(function (submitEnabled) {
-                    if (_this.isDisposed)
+                    if (_this_1.isDisposed)
                         return;
-                    if (GameCommand.inputTriggerLine == _this.triggerLineID) {
+                    if (GameCommand.inputTriggerLine == _this_1.triggerLineID) {
                         GameCommand.isNeedPlayerInput = false;
                     }
-                    _this._waitDialog = false;
-                    Callback.CallLaterBeforeRender(_this.update, _this, [false]);
+                    _this_1._waitDialog = false;
+                    Callback.CallLaterBeforeRender(_this_1.update, _this_1, [false]);
                 }, GameDialog, [submitEnabled]), true);
             }
             GameDialog.showDialog(dialogID, head, name, speed, realComicSceneObjectIndex, msg, Callback.New(function (submitEnabled) {
-                if (_this.isDisposed)
+                if (_this_1.isDisposed)
                     return;
                 if (submitEnabled) {
-                    _this._waitDialog = false;
-                    _this.update(false);
-                    GameCommand.inputMessageAndContinueExecute(null, true, 1, _this.triggerLineID);
+                    _this_1._waitDialog = false;
+                    _this_1.update(false);
+                    GameCommand.inputMessageAndContinueExecute(null, true, 1, _this_1.triggerLineID);
                 }
-            }, this, [submitEnabled]), audio, exp, nameColor);
+            }, this, [submitEnabled]), audio, exp, nameColor, null);
         }
         else {
             this.delayFrame += 1;
@@ -68918,18 +70385,29 @@ var GameImageGroup = (function () {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var GameImageLayer = (function (_super) {
     __extends(GameImageLayer, _super);
     function GameImageLayer() {
-        _super.call(this);
-        this.camera = new Camera();
-        this.cameraRecord = new Camera;
+        var _this_1 = _super.call(this) || this;
+        _this_1.camera = new Camera();
+        _this_1.cameraRecord = new Camera;
         if (Config.EDIT_MODE || Config.WINDOW_WIDTH != null) {
-            this.initRoot();
+            _this_1.initRoot();
         }
         else {
-            EventUtils.addEventListener(ClientWorld, ClientWorld.EVENT_BEFORE_INITED, Callback.New(this.initRoot, this), true);
+            EventUtils.addEventListener(ClientWorld, ClientWorld.EVENT_BEFORE_INITED, Callback.New(_this_1.initRoot, _this_1), true);
         }
+        return _this_1;
     }
     GameImageLayer.initDPCoord = function () {
         var code = "\n                (function(){\n                    var ___export = {};\n                    " + Config.IMAGE_LAYER_DP_COORD_JS + "\n                    if(typeof dpCoordToRealCoord != \"undefined\")___export.dpCoordToRealCoord = dpCoordToRealCoord;\n                    if(typeof realCoordToDPCoord != \"undefined\")___export.realCoordToDPCoord = realCoordToDPCoord;\n                    return ___export;\n                })();\n            ";
@@ -68948,7 +70426,7 @@ var GameImageLayer = (function (_super) {
         if (spInfo) {
             var displayObject = spInfo.displayObject;
             displayObject.removeSelf();
-            if (displayObject instanceof Animation || displayObject instanceof UIComponent.UIAvatar || displayObject instanceof UIComponent.UIBitmap ||
+            if (displayObject instanceof GCAnimation || displayObject instanceof UIComponent.UIAvatar || displayObject instanceof UIComponent.UIBitmap ||
                 (displayObject instanceof UIComponent.GUI_BASE && displayObject.useDPCoord)) {
                 displayObject.dispose();
             }
@@ -69114,7 +70592,7 @@ var GameImageLayer = (function (_super) {
         get: function () {
             return this.root.numChildren;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(GameImageLayer.prototype, "filterEnabled", {
@@ -69124,7 +70602,7 @@ var GameImageLayer = (function (_super) {
         set: function (v) {
             this.root.filterEnabled = v;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     GameImageLayer.imageLayerPassageData = [];
@@ -69137,15 +70615,26 @@ var GameImageLayer = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var GameLayer = (function (_super) {
     __extends(GameLayer, _super);
     function GameLayer() {
-        _super.call(this);
-        this.sceneLayer = new GameSprite();
-        this.imageLayer = new GameImageLayer();
-        this.uiLayer = new GameSprite();
-        this.graphics.drawRect(0, 0, 1, 1, "#000000");
-        this.initLayer();
+        var _this_1 = _super.call(this) || this;
+        _this_1.sceneLayer = new GameSprite();
+        _this_1.imageLayer = new GameImageLayer();
+        _this_1.uiLayer = new GameSprite();
+        _this_1.graphics.drawRect(0, 0, 1, 1, "#000000");
+        _this_1.initLayer();
+        return _this_1;
     }
     GameLayer.prototype.initLayer = function () {
         this.addChild(this.sceneLayer);
@@ -69160,12 +70649,23 @@ var GameLayer = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var StandAvatar = (function (_super) {
     __extends(StandAvatar, _super);
     function StandAvatar() {
-        _super.call(this);
-        this.ori = 4;
-        this.actID = 1;
+        var _this_1 = _super.call(this) || this;
+        _this_1.ori = 4;
+        _this_1.actID = 1;
+        return _this_1;
     }
     Object.defineProperty(StandAvatar.prototype, "oriMode", {
         get: function () {
@@ -69173,7 +70673,7 @@ var StandAvatar = (function (_super) {
         },
         set: function (v) {
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(StandAvatar.prototype, "flip", {
@@ -69186,35 +70686,35 @@ var StandAvatar = (function (_super) {
             this._flip = v;
             this.orientation = v ? 6 : 4;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(StandAvatar.prototype, "gameDataAvatarList", {
         get: function () {
             return Common.standAvatarList;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(StandAvatar.prototype, "gameDataAvatarURL", {
         get: function () {
             return "asset/json/standAvatar/data/standAvatar";
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(StandAvatar.prototype, "disposeAvatarAsset", {
         get: function () {
             return AssetManager.disposeStandAvatarAsset;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(StandAvatar.prototype, "myClass", {
         get: function () {
             return StandAvatar;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(StandAvatar.prototype, "id", {
@@ -69229,7 +70729,7 @@ var StandAvatar = (function (_super) {
             this._loadIDRD = Math.random();
             this.loadData(v, this._loadIDRD);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     return StandAvatar;
@@ -69239,20 +70739,31 @@ var StandAvatar = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var AnimationAudioLayer = (function (_super) {
     __extends(AnimationAudioLayer, _super);
     function AnimationAudioLayer() {
-        _super.apply(this, arguments);
-        this.type = AnimationItemType.Audio;
-        this._audioInfo = { url: "", volume: 1, pitch: 1 };
-        this._playAudio = false;
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.type = AnimationItemType.Audio;
+        _this_1._audioInfo = { url: "", volume: 1, pitch: 1 };
+        _this_1._playAudio = false;
+        return _this_1;
     }
     Object.defineProperty(AnimationAudioLayer.prototype, "audioInfo", {
         get: function () { return this._audioInfo; },
         set: function (v) {
             this._audioInfo = v;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(AnimationAudioLayer.prototype, "audioUrl", {
@@ -69261,7 +70772,7 @@ var AnimationAudioLayer = (function (_super) {
                 this._audioInfo.url = "";
             return this._audioInfo.url.split(",")[0];
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     AnimationAudioLayer.prototype.setData = function (data) {
@@ -69277,7 +70788,7 @@ var AnimationAudioLayer = (function (_super) {
         if (topAnimation.showHitEffect)
             return true;
         var p = this;
-        while ((p instanceof Animation || p instanceof AnimationLayer)) {
+        while ((p instanceof GCAnimation || p instanceof AnimationLayer)) {
             if (p.isHitEffect) {
                 return false;
             }
@@ -69355,11 +70866,22 @@ AnimationLayer.typeClsMap[AnimationItemType.Audio] = AnimationAudioLayer;
 
 
 
+
+
+
+
+
+
+
+
+
+
 var AnimationDisplayLayer = (function (_super) {
     __extends(AnimationDisplayLayer, _super);
     function AnimationDisplayLayer() {
-        _super.apply(this, arguments);
-        this._horizontalReversal = false;
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1._horizontalReversal = false;
+        return _this_1;
     }
     Object.defineProperty(AnimationDisplayLayer.prototype, "horizontalReversal", {
         get: function () {
@@ -69368,9 +70890,23 @@ var AnimationDisplayLayer = (function (_super) {
         set: function (v) {
             this._horizontalReversal = v;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
+    AnimationDisplayLayer.prototype.setData = function (data) {
+        _super.prototype.setData.call(this, data);
+        if (this.frames[0] && this.frames[0].materialData) {
+            this.materialData = ObjectUtils.depthClone(this.frames[0].materialData);
+        }
+        else if (Config.EDIT_MODE && this.inAniEditor) {
+            this.fixFramesMaterialsData();
+            this.materialData = [{ materials: [] }];
+        }
+        if (this.materialData) {
+            this.materialsDataExit = true;
+            this.installMaterialData(this.materialData);
+        }
+    };
     AnimationDisplayLayer.prototype.showFrame = function (frameIndex) {
         if (!this.animation)
             return;
@@ -69394,26 +70930,28 @@ var AnimationDisplayLayer = (function (_super) {
         if (!framedata)
             return;
         this.horizontalReversal = framedata.horizontalReversal;
-        this.hue = framedata.hue;
-        this.blur = framedata.blur;
-        this.setTonal(framedata.tonal_r, framedata.tonal_g, framedata.tonal_b, framedata.tonal_gray, framedata.tonal_mr, framedata.tonal_mg, framedata.tonal_mb);
         this.x = framedata.x;
         this.y = framedata.y;
         this.rotation = framedata.rotation;
         this.opacity = framedata.alpha;
+        if (this.materialsDataExit) {
+            if (this.checkMaterialsTransChange(framedata)) {
+                this.clearMaterials();
+                this.installMaterialData(this.materialData);
+            }
+            else {
+                this.setFrameMaterialsEffect(framedata.materialData);
+            }
+        }
+        else if (!Config.EDIT_MODE || !this.inAniEditor || Config.BEHAVIOR_EDIT_MODE) {
+            this.hue = framedata.hue;
+            this.blur = framedata.blur;
+            this.setTonal(framedata.tonal_r, framedata.tonal_g, framedata.tonal_b, framedata.tonal_gray, framedata.tonal_mr, framedata.tonal_mg, framedata.tonal_mb);
+        }
     };
     AnimationDisplayLayer.prototype.toAnimationFrameData = function (framedata) {
         framedata = _super.prototype.toAnimationFrameData.call(this, framedata);
         framedata.horizontalReversal = this.horizontalReversal;
-        framedata.hue = this.hue;
-        framedata.blur = this.blur;
-        framedata.tonal_r = this.tonal_r;
-        framedata.tonal_g = this.tonal_g;
-        framedata.tonal_b = this.tonal_b;
-        framedata.tonal_gray = this.tonal_gray;
-        framedata.tonal_mr = this.tonal_mr;
-        framedata.tonal_mg = this.tonal_mg;
-        framedata.tonal_mb = this.tonal_mb;
         framedata.x = this.x;
         framedata.y = this.y;
         framedata.rotation = this.rotation;
@@ -69422,23 +70960,27 @@ var AnimationDisplayLayer = (function (_super) {
     };
     AnimationDisplayLayer.prototype.interpolationFrame = function (pf, nf, frameIndex) {
         var frame = _super.prototype.interpolationFrame.call(this, pf, nf, frameIndex);
-        var t = (frameIndex - pf.index) / (nf.index - pf.index);
-        var tween = GameUtils.getTween(nf.tweenID)[0];
-        frame.tweenID = nf.tweenID;
         frame.horizontalReversal = pf.horizontalReversal;
-        frame.hue = Math.round(tween(t, pf.hue, nf.hue - pf.hue, 1));
-        frame.blur = tween(t, pf.blur, nf.blur - pf.blur, 1);
-        frame.tonal_r = Math.round(tween(t, pf.tonal_r, nf.tonal_r - pf.tonal_r, 1));
-        frame.tonal_g = Math.round(tween(t, pf.tonal_g, nf.tonal_g - pf.tonal_g, 1));
-        frame.tonal_b = Math.round(tween(t, pf.tonal_b, nf.tonal_b - pf.tonal_b, 1));
-        frame.tonal_gray = Math.round(tween(t, pf.tonal_gray, nf.tonal_gray - pf.tonal_gray, 1));
-        frame.tonal_mr = tween(t, pf.tonal_mr, nf.tonal_mr - pf.tonal_mr, 1);
-        frame.tonal_mg = tween(t, pf.tonal_mg, nf.tonal_mg - pf.tonal_mg, 1);
-        frame.tonal_mb = tween(t, pf.tonal_mb, nf.tonal_mb - pf.tonal_mb, 1);
-        frame.x = tween(t, pf.x, nf.x - pf.x, 1);
-        frame.y = tween(t, pf.y, nf.y - pf.y, 1);
-        frame.rotation = tween(t, pf.rotation, nf.rotation - pf.rotation, 1);
-        frame.alpha = tween(t, pf.alpha, nf.alpha - pf.alpha, 1);
+        var t = (frameIndex - pf.index) / (nf.index - pf.index);
+        if (this.materialsDataExit) {
+            var value = GameUtils.getValueByTransData(nf.trans, t);
+            frame.x = (nf.x - pf.x) * value + pf.x;
+            frame.y = (nf.y - pf.y) * value + pf.y;
+            frame.rotation = (nf.rotation - pf.rotation) * value + pf.rotation;
+            frame.alpha = (nf.alpha - pf.alpha) * value + pf.alpha;
+            if (pf.materialData && nf.materialData) {
+                this.refreshInterpolationFrameMaterials(frame, pf, nf, t);
+            }
+        }
+        else {
+            var tween = GameUtils.getTween(nf.tweenID)[0];
+            frame.tweenID = nf.tweenID;
+            frame.x = tween(t, pf.x, nf.x - pf.x, 1);
+            frame.y = tween(t, pf.y, nf.y - pf.y, 1);
+            frame.rotation = tween(t, pf.rotation, nf.rotation - pf.rotation, 1);
+            frame.alpha = tween(t, pf.alpha, nf.alpha - pf.alpha, 1);
+            this.refreshInterpolationFrameTonal(frame, pf, nf, t, tween);
+        }
         return frame;
     };
     return AnimationDisplayLayer;
@@ -69448,18 +70990,30 @@ var AnimationDisplayLayer = (function (_super) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var AnimationImageLayer = (function (_super) {
     __extends(AnimationImageLayer, _super);
     function AnimationImageLayer() {
-        _super.call(this);
-        this.type = AnimationItemType.Image;
-        this._pivotX = 0;
-        this._pivotY = 0;
-        this.img = new Sprite();
-        this.addChild(this.img);
-        this.on(EventObject.RESIZE, this, this.onResize);
-        this.add_DISPLAY(this.onDisplay, this);
-        this.add_UNDISPLAY(this.onUnDisplay, this);
+        var _this_1 = _super.call(this) || this;
+        _this_1.type = AnimationItemType.Image;
+        _this_1._blendModeType = 0;
+        _this_1._pivotX = 0;
+        _this_1._pivotY = 0;
+        _this_1.img = new Sprite();
+        _this_1.addChild(_this_1.img);
+        _this_1.on(EventObject.RESIZE, _this_1, _this_1.onResize);
+        _this_1.add_DISPLAY(_this_1.onDisplay, _this_1);
+        _this_1.add_UNDISPLAY(_this_1.onUnDisplay, _this_1);
+        return _this_1;
     }
     Object.defineProperty(AnimationImageLayer.prototype, "imageSource", {
         get: function () {
@@ -69469,16 +71023,18 @@ var AnimationImageLayer = (function (_super) {
             this._imageSource = v;
             this.updateImage();
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(AnimationImageLayer.prototype, "blendModeType", {
         get: function () { return this._blendModeType; },
         set: function (v) {
+            if (this._blendModeType === v)
+                return;
             this._blendModeType = v;
-            this.img.blendMode = [null, "lighter"][v] || null;
+            this.blendMode = ["normal", "lighter"][v] || "normal";
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     AnimationImageLayer.prototype.openAutoHitArea = function (force) {
@@ -69571,7 +71127,7 @@ var AnimationImageLayer = (function (_super) {
             }
             this.onResize();
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     AnimationImageLayer.prototype.onResize = function () {
@@ -69592,17 +71148,29 @@ var AnimationImageLayer = (function (_super) {
             this.img.scaleX = scaleX;
             this.img.scaleY = scaleY;
         }
-        if (this.width < 0 || this.height < 0)
+        if (this.width < 0 || this.height < 0) {
             this.hitArea = this.img.getBounds();
+        }
+        else {
+            this.hitArea = null;
+        }
     };
     AnimationImageLayer.prototype.interpolationFrame = function (pf, nf, frameIndex) {
         var frame = _super.prototype.interpolationFrame.call(this, pf, nf, frameIndex);
-        var t = (frameIndex - pf.index) / (nf.index - pf.index);
-        var tween = GameUtils.getTween(nf.tweenID)[0];
-        frame.width = tween(t, pf.width, nf.width - pf.width, 1);
-        frame.height = tween(t, pf.height, nf.height - pf.height, 1);
-        frame.imageSource = Math.round(tween(t, pf.imageSource, nf.imageSource - pf.imageSource, 1));
         frame.blendModeType = pf.blendModeType;
+        var t = (frameIndex - pf.index) / (nf.index - pf.index);
+        if (nf.trans != null) {
+            var value = GameUtils.getValueByTransData(nf.trans, t);
+            frame.width = (nf.width - pf.width) * value + pf.width;
+            frame.height = (nf.height - pf.height) * value + pf.height;
+            frame.imageSource = Math.round((nf.imageSource - pf.imageSource) * value + pf.imageSource);
+        }
+        else {
+            var tween = GameUtils.getTween(nf.tweenID)[0];
+            frame.width = tween(t, pf.width, nf.width - pf.width, 1);
+            frame.height = tween(t, pf.height, nf.height - pf.height, 1);
+            frame.imageSource = Math.round(tween(t, pf.imageSource, nf.imageSource - pf.imageSource, 1));
+        }
         return frame;
     };
     AnimationImageLayer.prototype.fromAnimationFrameData = function (framedata) {
@@ -69662,7 +71230,16 @@ AnimationLayer.typeClsMap[AnimationItemType.Image] = AnimationImageLayer;
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UIAnimationPlayType;
     (function (UIAnimationPlayType) {
@@ -69674,24 +71251,25 @@ var UIComponent;
         __extends(UIAnimation, _super);
         function UIAnimation(showCircleWhenInEditor) {
             if (showCircleWhenInEditor === void 0) { showCircleWhenInEditor = true; }
-            _super.call(this);
-            this._playType = UIAnimationPlayType.none;
-            this._aniFrame = 1;
-            this.className = "UIAnimation";
-            this.__init();
+            var _this_1 = _super.call(this) || this;
+            _this_1._playType = UIAnimationPlayType.none;
+            _this_1._aniFrame = 1;
+            _this_1.className = "UIAnimation";
+            _this_1.__init();
             if (Config.EDIT_MODE) {
-                this.modifyWidthHeightEnabled = false;
+                _this_1.modifyWidthHeightEnabled = false;
                 if (showCircleWhenInEditor) {
-                    this._bg = new Sprite();
-                    this.addChild(this._bg);
-                    this.hitArea = new Rectangle(-10, -10, 20, 20);
-                    this._bg.graphics.drawCircle(0, 0, 10, "#FF0000");
-                    this._bg.alpha = 0.4;
+                    _this_1._bg = new Sprite();
+                    _this_1.addChild(_this_1._bg);
+                    _this_1.hitArea = new Rectangle(-10, -10, 20, 20);
+                    _this_1._bg.graphics.drawCircle(0, 0, 10, "#FF0000");
+                    _this_1._bg.alpha = 0.4;
                 }
             }
             else {
-                this.on(EventObject.DISPLAY, this, this.refreshSize);
+                _this_1.on(EventObject.DISPLAY, _this_1, _this_1.refreshSize);
             }
+            return _this_1;
         }
         Object.defineProperty(UIAnimation.prototype, "animationID", {
             get: function () {
@@ -69706,19 +71284,19 @@ var UIComponent;
                 this._animation.id = v;
                 this._animation.syncLoadWhenAssetExist = this.syncLoadedEventWhenAssetExist;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAnimation.prototype, "playType", {
             get: function () { return this._playType; },
             set: function (v) { v = Math.floor(v); this._playType = v; this.updateAnimationPlayType(); },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAnimation.prototype, "playFps", {
             get: function () { return this.animation.fps; },
             set: function (v) { this.animation.fps = v; },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAnimation.prototype, "aniFrame", {
@@ -69733,7 +71311,7 @@ var UIComponent;
                 this.animation.currentFrame = v;
                 this.refreshSize();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAnimation.prototype, "scaleNumber", {
@@ -69743,7 +71321,7 @@ var UIComponent;
             set: function (v) {
                 this._animation.scaleX = this._animation.scaleY = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAnimation.prototype, "scaleNumberX", {
@@ -69753,7 +71331,7 @@ var UIComponent;
             set: function (v) {
                 this._animation.scaleX = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAnimation.prototype, "scaleNumberY", {
@@ -69763,14 +71341,14 @@ var UIComponent;
             set: function (v) {
                 this._animation.scaleY = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAnimation.prototype, "animation", {
             get: function () {
                 return this._animation;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAnimation.prototype, "silentMode", {
@@ -69778,7 +71356,7 @@ var UIComponent;
             set: function (v) {
                 this._animation.silentMode = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAnimation.prototype, "showHitEffect", {
@@ -69786,11 +71364,11 @@ var UIComponent;
             set: function (v) {
                 this._animation.showHitEffect = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIAnimation.prototype.__init = function () {
-            this._animation = new Animation();
+            this._animation = new GCAnimation();
             this.addChildAt(this._animation, 0);
             if (Config.EDIT_MODE) {
                 this._animation.openAutoHitArea();
@@ -69803,7 +71381,7 @@ var UIComponent;
             set: function (v) {
                 this._syncLoadedEventWhenAssetExist = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIAnimation.prototype.loadAssetTest = function () {
@@ -69866,11 +71444,11 @@ var UIComponent;
         };
         ;
         UIAnimation.prototype.once = function (type, caller, listener, args) {
-            var _this = this;
+            var _this_1 = this;
             var t = _super.prototype.once.apply(this, [type, caller, function (caller, listener, args, e) {
                     listener.apply(caller, args ? args.concat([e]) : [e]);
-                    if (!_this.hasMouseEvent && _this.animation)
-                        _this.animation.closeAutoHitArea(true);
+                    if (!_this_1.hasMouseEvent && _this_1.animation)
+                        _this_1.animation.closeAutoHitArea(true);
                 }, [caller, listener, args]]);
             if (this.hasMouseEvent && this.animation)
                 this.animation.openAutoHitArea(true);
@@ -69891,35 +71469,46 @@ var UIComponent;
             return t;
         };
         ;
+        UIAnimation.customCompFunctionNames = ["animationID", "scaleNumberX", "scaleNumberY", "aniFrame", "playFps", "playType", "showHitEffect", "silentMode"];
         return UIAnimation;
     }(UIComponent.UIBase));
     UIComponent.UIAnimation = UIAnimation;
-    ObjectUtils.redefinedEventFunc("UIComponent.UIAnimation", [Animation.RENDER, Animation.PLAY_START, Animation.PLAY_STOP, Animation.PLAY_COMPLETED, Animation.SIGNAL, EventObject.LOADED], "_animation", false);
+    ObjectUtils.redefinedEventFunc("UIComponent.UIAnimation", [GCAnimation.RENDER, GCAnimation.PLAY_START, GCAnimation.PLAY_STOP, GCAnimation.PLAY_COMPLETED, GCAnimation.SIGNAL, EventObject.LOADED], "_animation", false);
 })(UIComponent || (UIComponent = {}));
 
 
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UIAvatar = (function (_super) {
         __extends(UIAvatar, _super);
         function UIAvatar() {
-            _super.call(this);
-            this._oriMode = 8;
-            this._avatarFrame = 1;
-            this._orientationIndex = 0;
-            this._isPlay = true;
-            this._playOnce = false;
-            this.className = "UIAvatar";
+            var _this_1 = _super.call(this) || this;
+            _this_1._oriMode = 8;
+            _this_1._avatarFrame = 1;
+            _this_1._orientationIndex = 0;
+            _this_1._isPlay = true;
+            _this_1._playOnce = false;
+            _this_1.className = "UIAvatar";
             if (Config.EDIT_MODE) {
-                this.modifyWidthHeightEnabled = false;
+                _this_1.modifyWidthHeightEnabled = false;
             }
-            this.__init();
+            _this_1.__init();
+            return _this_1;
         }
         UIAvatar.prototype.__init = function () {
-            var _this = this;
+            var _this_1 = this;
             this._avatar = new Avatar();
             if (Config.EDIT_MODE) {
                 this._avatar.openAutoHitArea();
@@ -69928,14 +71517,14 @@ var UIComponent;
             this.addChildAt(this._avatar, 0);
             this.avatar.on(Avatar.RENDER, this, this.refreshSize);
             this.avatar.once(EventObject.LOADED, this, function () {
-                _this._oriMode = _this.avatar.oriMode;
+                _this_1._oriMode = _this_1.avatar.oriMode;
             });
         };
         Object.defineProperty(UIAvatar.prototype, "syncLoadedEventWhenAssetExist", {
             set: function (v) {
                 this._syncLoadedEventWhenAssetExist = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIAvatar.prototype.loadAssetTest = function () {
@@ -69953,23 +71542,22 @@ var UIComponent;
             _super.prototype.dispose.call(this);
         };
         UIAvatar.prototype.inEditorInit = function () {
-            var _this = this;
+            var _this_1 = this;
             this.width = 192;
             this.height = 192;
             if (!this.stage) {
                 this.once(EventObject.DISPLAY, this, function () {
-                    _this.avatarID = 0;
-                    _this.avatarID = 1;
+                    _this_1.avatarID = 1;
                 });
             }
             else {
-                this.avatarID = 0;
                 this.avatarID = 1;
             }
+            this.orientationIndex = this._orientationIndex;
         };
         Object.defineProperty(UIAvatar.prototype, "avatar", {
             get: function () { return this._avatar; },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAvatar.prototype, "avatarID", {
@@ -69990,7 +71578,7 @@ var UIComponent;
                         this._oriMode = avatarData.oriMode;
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAvatar.prototype, "scaleNumberX", {
@@ -70001,7 +71589,7 @@ var UIComponent;
                 this._avatar.scaleX = v;
                 this.refreshSize();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAvatar.prototype, "scaleNumberY", {
@@ -70012,7 +71600,7 @@ var UIComponent;
                 this._avatar.scaleY = v;
                 this.refreshSize();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAvatar.prototype, "orientationIndex", {
@@ -70020,13 +71608,16 @@ var UIComponent;
                 return this._orientationIndex;
             },
             set: function (v) {
-                var _this = this;
+                var _this_1 = this;
                 if (this.avatar.isLoading) {
+                    var oldVisible = this.avatar.visible;
+                    this.avatar.visible = false;
                     this.avatar.once(EventObject.LOADED, this, function () {
-                        if (_this.isDisposed || _this.avatar.isDisposed || _this.avatar.userChangeOrientation)
+                        if (_this_1.isDisposed || _this_1.avatar.isDisposed || _this_1.avatar.userChangeOrientation)
                             return;
-                        _this.orientationIndex = v;
-                        _this.refreshSize();
+                        _this_1.avatar.visible = oldVisible;
+                        _this_1.orientationIndex = v;
+                        _this_1.refreshSize();
                     });
                     return;
                 }
@@ -70037,7 +71628,7 @@ var UIComponent;
                     orientation = GameUtils.getFlipOriByIndex(0, this._oriMode);
                 this.orientation = orientation;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAvatar.prototype, "orientation", {
@@ -70050,7 +71641,7 @@ var UIComponent;
                 this.avatar.orientation = v;
                 this.refreshSize();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAvatar.prototype, "avatarFrame", {
@@ -70063,7 +71654,7 @@ var UIComponent;
                 this.avatar.setCurrentFrame(v);
                 this.refreshSize();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAvatar.prototype, "isPlay", {
@@ -70074,7 +71665,7 @@ var UIComponent;
                 this._isPlay = v;
                 this.refreshPlayState();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAvatar.prototype, "playOnce", {
@@ -70085,18 +71676,18 @@ var UIComponent;
                 this._playOnce = v;
                 this.refreshPlayState();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIAvatar.prototype.refreshPlayState = function () {
-            var _this = this;
+            var _this_1 = this;
             if (this.guiRoot && this.guiRoot.onlyForPreload)
                 return;
             if ((this._isPlay || this._playOnce) && !this.avatar.isPlaying)
                 this.avatar.play();
             if (this._playOnce) {
                 this.avatar.once(Avatar.ACTION_PLAY_COMPLETED, this, function () {
-                    _this.avatar.stop(_this.avatar.totalFrame);
+                    _this_1.avatar.stop(_this_1.avatar.totalFrame);
                 });
             }
             else {
@@ -70112,7 +71703,19 @@ var UIComponent;
                 v = Math.floor(v);
                 this.avatar.fps = v;
             },
-            enumerable: true,
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(UIAvatar.prototype, "actionIndex", {
+            get: function () {
+                return this.avatar.actionIndex;
+            },
+            set: function (v) {
+                v = Math.floor(v);
+                this.avatar.actionIndex = v;
+                this.refreshSize();
+            },
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAvatar.prototype, "actionID", {
@@ -70124,7 +71727,7 @@ var UIComponent;
                 this.avatar.actionID = v;
                 this.refreshSize();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIAvatar.prototype, "avatarHue", {
@@ -70136,15 +71739,15 @@ var UIComponent;
                     return;
                 this._avatar.hue = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIAvatar.prototype.refreshSize = function () {
-            var _this = this;
+            var _this_1 = this;
             if (Config.EDIT_MODE) {
                 Callback.CallLaterBeforeRender(function () {
-                    if (_this.avatar)
-                        _this.hitArea = _this.avatar.getBounds();
+                    if (_this_1.avatar)
+                        _this_1.hitArea = _this_1.avatar.getBounds();
                 }, this);
             }
             else {
@@ -70160,11 +71763,11 @@ var UIComponent;
         };
         ;
         UIAvatar.prototype.once = function (type, caller, listener, args) {
-            var _this = this;
+            var _this_1 = this;
             var t = _super.prototype.once.apply(this, [type, caller, function (caller, listener, args, e) {
                     listener.apply(caller, args ? args.concat([e]) : [e]);
-                    if (!_this.hasMouseEvent && _this.avatar)
-                        _this.avatar.closeAutoHitArea(true);
+                    if (!_this_1.hasMouseEvent && _this_1.avatar)
+                        _this_1.avatar.closeAutoHitArea(true);
                 }, [caller, listener, args]]);
             if (this.hasMouseEvent && this.avatar)
                 this.avatar.openAutoHitArea(true);
@@ -70185,6 +71788,7 @@ var UIComponent;
             return t;
         };
         ;
+        UIAvatar.customCompFunctionNames = ["avatarID", "scaleNumberX", "scaleNumberY", "orientationIndex", "avatarFPS", "playOnce", "isPlay", "avatarFrame", "actionID", "avatarHue"];
         return UIAvatar;
     }(UIComponent.UIBase));
     UIComponent.UIAvatar = UIAvatar;
@@ -70195,24 +71799,34 @@ var UIComponent;
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UICustomGameNumber = (function (_super) {
         __extends(UICustomGameNumber, _super);
         function UICustomGameNumber() {
-            _super.call(this);
-            this._customData = [1, {}, {}];
-            this._previewNum = 2;
-            this._previewFixed = 0;
-            this.className = "UICustomGameNumber";
-            this._tf.text = "";
+            var _this_1 = _super.call(this) || this;
+            _this_1._customData = [1, {}, {}];
+            _this_1._previewNum = 2;
+            _this_1._previewFixed = 0;
+            _this_1.className = "UICustomGameNumber";
+            _this_1._tf.text = "";
             if (!Config.EDIT_MODE) {
-                this.on(EventObject.DISPLAY, this, this.onDisplay);
-                this.on(EventObject.UNDISPLAY, this, this.onUnDisplay);
+                _this_1.on(EventObject.DISPLAY, _this_1, _this_1.onDisplay);
+                _this_1.on(EventObject.UNDISPLAY, _this_1, _this_1.onUnDisplay);
             }
             else {
-                Tips.reg(this, Callback.New(this.onTips, this));
+                Tips.reg(_this_1, Callback.New(_this_1.onTips, _this_1));
             }
+            return _this_1;
         }
         UICustomGameNumber.prototype.onTips = function () {
             if (!this._customData)
@@ -70264,7 +71878,7 @@ var UIComponent;
                     this.refreshDataDisplay();
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UICustomGameNumber.prototype.refreshDataDisplay = function () {
@@ -70301,7 +71915,7 @@ var UIComponent;
                     this.refreshEditorDataDisplay();
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UICustomGameNumber.prototype, "previewFixed", {
@@ -70314,7 +71928,7 @@ var UIComponent;
                     this.refreshEditorDataDisplay();
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UICustomGameNumber.prototype.inEditorInfo = function () {
@@ -70367,6 +71981,8 @@ var UIComponent;
                 os.remove_ENTERFRAME(this.refreshDataDisplay, this);
             _super.prototype.dispose.call(this);
         };
+        UICustomGameNumber.customCompFunctionNames = ["customData", "previewNum", "previewFixed", "fontSize", "color", "bold", "italic", "smooth", "align", "valign", "leading",
+            "letterSpacing", "font", "wordWrap", "overflow", "shadowEnabled", "shadowColor", "shadowDx", "shadowDy", "stroke", "strokeColor"];
         return UICustomGameNumber;
     }(UIComponent.UIString));
     UIComponent.UICustomGameNumber = UICustomGameNumber;
@@ -70376,20 +71992,30 @@ var UIComponent;
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UICustomGameString = (function (_super) {
         __extends(UICustomGameString, _super);
         function UICustomGameString() {
-            _super.call(this);
-            this._customData = [1, {}, {}];
-            this._inEditorText = "[STR]";
-            this.className = "UICustomGameString";
-            this._tf.text = "";
+            var _this_1 = _super.call(this) || this;
+            _this_1._customData = [1, {}, {}];
+            _this_1._inEditorText = "[STR]";
+            _this_1.className = "UICustomGameString";
+            _this_1._tf.text = "";
             if (!Config.EDIT_MODE) {
-                this.on(EventObject.DISPLAY, this, this.onDisplay);
-                this.on(EventObject.UNDISPLAY, this, this.onUnDisplay);
+                _this_1.on(EventObject.DISPLAY, _this_1, _this_1.onDisplay);
+                _this_1.on(EventObject.UNDISPLAY, _this_1, _this_1.onUnDisplay);
             }
+            return _this_1;
         }
         UICustomGameString.prototype.inEditorInit = function () {
             _super.prototype.inEditorInit.call(this);
@@ -70425,7 +72051,7 @@ var UIComponent;
                     this.refreshDataDisplay();
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UICustomGameString.prototype.refreshDataDisplay = function () {
@@ -70460,7 +72086,7 @@ var UIComponent;
                 this._inEditorText = v;
                 this.refreshEditorDataDisplay();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UICustomGameString.prototype.inEditorInfo = function () {
@@ -70492,6 +72118,8 @@ var UIComponent;
                 os.remove_ENTERFRAME(this.refreshDataDisplay, this);
             _super.prototype.dispose.call(this);
         };
+        UICustomGameString.customCompFunctionNames = ["customData", "inEditorText", "fontSize", "color", "bold", "italic", "smooth", "align", "valign", "leading",
+            "letterSpacing", "font", "wordWrap", "overflow", "shadowEnabled", "shadowColor", "shadowDx", "shadowDy", "stroke", "strokeColor"];
         return UICustomGameString;
     }(UIComponent.UIString));
     UIComponent.UICustomGameString = UICustomGameString;
@@ -70501,23 +72129,33 @@ var UIComponent;
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UIInput = (function (_super) {
         __extends(UIInput, _super);
         function UIInput() {
-            _super.call(this, !Config.EDIT_MODE);
-            this._color = "#000000";
-            this._promptColor = "#606060";
-            this.className = "UIInput";
-            this.valign = 1;
-            this.width = 200;
-            this.height = 30;
-            this.fontSize = 16;
-            this.align = 0;
-            this.inputMode = 0;
-            this.maxChars = 99999;
-            this.mouseEventEnabled = true;
+            var _this_1 = _super.call(this, !Config.EDIT_MODE) || this;
+            _this_1._color = "#000000";
+            _this_1._promptColor = "#606060";
+            _this_1.className = "UIInput";
+            _this_1.valign = 1;
+            _this_1.width = 200;
+            _this_1.height = 30;
+            _this_1.fontSize = 16;
+            _this_1.align = 0;
+            _this_1.inputMode = 0;
+            _this_1.maxChars = 99999;
+            _this_1.mouseEventEnabled = true;
+            return _this_1;
         }
         UIInput.prototype.select = function () {
             this.setSelection(0, 999999999);
@@ -70547,7 +72185,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.focus = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIInput.prototype, "restrict", {
@@ -70557,7 +72195,7 @@ var UIComponent;
             set: function (v) {
                 this._restrict = this._tf.restrict = v ? v : "";
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIInput.prototype, "maxChars", {
@@ -70567,7 +72205,7 @@ var UIComponent;
             set: function (v) {
                 this._tf.maxChars = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIInput.prototype, "inputMode", {
@@ -70595,7 +72233,7 @@ var UIComponent;
                     this.changeTextInputType();
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIInput.prototype, "text", {
@@ -70632,7 +72270,7 @@ var UIComponent;
                     this._tf.color = this._promptColor;
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIInput.prototype, "color", {
@@ -70652,7 +72290,7 @@ var UIComponent;
                     }
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIInput.prototype, "prompt", {
@@ -70671,7 +72309,7 @@ var UIComponent;
                     }
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIInput.prototype, "promptColor", {
@@ -70689,7 +72327,7 @@ var UIComponent;
                     }
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIInput.prototype.changeTextInputType = function () {
@@ -70730,7 +72368,7 @@ var UIComponent;
                     this.off(EventObject.INPUT, this, this.onInput_private);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIInput.prototype, "onEnterFragEvent", {
@@ -70747,7 +72385,7 @@ var UIComponent;
                     this.off(EventObject.ENTER, this, this.onEnter_private);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIInput.prototype.onInput_private = function () {
@@ -70764,6 +72402,8 @@ var UIComponent;
                 }
             }
         };
+        UIInput.customCompFunctionNames = ["text", "fontSize", "color", "prompt", "promptColor", "bold", "italic", "smooth", "align", "leading",
+            "font", "wordWrap", "restrict", "inputMode", "maxChars", "shadowEnabled", "shadowColor", "shadowDx", "shadowDy", "onInputFragEvent", "onEnterFragEvent"];
         return UIInput;
     }(UIComponent.UIString));
     UIComponent.UIInput = UIInput;
@@ -70773,48 +72413,58 @@ var UIComponent;
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UIList = (function (_super) {
         __extends(UIList, _super);
         function UIList() {
-            _super.call(this);
-            this.overSelectMode = true;
-            this._selectEnable = true;
-            this._repeatX = 1;
-            this._spaceX = 2;
-            this._spaceY = 20;
-            this._itemWidth = 200;
-            this._itemHeight = 50;
-            this._selectedIndex = -1;
-            this._overIndex = -1;
-            this._items = [];
-            this._overImageGrid9 = "0,0,0,0,0";
-            this._selectImageGrid9 = "0,0,0,0,0";
-            this._selectedImageOnTop = true;
-            this._overImageOnTop = true;
-            this._itemSize = 0;
-            this.subitemIndentation = 20;
-            this._previewSize = 5;
-            this.cancelSelectedIndex = -1;
-            this.className = "UIList";
-            this._contentArea = new GameSprite();
-            this._overImageBox = new GameSprite();
-            this._overImage = new UIComponent.UIBitmap();
-            this._overImageBox.addChild(this._overImage);
-            this._selectedImageBox = new GameSprite();
-            this._selectedImage = new UIComponent.UIBitmap();
-            this._selectedImageBox.addChild(this._selectedImage);
-            this._overImageBox.mouseEnabled = false;
-            this._selectedImageBox.mouseEnabled = false;
-            this._overImageBox.visible = false;
-            this.refreshLayer();
-            this.enabledLimitView = true;
-            this.scrollShowType = 2;
-            this.selectedImageAlpha = 0.5;
-            this.overImageAlpha = 0.5;
-            this.width = 200;
-            this.height = 200;
+            var _this_1 = _super.call(this) || this;
+            _this_1.overSelectMode = true;
+            _this_1._selectEnable = true;
+            _this_1._repeatX = 1;
+            _this_1._spaceX = 2;
+            _this_1._spaceY = 20;
+            _this_1._itemWidth = 200;
+            _this_1._itemHeight = 50;
+            _this_1._selectedIndex = -1;
+            _this_1._overIndex = -1;
+            _this_1._items = [];
+            _this_1._overImageGrid9 = "0,0,0,0,0";
+            _this_1._selectImageGrid9 = "0,0,0,0,0";
+            _this_1._selectedImageOnTop = true;
+            _this_1._overImageOnTop = true;
+            _this_1._itemSize = 0;
+            _this_1.subitemIndentation = 20;
+            _this_1._previewSize = 5;
+            _this_1.cancelSelectedIndex = -1;
+            _this_1.className = "UIList";
+            _this_1._contentArea = new GameSprite();
+            _this_1._overImageBox = new GameSprite();
+            _this_1._overImage = new UIComponent.UIBitmap();
+            _this_1._overImageBox.addChild(_this_1._overImage);
+            _this_1._selectedImageBox = new GameSprite();
+            _this_1._selectedImage = new UIComponent.UIBitmap();
+            _this_1._selectedImageBox.addChild(_this_1._selectedImage);
+            _this_1._overImageBox.mouseEnabled = false;
+            _this_1._selectedImageBox.mouseEnabled = false;
+            _this_1._overImageBox.visible = false;
+            _this_1.refreshLayer();
+            _this_1.enabledLimitView = true;
+            _this_1.scrollShowType = 2;
+            _this_1.selectedImageAlpha = 0.5;
+            _this_1.overImageAlpha = 0.5;
+            _this_1.width = 200;
+            _this_1.height = 200;
+            return _this_1;
         }
         Object.defineProperty(UIList, "KEY_BOARD_ENABLED", {
             get: function () {
@@ -70835,7 +72485,7 @@ var UIComponent;
                     stage.off(EventObject.KEY_DOWN, this, UIList.onListKeyDown);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIList.listKeyboardHandle = function () {
@@ -70935,7 +72585,7 @@ var UIComponent;
                 }
                 EventUtils.happen(UIList, UIList.EVENT_FOCUS_CHANGE, [lastFocus, this._focus]);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIList.prototype.dispose = function () {
@@ -70999,7 +72649,7 @@ var UIComponent;
             get: function () {
                 return this._contentArea["_childs"];
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "previewSize", {
@@ -71014,7 +72664,7 @@ var UIComponent;
                     Callback.CallLater(this.itemsPreview, this);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "selectEnable", {
@@ -71027,7 +72677,7 @@ var UIComponent;
                     this._overImageBox.visible = v;
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "repeatX", {
@@ -71042,7 +72692,7 @@ var UIComponent;
                     this.refreshOrder();
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "spaceX", {
@@ -71055,7 +72705,7 @@ var UIComponent;
                     this.refreshOrder();
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "spaceY", {
@@ -71068,7 +72718,7 @@ var UIComponent;
                     this.refreshOrder();
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "itemWidth", {
@@ -71083,7 +72733,7 @@ var UIComponent;
                     this.refreshOrder();
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "itemHeight", {
@@ -71098,7 +72748,7 @@ var UIComponent;
                     this.refreshOrder();
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIList.prototype.scrollTo = function (index, ignoreAlreadyInVisible, tween, duration, ease, complete) {
@@ -71163,7 +72813,7 @@ var UIComponent;
             get: function () {
                 return this._selectedImage;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "overImageURL", {
@@ -71178,14 +72828,14 @@ var UIComponent;
                     this._overImage.image = v;
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "overImage", {
             get: function () {
                 return this._overImage;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "selectImageURL", {
@@ -71200,14 +72850,14 @@ var UIComponent;
                     this._selectedImage.image = v;
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "selectImage", {
             get: function () {
                 return this._selectedImage;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "selectedImageAlpha", {
@@ -71220,7 +72870,7 @@ var UIComponent;
                     this._selectedImageBox.alpha = v;
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "overImageAlpha", {
@@ -71233,7 +72883,7 @@ var UIComponent;
                     this._overImageBox.alpha = v;
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "selectedImageOnTop", {
@@ -71246,7 +72896,7 @@ var UIComponent;
                     this.refreshLayer();
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "overImageOnTop", {
@@ -71259,7 +72909,7 @@ var UIComponent;
                     this.refreshLayer();
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIList.prototype.refreshLayer = function () {
@@ -71281,21 +72931,21 @@ var UIComponent;
             get: function () {
                 return this._overImage.width;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "overImageGrid9Height", {
             get: function () {
                 return this._overImage.height;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "overImageGrid9Skin", {
             get: function () {
                 return this._overImage.image;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "overImageGrid9", {
@@ -71310,28 +72960,28 @@ var UIComponent;
                     this._overImage.grid9 = v;
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "selectImageGrid9Width", {
             get: function () {
                 return this._selectedImage.width;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "selectImageGrid9Height", {
             get: function () {
                 return this._selectedImage.height;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "selectImageGrid9Skin", {
             get: function () {
                 return this._selectedImage.image;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "selectImageGrid9", {
@@ -71346,7 +72996,7 @@ var UIComponent;
                     this._selectedImage.grid9 = v;
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "itemModelClass", {
@@ -71362,7 +73012,7 @@ var UIComponent;
                     this.event(EventObject.LOADED);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "itemModelGUI", {
@@ -71370,7 +73020,7 @@ var UIComponent;
                 return this._itemModelGUI;
             },
             set: function (v) {
-                var _this = this;
+                var _this_1 = this;
                 if (this.isDisposed)
                     return;
                 this._itemModelGUI = v;
@@ -71382,23 +73032,23 @@ var UIComponent;
                 }
                 if (Config.EDIT_MODE) {
                     Callback.CallLater(function () {
-                        if (_this.isDisposed)
+                        if (_this_1.isDisposed)
                             return;
-                        if (_this.checkDeepLoopAndReset(_this._itemModelGUI))
+                        if (_this_1.checkDeepLoopAndReset(_this_1._itemModelGUI))
                             return;
                         var uiData = Common.uiList.data[v];
                         if (!uiData) {
-                            _this._itemModelClass = null;
-                            _this.itemsPreview();
-                            _this.event(EventObject.LOADED);
+                            _this_1._itemModelClass = null;
+                            _this_1.itemsPreview();
+                            _this_1.event(EventObject.LOADED);
                             return;
                         }
                         var instanceClassName = uiData.uiDisplayData.instanceClassName;
                         var classObj = window[instanceClassName];
                         if (!classObj)
                             classObj = window["GUI_" + v];
-                        _this._itemModelClass = classObj;
-                        _this.itemsPreview();
+                        _this_1._itemModelClass = classObj;
+                        _this_1.itemsPreview();
                     }, this);
                 }
                 else {
@@ -71415,18 +73065,18 @@ var UIComponent;
                         classObj = window["GUI_" + v];
                     this._itemModelClass = classObj;
                     AssetManager.preLoadUIAsset(v, Callback.New(function () {
-                        _this.event(EventObject.LOADED);
+                        _this_1.event(EventObject.LOADED);
                     }, this), true, true);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIList.prototype.checkDeepLoopAndReset = function (guiID) {
             if (!guiID)
                 return false;
             if (Config.EDIT_MODE && this.isDeepLoop(guiID)) {
-                AlertUtils.alert("不允许循环嵌套!");
+                gcide_canvasbuilder.AlertUtils.alert("不允许循环嵌套!");
                 var p = this.parent;
                 while (p) {
                     if (p instanceof UIComponent.UIGUI) {
@@ -71514,7 +73164,7 @@ var UIComponent;
                     EUIRoot.dataBaseWindow.win7.on(EUIWindowUI.EVENT_GUI_DATA_SYNC_COMPLETE, this, this.onItemUIChange);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIList.prototype.onItemUIChange = function (syncGUIID) {
@@ -71541,37 +73191,37 @@ var UIComponent;
             return this._contentArea.getChildAt(index);
         };
         UIList.prototype.itemInit = function (ui, data, index) {
-            var _this = this;
+            var _this_1 = this;
             if (!ui)
                 return;
             ui.data = data;
             ui.hitArea = new Rectangle(0, 0, this.itemWidth, this.itemHeight);
             ui.on(EventObject.MOUSE_OVER, this, function (index, ui) {
-                if (_this.overSelectMode) {
-                    _this.selectedIndex = index;
+                if (_this_1.overSelectMode) {
+                    _this_1.selectedIndex = index;
                 }
-                _this._overItem = ui;
-                _this.overIndex = index;
+                _this_1._overItem = ui;
+                _this_1.overIndex = index;
             }, [index, ui]);
             ui.on(EventObject.MOUSE_OUT, this, function (ui) {
-                _this._overItem = null;
-                _this.overIndex = -1;
+                _this_1._overItem = null;
+                _this_1.overIndex = -1;
             }, [ui]);
             ui.on(EventObject.MOUSE_DOWN, this, function (ui, data, index) {
-                if (_this.selectedItem == data) {
-                    _this.event(UIList.ITEM_CLICK);
+                if (_this_1.selectedItem == data) {
+                    _this_1.event(UIList.ITEM_CLICK);
                     return;
                 }
-                _this.selectedItem = data;
+                _this_1.selectedItem = data;
                 if (!UIList.SINGLE_FOCUS_MODE)
-                    UIList.focus = _this;
+                    UIList.focus = _this_1;
             }, [ui, data, index]);
             ui.on(EventObject.DOUBLE_CLICK, this, function (ui, data, index) {
                 if (!data || data.numChildren == 0)
                     return;
                 data.isOpen = !data.isOpen;
-                _this.refreshOrder();
-                _this.event(UIList.OPEN_STATE_CHANGE, [ui, data, index]);
+                _this_1.refreshOrder();
+                _this_1.event(UIList.OPEN_STATE_CHANGE, [ui, data, index]);
             }, [ui, data, index]);
             this.refreshItem(data);
             this.event(UIList.ITEM_CREATE, [ui, data, index]);
@@ -71634,7 +73284,7 @@ var UIComponent;
         };
         Object.defineProperty(UIList.prototype, "length", {
             get: function () { return this._items.length; },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         ;
@@ -71647,7 +73297,7 @@ var UIComponent;
                 this._selectedItem = idx != -1 ? v : null;
                 this.selectedIndex = idx;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIList.prototype, "selectedIndex", {
@@ -71664,7 +73314,7 @@ var UIComponent;
                         this.event(EventObject.CHANGE, [0]);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIList.prototype.setSelectedIndexForce = function (v) {
@@ -71690,7 +73340,7 @@ var UIComponent;
                         this.event(EventObject.CHANGE, [1]);
                 }
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         UIList.prototype.setOverIndexForce = function (v) {
@@ -71756,6 +73406,9 @@ var UIComponent;
             this.refreshSelectedImagePos();
             this.refresh();
         };
+        UIList.customCompFunctionNames = ["itemModelGUI", "previewSize", "selectEnable", "repeatX", "itemWidth", "itemHeight", "spaceX", "spaceY", "scrollShowType",
+            "hScrollBar", "hScrollBg", "vScrollBar", "vScrollBg", "scrollWidth", "selectImageURL", "selectImageGrid9", "selectedImageAlpha", "selectedImageOnTop",
+            "overImageURL", "overImageGrid9", "overImageAlpha", "overImageOnTop", "overSelectMode", "slowmotionType"];
         UIList.EVENT_FOCUS_CHANGE = "UIListEVENT_FOCUS_CHANGE";
         UIList.OPEN_STATE_CHANGE = "UIList_EVENT_OPEN_STATE_CHANGE";
         UIList.ITEM_CLICK = "UIListITEM_CLICK";
@@ -71777,13 +73430,23 @@ var UIComponent;
 
 
 
-var UIComponent;
+
+
+
+
+
+
+
+
+
+
 (function (UIComponent) {
     var UIStandAvatar = (function (_super) {
         __extends(UIStandAvatar, _super);
         function UIStandAvatar() {
-            _super.call(this);
-            this.className = "UIStandAvatar";
+            var _this_1 = _super.call(this) || this;
+            _this_1.className = "UIStandAvatar";
+            return _this_1;
         }
         UIStandAvatar.prototype.loadAssetTest = function () {
             AssetManager.preLoadStandAvatarAsset(this.avatarID, Callback.New(function () {
@@ -71791,7 +73454,7 @@ var UIComponent;
             }, this), this._syncLoadedEventWhenAssetExist, true);
         };
         UIStandAvatar.prototype.__init = function () {
-            var _this = this;
+            var _this_1 = this;
             this._avatar = new StandAvatar();
             if (Config.EDIT_MODE) {
                 this._avatar.openAutoHitArea();
@@ -71800,8 +73463,8 @@ var UIComponent;
             this.addChildAt(this._avatar, 0);
             this.avatar.on(Avatar.RENDER, this, this.refreshSize);
             this.avatar.on(EventObject.LOADED, this, function () {
-                _this._oriMode = _this.avatar.oriMode;
-                _this.refreshSize();
+                _this_1._oriMode = _this_1.avatar.oriMode;
+                _this_1.refreshSize();
             });
         };
         Object.defineProperty(UIStandAvatar.prototype, "flip", {
@@ -71813,7 +73476,7 @@ var UIComponent;
                     return;
                 this.avatar.flip = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(UIStandAvatar.prototype, "avatarID", {
@@ -71828,9 +73491,10 @@ var UIComponent;
                 v = Math.floor(v);
                 this.avatar.id = v;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
+        UIStandAvatar.customCompFunctionNames = ["avatarID", "actionID", "scaleNumberX", "scaleNumberY", "flip", "playOnce", "isPlay", "avatarFrame", "avatarFPS", "avatarHue"];
         return UIStandAvatar;
     }(UIComponent.UIAvatar));
     UIComponent.UIStandAvatar = UIStandAvatar;
@@ -71840,12 +73504,23 @@ var UIComponent;
 
 
 
+
+
+
+
+
+
+
+
+
+
 var AnimationAnimationLayer = (function (_super) {
     __extends(AnimationAnimationLayer, _super);
     function AnimationAnimationLayer() {
-        _super.apply(this, arguments);
-        this.type = AnimationItemType.Animation;
-        this.loop = false;
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
+        _this_1.type = AnimationItemType.GCAnimation;
+        _this_1.loop = false;
+        return _this_1;
     }
     Object.defineProperty(AnimationAnimationLayer.prototype, "animationId", {
         get: function () { return this._animationId; },
@@ -71856,7 +73531,7 @@ var AnimationAnimationLayer = (function (_super) {
             if (this._animationInstance)
                 this.removeChild(this._animationInstance);
             this._animationInstance = null;
-            this._animationInstance = new Animation();
+            this._animationInstance = new GCAnimation();
             this._animationInstance.topAnimation = this.topAnimation;
             if (this.topAnimation)
                 this._animationInstance.syncLoadWhenAssetExist = this.topAnimation.syncLoadWhenAssetExist;
@@ -71866,12 +73541,12 @@ var AnimationAnimationLayer = (function (_super) {
             this._animationInstance.id = v;
             this.addChildAt(this._animationInstance, 0);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(AnimationAnimationLayer.prototype, "animationInstance", {
         get: function () { return this._animationInstance; },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     AnimationAnimationLayer.prototype.onAnimationLoaded = function () {
@@ -71969,7 +73644,7 @@ var AnimationAnimationLayer = (function (_super) {
                 var subFrame = this._frameIndex - firstFrame;
                 if (this.loop)
                     subFrame = subFrame % this._animationInstance.totalFrame;
-                Animation.getChildrenLayers(this._animationInstance).forEach(function (layer) {
+                GCAnimation.getChildrenLayers(this._animationInstance).forEach(function (layer) {
                     layer.showFrame(subFrame);
                 });
             }
@@ -71998,9 +73673,16 @@ var AnimationAnimationLayer = (function (_super) {
         if (pf.scaleY == undefined)
             pf.scaleY = 1;
         var t = (frameIndex - pf.index) / (nf.index - pf.index);
-        var tween = GameUtils.getTween(nf.tweenID)[0];
-        frame.scaleX = tween(t, pf.scaleX, nf.scaleX - pf.scaleX, 1);
-        frame.scaleY = tween(t, pf.scaleY, nf.scaleY - pf.scaleY, 1);
+        if (nf.trans != null) {
+            var value = GameUtils.getValueByTransData(nf.trans, t);
+            frame.scaleX = (nf.scaleX - pf.scaleX) * value + pf.scaleX;
+            frame.scaleY = (nf.scaleY - pf.scaleY) * value + pf.scaleY;
+        }
+        else {
+            var tween = GameUtils.getTween(nf.tweenID)[0];
+            frame.scaleX = tween(t, pf.scaleX, nf.scaleX - pf.scaleX, 1);
+            frame.scaleY = tween(t, pf.scaleY, nf.scaleY - pf.scaleY, 1);
+        }
         return frame;
     };
     AnimationAnimationLayer.prototype.dispose = function () {
@@ -72011,12 +73693,12 @@ var AnimationAnimationLayer = (function (_super) {
     };
     return AnimationAnimationLayer;
 }(AnimationDisplayLayer));
-AnimationLayer.typeClsMap[AnimationItemType.Animation] = AnimationAnimationLayer;
+AnimationLayer.typeClsMap[AnimationItemType.GCAnimation] = AnimationAnimationLayer;
 var SinglePlayerGame = (function () {
     function SinglePlayerGame() {
     }
     SinglePlayerGame.init = function (onFin) {
-        var _this = this;
+        var _this_1 = this;
         SinglePlayerGame.GC_LIFE_DATA_PATH = SinglePlayerGame.toWebSaveFileURL("savedata/life.gcdata");
         SinglePlayerGame.GC_LIFE_DATA_PATH_BAK = SinglePlayerGame.toWebSaveFileURL("savedata/life.gcdatabak");
         Command.prototype.callExecuteFunction = function (triggerLineID, player, params, gameFunc) {
@@ -72026,7 +73708,7 @@ var SinglePlayerGame = (function () {
             GameCommand.rpcCall.apply(GameCommand, args);
         };
         Player.prototype.toScene = function (sceneID, x, y) {
-            var _this = this;
+            var _this_1 = this;
             if (x === void 0) { x = 0; }
             if (y === void 0) { y = 0; }
             GameCommand.banSceneObjectEvent = true;
@@ -72082,7 +73764,7 @@ var SinglePlayerGame = (function () {
                     GameCommand.banSceneObjectEvent = false;
                 }
                 else {
-                    Callback.CallLaterBeforeRender(checkChangeScene, _this, [lastScene, lastPlayerSceneObject]);
+                    Callback.CallLaterBeforeRender(checkChangeScene, _this_1, [lastScene, lastPlayerSceneObject]);
                 }
             };
             Callback.CallLaterBeforeRender(checkChangeScene, this, [lastScene, lastPlayerSceneObject]);
@@ -72162,7 +73844,7 @@ var SinglePlayerGame = (function () {
         AssetManager.preLoadSceneAssetExt = Callback.New(function (sceneID, onFin) {
             var loadSoTask = new AsynTask(Callback.New(function () {
                 onFin();
-            }, _this));
+            }, _this_1));
             Game.data.loadScene(sceneID, Callback.New(function () {
                 var sceneData = Game.data.sceneList.data[sceneID];
                 if (sceneData) {
@@ -72198,7 +73880,7 @@ var SinglePlayerGame = (function () {
                 }
                 loadSoTask.execute(1);
                 loadSoTask.complete();
-            }, _this));
+            }, _this_1));
         }, this);
         AssetManager.disposeSceneAssetExt = Callback.New(function (sceneID) {
             Game.data.loadScene(sceneID, Callback.New(function () {
@@ -72231,7 +73913,7 @@ var SinglePlayerGame = (function () {
                         }
                     }
                 }
-            }, _this));
+            }, _this_1));
         }, this);
         var oriAddSceneObject = ClientScene.prototype.addSceneObject;
         ClientScene.prototype.addSceneObject = function (soData, isSoc, useModelClass) {
@@ -72306,7 +73988,7 @@ var SinglePlayerGame = (function () {
         task.execute(SinglePlayerGame.loadLifeData(onloadDataOver));
     };
     SinglePlayerGame.saveLifeData = function (onFin, globalData, completeProcess, taskLock, ifNullGlobalDataSaveLastGlobalData) {
-        var _this = this;
+        var _this_1 = this;
         if (globalData === void 0) { globalData = null; }
         if (completeProcess === void 0) { completeProcess = true; }
         if (taskLock === void 0) { taskLock = true; }
@@ -72330,7 +74012,7 @@ var SinglePlayerGame = (function () {
                 onFin && onFin.runWith([success]);
                 if (taskLock)
                     SyncTask.taskOver(SinglePlayerGame.TASK_MODIFY_FILE);
-            }, _this);
+            }, _this_1);
             if (!SinglePlayerGame.saveIDs) {
                 Callback.CallLater(SinglePlayerGame.saveLifeData, SinglePlayerGame, [saveGameFin, globalData, completeProcess]);
                 return;
@@ -72358,10 +74040,10 @@ var SinglePlayerGame = (function () {
                         }
                         FileUtils.deleteFile(SinglePlayerGame.GC_LIFE_DATA_PATH_BAK, Callback.New(function (success) {
                             saveGameFin.runWith([success]);
-                        }, _this));
-                    }, _this));
+                        }, _this_1));
+                    }, _this_1));
                 }
-            }, _this));
+            }, _this_1));
         };
         if (taskLock) {
             new SyncTask(SinglePlayerGame.TASK_MODIFY_FILE, saveLifeDataF);
@@ -72377,7 +74059,7 @@ var SinglePlayerGame = (function () {
         SinglePlayerGame.saveLifeData(onFin, globalData);
     };
     SinglePlayerGame.loadLifeData = function (onFin) {
-        var _this = this;
+        var _this_1 = this;
         var url = SinglePlayerGame.GC_LIFE_DATA_PATH;
         SinglePlayerGame.loadSaveFile(SinglePlayerGame.GC_LIFE_DATA_PATH_BAK, Callback.New(function (data) {
             SinglePlayerGame.disposeSaveFile(SinglePlayerGame.GC_LIFE_DATA_PATH_BAK, true);
@@ -72388,11 +74070,12 @@ var SinglePlayerGame = (function () {
                 SinglePlayerGame.loadSaveFile(url, Callback.New(function (data) {
                     SinglePlayerGame.disposeSaveFile(url, true);
                     SinglePlayerGame.doLoadLifeData(data, onFin);
-                }, _this), false, true, false);
+                }, _this_1), false, true, false);
             }
         }, this), false, true, false);
     };
     SinglePlayerGame.doLoadLifeData = function (data, onFin) {
+        var _this_1 = this;
         if (data) {
             if (data.variable)
                 ObjectUtils.clone(data.variable, ClientWorld.variable);
@@ -72406,46 +74089,73 @@ var SinglePlayerGame = (function () {
             else {
                 SinglePlayerGame.globalData = data.globalData;
             }
-            if (!SinglePlayerGame.saveIDs || SinglePlayerGame.saveIDs.length == 0) {
-                if (os.platform == 2) {
-                    var newSaveIDsObj = {};
-                    var newSaveIDs = [];
-                    FileUtils.getDirectoryListing("savedata", Callback.New(function (fos) {
-                        if (!fos) {
-                            SinglePlayerGame.saveIDs = newSaveIDs;
-                            onFin.delayRun(0);
-                            return;
-                        }
-                        var fosClone = fos.concat();
-                        fosClone.sort(function (a, b) { return a.lastModifyDate.getTime() < a.lastModifyDate.getTime() ? -1 : 1; });
-                        for (var i = 0; i < fosClone.length; i++) {
-                            var fo = fosClone[i];
-                            if (fo.isDirectory)
-                                continue;
-                            var fileNameArr = fo.fileName.split(".");
-                            var ext = fileNameArr.pop();
-                            if (ext == "gcdatabak" || ext == "gcdata") {
-                                var fileName = fileNameArr.join(".");
-                                if (newSaveIDsObj[fileName])
-                                    continue;
-                                newSaveIDsObj[fileName] = true;
-                                var fileNameID = MathUtils.int(fileName.replace("gamedata", ""));
-                                var newSaveID = {
-                                    id: fileNameID,
-                                    indexInfo: {},
-                                    now: fo.lastModifyDate.getTime()
-                                };
-                                newSaveIDs.push(newSaveID);
-                            }
-                            SinglePlayerGame.saveIDs = newSaveIDs;
-                            onFin.delayRun(0);
-                        }
-                    }, this));
-                    return;
-                }
-                else {
+            if (FileUtils.hasFileOperationJurisdiction) {
+                var newSaveIDsObj = {};
+                if (!SinglePlayerGame.saveIDs)
                     SinglePlayerGame.saveIDs = [];
-                }
+                FileUtils.getDirectoryListing("savedata", Callback.New(function (fos) {
+                    if (!fos) {
+                        SinglePlayerGame.saveIDs = [];
+                        onFin.delayRun(0);
+                        return;
+                    }
+                    var fosClone = fos.concat();
+                    fosClone.sort(function (a, b) { return a.lastModifyDate.getTime() < a.lastModifyDate.getTime() ? -1 : 1; });
+                    var syncTaskName = "doLoadLifeData";
+                    var fileIDs = [];
+                    for (var i = 0; i < fosClone.length; i++) {
+                        var fo = fosClone[i];
+                        if (fo.isDirectory)
+                            continue;
+                        var fileNameArr = fo.fileName.split(".");
+                        var ext = fileNameArr.pop();
+                        if (ext == "gcdatabak" || ext == "gcdata") {
+                            var fileName = fileNameArr.join(".");
+                            if (newSaveIDsObj[fileName])
+                                continue;
+                            newSaveIDsObj[fileName] = true;
+                            var fileNmaeIDStr = fileName.replace("gamedata", "");
+                            if (fileNmaeIDStr == "" || fileNmaeIDStr == "life")
+                                continue;
+                            var fileNameID = MathUtils.int(fileNmaeIDStr);
+                            var m = ArrayUtils.matchAttributes(SinglePlayerGame.saveIDs, { id: fileNameID }, true)[0];
+                            if (!m) {
+                                new SyncTask(syncTaskName, function (fileNameID, localPath, lastModifyDate) {
+                                    FileUtils.loadJsonFile(localPath, Callback.New(function (fileNameID, lastModifyDate, jsonObj) {
+                                        if (jsonObj) {
+                                            var indexInfo = jsonObj[15];
+                                            if (!indexInfo)
+                                                indexInfo = {};
+                                            var newSaveID = {
+                                                id: fileNameID,
+                                                indexInfo: indexInfo,
+                                                now: lastModifyDate.getTime()
+                                            };
+                                            SinglePlayerGame.saveIDs.push(newSaveID);
+                                        }
+                                        Callback.New(SyncTask.taskOver, SyncTask, [syncTaskName]).delayRun(0, setFrameout);
+                                    }, _this_1, [fileNameID, lastModifyDate]));
+                                }, [fileNameID, fo.localPath, fo.lastModifyDate]);
+                            }
+                            fileIDs.push(fileNameID);
+                        }
+                    }
+                    new SyncTask(syncTaskName, function () {
+                        for (var i = 0; i < SinglePlayerGame.saveIDs.length; i++) {
+                            var saveIDInfo = SinglePlayerGame.saveIDs[i];
+                            if (!saveIDInfo || fileIDs.indexOf(saveIDInfo.id) == -1) {
+                                SinglePlayerGame.saveIDs.splice(i, 1);
+                                i--;
+                            }
+                        }
+                        onFin.delayRun(0);
+                        SyncTask.taskOver(syncTaskName);
+                    });
+                }, this));
+                return;
+            }
+            else if (!SinglePlayerGame.saveIDs) {
+                SinglePlayerGame.saveIDs = [];
             }
         }
         else {
@@ -72525,10 +74235,10 @@ var SinglePlayerGame = (function () {
             var cbInfo = SinglePlayerGame.regSaveCustomDataCallbacks[i];
             packageCustomData[cbInfo.dataName] = cbInfo.dataFunction.run();
         }
-        var saveData = [Game.getSaveData(), now, Game.currentScene.id, worldSaveData, playerVarialbeData, playerData, SinglePlayerGame.sceneDatas, audioInfo, triggerEventData, sceneObjectData, gameCommandData, sceneStatus, packageCustomData, needLoadUIs, playerSoModuleDatas];
+        var saveData = [Game.getSaveData(), now, Game.currentScene.id, worldSaveData, playerVarialbeData, playerData, SinglePlayerGame.sceneDatas, audioInfo, triggerEventData, sceneObjectData, gameCommandData, sceneStatus, packageCustomData, needLoadUIs, playerSoModuleDatas, indexInfo];
         saveData = ObjectUtils.depthClone(saveData);
         new SyncTask(SinglePlayerGame.TASK_MODIFY_FILE, function () {
-            var _this = this;
+            var _this_1 = this;
             var saveGameFin = Callback.New(function (success) {
                 onFin && onFin.runWith([success]);
                 SyncTask.taskOver(SinglePlayerGame.TASK_MODIFY_FILE);
@@ -72567,16 +74277,16 @@ var SinglePlayerGame = (function () {
                                 FileUtils.deleteFile(SinglePlayerGame.GC_LIFE_DATA_PATH_BAK, Callback.New(function (success) {
                                     FileUtils.deleteFile(gameFileBAK, Callback.New(function (success) {
                                         saveGameFin.runWith([true]);
-                                    }, _this));
-                                }, _this));
-                            }, _this));
-                        }, _this));
-                    }, _this));
+                                    }, _this_1));
+                                }, _this_1));
+                            }, _this_1));
+                        }, _this_1));
+                    }, _this_1));
                 }
                 else {
                     FileUtils.save(saveData, gameFile, Callback.New(function (success, localURL) {
                         saveGameFin.runWith([success]);
-                    }, _this));
+                    }, _this_1));
                 }
             }, this), globalData, false, false, true);
         });
@@ -72588,7 +74298,7 @@ var SinglePlayerGame = (function () {
         SinglePlayerGame.regSaveCustomGlobalDataCallbacks.push({ globalDataName: globalDataName, globalDataFunction: globalDataFunction });
     };
     SinglePlayerGame.loadGame = function (index, onFin, onProgress) {
-        var _this = this;
+        var _this_1 = this;
         if (onProgress === void 0) { onProgress = null; }
         index = MathUtils.int(index);
         var m = ArrayUtils.matchAttributes(SinglePlayerGame.saveIDs, { id: index }, true);
@@ -72607,7 +74317,7 @@ var SinglePlayerGame = (function () {
                 SinglePlayerGame.loadSaveFile(url, Callback.New(function (saveData) {
                     SinglePlayerGame.disposeSaveFile(url, true);
                     SinglePlayerGame.doLoadGame(index, onFin, onProgress, saveData);
-                }, _this));
+                }, _this_1));
             }
         }, this), false, true, false);
     };
@@ -72657,7 +74367,9 @@ var SinglePlayerGame = (function () {
             url = SinglePlayerGame.toWebSaveFileURL(url);
             var indiaAppGameInfo = Config.INDIA_APPLICATION_GAME_INFO;
             if (indiaAppGameInfo) {
-                AssetManager.loadJson(url, complete, syncCallbackWhenAssetExist, useRef, onErrorTips);
+                AssetManager.loadJson(url, Callback.New(function (jsonObj) {
+                    complete.runWith([ObjectUtils.depthClone(jsonObj)]);
+                }, this), syncCallbackWhenAssetExist, useRef, onErrorTips);
                 return;
             }
             if (IndexedDBManager.support && IndexedDBManager.used) {
@@ -72677,7 +74389,7 @@ var SinglePlayerGame = (function () {
             AssetManager.disposeJson(url, force);
     };
     SinglePlayerGame.doLoadGame = function (index, onFin, onProgress, saveData) {
-        var _this = this;
+        var _this_1 = this;
         if (onProgress === void 0) { onProgress = null; }
         if (!saveData) {
             onFin.runWith([false]);
@@ -72752,7 +74464,7 @@ var SinglePlayerGame = (function () {
                     preLoadTask.execute(1);
                     Game.data.loadScene(copyFrom.sceneID, Callback.New(function () {
                         preLoadTask.complete();
-                    }, _this));
+                    }, _this_1));
                 }
             }
             preLoadTask.complete();
@@ -72779,7 +74491,7 @@ var SinglePlayerGame = (function () {
     };
     SinglePlayerGame.delSaveFile = function (index, onFin) {
         new SyncTask(SinglePlayerGame.TASK_MODIFY_FILE, function () {
-            var _this = this;
+            var _this_1 = this;
             var saveGameFin = Callback.New(function (success) {
                 onFin && onFin.runWith([success]);
                 SyncTask.taskOver(SinglePlayerGame.TASK_MODIFY_FILE);
@@ -72795,7 +74507,7 @@ var SinglePlayerGame = (function () {
             FileUtils.deleteFile(urlBak, Callback.New(function (success) {
                 FileUtils.deleteFile(url, Callback.New(function (success) {
                     SinglePlayerGame.saveLifeData(saveGameFin, SinglePlayerGame.globalData, true, false);
-                }, _this));
+                }, _this_1));
             }, this));
         });
     };
@@ -72862,18 +74574,22 @@ var SinglePlayerGame = (function () {
             case 2:
                 var commonEvCmd = ClientWorld.commonEventPages[commandID];
                 if (commonEvCmd) {
-                    var triggerSceneObject = Game.player.sceneObject;
+                    var triggerSceneObject = null;
                     if (triggerSceneObjectIndex != null) {
                         triggerSceneObject = Game.currentScene.sceneObjects[triggerSceneObjectIndex];
                     }
-                    var executorSceneObject = Game.player.sceneObject;
+                    if (triggerSceneObject == null)
+                        triggerSceneObject = Game.player.sceneObject;
+                    var executorSceneObject = null;
                     if (executorSceneObjectIndex != null) {
                         executorSceneObject = Game.currentScene.sceneObjects[executorSceneObjectIndex];
                     }
-                    var trigger = new CommandTrigger(CommandTrigger.COMMAND_MAIN_TYPE_CALL_COMMON_EVENT, commandID, Game.currentScene, triggerSceneObject, true, executorSceneObject);
-                    if (onReturnID != 0 && trigger)
-                        EventUtils.addEventListener(trigger, CommandTrigger.EVENT_OVER, Callback.New(ClientMsgSender.cmdReturn, ClientMsgSender, [onReturnID]), true);
-                    commonEvCmd.startTriggerEvent(trigger, playerInput);
+                    if (executorSceneObject == null)
+                        executorSceneObject = Game.player.sceneObject;
+                    var trigger_1 = new CommandTrigger(CommandTrigger.COMMAND_MAIN_TYPE_CALL_COMMON_EVENT, commandID, Game.currentScene, triggerSceneObject, true, executorSceneObject);
+                    if (onReturnID != 0 && trigger_1)
+                        EventUtils.addEventListener(trigger_1, CommandTrigger.EVENT_OVER, Callback.New(ClientMsgSender.cmdReturn, ClientMsgSender, [onReturnID]), true);
+                    commonEvCmd.startTriggerEvent(trigger_1, playerInput);
                 }
                 break;
         }
@@ -72911,13 +74627,13 @@ var SinglePlayerGame = (function () {
                     if (triggerSceneObjectIndex != null) {
                         triggerSceneObject = scene.sceneObjects[triggerSceneObjectIndex];
                     }
-                    var trigger = triggerSceneObject.getCommandTrigger(mainType, indexType, scene, so);
-                    if (trigger) {
-                        onTriggerCreated && onTriggerCreated.runWith([trigger]);
-                        var cmdPage = so.customCommandPages[indexType];
-                        if (cmdPage) {
-                            cmdPage.startTriggerEvent(trigger, playerInput);
-                            return trigger;
+                    var trigger_2 = triggerSceneObject.getCommandTrigger(mainType, indexType, scene, so);
+                    if (trigger_2) {
+                        onTriggerCreated && onTriggerCreated.runWith([trigger_2]);
+                        var cmdPage_1 = so.customCommandPages[indexType];
+                        if (cmdPage_1) {
+                            cmdPage_1.startTriggerEvent(trigger_2, playerInput);
+                            return trigger_2;
                         }
                     }
                 }
@@ -72925,12 +74641,12 @@ var SinglePlayerGame = (function () {
             case CommandTrigger.COMMAND_MAIN_TYPE_UI:
                 var commands = ClientWorld.uiCustomCommandPages[commandID];
                 if (commands) {
-                    var cmdPage = commands[indexType];
-                    if (cmdPage) {
+                    var cmdPage_2 = commands[indexType];
+                    if (cmdPage_2) {
                         var trigger = Game.player.sceneObject.getCommandTrigger(mainType, indexType, scene, Game.player.sceneObject, commandID);
                         if (trigger) {
                             onTriggerCreated && onTriggerCreated.runWith([trigger]);
-                            cmdPage.startTriggerEvent(trigger, playerInput);
+                            cmdPage_2.startTriggerEvent(trigger, playerInput);
                         }
                         return trigger;
                     }
@@ -73050,7 +74766,7 @@ var SinglePlayerGame = (function () {
                     var sceneData = Game.data.sceneList.data[Game.currentScene.id];
                     SceneObjectEntity.recoveryModulesData[soData.so.index] = { needCheckModulesCustomAttributes: true, presetData: soData.moduleDatas };
                 }
-                soc = Game.currentScene.addSceneObjectFromClone(fromSceneID, fromSceneObjectindex, false, null, soSwitchs, soData.so);
+                soc = Game.currentScene.addSceneObjectFromClone(fromSceneID, fromSceneObjectindex, soData.so['_isCopy'], null, soSwitchs, soData.so);
             }
         }
         function recoveryCurrentSceneObjectModules(soc, modulesCustomAttribute, presetData) {
@@ -73279,91 +74995,115 @@ var SinglePlayerGame = (function () {
     SinglePlayerGame.regSaveCustomGlobalDataCallbacks = [];
     return SinglePlayerGame;
 }());
+var GCPolyfill = (function () {
+    function GCPolyfill() {
+    }
+    GCPolyfill.init = function () {
+        var minFilters = ["LINEAR", "NEAREST", "NEAREST_MIPMAP_NEAREST", "LINEAR_MIPMAP_NEAREST", "NEAREST_MIPMAP_LINEAR", "LINEAR_MIPMAP_LINEAR"];
+        var magFilters = ["LINEAR", "NEAREST"];
+        var oldTexParameteri = WebGLRenderingContext.prototype.texParameteri;
+        WebGLRenderingContext.prototype.texParameteri = function (target, pname, param) {
+            switch (pname) {
+                case WebGLRenderingContext.TEXTURE_MIN_FILTER:
+                    var v = minFilters.filter(function (v) { return WebGLRenderingContext[v] == param; });
+                    param = WebGLRenderingContext.LINEAR;
+                    break;
+                case WebGLRenderingContext.TEXTURE_MAG_FILTER:
+                    var v1 = magFilters.filter(function (v) { return WebGLRenderingContext[v] == param; });
+                    param = Config.GAME_MAG_FILTER ? Config.GAME_MAG_FILTER : 0x2600;
+                    break;
+            }
+            oldTexParameteri.call(this, target, pname, param);
+        };
+        ClientMain.prototype["initOver"] = function () {
+            if (IndexedDBManager && IndexedDBManager.support) {
+                if (window.name != null && os.platform == 0) {
+                    try {
+                        var parentInfo = JSON.parse(window.name);
+                        IndexedDBManager.databaseName = parentInfo.id;
+                        IndexedDBManager.used = true;
+                    }
+                    catch (e) {
+                        IndexedDBManager.used = false;
+                    }
+                }
+                else {
+                    if (Config.gameSID) {
+                        IndexedDBManager.databaseName = Config.gameSID.toString();
+                        IndexedDBManager.used = true;
+                    }
+                    else {
+                        IndexedDBManager.used = false;
+                    }
+                }
+            }
+            Config.TILE_SPLIT_SIZE_LOCK = true;
+            SinglePlayerGame.init(Callback.New(function () {
+                EventUtils.happen(ClientWorld, ClientWorld.EVENT_BEFORE_INITED);
+                EventUtils.happen(ClientWorld, ClientWorld.EVENT_INITED);
+            }, this));
+        };
+        gcParent.window["onunload"] = window["onunload"] = function (isRealClose) {
+            gcParent.window["onunload"] = window["onunload"] = null;
+            GameAudio.stopBGM();
+            GameAudio.stopSE();
+            GameAudio.stopBGS();
+            GameAudio.stopTS();
+            if (typeof mainDomain_kdsrpg != "undefined") {
+                mainDomain_frameRef(-1);
+            }
+            return false;
+        };
+        window.addEventListener("mousedown", function (e) {
+            if (typeof mainDomain_kdsrpg == "undefined")
+                return;
+            var ev = new Event("mousedown");
+            ev.domain = "midCanvas";
+            ev.clientX = e.clientX;
+            ev.clientY = e.clientY + 32;
+            if (gcParent != window)
+                gcParent.window.dispatchEvent(ev);
+        });
+        window.addEventListener("mousemove", function (e) {
+            if (typeof mainDomain_kdsrpg == "undefined")
+                return;
+            var ev = new Event("mousemove");
+            ev.domain = "midCanvas";
+            ev.clientX = e.clientX;
+            ev.clientY = e.clientY + 32;
+            if (gcParent != window)
+                gcParent.window.dispatchEvent(ev);
+        });
+        window.addEventListener("onmouseup", function (e) {
+            if (typeof mainDomain_kdsrpg == "undefined")
+                return;
+            var ev = new Event("mouseup");
+            ev.domain = "midCanvas";
+            ev.clientX = e.clientX;
+            ev.clientY = e.clientY + 32;
+            if (gcParent != window)
+                gcParent.window.dispatchEvent(ev);
+        });
+        if (typeof window["CumtomGameNumber"] != "undefined") {
+            if (typeof window["CustomGameNumber"] == "undefined") {
+                window["CustomGameNumber"] = window["CumtomGameNumber"];
+            }
+            else {
+                for (var i in window["CumtomGameNumber"]) {
+                    if (!window["CustomGameNumber"][i]) {
+                        window["CustomGameNumber"][i] = window["CumtomGameNumber"][i];
+                    }
+                }
+            }
+        }
+    };
+    return GCPolyfill;
+}());
 var playerMap = {};
 var layer3Test;
 function main() {
     Config.SINGLE_PLAYER_CORE = true;
-    ClientMain.prototype["initOver"] = function () {
-        if (IndexedDBManager && IndexedDBManager.support) {
-            if (window.name != null && os.platform == 0) {
-                try {
-                    var parentInfo = JSON.parse(window.name);
-                    IndexedDBManager.databaseName = parentInfo.id;
-                    IndexedDBManager.used = true;
-                }
-                catch (e) {
-                    IndexedDBManager.used = false;
-                }
-            }
-            else {
-                if (Config.gameSID) {
-                    IndexedDBManager.databaseName = Config.gameSID.toString();
-                    IndexedDBManager.used = true;
-                }
-                else {
-                    IndexedDBManager.used = false;
-                }
-            }
-        }
-        Config.TILE_SPLIT_SIZE_LOCK = true;
-        SinglePlayerGame.init(Callback.New(function () {
-            EventUtils.happen(ClientWorld, ClientWorld.EVENT_BEFORE_INITED);
-            EventUtils.happen(ClientWorld, ClientWorld.EVENT_INITED);
-        }, this));
-    };
+    GCPolyfill.init();
     ClientWorld.init();
-    if (typeof window["CumtomGameNumber"] != "undefined") {
-        if (typeof window["CustomGameNumber"] == "undefined") {
-            window["CustomGameNumber"] = window["CumtomGameNumber"];
-        }
-        else {
-            for (var i in window["CumtomGameNumber"]) {
-                if (!window["CustomGameNumber"][i]) {
-                    window["CustomGameNumber"][i] = window["CumtomGameNumber"][i];
-                }
-            }
-        }
-    }
 }
 GameUI.init();
-gcParent.window["onunload"] = window["onunload"] = function (isRealClose) {
-    gcParent.window["onunload"] = window["onunload"] = null;
-    GameAudio.stopBGM();
-    GameAudio.stopSE();
-    GameAudio.stopBGS();
-    GameAudio.stopTS();
-    if (typeof gcTop["kdsrpg"] != "undefined") {
-        gcTop["frameRef"](-1);
-    }
-    return false;
-};
-window.addEventListener("mousedown", function (e) {
-    if (typeof gcTop["kdsrpg"] == "undefined")
-        return;
-    var ev = new Event("mousedown");
-    ev.domain = "midCanvas";
-    ev.clientX = e.clientX;
-    ev.clientY = e.clientY + 32;
-    if (gcParent != window)
-        gcParent.window.dispatchEvent(ev);
-});
-window.addEventListener("mousemove", function (e) {
-    if (typeof gcTop["kdsrpg"] == "undefined")
-        return;
-    var ev = new Event("mousemove");
-    ev.domain = "midCanvas";
-    ev.clientX = e.clientX;
-    ev.clientY = e.clientY + 32;
-    if (gcParent != window)
-        gcParent.window.dispatchEvent(ev);
-});
-window.addEventListener("onmouseup", function (e) {
-    if (typeof gcTop["kdsrpg"] == "undefined")
-        return;
-    var ev = new Event("mouseup");
-    ev.domain = "midCanvas";
-    ev.clientX = e.clientX;
-    ev.clientY = e.clientY + 32;
-    if (gcParent != window)
-        gcParent.window.dispatchEvent(ev);
-});

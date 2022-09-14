@@ -107,12 +107,16 @@
             },
             {
                 "mode": 2
+            },
+            {
+                "mode": 2
             }
         ],
         "commandPagePreviewState": [
             true,
             true,
             1,
+            true,
             true
         ],
         "applyModuleToAllScene": false,

@@ -3441,7 +3441,7 @@
     {
         "class": "UITabBox",
         "icon": "editorAsset/img/UIIcon/c_tab.png",
-        "name": "UITabBox",
+        "name": "标签选项卡",
         "attributes": [
             {
                 "enable": true,
@@ -4130,7 +4130,7 @@
     {
         "class": "UIGUI",
         "icon": "editorAsset/img/UIIcon/c_ui.png",
-        "name": "UI界面",
+        "name": "子界面",
         "attributes": [
             {
                 "enable": true,
@@ -4228,7 +4228,7 @@
                     "xDragEnabled": true,
                     "yDragEnabled": true
                 },
-                "enable": true,
+                "enable": false,
                 "attribute": "dpWidth",
                 "name": "dpWidth",
                 "tips": "",
